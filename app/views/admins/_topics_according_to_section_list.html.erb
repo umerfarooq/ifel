@@ -1,0 +1,34 @@
+<%unless topics.blank?%>
+  <table width="200" border="0" cellspacing="0" class="admnQuiztbl">
+    <%topics.each do |topic_template|%>
+      <tr>
+        <td>
+          <%= helper_get_topic_name(topic_template) %>
+        </td>
+        <td>
+          <% if(topic_template.state == (State.published)) %>
+            <%= link_to 'INACTIVATE','javascript:void(0)', :onclick=>"inactivate_template_topic('section','#{topic_template.id.to_s}')" %>
+          <% elsif(topic_template.state == (State.activated)) %>
+            <%= link_to 'PUBLISH','javascript:void(0)', :onclick=>"publish_template_topic('section','#{topic_template.id.to_s}')" %>
+            |
+            <%= link_to 'INACTIVATE','javascript:void(0)', :onclick=>"inactivate_template_topic('section','#{topic_template.id.to_s}')" %>
+          <% else %>
+            <%= link_to 'ACTIVATE','javascript:void(0)', :onclick=>"activate_template_topic('section','#{topic_template.id.to_s}')" %>
+          <% end %>
+          <% unless topic_template.is_default %>
+            |
+            <%= link_to 'MARK AS DEFAULT','javascript:void(0)', :onclick=>"mark_as_default('section','#{topic_template.id.to_s}')" %>
+            <%else%>
+            |
+            DEFAULT
+            |
+            <%= link_to 'UNMARK AS DEFAULT', 'javascript:void(0)', :onclick=>"unmark_as_default('section','#{topic_template.id.to_s}')" %>
+          <%end%>
+        </td>
+      </tr>
+    <%end%>
+  </table>
+<%else%>
+  No Topic has been attached with this Item
+<%end%>
+

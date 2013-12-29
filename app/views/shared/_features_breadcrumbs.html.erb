@@ -1,0 +1,20 @@
+<ul id="breadcrumb">
+  <li>
+    <%= link_to "Overview", features_path, :class => ("current" if(current == :overview)) %>
+  </li>
+  <li>
+    <%= link_to "Why Choose Wicked Start?", why_wicked_start_features_path, :class => ("current" if(current == :why_wicked_start)) %>
+  </li>
+  <li>
+    <%= link_to "Tour", (detail_feature_path(Feature.get_parents.published.first) rescue features_path), :class => ("current" if(current == :detail_features)) %>
+  </li>
+  <% unless $is_ws_free_as_default %>
+  <li>
+    <%= link_to "Pricing", pricing_features_path, :class => ("current" if(current == :pricing)) %>
+  </li>
+  <%end%>
+  <li>
+    <%= link_to "Sign Up", signup_path, :class => ("current" if(current == :sign_up)) %>
+  </li>
+</ul>
+<div class="clear"></div>

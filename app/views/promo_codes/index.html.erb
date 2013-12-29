@@ -1,0 +1,57 @@
+<h1>PromoCodes</h1>
+<p><%= link_to 'Create Promotional Code', new_promo_code_path %></p>
+<br />
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Untitled Document</title>
+    <style>
+
+      body	{ font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#666 }
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <table width="1019" border="0" cellpadding="5" cellspacing="0">
+      <tr>
+        <th scope="col">PCode</th>
+        <th scope="col">RegisterLimit</th>
+        <th scope="col">Register_Counter</th>
+        <th scope="col">Organization</th>
+        <th scope="col">Registration_Fee</th>
+        <th scope="col">Recurring Fee</th>
+        <th scope="col">Delayed_Billing</th>
+        <th scope="col">Month_Begins</th>
+        <th scope="col">Day_Begins</th>
+        <th scope="col">Expiry Date</th>
+        <th scope="col">Is_Active</th>
+        <th scope="col">&nbsp;</th>
+      </tr>
+      <% @promo_codes.each do |promo_code| %>
+        <tr>
+          <td><%= promo_code.code %></td>
+          <td><%= promo_code.register_limit %></td>
+          <td><%= promo_code.register_counter %></td>
+          <td><%= promo_code.organization %></td>
+          <td><%= promo_code.registration_fee %></td>
+          <td><%= promo_code.recurring_fee %></td>
+          <td><%= promo_code.delayed_billing %></td>
+          <td><%= promo_code.month_begins %></td>
+          <td><%= promo_code.day_begins %></td>
+          <td><%= promo_code.expire_date %></td>
+          <td><%= promo_code.status %></td>
+          <td>
+            <%= link_to 'Edit', edit_promo_code_path(promo_code) %>
+            <%#= link_to 'Delete', promo_code, :method => :delete %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+  </body>
+</html>

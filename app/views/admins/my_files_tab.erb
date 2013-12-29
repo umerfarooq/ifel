@@ -1,0 +1,305 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'jquery-1.4.2.min' %>
+  <script type="text/javascript">
+    function edit_content(content_type) {
+      var msg_title = $("#"+content_type+"_title").val();
+      var msg_content = $("#"+content_type+"_content").val();
+      if($("a#"+content_type+"_edit_link").text() == "EDIT") {
+        $("a#"+content_type+"_edit_link").text("CANCEL");
+        $("#"+content_type+"_title").val(msg_title);
+        $("#"+content_type+"_content").val(msg_content);
+        $("#"+content_type+"_show").hide();
+        $("#"+content_type+"_edit").show();
+      } else {
+        $("a#"+content_type+"_edit_link").text("EDIT");
+        $("#"+content_type+"_show").show();
+        $("#"+content_type+"_edit").hide();
+      }
+    }
+    function edit_tooltips(type){
+      if($("a#"+type+"_edit_link").text()=="EDIT"){
+        $("a#"+type+"_edit_link").text("CANCEL");
+        $("#"+type+"_title_label").hide();
+        $("#"+type+"_content_label").hide();
+        $("#"+type+"_title_field").show();
+        $("#"+type+"_content_field").show();
+        $("#"+type+"_update_btn").show();
+      }else{
+        $("a#"+type+"_edit_link").text("EDIT")
+        $("#"+type+"_title_label").show();
+        $("#"+type+"_content_label").show();
+        $("#"+type+"_title_field").hide();
+        $("#"+type+"_content_field").hide();
+        $("#"+type+"_update_btn").hide();
+      }
+
+    }
+  </script>
+<% end %>
+
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :user_tooltips } %>
+<div class="admnRitCol">
+  <%unless @startup_workspace_contents[:company_files].blank?%>
+    <div>
+      <h4>
+        FILE SUMMARY
+        |
+        <%= link_to "EDIT", '#.', :id => "file_summary_edit_link", :onclick=>"edit_content('file_summary')" %>
+      </h4>
+      <br />
+      <%unless @startup_workspace_contents[:company_files][:summary].blank?%>
+        <div id="file_summary_show">
+          <table style="text-align: left;">
+            <tr>
+              <th width="20%">Title</th>
+              <th width="80%">Summary</th>
+            </tr>
+            <tr>
+              <td><%= @startup_workspace_contents[:company_files][:summary].title.to_s %></td>
+              <td><%= @startup_workspace_contents[:company_files][:summary].content.to_s %></td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="file_summary_edit" style="display: none">
+          <% form_for @startup_workspace_contents[:company_files][:summary], :url => update_file_content_document_path(@startup_workspace_contents[:company_files][:summary]), :method=>:put do |f| %>
+            <table>
+              <tr>
+                <th><%= f.label :title %></th>
+                <th><%= f.label :content, 'Summary' %></th>
+              </tr>
+              <tr>
+                <td>
+                  <%= f.text_field :title, :size => "20", :id=>'file_summary_title' %>
+                </td>
+                <td>
+                  <%= f.text_area :content, :size => "80x5", :id=>'file_summary_content', :class => "adminEditor" %>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.submit 'Update and Publish' %></td>
+              </tr>
+            </table>
+
+          <% end %>
+        </div>
+      <%end%>
+      <br />
+    </div>
+
+    <div>
+      <h4>
+        TOOLTIPS  <span id="chars-left" style="color:red"></span>
+      </h4>
+      <br />
+      <table width="100%">
+        <tr style="text-align:left;">
+          <th width="15%">
+            Tip About
+          </th>
+          <th width="15%">
+            Title
+          </th>
+          <th width="50%">
+            Content
+          </th>
+          <th width="20%">
+            Action
+          </th>
+        </tr>
+
+        <%unless @startup_workspace_contents[:company_files]['section_1'].blank?%>
+          <tr id="starting_block_show">
+            <% form_for @startup_workspace_contents[:company_files]['section_1'], :url => update_file_content_document_path(@startup_workspace_contents[:company_files]['section_1']) do |f| %>
+              <td width="15%">Starting Block</td>
+              <td width="15%">
+                <%= f.label :title, @startup_workspace_contents[:company_files]['section_1'].title, :id=>'starting_block_title_label' %>
+                <%= f.text_field :title, :size => '15', :id=>'starting_block_title_field', :class => 'dispNone' %>
+              </td>
+              <td width="50%">
+                <%= f.label :content, @startup_workspace_contents[:company_files]['section_1'].content, :id=>'starting_block_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'starting_block_content_field', :class => 'dispNone', :onkeyup=>"countLimit('starting_block_content_field');" %><span id="info-chars"></span>
+              </td>
+              <td width="20%">
+                <%= link_to "EDIT", '#.', :id => "starting_block_edit_link", :onclick=>"edit_tooltips('starting_block')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'starting_block_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company_files]['section_1']), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company_files]['section_2'].blank?%>
+          <tr id="industry_show">
+            <% form_for @startup_workspace_contents[:company_files]['section_2'], :url => update_file_content_document_path(@startup_workspace_contents[:company_files]['section_2']) do |f| %>
+              <td>Industry</td>
+              <td>
+                <%= f.label :title,@startup_workspace_contents[:company_files]['section_2'].title, :id=>'industry_title_label' %>
+                <%= f.text_field :title, :size => '15', :id=>'industry_title_field', :class => 'dispNone' %>
+              </td>
+              <td>
+                <%= f.label :content,@startup_workspace_contents[:company_files]['section_2'].content, :id=>'industry_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'industry_content_field', :class => 'dispNone', :onkeyup=>"countLimit('industry_content_field');" %>
+              </td>
+              <td>
+                <%= link_to "EDIT", '#.', :id => "industry_edit_link", :onclick=>"edit_tooltips('industry')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'industry_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company_files]['section_2']), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company_files]['section_3'].blank?%>
+          <tr id="prototype_show">
+            <% form_for @startup_workspace_contents[:company_files]['section_3'], :url => update_file_content_document_path(@startup_workspace_contents[:company_files]['section_3']) do |f| %>
+              <td>Prototype</td>
+              <td><%= f.label :title,@startup_workspace_contents[:company_files]['section_3'].title, :id=>'prototype_title_label' %><%= f.text_field :title, :size => '15', :id=>'prototype_title_field', :class => 'dispNone' %></td>
+              <td><%= f.label :content,@startup_workspace_contents[:company_files]['section_3'].content, :id=>'prototype_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'prototype_content_field', :class => 'dispNone', :onkeyup=>"countLimit('prototype_content_field');" %></td>
+              <td>
+                <%= link_to "EDIT", '#.', :id => "prototype_edit_link", :onclick=>"edit_tooltips('prototype')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'prototype_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company_files]['section_3']), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company_files]['section_4'].blank?%>
+          <tr id="business_structure_show">
+            <% form_for @startup_workspace_contents[:company_files]['section_4'], :url => update_file_content_document_path(@startup_workspace_contents[:company_files]['section_4']) do |f| %>
+              <td>Business Structure</td>
+              <td><%= f.label :title,@startup_workspace_contents[:company_files]['section_4'].title, :id=>'business_structure_title_label' %><%= f.text_field :title, :size => '15', :id=>'business_structure_title_field', :class => 'dispNone' %></td>
+              <td><%= f.label :content,@startup_workspace_contents[:company_files]['section_4'].content, :id=>'business_structure_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'business_structure_content_field', :class => 'dispNone', :onkeyup=>"countLimit('business_structure_content_field');" %></td>
+              <td>
+                <%= link_to "EDIT", '#.', :id => "business_structure_edit_link", :onclick=>"edit_tooltips('business_structure')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'business_structure_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company_files]['section_4']), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company_files]['section_5'].blank?%>
+          <tr id="business_plan_show">
+            <% form_for @startup_workspace_contents[:company_files]['section_5'], :url => update_file_content_document_path(@startup_workspace_contents[:company_files]['section_5']) do |f| %>
+              <td>Business Plan</td>
+              <td><%= f.label :title,@startup_workspace_contents[:company_files]['section_5'].title, :id=>'business_plan_title_label' %><%= f.text_field :title, :size => '15', :id=>'business_plan_title_field', :class => 'dispNone' %></td>
+              <td><%= f.label :content,@startup_workspace_contents[:company_files]['section_5'].content, :id=>'business_plan_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'business_plan_content_field', :class => 'dispNone', :onkeyup=>"countLimit('business_plan_content_field');" %></td>
+              <td>
+                <%= link_to "EDIT", '#.', :id => "business_plan_edit_link", :onclick=>"edit_tooltips('business_plan')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'business_plan_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company_files]['section_5']), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company_files]['section_6'].blank?%>
+          <tr id="funding_show">
+            <% form_for @startup_workspace_contents[:company_files]['section_6'], :url => update_file_content_document_path(@startup_workspace_contents[:company_files]['section_6']) do |f| %>
+              <td>Funding</td>
+              <td><%= f.label :title,@startup_workspace_contents[:company_files]['section_6'].title, :id=>'funding_title_label' %><%= f.text_field :title, :size => '15', :id=>'funding_title_field', :class => 'dispNone' %></td>
+              <td><%= f.label :content,@startup_workspace_contents[:company_files]['section_6'].content, :id=>'funding_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'funding_content_field', :class => 'dispNone', :onkeyup=>"countLimit('funding_content_field');" %></td>
+              <td>
+                <%= link_to "EDIT", '#.', :id => "funding_edit_link", :onclick=>"edit_tooltips('funding')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'funding_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company_files]['section_6']), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company_files]['section_7'].blank?%>
+          <tr id="business_infrastructure_show">
+            <% form_for @startup_workspace_contents[:company_files]['section_7'], :url => update_file_content_document_path(@startup_workspace_contents[:company_files]['section_7']) do |f| %>
+              <td>Business Infrastructure</td>
+              <td><%= f.label :title,@startup_workspace_contents[:company_files]['section_7'].title, :id=>'business_infrastructure_title_label' %><%= f.text_field :title, :size => '15', :id=>'business_infrastructure_title_field', :class => 'dispNone' %></td>
+              <td><%= f.label :content,@startup_workspace_contents[:company_files]['section_7'].content, :id=>'business_infrastructure_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'business_infrastructure_content_field', :class => 'dispNone', :onkeyup=>"countLimit('business_infrastructure_content_field');" %></td>
+              <td>
+                <%= link_to "EDIT", '#.', :id => "business_infrastructure_edit_link", :onclick=>"edit_tooltips('business_infrastructure')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'business_infrastructure_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company_files]['section_7']), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company_files]['section_8'].blank?%>
+          <tr id="hiring_show">
+            <% form_for @startup_workspace_contents[:company_files]['section_8'], :url => update_file_content_document_path(@startup_workspace_contents[:company_files]['section_8']) do |f| %>
+              <td>Hiring</td>
+              <td><%= f.label :title,@startup_workspace_contents[:company_files]['section_8'].title, :id=>'hiring_title_label' %><%= f.text_field :title, :size => '15', :id=>'hiring_title_field', :class => 'dispNone' %></td>
+              <td><%= f.label :content,@startup_workspace_contents[:company_files]['section_8'].content, :id=>'hiring_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'hiring_content_field', :class => 'dispNone', :onkeyup=>"countLimit('hiring_content_field');" %></td>
+              <td>
+                <%= link_to "EDIT", '#.', :id => "hiring_edit_link", :onclick=>"edit_tooltips('hiring')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'hiring_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company_files]['section_8']), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company_files]['section_9'].blank?%>
+          <tr id="operations_show">
+            <% form_for @startup_workspace_contents[:company_files]['section_9'], :url => update_file_content_document_path(@startup_workspace_contents[:company_files]['section_9']) do |f| %>
+              <td>Operations</td>
+              <td><%= f.label :title,@startup_workspace_contents[:company_files]['section_9'].title, :id=>'operations_title_label' %><%= f.text_field :title, :size => '15', :id=>'operations_title_field', :class => 'dispNone' %></td>
+              <td><%= f.label :content,@startup_workspace_contents[:company_files]['section_9'].content, :id=>'operations_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'operations_content_field', :class => 'dispNone', :onkeyup=>"countLimit('operations_content_field');" %></td>
+              <td>
+                <%= link_to "EDIT", '#.', :id => "operations_edit_link", :onclick=>"edit_tooltips('operations')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'operations_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company_files]['section_9']), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company_files]['section_10'].blank?%>
+          <tr id="marketing_show">
+            <% form_for @startup_workspace_contents[:company_files]['section_10'], :url => update_file_content_document_path(@startup_workspace_contents[:company_files]['section_10']) do |f| %>
+              <td>Marketing</td>
+              <td><%= f.label :title,@startup_workspace_contents[:company_files]['section_10'].title, :id=>'marketing_title_label' %><%= f.text_field :title, :size => '15', :id=>'marketing_title_field', :class => 'dispNone' %></td>
+              <td><%= f.label :content,@startup_workspace_contents[:company_files]['section_10'].content, :id=>'marketing_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'marketing_content_field', :class => 'dispNone', :onkeyup=>"countLimit('marketing_content_field');" %></td>
+              <td>
+                <%= link_to "EDIT", '#.', :id => "marketing_edit_link", :onclick=>"edit_tooltips('marketing')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'marketing_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company_files]['section_10']), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+      </table>
+      <br />
+    </div>
+  <%end%>
+</div>
+<script>
+  //bkLib.onDomLoaded(function(){
+  function countLimit(element){
+    $('#'+element).keyup(function(){
+      limitCharsForSimpleTextArea(element, 300, 'chars-left');
+    });
+  }
+  //});
+</script>

@@ -1,0 +1,60 @@
+<%  form_for(@community_question) do |cq| %>
+<div class="subPageWrapper">
+  <h1>COMMUNITY</h1>
+  <ul id="breadcrumb">
+    <li><a href="#" class="current">Feed wall</a></li>
+    <li><a href="community-profile.html">Community Profile</a></li>
+    <li><a href="community-categories.html">TOPIC Categories</a></li>
+  </ul>
+  <div class="clear"></div>
+  <div class="communitySearch">
+    <%= text_field_tag(:search_que, "Search for questions and answers to topics that interest you and your start-up's needs.", :class => "communityTxtFld" ) %>
+    <!--<input type="text" value="Search for questions and answers to topics that interest you and your start-up's needs." class="communityTxtFld" />-->
+    <%= image_submit_tag("theme/commuity-search-btn.jpg") %>
+    <!--<input type="image" src="images/theme/commuity-search-btn.jpg" />-->
+
+    <!--<p><a href="#"><img src="images/post-question-btn.png" /></a><a href="#"><img src="images/theme/view-topics-btn.png" /></a></p>-->
+
+  </div>
+  <div class="sep"></div>
+  <div class="communityPostQstn">
+    <div class="postQstnTxt">
+      <h2>Post a Question</h2>
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+    </div>
+    <div class="postQstnForm">
+      <form action="">
+        <table width="100%" cellspacing="0" cellpadding="0" border="1">
+          <tr>
+            <td>Select a Category for Your Question</td>
+          </tr>
+          <tr>
+           <td><%= cq.select_tag(:title, options_from_collection_for_select(SectionTemplate.all, :id, :title, 18)) %></select></td>
+          </tr>
+          <tr><td height="10"></td></tr>
+          <tr>
+            <td>Write Your Question</td>
+          </tr>
+          <tr>
+            <td><%= cq.text_area_tag(:message, "Hi, nice site", :size => "24x6") %></td>
+          </tr>
+          <tr><td height="10"></td></tr>
+          <tr>
+            <td>Define topic to associate with your question</td>
+          </tr>
+          <tr>
+
+            <td><%= cq.text_field_tag(:topic,"", :class =>"text1")%><span style="position: absolute; padding: 0px; margin: 0px; font-family: MS Shell Dlg; font-size: 13.3333px; font-weight: 400; color: rgb(191, 191, 191); width: 300px; cursor: text; background-color: rgb(255, 255, 255); top: 5px; left: 5px;" class="default"></span></td>
+          </tr>
+          <tr><td height="15"></td></tr>
+          <tr>
+
+            <td><%= cq.image_submit_tag("post-question-btn.png") %><%= image_submit_tag("theme/cancel-btn.png") %></td>
+          </tr>
+        </table>
+      </form>
+
+    </div>
+  </div>
+</div>
+<% end  %>

@@ -1,0 +1,31 @@
+<div class="admnlftCol">
+  <ul class="admnLnks">
+    
+    <li>
+      <% if active_admin_resource_tab == :title_tab %>
+        <a href="<%= title_resources_path %>" class="active">Title Page</a>
+      <% else %>
+        <a href="<%= title_resources_path %>">Title Page</a>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_admin_resource_tab == :types_tab %>
+        <a href="<%= list_resource_categories_path %>" class="active">Types</a>
+      <% else %>
+        <a href="<%= list_resource_categories_path %>">Types</a>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_admin_resource_tab == :resources_tab %>
+        <a href="<%= list_resources_path %>" class="active">Edit Resources</a>
+      <% else %>
+        <a href="<%= list_resources_path %>">Edit Resources</a>
+      <% end %>
+    </li>
+    
+    
+    
+  </ul>
+</div>

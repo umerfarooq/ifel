@@ -1,0 +1,20 @@
+<ul id="breadcrumb" class="marginTop10">
+  <!--<li>
+<%#= link_to "dashboard", dashboard_path, :class => ("current" if(selected == :dashboard)) %>
+  </li>-->
+  <li>
+    <%= link_to "roadmap", roadmap_path, :class => ("current" if(selected == :roadmap)) %>
+  </li>
+  <li>
+    <%= link_to "company files", documents_path, :class => ("current" if(selected == :company_files)) %>
+  </li>
+  <li>
+    <%= link_to "company profile",company_profile_path, :class => ("current" if(selected == :company_profile)) %>
+  </li>
+  <li>
+    <%= link_to "MY Profile", profile_path , :class => ("current" if(selected == :my_profile) ) %>
+  </li>
+  <li>
+    <%= link_to "MY MENTOR", my_mentor_path , :class => ("current" if(selected == :mentor) ) %>
+  </li>
+</ul>

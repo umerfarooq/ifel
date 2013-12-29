@@ -1,0 +1,77 @@
+<%content_for :javascripts do%>
+  <%= javascript_include_tag "jquery.hoverscroll.js"%>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      // Creating hoverscroll with fixed arrows
+      $('#scroller').hoverscroll({
+        fixedArrows: true,
+        rtl: false,
+        width:920,
+        height: 348
+
+
+
+      });
+      // Starting the movement automatically at loading
+      // @param direction: right/bottom = 1, left/top = -1
+      // @param speed: Speed of the animation (scrollPosition += direction * speed)
+      var direction = -1,
+      speed = 3;
+      $("#scroller")[0].startMoving(direction, speed);
+
+    });
+  </script>
+<%end%>
+<%content_for :head do%>
+  <%= stylesheet_link_tag "jquery.hoverscroll.css"%>
+<%end%>
+
+<% title "Starting A Small Business Success Stories" %>
+<% meta "Read stories how these entrepreneurs used WickedStart to successfully start a small business and succeed." %>
+
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+
+  <h1 class="typeface-js">SUCCESS STORIES</h1>
+
+  <ul id="breadcrumb">
+    <li>  <%= label_tag 'Overview','Overview', {:class => 'current'} %> <%#= link_to "Overview", success_stories_path, :class => "current" %></li>
+
+  </ul>
+
+  <div class="clear"></div>
+  <h2 class="headLine"><%= @message_main.title %></h2>
+  <h2 class="leadInText"><%= @message_main.content %></h2>
+
+
+  <ul id="scroller" class="teamPhotoListing">
+
+    <%= render :partial => @success_stories %>
+
+
+  </ul>
+
+
+
+
+</div>
+<div id="ContentBottom">
+  <div class="areYouEntreprenuer">
+    <h2>Are You An Entrepreneur?</h2>
+    <img src="images/bulb-icon.jpg" alt="Are Your An Entreprenuer?" />
+    <p>
+      Ever wonder if you have what it takes to start your own company? Starting a business can be challenging, and it isn't for everyone.
+      <%= link_to 'Take our quiz and see how you fare.', quiz_reply_for_path('am-i-an-entrepreneur') %>
+    </p>
+  </div>
+
+  <div class="tenSteps">
+    <h2>Discover the 10 Steps to Start-Up</h2>
+    <img src="images/steps-img.jpg" alt="Discover the 10 Steps to Start-Up" />
+    <p>
+      You're ready to start the business you've always dreamt of . . . or, at least, you're thinking about it! This is an exciting opportunity, but deciding where to begin, or what to do first, can be challenging.
+      <%= link_to 'Are you ready to get going?', ten_steps_path %>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<% title "#{@event.title}" %>
+<% meta "WickedStart’s team is dedicated to helping you start a small business by developing the best set of tools imaginable to ensure your success, built an their years of entrepreneurial experience and success." %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+
+  <h1>ABOUT US</h1>
+
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :events} %>
+
+  <div id="contentLarge">
+    <%= link_to image_tag(@event.picture.url(@event.image_display_size), :alt => @event.title),@event.url, :target =>"_blank", :class=>'floatR' %>
+    <h2 class="headLine">
+      <%= link_to truncate(@event.title,20), @event.url, :target =>"_blank" %>
+    </h2>
+    <span class="meta">
+      <% if helper_event_has_same_dates? or @event.event_end_date.blank? %>
+        Date: <%= ws_date_format(@event.event_start_date) %>
+      <%else%>
+        Date: <%= ws_date_format(@event.event_start_date)%> - <%= ws_date_format(@event.event_end_date) %>
+      <% end %>
+    </span>
+    <span class="meta">
+      <% if (helper_event_has_same_dates? and helper_event_has_same_times?) or @event.event_end_time.blank? %>
+        Time: <%= ws_time_format(@event.event_start_time) %>
+      <%else%>
+        Time: <%= ws_time_format(@event.event_start_time) %> - <%= ws_time_format(@event.event_end_time) %>
+      <% end %>
+    </span>
+    <p>
+    <div class="eventDescStyled"><%= @event.description %></div>
+    </p>
+    <% if @event.rsvp == 'yes' %>
+      <p>
+        <%= link_to image_tag("rsvp-btn.jpg", :alt => "RSVP"), @event.url, :target =>"_blank", :class => "rsvpBtn" %>
+      </p>
+    <% end %>
+<%#*<span class="st_facebook_button" displayText="Facebook"></span><span class="st_twitter_button" displayText="Tweet"></span><span class="st_email_button" displayText="Share"></span><span class="st_sharethis_button" displayText="ShareThis"></span>%>
+    <%= render :partial => 'shared/share_widget' %>
+  </div>
+
+  <div id="sideBarRight2Col">
+    <h3 class="header">
+      Upcoming Event
+    </h3>
+    <% unless @latest_event.blank? %>
+      <%= image_tag @latest_event.picture.url(:small), :alt => @latest_event.title %>
+      <h3>
+        <%= link_to @latest_event.title, @latest_event %>
+      </h3>
+      <span class="meta">
+        <% if helper_event_has_same_dates? or @event.event_end_date.blank? %>
+          <%= ws_date_format(@latest_event.event_start_date) %>
+        <%else%>
+          <%= ws_date_format(@latest_event.event_start_date) %> - <%= ws_date_format(@latest_event.event_end_date) %>
+        <% end %>
+      </span>
+      <p>
+        <%= @latest_event.summary %>
+        <%= link_to "Read more", @latest_event %>
+      </p>
+    <% end %>
+    <!--<p><a href="#"><img src="images/banner-214.jpg" alt="Marketing Element" /></a></p>-->
+  </div>
+</div> <!-- End of Sub page Wrapper -->

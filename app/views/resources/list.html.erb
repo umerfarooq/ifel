@@ -1,0 +1,116 @@
+<%= render :partial => "admins/admin_resource_menu", :locals => { :active_admin_resource_tab => :resources_tab } %>
+<div class="admnRitCol">
+  <h4>
+    WICKED START SERVICE PROVIDERS
+    |
+    <%= link_to "Add Service Providers", new_resource_path %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th style="width: 140px"><%= sort_link 'COMPANY NAME', :company_name %></th>
+      <th style="width: 140px">CATEGORY</th>
+      <th style="width: 240px">LINK</th>
+      <th style="width: 140px">UPDATED_AT</th>
+      <th style="width: 100px">STATE</th>
+      <th>AVAILABLE ACTIONS</th>
+    </tr>
+    <% unless @services.blank? %>
+      <% @services.each do |resource| %>
+        <tr>
+          <td>
+    <%#= link_to resource.title, resource %>
+            <%= resource.title %>
+          </td>
+          <td>
+    <%#* TODO  Put validation checks on the admin side and remove the following check:%>
+            <%=h (resource.resource_category.blank?)?'' :resource.resource_category.title %>
+          </td>
+          <td>
+            <%= link_to truncate(resource.url,30), resource.url, :target => "_blank" %>
+          </td>
+          <td>
+            <%=h ws_date_format_with_time(resource.updated_at) %>
+          </td>
+          <td>
+            <%=h resource.state.title.upcase %>
+          </td>
+          <td>
+            <%= link_to 'EDIT', edit_resource_path(resource) %>
+            |
+            <% if resource.state.is_published? %>
+              <%= link_to 'INACTIVATE', inactivate_resource_path(resource) %>
+            <% elsif resource.state.is_activated? %>
+              <%= link_to 'PUBLISH', publish_resource_path(resource) %>
+              |
+              <%= link_to 'INACTIVATE', inactivate_resource_path(resource) %>
+            <% else %>
+              <%= link_to 'ACTIVATE', activate_resource_path(resource) %>
+            <% end %>
+            |
+            <%= link_to 'DELETE', resource, :method => :delete, :confirm => "Are you sure?" %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+  <hr />
+  <br />
+
+  <h4>
+    WICKED START RESOURCES 
+    |
+    <%= link_to "Add Resource", new_resource_path %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th><%= sort_link 'TITLE', :title %></th>
+      <th>CATEGORY</th>
+      <th>LINK</th>
+      <th>UPDATED_AT</th>
+      <th>STATE</th>
+      <th>AVAILABLE ACTIONS</th>
+    </tr>
+    <% unless @resources.blank? %>
+      <% @resources.each do |resource| %>
+        <tr>
+          <td>
+    <%#= link_to resource.title, resource %>
+            <%= resource.title %>
+          </td>
+          <td>
+    <%#* TODO  Put validation checks on the admin side and remove the following check:%>
+            <%=h (resource.resource_category.blank?)?'' :resource.resource_category.title %>
+          </td>
+          <td>
+            <%= link_to truncate(resource.url,30), resource.url, :target => "_blank" %>
+          </td>
+          <td>
+            <%=h ws_date_format_with_time(resource.updated_at) %>
+          </td>
+          <td>
+            <%=h resource.state.title.upcase %>
+          </td>
+          <td>
+            <%= link_to 'EDIT', edit_resource_path(resource) %>
+            |
+            <% if resource.state.is_published? %>
+              <%= link_to 'INACTIVATE', inactivate_resource_path(resource) %>
+            <% elsif resource.state.is_activated? %>
+              <%= link_to 'PUBLISH', publish_resource_path(resource) %>
+              |
+              <%= link_to 'INACTIVATE', inactivate_resource_path(resource) %>
+            <% else %>
+              <%= link_to 'ACTIVATE', activate_resource_path(resource) %>
+            <% end %>
+            |
+            <%= link_to 'DELETE', resource, :method => :delete, :confirm => "Are you sure?" %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+</div>

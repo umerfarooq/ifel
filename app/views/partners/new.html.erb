@@ -1,0 +1,8 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :partners_tab } %>
+
+<% title "New Partner" %>
+
+<div class="admnRitCol">
+  <h1>New Partner</h1>
+  <%= render :partial => 'form', :locals => {:partner => @partner} %>
+</div>

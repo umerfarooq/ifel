@@ -1,0 +1,122 @@
+<%#*# TODO [11/11/10 12:51 AM] => CHECK_THIS%>
+<% content_for :js_includes do %>
+  <%= stylesheet_link_tag 'style' %>
+<% end %>
+
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    function toggleHideElement (elementId, elementToggleImgId)
+    {
+  <%#*alert(elementId)%>
+    var element,elementImgToggle;
+    if (document.all){
+      element = document.all[elementId];
+      elementImgToggle = document.all[elementToggleImgId]
+    }else if (document.getElementById){
+      element = document.getElementById(elementId);
+      elementImgToggle = document.getElementById(elementToggleImgId);
+    }if (element && element.style)
+      if (element.style.display == 'none')
+    {
+      element.style.display = '';
+      elementImgToggle.src="/images/icons/minus-icn.jpg";
+    }
+    else
+    {
+      element.style.display = 'none';
+      elementImgToggle.src="/images/icons/plus-icn.jpg";
+    }
+  }
+  </script>
+<% end %>
+<body onload="javascript:window.print();">
+  <div class="PrntMnDv">
+    <div class="PrntMnCntnt">
+      <div class="liteBxTtl">
+        <h1><strong>
+            <%= @project.business_name %>
+          </strong>
+          <br />
+        </h1>
+
+        <h2>
+          ACTION ITEM OVERVIEW
+        </h2>
+        <span class="closBtn">
+<%#a href="#">
+<img src="images/close-btn.jpg" alt="" width="14" height="14" />
+</a%>
+        </span>
+      </div>
+
+      <div class="prntBdy">
+        <div class="prntCntnt">
+          <div class="prntViewLstDv">
+
+            <% @project.sections.each do |section| %>
+              <div class="prntDtl" id="divSectionItems<%= section.id %>">
+                <div class="prntViewsbTtl">
+                  <h3>
+                    SECTION
+                    <%= section.name %>:
+                    <%= section.title%>
+                  </h3>
+                </div>
+
+                <% section.items.each do |item| %>
+                  <div class="prntDtlTxt">
+                    <a href="#">
+                      <% if item.ended? %>
+                        <%= image_tag "icons/good.jpg", :alt => "COMPLETE", :size => "12x12" %>
+                      <% elsif item.edited? %>
+                        <%= image_tag "icons/pending.jpg", :alt => "EDITED", :size => "12x12" %>
+                      <% else %>
+                        <%= image_tag "icons/cancel.jpg", :alt => "INCOMPLETE", :size => "12x12" %>
+                      <% end %>
+                    </a>
+                    <span class="prntTxtTtl">
+                      <b><%= item.title %></b>
+                    </span>
+                    <br />
+                    <div class="liteBxCntnt2">
+                      <div class="liteBxLft">
+                        <div class="scrollingDiv">
+                          <span class="prntTxtTtl">
+                            <h5>DEFINITION</h5>
+                            <p class="litBxTxt">
+                              <%= item.definition %>
+                            </p>
+                            <h4>User Notes: </h4>
+                            <p class="litBxTxt">
+                              <%= item.user_answer %>
+                            </p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="prntFtr">
+      <span class="PrntSpan">
+        <%= @project.business_name %>
+      </span>
+      <span class="PrntSpan2">http://www.wickedstart.com/</span>
+    </div>
+    <h3> User Notes: </h3>
+    <%= @project.user_answer %>
+  </div>
+</body>
+<script>
+  function printDoc() {
+    document.getElementById("divPrintBtn").style.display = 'none';
+    window.print();
+    window.close();
+  }
+</script>

@@ -1,0 +1,59 @@
+<h4>
+    BIOGRAPHIES LINKS
+    |
+    <%= link_to "Add bio_link", new_biography_biography_link_path(biography) %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>
+        Seq
+      </th>
+      <th>
+        Name
+      </th>
+      <%#*<th>%>
+        <%#*Title%>
+      <%#*</th>%>
+      <th>
+        STATE
+      </th>
+      <th>
+        AVAILABLE ACTIONS
+      </th>
+    </tr>
+    <% biography.biography_links.each do |bio_link| %>
+      <tr>
+        <td>
+          <%= bio_link.sequence_number %>
+        </td>
+        <td>
+          <%= bio_link.text %>
+        </td>
+        <%#*<td>%>
+          <%#= bio_link.title %>
+        <%#*</td>%>
+        <td>
+          <%= bio_link.state.title.upcase %>
+        </td>
+        <td>
+          <%#= link_to 'SHOW', bio_link %>
+          <%#*|%>
+          <%= link_to 'EDIT', edit_biography_biography_link_path(biography,bio_link) %>
+          |
+          <% if bio_link.published? %>
+            <%= link_to 'INACTIVATE', inactivate_biography_link_path(bio_link) %>
+          <% elsif bio_link.activated? %>
+            <%= link_to 'PUBLISH', publish_biography_link_path(bio_link) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_biography_link_path(bio_link) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_biography_link_path(bio_link) %>
+          <% end %>
+          <%= "| #{link_to 'MOVE-UP', move_up_biography_link_path(bio_link)}" unless bio_link.on_top? %>
+          <%= "| #{link_to 'MOVE-DOWN', move_down_biography_link_path(bio_link)}" unless bio_link.on_bottom? %>
+        </td>
+      </tr>
+    <% end %>
+  </table>

@@ -1,0 +1,70 @@
+<% title login_title %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+  <h1>
+    <%= login_title %>
+  </h1>
+  <%= login_headline %>
+  <p class="marginTop desc">
+    <%= login_message %>
+  </p>
+  <% form_for @user_session, :url => {:action => :create} do |f| %>
+    <table cellspacing="0" cellpadding="0" border="0" class="frmLogin">
+      <tbody>
+        <tr>
+          <td class="lableTd">
+            <%= f.label :login, "Username" %>
+          </td>
+          <td >
+            <%= f.text_field :login, :title => "username" %>
+          </td>
+        </tr>
+        <tr>
+          <td class="lableTd">
+            <%= f.label :password, "Password" %>
+          </td>
+          <td >
+            <%= f.password_field :password, :title => "password" %>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td >
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+            <span class="rememberMe">
+              <%= link_to "Forgot Password?", forget_passwords_path %>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th align="left" colspan="2">&nbsp;</th>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <%= f.submit "LOGIN", :class => "bntLogin", :name => nil %>
+            &nbsp;
+            <%= link_to "Cancel", root_url %>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" colspan="2">
+            <h2>
+              DON'T HAVE AN ACCOUNT?
+              &nbsp;
+              <span>
+                <%= link_to "SIGN UP NOW!", signup_path %>
+              </span>
+            </h2>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+  <div class="clear"></div>
+</div>
+<!-- End of Sub page Wrapper -->

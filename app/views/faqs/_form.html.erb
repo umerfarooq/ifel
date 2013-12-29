@@ -1,0 +1,30 @@
+<% form_for @faq do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.label :category %> <br />
+    <%= f.collection_select(:faq_category_id, helper_get_sanitized_faq_categories, :id, :title, {:prompt => true}) %>
+  </p>
+  <%#*<p>%>
+  <%#= f.label :name %>
+  <%#*<br />%>
+  <%#= f.text_field :name %>
+  <%#*</p>%>
+  <p>
+    <%= f.check_box :is_public %>
+    <%= f.label :is_public %>
+  </p>
+  <p>
+    <%= f.label :question %> <br />
+    <%= f.text_field :question, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :answer %> <br />
+    <%= f.text_area :answer, :size => "100x10" %>
+  </p>
+  <p>
+    <%= f.submit :add %>
+  </p>
+  <p>
+    <%= link_to '<< Back', url_for(:back) %>
+  </p>
+<% end %>

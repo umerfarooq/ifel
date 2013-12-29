@@ -1,0 +1,17 @@
+<%= render :partial => "/admins/admin_client_information_menu", :locals => { :active_admin_client_information_tab => :community_tab } %>
+<div class="admnRitCol">
+<% form_for @topic do |q| %>
+  <p>
+    <%= q.text_field :name %>
+  </p>
+  <!--<p>
+    <%#= q.select(:item_template,options_from_collection_for_select(helper_display_items_concatenated_with_sections, :id, :name, @topic.item_template.collect { |ti| ti.id }),{:prompt=> false}, {:multiple=>true}) %>
+  </p>-->
+  <p>
+    <%= q.submit :update %>
+  </p>
+  <p>
+    <%= link_to '<< Back', url_for(:back) %>
+  </p>
+<% end %>
+</div>

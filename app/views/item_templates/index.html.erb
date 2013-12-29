@@ -1,0 +1,250 @@
+<% content_for :head do %>
+  <%#= javascript_include_tag 'jquery-1.4.2.min' %>
+  <%#= javascript_include_tag 'jquery.colorbox-min' %>
+  <%= stylesheet_link_tag 'colorbox' %>
+<% end %>
+
+<%if params[:type] == 'wibo' %>
+  <%= render :partial => "admins/admin_roadmap_menu", :locals => { :active_admin_roadmap_tab => :wibo_roadmap_tab } %>
+<%else%>
+  <%= render :partial => "admins/admin_roadmap_menu", :locals => { :active_admin_roadmap_tab => :ifel_roadmap_tab } %>
+<%end%>
+
+
+
+<% if @section_template %>
+  <div class="admnRitCol">
+    <h2>
+      <%= link_to "All Section Templates", "/section_templates?type=#{params[:type]}", :style => "font-size: 20px" %>
+      |
+      <%= link_to "All Item Templates", "/item_templates?type=#{params[:type]}", :style => "font-size: 20px" %>
+    </h2>
+    <br />
+    <h3>
+      <%= "Section #{@section_template.name} - #{@section_template.state.title.upcase}" %>
+    </h3>
+    <p>
+      <strong>
+        <%= link_to 'EDIT', edit_section_template_path(@section_template, :type => params[:type]) %>
+        |
+        <% if @section_template.state.is_published? %>
+          <%= link_to 'INACTIVATE', inactivate_section_template_path(@section_template, :type => params[:type]) %>
+        <% elsif @section_template.state.is_activated? %>
+          <%= link_to 'PUBLISH', publish_section_template_path(@section_template, :type => params[:type]) %>
+          |
+          <%= link_to 'INACTIVATE', inactivate_section_template_path(@section_template, :type => params[:type]) %>
+        <% else %>
+          <%= link_to 'ACTIVATE', activate_section_template_path(@section_template, :type => params[:type]) %>
+        <% end %>
+      </strong>
+    </p>
+    <br />
+    <h4>
+      <%= "#{@section_template.title}: #{@section_template.title_comment}" %>
+    </h4>
+    <p>
+      Project's percentage for all section items:
+      <b>
+        <%= "#{@section_template.item_templates.sum :percent}%" %>
+      </b>
+    </p>
+    <div>
+  <%#*<div style="float: left; width: 700px">%>
+      <div>
+        <p>
+          Due Days Addition Factor <br />
+          30 Days Plan:
+          <strong>
+            <%= @section_template.due_days_30 %>
+            Days |
+          </strong>
+          60 Days Plan:
+          <strong>
+            <%= @section_template.due_days_60 %>
+            Days |
+          </strong>
+          120 Days Plan:
+          <strong>
+            <%= @section_template.due_days_120 %>
+            Days
+          </strong>
+  <%#= "30 Days Plan [#{@section_template.due_days_30}], 60 Days Plan: #{@section_template.due_days_60}, 120 Days Plan: #{@section_template.due_days_120}" %>
+        </p>
+        <br />
+        <h4>SECTION INTRODUCTION</h4>
+        <%= @section_template.introduction %>
+      </div>
+  <%#*<div style="float: right; width: 250px">%>
+      <div>
+        <% if @section_template.is_multimedia_video %>
+    <%#*<div style="z-index:0;  padding-top:30px; padding-left:30px; padding-bottom:30px; padding-right:30px; width:635px; height:480px;">%>
+          <div style="z-index:0;  ">
+            <object width='360' height='270' id='flvPlayer'>
+              <param name='allowFullScreen' value='true' />
+              <param name='movie' value='/flvplayer/player.swf?movie=<%= @section_template.multimedia.url(:original, false) %>&bgcolor=0xff7800&fgcolor=0x7ef54f&volume=50&autoload=on&autorewind=on&clickurl=&clicktarget=' />
+              <embed src='/flvplayer/player.swf?movie=<%= @section_template.multimedia.url(:original, false) %>&bgcolor=0xff7800&fgcolor=0x7ef54f&volume=50&autoload=on&autorewind=on&clickurl=&clicktarget=' width='320' height='240' allowFullScreen='true' type='application/x-shockwave-flash' >
+            </object>
+          </div>
+        <% else %>
+          <%= image_tag @section_template.multimedia.url %>
+        <% end %>
+      </div>
+    </div>
+    <div style="clear: both" />
+    <br />
+    <hr />
+    <strong>
+      <%= "Section #{@section_template.name} Checklist Items" %>
+    </strong>
+    |
+    <%= link_to "Add Checklist Item", new_section_template_item_template_path(@section_template, :type => params[:type]) %>
+    <br />
+    <table cellpadding="5px" style="text-align: left">
+      <tr>
+        <th>CL#</th>
+        <th>SEQ</th>
+        <th>TITLE</th>
+  <%#*<th>POPUP</th>%>
+  <%#*<th>SHOW</th>%>
+        <th>%AGE</th>
+        <th>has_TB</th>
+        <th>has_UL</th>
+        <th>STATE</th>
+        <th style="width: 320px">AVAILABLE ACTIONS</th>
+  <%#*<th>Destroy</th>%>
+      </tr>
+      <% @section_template.item_templates.all(:order => "sequence_number ASC").each do |item_template| %>
+        <tr>
+          <td>
+            <%=h item_template.item_number %>
+          </td>
+          <td>
+            <%=h item_template.sequence_number %>
+          </td>
+          <td>
+            <%= link_to item_template.title.slice(0, 75), item_template_path(item_template, :type => params[:type]), :id => "item_template_link_#{item_template.item_number}" %>
+          </td>
+          <td>
+            <%=h item_template.percent %>
+          </td>
+          <td>
+            <%=h (item_template.has_textbox) ? "Y" : "N" %>
+          </td>
+          <td>
+            <%=h (item_template.has_upload) ? "Y" : "N" %>
+          </td>
+    <%#*<td>%>
+    <%#= link_to 'POPUP', item_template, :id => "item_template_link_#{item_template.item_number}" %>
+    <%#*</td>%>
+    <%#*<td>%>
+    <%#= link_to 'SHOW', item_template, :id => "item_template_link_#{item_template.item_number}" %>
+    <%#*</td>%>
+          <td>
+            <%= item_template.state.title.upcase %>
+          </td>
+          <td>
+            <%= link_to 'EDIT', edit_item_template_path(item_template, :type => params[:type]) %>
+            |
+            <% if item_template.state.is_published? %>
+              <%= link_to 'INACTIVATE', inactivate_item_template_path(item_template, :type => params[:type]) %>
+            <% elsif item_template.state.is_activated? %>
+              <%= link_to 'PUBLISH', publish_item_template_path(item_template, :type => params[:type]) %>
+              |
+              <%= link_to 'INACTIVATE', inactivate_item_template_path(item_template, :type => params[:type]) %>
+            <% else %>
+              <%= link_to 'ACTIVATE', activate_item_template_path(item_template, :type => params[:type]) %>
+            <% end %>
+            <%= "| #{link_to 'MOVE-UP', move_up_item_template_path(item_template, :type => params[:type])}" unless item_template.on_top? %>
+            <%= "| #{link_to 'MOVE-DOWN', move_down_item_template_path(item_template, :type => params[:type])}" unless item_template.on_bottom? %>
+            |
+            <%= link_to 'SYNC', synchronize_item_template_path(item_template, :type => params[:type])%>
+            |
+            <%= link_to 'DELETE', item_template, :method => :delete, :confirm => "Are you sure?" %>
+          </td>
+    <%#*<td>%>
+    <%#= link_to 'Destroy', item_template, :confirm => 'Are you sure?', :method => :delete %>
+    <%#*</td>%>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+<% else %>
+  <div class="admnRitCol">
+    <h2>
+      <%= link_to "All Section Templates", "/section_templates?type=#{params[:type]}", :style => "font-size: 20px" %>
+      |
+      All Item Templates
+    </h2>
+  <%#*<strong>%>
+  <%#= link_to "All Active Section Templates", section_templates_path %>
+  <%#*|%>
+  <%#*All Active Item Templates%>
+  <%#*</strong>%>
+    <br />
+    <br />
+    <%= link_to "Add Checklist Item", new_item_template_path(:type => params[:type]) %>
+    <br />
+    <br />
+    <table cellpadding="5px" style="text-align: left">
+      <tr>
+        <th>CL#</th>
+        <th>SECTION</th>
+        <th>SEQ#</th>
+        <th>TITLE</th>
+  <%#*<th>POPUP</th>%>
+  <%#*<th>SHOW</th>%>
+        <th>%AGE</th>
+  <%#*<th>has_TB</th>%>
+  <%#*<th>has_UL</th>%>
+        <th>STATE</th>
+        <th style="width: 320px">AVAILABLE ACTIONS</th>
+  <%#*<th>Destroy</th>%>
+      </tr>
+      <% @item_templates.each do |item_template| %>
+        <% if item_template.section_template.present? %>
+          <tr>
+            <td>
+              <%=h item_template.item_number %>
+            </td>
+            <td>
+              <%=h item_template.section_template.name %>
+            </td>
+            <td>
+              <%=h item_template.sequence_number %>
+            </td>
+            <td>
+              <%= link_to item_template.title, item_template_path(item_template, :type => params[:type]), :id => "item_template_link_#{item_template.item_number}" %>
+            </td>
+            <td>
+              <%=h item_template.percent %>
+            </td>
+            <td>
+              <%= item_template.state.title.upcase %>
+            </td>
+            <td>
+              <%= link_to 'EDIT', edit_item_template_path(item_template, :type => params[:type]) %>
+              |
+              <% if item_template.state.is_published? %>
+                <%= link_to 'INACTIVATE', inactivate_item_template_path(item_template, :type => params[:type]) %>
+              <% elsif item_template.state.is_activated? %>
+                <%= link_to 'PUBLISH', publish_item_template_path(item_template, :type => params[:type]) %>
+                |
+                <%= link_to 'INACTIVATE', inactivate_item_template_path(item_template, :type => params[:type]) %>
+              <% else %>
+                <%= link_to 'ACTIVATE', activate_item_template_path(item_template, :type => params[:type]) %>
+              <% end %>
+              <%= "| #{link_to 'MOVE-UP', move_up_item_template_path(item_template, :type => params[:type])}" unless item_template.on_top? %>
+              <%= "| #{link_to 'MOVE-DOWN', move_down_item_template_path(item_template, :type => params[:type])}" unless item_template.on_bottom? %>
+              |
+              <%= link_to 'SYNC', synchronize_item_template_path(item_template, :type => params[:type])%>
+              |
+              <%= link_to 'DELETE', item_template, :method => :delete, :confirm => "Are you sure?" %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+
+<% end %>

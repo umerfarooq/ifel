@@ -1,0 +1,9 @@
+<div class="toolTip">
+  <div class="tipText">
+    <% unless tip.blank? %>
+      <h2><%= sanitize tip.title.to_s %></h2>
+      <p><%= sanitize tip.content.to_s %></p>
+    <%end%>
+  </div>
+  <div class="tipBottom"></div>
+</div>

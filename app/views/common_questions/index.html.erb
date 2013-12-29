@@ -1,0 +1,26 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'ws.common-questions'  %>
+<%end%>
+<div class="subPageWrapper">
+  <a href="/signup" class="freeTrialBadge"></a>
+  <h1>COMMON QUESTIONS</h1>
+  <div class="clear"></div>
+  <h2 class="headLine"><%= @main_title.title.camelize rescue '' %></h2>
+  <h2 class="leadInText">
+    <%= @main_title.content.camelize rescue '' %>
+    <%= link_to image_tag("have-ask-btn.png"), "JavaScript:void(0);", :title => "Have a question? Ask Us", :id => "btnHaveQuestion" %>
+    <div id="haveQuestPanel">
+      <%= render :partial => "have_question_popup" %>
+    </div>
+    <div id="sentConfirmPanel" class="havQuestConfirmPos" style="display: none;">
+      THANK YOU, YOUR REQUEST HAS BEEN SENT!
+    </div>
+  </h2>
+
+
+  <div id="commonQuestionTop" class="sep">
+    <%= render :partial => 'slider_panel' %>
+  </div>
+</div>
+<div class="clear"></div>
+<%= render :partial => 'shared/quizzes_bottom_panel' %>

@@ -1,0 +1,48 @@
+<%= render :partial => "admins/admin_profile_menu", :locals => { :active_admin_profile_tab => :industry_tab } %>
+
+<div class="admnRitCol">
+
+  <h4>
+    CATEGORY TYPE
+    |
+    <%= link_to "Add Category", new_industry_path %>
+  </h4>
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>TITLE</th>
+      <th>STATE</th>
+      <th style="width: 320px">AVAILABLE ACTIONS</th>
+    </tr>
+    <% @industries.each do |industry| %>
+      <tr>
+        <td style="width: 350px">
+          <span id="industry_title_span_<%= industry.id %>">
+            <%=h industry.title %>
+          </span>
+        </td>
+        <td>
+          <%= industry.state.title.upcase %>
+        </td>
+        <td>
+          <%= link_to 'EDIT', edit_industry_path(industry) %>
+          |
+
+          <% if industry.state.is_published? %>
+            <%= link_to 'INACTIVATE', inactivate_industry_path(industry) %>
+          <% elsif industry.state.is_activated? %>
+            <%= link_to 'PUBLISH', publish_industry_path(industry) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_industry_path(industry) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_industry_path(industry) %>
+          <% end %>
+          |
+          <%= link_to 'DELETE', industry_path(industry), :method => :delete, :confirm => "Are you sure?" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <hr />
+  <br />
+</div>

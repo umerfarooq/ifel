@@ -1,0 +1,17 @@
+
+<h3><span>Following</span> <%=@topics.length%>  Topics</h3>
+<table width="100%" border="0" cellpadding="5" cellspacing="0">
+  <% @topics.each do |topic|  %>
+    <tr>
+      <td><img src="images/cancel-community.jpg" /></td>
+      <td><h3><%= get_followed_topic_name(topic.subject_id) %></h3></td>
+      <td align="right"><%= link_to image_tag("unfollow-btn.png"),"JavaScript:void(0);",:onclick=> "unfollow_topic(#{topic.id})"%></td>
+    </tr>
+  <%end%>
+  <tr>
+    <td class="noBorder">&nbsp;</td>
+    <td class="noBorder"><%=link_to "View All Topics", "JavaScript:void(0);",:class=>"view_topics" %></td>
+    <td class="noBorder">&nbsp;</td>
+  </tr>
+</table>
+

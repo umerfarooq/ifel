@@ -1,0 +1,160 @@
+.clear {
+    clear: both;
+}
+
+#main {
+    background: none repeat scroll 0 0 white;
+}
+#notYou {
+    color: white;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    left: 275px;
+    padding: 7px 6px 6px;
+    position: absolute;
+}
+.popular {
+    background: -moz-linear-gradient(center top , #929292 1%, #666666 100%) repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    display: block;
+    font-family: helvetica,arial;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 2px 6px;
+    text-shadow: 1px 1px 2px #666666;
+    line-height: 18px;
+}
+
+.pageContainer {
+    background: -moz-linear-gradient(center top , #FFFFFF 80%, #DBDBDB 100%) repeat scroll 0 0 transparent;
+    display: block;
+    height: 250px;
+    width: 100%;
+}
+
+
+#outercontainer {
+    background: -moz-linear-gradient(center top , #929292 1%, #666666 10%) repeat scroll 0 0 transparent;
+    border-radius: 5px;
+    height: 300px;
+    padding: 5px;
+    width: 326px;
+}
+
+#email_main {
+    height: 100%;
+}
+.heading {
+    height: 20px;
+}
+
+#main  h1 {
+    font-size: 14px;
+    color: #666;
+}
+
+#recents {
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+#recents_list {
+    margin-left: 10px;
+}
+
+.field {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+
+.label {
+    color: #666666;
+    display: inline;
+    font-size: 140%;
+    font-weight: bold;
+    position: absolute;
+    text-align: right;
+    vertical-align: top;
+    width: 95px;
+}
+.txtYourAddr {
+    height: 30px;
+}
+
+.txtFromAddr, .txtYourAddr, .txtMessage {
+    background-color: #F4F4F4;
+    border: 1px solid #CCCCCC;
+    font-family: "Lucida Grande","Lucida Sans Unicode",Verdana,Tahoma,Arial,sans-serif;
+    font-size: 11px;
+    margin-left: 100px;
+    padding: 4px;
+    width: 195px !important;
+}
+#import_div {
+    height: 15px;
+    margin-left: 100px;
+}
+#import_div span {
+    margin-left: 0;
+    margin-right: 0;
+}
+#import_contacts_link_yahoo, #import_contacts_link_google {
+    color: #4997CC;
+    cursor: pointer;
+}
+
+.field {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+#message_div {
+    height: 60px;
+}
+
+.txtMessage {
+    height: 45px;
+}
+#btnShareSend, #posterSubmit, #captchaSubmit, #btnTryFastShare {
+    background: -moz-linear-gradient(center top , #000000 0pt, #000000 100%) repeat scroll 0 0 transparent;
+    border: 1px solid #580F8B;
+    color: white;
+    cursor: pointer;
+}
+.button_holder {
+    border: 1px solid #666666;
+    border-radius: 5px 5px 5px 5px;
+    cursor: pointer;
+    display: block;
+    float: right;
+    font-size: 130%;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px 20px;
+}
+
+#shareFooter {
+    background-color: #666666;
+    color: #FFFFFF;
+}
+
+#emailcontainer {
+    height: 255px;
+    padding: 10px;
+}
+
+.attText {margin-left: 100px; padding: 4px;}
+.attIcon {float: right; height: 25px; width: 25px;}
+
+.closeX {
+    background-image: url("http://w.sharethis.com/share4x/images/close.png");
+    background-repeat: no-repeat;
+    height: 28px;
+    left: 325px;
+    position: relative;
+    top: 15px;
+    width: 26px;
+    z-index: 10000;}
+.notice {text-align: center; color: red;}

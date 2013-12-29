@@ -1,0 +1,8 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :radar_tab } %>
+
+<% title "New White Paper" %>
+
+<div class="admnRitCol">
+  <h1>New White Paper</h1>
+  <%= render :partial => 'form', :locals => {:white_paper => @white_paper} %>
+</div>

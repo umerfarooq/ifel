@@ -1,0 +1,9 @@
+<p class="feedDate">
+  <% unless topic.blank? %>
+    Question added in topic <%= Topic.find(topic).name %>
+  <%end%>
+  <%= "#{ws_date_format_with_time_and_meridiem_first_with_day(msg.created_at)} - #{msg.comments.for_user(@current_user).count} Answer(s) - #{msg.followers_count} Following(s) - #{helper_get_appropriate_followship(msg)}  #{helper_get_appropriate_voting(msg)} -#{msg.likes_count} Vote(s)" %>
+   <%#=  ws - #{message_answers_count(msg)} Answer(s) -#{message_following_count(msg)} Following(s) - #{is_message_followed(msg.id, false) %>
+  <%#= message_details(msg)%>
+</p>
+

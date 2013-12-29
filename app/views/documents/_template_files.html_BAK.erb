@@ -1,0 +1,21 @@
+<h4>
+  <%= @tcat.title %>
+</h4>
+<div class="inbxDv">
+  <%if @tcat.template_documents.length==0%>
+    <p>No template file found.</p>
+  <%end%>
+  <% @tcat.template_documents.each do |file| %>
+    <div>
+      <h5>
+        <%=file.title%>
+      </h5>
+      <p class="inbxBdy">
+        <%= file.description %>
+      </p>
+      <%= link_to "Download", download_template_document_path(file), :target => "_blank", :class => "cmntyLnk" %>
+    </div>
+    <br />
+  <% end %>
+</div>
+

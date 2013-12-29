@@ -1,0 +1,29 @@
+<span id="main_loading_bar"></span>
+<% documents = section.documents %>
+
+<div class="company-files-slide">
+  <h2 style="float:left;">
+    <%= sanitize section.section_template.title.to_s %>
+    <% dom_id = helper_generate_unique_dom_id(section.section_template) %>
+    <span>
+      <%= link_to image_tag('information-icon.jpg', :class=>'dispInline'),'JavaScript:void(0);', :onmouseover=>"$('##{dom_id}').show();", :onmouseout=>"$('##{dom_id}').hide();" %>
+      <div id="<%= dom_id %>" class="floatR dispNone fileSectionTip">
+        <%= render :partial => 'shared/info_tooltip', :locals => { :tip => @files_content["section_#{section.sequence_number.to_s}"] }  %>
+      </div>
+    </span>
+  </h2>
+  <div class="clear"></div>
+  <div>
+    <span id="upload_file_btn_<%= section.id.to_s %>" class="btn-slide6 uploadFileBtn" section_id="<%= section.id.to_s %>"></span>
+    <span id="upload_error_msg_<%= section.id.to_s %>" class="uploadError"></span>
+  </div>
+  <div class="clearHeight"></div>
+  <% unless documents.blank? %>
+    <%= render :partial=>'documents_list', :locals=>{:documents=>documents, :section=>section} %>
+  <%else%>
+    <span class="floatL">No files available</span>
+  <%end%>
+</div>
+<%content_for :javascripts do%>
+  <script>prepareUploader();</script>
+<%end%>

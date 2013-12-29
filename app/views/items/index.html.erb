@@ -1,0 +1,60 @@
+ <%#*# TODO [10/11/10 7:38 PM] => DELETE_FILE : NOT_IN_USE%>
+
+<%# content_for :head do %>
+  <%#= javascript_include_tag 'jquery-1.4.2.min' %>
+  <%#= javascript_include_tag 'jquery.colorbox-min' %>
+
+  <%#= stylesheet_link_tag 'colorbox' %>
+
+  <%#*<script type="text/javascript">%>
+    <%#*$(document).ready(function(){%>
+  <%#*$("#item_top_link").colorbox({width:"80%", height:"80%", iframe:true});%>
+  <%# @items.each do |item| %>
+    <%#*$("#item_link").colorbox();%>
+      <%#*$("#item_link_%>
+ <%#=item.item_number%>
+      <%#*").colorbox();%>
+  <%# end %>
+  <%#*});%>
+  <%#*</script>%>
+<%# end %>
+
+<%#*<br />%>
+<%#*<br />%>
+
+<%#*<table>%>
+  <%# @sections.each do |section| %>
+    <%#*<tr>%>
+      <%#*<td colspan="2">%>
+        <%#*<strong>%>
+          <%#= section.title %>
+        <%#*</strong>%>
+      <%#*</td>%>
+      <%#*<td colspan="3">%>
+        <%#= section.title_comment %>
+      <%#*</td>%>
+    <%#*</tr>%>
+    <%# section.items.each do |item| %>
+      <%#*<tr>%>
+    <%#*<td>%>
+    <%#=h item.item_number %>
+    <%#*</td>%>
+        <%#*<td>%>
+          <%#=h item.sequence_number %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#=h item.title.slice(0, 70) %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#=h item.percent %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#=h item.has_textbox %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= link_to 'Show', item, :id => "item_link_#{item.item_number}" %>
+        <%#*</td>%>
+      <%#*</tr>%>
+    <%# end %>
+  <%# end %>
+<%#*</table>%>

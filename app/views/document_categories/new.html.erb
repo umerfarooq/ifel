@@ -1,0 +1,12 @@
+<% form_for @document_category do |doc| %>
+  <br />
+  <%#= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= doc.label :company_name %> <br />
+    <%= doc.text_field :company_name %>
+  </p>
+  <p>
+    <%= doc.label :details %> <br />
+    <%= doc.text_area :description %>
+  </p>
+<% end %>

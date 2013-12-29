@@ -1,0 +1,52 @@
+NameVirtualHost wickedstartlocal.com:80
+NameVirtualHost wickedstartlocal.com:443
+
+<VirtualHost wickedstartlocal.com:80>
+
+  # Application Basic Settings
+  ServerName wickedstartlocal.com
+  DocumentRoot /data/wickedstart/code/public
+  RailsEnv development
+
+  # Disable Passenger to Enable mod_php for PhpMyAdmin 
+  <Location /phpmyadmin>
+    PassengerEnabled off
+  </Location>
+
+  # Set header to indentify http requests
+  RequestHeader set X-Forwarded-Proto "http"
+
+</VirtualHost>
+<VirtualHost wickedstartlocal.com:443>
+
+  # Application Basic Settings
+  ServerName wickedstartlocal.com
+  DocumentRoot /data/wickedstart/code/public
+  RailsEnv development
+
+  # Disable Passenger to Enable mod_php for PhpMyAdmin 
+  <Location /phpmyadmin>
+    PassengerEnabled off
+  </Location>
+
+  # SSL Engine Switch
+  SSLEngine on
+
+  # SSL Cipher Suite:
+  #SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
+  # SSL Protocol:
+  SSLProtocol all -SSLv2
+
+  # Server Certificate
+  SSLCertificateFile /etc/ssl/certs/wickedstartlocal.crt
+
+  # Server Private Key
+  SSLCertificateKeyFile /etc/ssl/private/wickedstartlocal.key 
+
+  # Set header to indentify https requests
+  RequestHeader set X-Forwarded-Proto "https"
+
+  SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown
+
+</VirtualHost>
+

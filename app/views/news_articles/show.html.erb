@@ -1,0 +1,25 @@
+<% title "#{@news_article.title}" %>
+<% meta "WickedStart’s team is dedicated to helping you start a small business by developing the best set of tools imaginable to ensure your success, built an their years of entrepreneurial experience and success." %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+
+  <h1>ABOUT US</h1>
+
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :news} %>
+
+  <div id="contentLarge">
+    <h2 class="headLine">
+      <%= @news_article.title %>
+    </h2>
+    <span class="meta">
+      <%= ws_date_format(@news_article.news_date) %>
+    </span>
+    <%= simple_format(h(@news_article.description)) %>
+<%#*<span class="shareLinks"></span>%>
+  </div>
+
+  <%= render :partial => "shared/aboutus_sidebar_events", :locals => { :upcomming_events => @upcomming_events } %>
+
+</div> <!-- End of Sub page Wrapper -->
+

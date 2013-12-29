@@ -1,0 +1,38 @@
+<%= render :partial => "messages/left_column" %>
+<div class="RitCol">
+  <h4>Confirmation</h4>
+  <div class="inbxDv">
+    <p class="inbxMsg">
+      <%- case @confirm -%>
+      <%- when "default" -%>
+        <% if @comment.is_private %>
+          Thank you! Your reply has been posted to
+          <%= "#{@message.user.screen_name.capitalize}." %>
+        <% else %>
+          Thank you! Your reply has been posted on WickedStart’s Launch Pad to
+          <%= "#{@message.user.screen_name.capitalize}." %>
+        <% end %>
+      <%- when "inappropriate-new" -%>
+        Thank you! your request to mark the comment as inappropriate has been
+        reported to WickedStart Management and you will be informed shortly
+        about their decision.
+      <%- when "inappropriate-old" -%>
+        Thank you! your request to mark this comment as inappropriate is
+        already with the WickedStart Management and you will be informed
+        shortly about their decision.
+      <%- when "rating-new" -%>
+        Thank you! Your rating for this comment has been updated.
+      <%- when "rating-old" -%>
+        Thank you! But you have already rated this comment.
+      <%- when "rating-not-saved" -%>
+        Thank you! But your message rating could not be saved, please try later.
+      <%- end -%>
+      <br />
+      <br />
+      Regards
+      <br />
+      <br />
+      <strong>Wicked Start Team</strong>
+    </p>
+  </div>
+</div>

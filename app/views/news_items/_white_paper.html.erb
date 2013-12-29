@@ -1,0 +1,13 @@
+<div class="whitPprLst">
+  <strong>
+    <%= white_paper.title %>
+  </strong>
+  <p>
+<%#= white_paper.news_summary %>
+<%#= white_paper.headline %>
+    <%= white_paper.summary %>
+    <% if white_paper.paper.file? %>
+      <%= link_to "Download", white_paper.paper.url, :target => '_blank' %>
+    <% end %>
+  </p>
+</div>

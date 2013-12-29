@@ -1,0 +1,240 @@
+<%#*<div style="margin-top: -14px;" class="launchTopBg"></div>%>
+<div class="rgstrFrmDv">
+  <% form_for :user, user, :url => { :controller => :users, :action => 'create' } do |f| %>
+    <%= hidden_field_tag :step, step %>
+    <table border="0" cellpadding="0" cellspacing="0" class="rgstrTbl">
+      <tr>
+        <td colspan="2" class="rgstFrmTtl" valign="top" style="padding-left:0;"><h1>Get Going Now!</h1>
+          <span class="rgstrMsg">Register for a Wicked Start Account in 3 Easy Steps</span>
+          <div style="clear:both;"></div>
+          <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+        <td colspan="2" align="left" class="stepsTd">
+          <img src="/images/icons/1b.jpg" width="65" height="65" />
+          <img src="/images/icons/2a.jpg" width="65" height="65" />
+          <img src="/images/icons/3a.jpg" width="65" height="65" />
+        </td>
+            </tr>
+          </table>
+        </td>
+        <td class="chatTd"><!-- BEGIN LivePerson Button Code -->
+<div id="lpButDivID-1278944190290"></div>
+<script type="text/javascript" charset="UTF-8" src="https://server.iad.liveperson.net/hc/21508013/?cmd=mTagRepstate&site=21508013&buttonID=1&divID=lpButDivID-1278944190290&bt=1&c=1"></script>
+<!-- END LivePerson Button code --></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="left">
+         
+        </td>
+        <td rowspan="19" align="right" valign="top" class="rgstrRitCol">
+          <table width="200" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td align="right" valign="bottom" class="blockCrnr"><img src="/images/rgstr-right-top.jpg" width="427" height="9" /></td>
+            </tr>
+            <tr>
+              <td height="200" align="right" valign="top" class="ritBlock">
+                <table width="200" border="0" cellpadding="0" cellspacing="0" class="blockTbl">
+                  <tr>
+                    <td align="left" class="blockTtl"><i>Your Wicked Start account includes the following features and benefits:</i></td>
+                  </tr>
+                  <tr>
+                    <td align="left" class="blockBdy">
+                      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td class="rgstrIcnTd"><img src="/images/icons/grph-icn-s.jpg" width="56" height="36" /></td>
+                          <td class="rgstrTxt">Personalized roadmap of action items to help you manage the startup process, each step of the way.</td>
+                        </tr>
+                        <tr>
+                          <td><img src="/images/icons/edit-icn-s.jpg" width="56" height="36" /></td>
+                          <td class="rgstrTxt">Get access to templates, examples and links to expert resources to help streamline the process.</td>
+                        </tr>
+                        <tr>
+                          <td><img src="/images/icons/comment-icn-s.jpg" width="56" height="43" /></td>
+                          <td class="rgstrTxt">Connect to the Wicked Start Community to ask and answer questions and share experiences with peers.</td>
+                        </tr>
+                        <tr>
+                          <td><img src="/images/icons/info-icn-s.jpg" width="56" height="36" /></td>
+                          <td class="rgstrTxt">Email alert and notification systems to let you know when a deadline is approaching.</td>
+                        </tr>
+                        <tr>
+                          <td><img src="/images/icons/folder-icn-s.jpg" width="56" height="36" /></td>
+                          <td class="rgstrTxt">Maintain a centralized "hub" to manage your files and important startup documents.</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left" class="blockTxt"><i><strong>WE'RE HERE TO HELP YOU GET GOING!</strong></i></td>
+                  </tr>
+                  <tr>
+                    <td align="left" class="blockTtl2"><i>Sign up for your free, seven-day trial now! After the trial, you'll pay only $9.99 a month with a one-time registration fee of $40.00*</i></td>
+                  </tr>
+                  <tr>
+                    <td align="left" class="blockTxt"><i>*At the end of the seven-day trial, we will bill your account for the first month's subscription fee of $9.99 plus the initial registration fee of $40. You can cancel your account online at anytime during the seven-day trial and pay nothing. If you continue with the Wicked Start service, you will automatically be billed $9.99 every 30 days.</i>
+                      <br />
+                      <br />
+                      To read more about our billing policies contained in the Terms and Conditions, along with refund and cancellation  policies,
+                      <%= link_to "Click here", home_path('terms_and_conditions') %>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td align="right" valign="top" class="blockCrnr"><img src="/images/rgstr-right-bot.jpg" width="427" height="9" /></td>
+            </tr>
+          </table>
+          &nbsp;</td>
+      </tr>
+      <tr>
+        <th colspan="2" align="left" scope="col" valign="top"><i>Tell us about Yourself</i></th>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <%= f.error_messages :header_message => nil, :message => nil %>
+          &nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :first_name, "First Name :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :first_name, :class => "txtFld" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :last_name, "Last Name :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :last_name, :class => "txtFld" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :email, "Email :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :email, :class => "txtFld" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :email_confirmation, "Confirm Email :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :email_confirmation, :class => "txtFld" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :screen_name, "Screen Name :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :screen_name, :class => "txtFld" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <%= f.label :gender, "Gender :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.select :gender, [['Male', 'm'], ['Female', 'f']], :class => "LstFld2" %>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2" align="left">
+          <i>Tell us about your business idea<br />
+            Don’t Worry, It’s Completely Confidential</i>
+        </th>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <span>*</span>
+          <%= f.label :is_first_time, "Is this your first time starting a business.?" %>
+          <%= f.select :is_first_time, [["Yes", 'y'], ["No", 'n']], :class => "LstFld2" %>
+        </td>
+      </tr>
+      <%#*<tr>%>
+        <%#*<td class="rgstrLbl">%>
+          <%#*<span>*</span>%>
+          <%#= f.label :business_name, "Idea / Business Name :" %>
+        <%#*</td>%>
+        <%#*<td class="rgstrfld">%>
+          <%#= f.text_field :business_name, :class => "txtFld" %>
+        <%#*</td>%>
+      <%#*</tr>%>
+      <tr>
+        <td class="rgstrLbl">
+          <%= f.label :industry_id, "Industry :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.collection_select(:industry_id, Industry.published, :id, :title, {:prompt => true}) %>
+          <%# unless session[:industry_id].blank? %>
+          <%#= f.select :industry_id, Industry.all.collect {|c| [ c.title, c.id ] }, :selected => session[:industry_id].to_i, :class=>"lstBx"%>
+          <%# else %>
+          <%#= f.select :industry_id, Industry.all.collect {|c| [ c.title, c.id ] }, :class=>"lstBx"%>
+          <%# end %>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2" align="left">
+          <i>Tell us How You Want to Access Your Account</i>
+        </th>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :login, "User Name :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :login, :class => "txtFld" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :password, "Password :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.password_field :password, :value => "", :class => "txtFld"  %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :password_confirmation, "Confirm Password :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.password_field :password_confirmation, :value => "", :class => "txtFld"  %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <%= f.check_box :terms_of_service %> 
+          <%= f.label :terms_of_service, "I have read and understood the" %>
+          <%= link_to "Terms and Conditions", home_path('terms_and_conditions') %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <%= recaptcha_tags :ssl => true %>
+        </td>
+      </tr>
+      <tr>
+        <td align="left">
+          <%= image_submit_tag 'continue-btn.jpg', :alt => "CONTINUE", :style => "cursor: default" %>
+        </td>
+        <td class="btnTd">
+          <%= link_to 'Cancel', url_for(:back) %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+</div>

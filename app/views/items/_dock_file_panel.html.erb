@@ -1,0 +1,41 @@
+<div class="filesColLeft">
+  <h2>Files</h2>
+  <% unless documents.blank? %>
+    <div class="filesList ">
+      <ul>
+        <% documents.each do |document| %>
+          <li>
+            <a href="JavaScript:void(0);" id="document_opener_<%= document.id.to_s %>" onclick="showPanel('<%= document.id.to_s %>', 'document');">
+              <%=  image_tag helper_get_file_extension(document.data_file_name) %>
+              <p><%= sanitize document.name %> <br /> <span class="by">by</span> <span class="name">You</span></p>
+            </a>
+          </li>
+        <%end%>
+      </ul>
+    </div>
+  <%else%>
+    <div class="marginTop10">
+      No Matching Selection Available for this Action Item
+    </div>
+  <%end%>
+</div>
+<% unless documents.blank? %>
+  <% documents.each_with_index do |document,index| %>
+    <div class="filesColRight <%= (index!=0) ? 'dispNone' : '' %>" id="document_panel_<%= document.id.to_s %>">
+      <div class="iconCol">
+        <%=  image_tag helper_get_file_extension_big_icon(document.data_file_name) %>
+        <%= link_to image_tag('edit-file-btn.png'), "/documents?edit=#{document.id.to_s}#plain_panel_row_#{document.id.to_s}", :target => '_blank' %>
+        <%= link_to image_tag('download-btn.png'), download_document_path(document) %>
+        <!--<a href="#"><img src="images/share-btn.png" /></a>-->
+      </div>
+      <div class="filesDetailCom">
+        <h3 class="breakWord"><%= sanitize document.name %></h3>
+        <p class="byP">by <%= link_to 'You', profile_path %></p>
+        <p class="breakWord"><%= sanitize document.description %></p>
+        <!--<p><span>01/22/2011</span> <br /> Have Darlene review</p>
+        <p><span>01/12/2011</span> <br /> Updated research section</p>
+        <p><span>12/21/2011</span> <br /> Do Research and insight on refining service's core values</p>-->
+      </div>
+    </div>
+  <%end%>
+<%end%>

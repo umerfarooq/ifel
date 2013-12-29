@@ -1,0 +1,48 @@
+<% title "Resources" %>
+
+<div class="subPageWrapper">
+  <% if current_user.blank? %>
+    <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+  <%end%>
+
+  <h1><%= sanitize @resource_content[:main_content].title %></h1>
+  <%= render :partial => "shared/resources_breadcrumbs", :locals => {:current => :overview} %>
+
+  <div class="clear"></div>
+  <h2 class="leadInText ">
+    <%= strip_tags @resource_content[:main_content].content %> </h2>
+  <div class="clear"></div>
+  <div class="overview-wrapper">
+    <div class="resource-library">
+      <%= image_tag @resource_content[:resource_library_image].content.url %>
+      <h3> <%= link_to @resource_content[:resource_library_content].title, resource_library_resources_path %> </h3>
+      <p><%= @resource_content[:resource_library_image].description %> </p>
+    </div>
+    <div class="services-providers">
+      <%= image_tag @resource_content[:service_provider_image].content.url %>
+      <h3> <%= link_to @resource_content[:service_provider_content].title, service_provider_resources_path %> </h3>
+      <p><%= @resource_content[:service_provider_image].description %> </p>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+<span id="main_loading_bar"></span>
+<div class="company-files-slide">  
+  <div class="clearHeight"></div>
+  <% unless documents.blank? %>
+    <%= render :partial=>'documents_list', :locals=>{:documents=>documents} %>
+  <%else%>
+    <div class="noSearchRes">Sorry, there are no files that match the criteria. Try again.</div>
+  <%end%>
+</div>
+<%content_for :javascripts do%>
+  <script>prepareUploader();</script>
+<%end%>

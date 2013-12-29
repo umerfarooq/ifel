@@ -1,0 +1,21 @@
+<div class="admnlftCol">
+  <ul class="admnLnks">
+    
+    <li>
+      <% if active_admin_roadmap_tab == :wibo_roadmap_tab %>
+      <a href="/section_templates?type=wibo" class="active">WIBO</a>
+      <% else %>
+        <a href="/section_templates?type=wibo">WIBO</a>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_admin_roadmap_tab == :ifel_roadmap_tab %>
+        <a href="/section_templates?type=ifel" class="active">IFEL</a>
+      <% else %>
+        <a href="/section_templates?type=ifel">IFEL</a>
+      <% end %>
+    </li>
+ 
+  </ul>
+</div>

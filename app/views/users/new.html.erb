@@ -1,0 +1,239 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    switch_affiliation();
+  });
+  function getSelectedIndustry()
+  {
+    var industrySelector = document.getElementById('user_industry_id');
+    var selectedValue = industrySelector.options[industrySelector.selectedIndex].text;
+    if(selectedValue == 'Other')
+    {
+      document.getElementById('user_other_industry').style.display = "inline-block";
+    }else
+    {
+      otherIndustryField = document.getElementById('user_other_industry');
+      otherIndustryField.value = "";
+      otherIndustryField.style.display = "none";
+    }
+  }
+  
+  function switch_affiliation(){
+    association = $('#user_associated_with_ifel').val();
+    if(association == 'true'){
+        $('#affiliation-row').hide();
+    }else{
+      $('#affiliation-row').show();
+    }
+  }
+</script>
+<% title "Join WickedStart and Start Your Small Business Today" %>
+<% meta "WickedStart is the platform for launching your new business.  Signup and join our free entrepreneur community and use our small business tools." %>
+
+<div class="subPageWrapper">
+  <h1>Sign Up</h1>
+  <!--<h2 class="headLine">WIBO, in partnership with Wicked Start, present the Startup Hub</h2>-->
+  <h3 class="subHeadLine">Sign-up in just one easy step and start your business today.</h3>
+
+  <a href="#" class="freeTrialBadge"></a>
+<%# form_for :user, :url => { :controller => :users, :action => 'create' } do |f| %>
+  <% form_for @user, users_path do |f| %>
+    <table  class="frmSignup">
+      <tbody>
+      <p style ="color:#D8000C">
+        <%= f.error_messages :header_message => nil, :message => nil %>
+        <% if @error == :insufficient_balance %>
+          Insufficient Balance
+        <%elsif @error == :invalid_card%>
+          Invalid Card Details
+        <% elsif @error == :subscription_cancelled %>
+          Subscription cancelled due to invalid card credentials
+        <% elsif @error == :invalid_promo_code%>
+          Invalid promotional code
+        <% elsif @error == :subscription_failed %>
+          <% @err_msg.each do |message| %>
+            <%= "Error Code=" + message.code + "\n"%>
+            <%= "Error Message = " + message.text + "\n"%>
+          <% end %>
+        <% end %>
+      </p>
+
+      <tr>
+        <td colspan="2"><h2>Tell us about Yourself</h2></td>
+      </tr>
+
+      <tr>
+        <td class="frmSignupLbl"><span>*</span><%= f.label :first_name, "First Name :" %></td>
+        <td ><%= f.text_field :first_name %></td>
+      </tr>
+
+      <tr>
+        <td class="frmSignupLbl"><span>*</span><%= f.label :last_name, "Last Name :" %></td>
+        <td ><%= f.text_field :last_name %></td>
+      </tr>
+
+      <tr>
+        <td class="frmSignupLbl"><span>*</span><%= f.label :email, "Email :" %></td>
+        <td ><%= f.text_field :email %></td>
+      </tr>
+
+      <tr>
+        <td class="frmSignupLbl"><span>*</span><%= f.label :email_confirmation, "Confirm Email :" %></td>
+        <td><%= f.text_field :email_confirmation %></td>
+      </tr>
+
+      <tr>
+        <td class="frmSignupLbl"><%= f.label :contact_number, "Contact Number :" %></td>
+        <td><%= f.text_field :contact_number %></td>
+      </tr>      
+
+      <!--<tr>
+        <td class="frmSignupLbl"><span>*</span><%#= f.label :screen_name, "Screen Name :" %></td>
+        <td ><%#= f.text_field :screen_name %></td>
+      </tr>-->
+
+      <tr>
+        <td  colspan="2"> <h2>Tell us about your business idea.</h2></td>
+      </tr>
+
+      <tr>
+        <td class="frmSignupLbl"><span>*</span>
+          <%= f.label :is_first_time, "Is this your first time starting a business?" %>
+
+        </td><td><%= f.select :is_first_time, [["Yes", 'y'], ["No", 'n']] %></td>
+      </tr>
+
+      <tr>
+        <td class="frmSignupLbl"><%= f.label :other_industry, "Industry :" %></td>
+        <td >
+          <%= f.collection_select(:industry_id, Industry.published.title_wise, :id, :title, {:prompt => true}) %>
+  <%#= f.collection_select(:industry_id, Industry.published, :id, :title, {:prompt => true}, {:onchange => "getSelectedIndustry();"}) %>
+  <%#= f.text_field :other_industry, :class => "dispNone"  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="frmSignupLbl"><span>*</span><%=  f.label :business_idea, "What's the name of your idea or business? Don't worry you can always change it." %></td>
+        <td><%=  f.text_field :business_idea %></td>
+      </tr>
+
+      <tr>
+        <td class="frmSignupLbl"><span>*</span><%=  f.label :startup_process_start_date, "What date do you want to begin the startup process?" %></td>
+        <td><%= f.date_select :startup_process_start_date, :start_year=>Time.now.year,:end_year=>Time.now.year+5 %></td>
+      </tr>
+
+      <tr>
+        <td colspan="2"> <h2>Tell us How You Want to Access Your Account</h2>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="frmSignupLbl"><span>*</span><%= f.label :login, "User Name :" %></td>
+        <td ><%= f.text_field :login %></td>
+      </tr>
+
+      <tr>
+        <td class="frmSignupLbl"><span>*</span><%= f.label :password, "Password :" %></td>
+        <td ><%= f.password_field :password %></td>
+      </tr>
+
+      <tr>
+        <td class="frmSignupLbl"><span>*</span><%= f.label :password_confirmation, "Confirm Password :" %></td>
+        <td ><%= f.password_field :password_confirmation %></td>
+      </tr>
+      
+      <tr>
+        <td class="frmSignupLbl"><span>*</span><%= f.label :signup_code, "Registration Code :" %></td>
+        <td ><%= f.text_field :signup_code %></td>
+      </tr>
+      
+      <tr>
+        <td class="frmSignupLbl">
+          <%= f.label :associated_with_ifel, "Are you associated with WIBO?" %>
+        </td>
+        <td><%= f.select :associated_with_ifel, [["Yes", false], ["No", true]], {}, {:onchange => "switch_affiliation();"} %></td>
+      </tr>
+      
+      <tr id="affiliation-row">
+        <td class="frmSignupLbl"><%= f.label :nyu_affiliation, "What is Your WIBO Affiliation?" %></td>
+        <td><%= f.select :nyu_affiliation, wibo_affiliation, {:include_blank => true} %></td>
+      </tr>
+
+      <% unless $is_ws_free_as_default %>
+
+        <% f.fields_for @credential do |credential| %>
+
+          <tr>
+            <td colspan="2"> <h2>Payment information. DON'T WORRY, YOU CAN CANCEL ANYTIME BEFORE YOUR 7-DAY TRIAL ENDS.</h2></td>
+          </tr>
+
+          <tr>
+            <td class="frmSignupLbl"><span>*</span><%= credential.label :card_type, "Type :" %></td>
+            <td ><%= credential.select :card_type, options_for_select([["Visa", "visa"], ["MasterCard", "master"], ["Discover", "discover"], ["American Express", "american_express"]]) %></td>
+          </tr>
+
+          <tr>
+            <td class="frmSignupLbl"><span>*</span><%= credential.label :card_number, "Card Number :" %></td>
+            <td ><%= credential.text_field :card_number, :autocomplete => 'off' %></td>
+          </tr>
+
+          <tr>
+            <td class="frmSignupLbl"><span>*</span><%= credential.label :card_expires_on, "Expiration Date :" %></td>
+            <td ><%= credential.date_select :card_expires_on, :discard_day => true, :start_year => Date.today.year, :end_year => (Date.today.year+10), :order => [:month, :year, :day] %></td>
+          </tr>
+
+          <tr>
+            <td class="frmSignupLbl"><span>*</span><%= credential.label :card_verification, "Card Verification Value (CVV) :" %></td>
+            <td ><%= credential.text_field :card_verification %> <a href="#">What is this</a> </td>
+          </tr>
+        <% end %>
+        <tr>
+          <td class="frmSignupLbl">
+            <label for="discount-code">Discount Code:</label>
+          </td>
+
+          <td >
+    <%# if session[:promo_code] %>
+    <%#= text_field "promotion", "code", :value => session[:promo_code] %>
+    <%# else %>
+    <%#= text_field "promotion", "code" %>
+    <%# end %>
+            <%= text_field "promotion", "code",:value=>@promotion_code %>
+          </td>
+        </tr>
+      <%end%>
+
+      <tr>
+        <td colspan="2">
+          <%= f.check_box :terms_of_service %>
+          <%= f.label :terms_of_service, "I have read and understood the" %>
+          <%= link_to "Terms and Conditions", 'http://www.wickedstart.com/terms_and_conditions', :target => '_blank' %>
+        </td>
+      </tr>
+      <!--<tr>
+        <td colspan="2" class="captchaBox">
+          <%#= recaptcha_tags :ssl=>true %>
+        </td>
+      </tr>-->
+      <tr>
+        <td colspan="2">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= submit_tag 'Submit', :alt => "Submit", :class => "bntSignUpToday"  %>&nbsp;<%= link_to 'Cancel', url_for(:back) %></td>
+      </tr>
+      </tbody>
+    </table>
+  <% end %>
+  <!--<div id="liveChatWidget">
+    <div id="lpButDivID-1278944190290"></div>
+    <script type="text/javascript" charset="UTF-8" src="https://server.iad.liveperson.net/hc/21508013/?cmd=mTagRepstate&site=21508013&buttonID=1&divID=lpButDivID-1278944190290&bt=1&c=1"></script>
+  </div>-->
+  <div class="clear"></div>
+  <div class="go-daddy">
+    <%=image_tag "/images/GoDaddySslSeal.jpg"%>
+  </div>
+  <div class="clear"></div>
+</div>
+<!-- End of Sub page Wrapper -->
+<script>
+  //getSelectedIndustry();
+</script>

@@ -1,0 +1,178 @@
+<%content_for :javascripts do%>
+  <script type="text/javascript">
+    function giveTimeSpan()
+    {
+      var responseArray = new Array();
+      var answerArray1 = new Array("","yes","no","no");
+      var answerArray2 = new Array("","yes","yes","no");
+      var varName = "qs_";
+      var j = 0, sixty = 0, thirty = 0;
+      for(i=1; i<=6; i+=2)
+      {
+        j++;
+        if (document.getElementById(varName + i).checked == true)
+          responseArray[j] = document.getElementById(varName + i).value;
+        else if(document.getElementById(varName + (i+1)).checked == true)
+          responseArray[j] = document.getElementById(varName + (i+1)).value;
+        else{
+          document.getElementById("quiz-error").innerHTML = "Please answer all three questions"
+          return;
+        }
+        if (responseArray[j] == answerArray1[j])
+          sixty++;
+        if (responseArray[j] == answerArray2[j])
+          thirty++;
+      }
+      document.getElementById("quizTbl").style.display='none';
+      if (thirty == 3){
+  <%#*document.getElementById("popupQuizContent").innerHTML = "30 days"%>
+        document.getElementById("quizTbl30").style.display='block';
+        $("#project_max_days_30").attr('checked', true);
+      }else if (sixty == 3){
+  <%#*document.getElementById("popupQuizContent").innerHTML = "60 days"%>
+        document.getElementById("quizTbl60").style.display='block';
+        $("#project_max_days_60").attr('checked', true);
+      }else{
+  <%#*document.getElementById("popupQuizContent").innerHTML = "120 days"%>
+        document.getElementById("quizTbl120").style.display='block';
+        $("#project_max_days_120").attr('checked', true);
+      }
+      document.getElementById("submitBtn").style.display='none';
+      document.getElementById("closeBtn").style.display='block';
+      $.fn.colorbox.resize({innerHeight:168});
+    }
+
+    function closePopUp()
+    {
+      $.fn.colorbox.close();
+    }
+  </script>
+<%end%>
+
+<div id="liteBx-wrapper">
+  <div id="liteBx-Cntainer">
+<%#*<div class="liteBxBdy" style="width:700px;">%>
+    <div class="liteBxBdy">
+
+      <div class="quizBxTtl">
+        <span class="quizLogo">
+          <%= image_tag "quiz-logo.jpg", :alt => "WICKED START" %>
+          <h3>
+            Startup Planning Timeframe Guidance
+          </h3>
+        </span>
+      </div>
+
+      <div id="popupQuizContent" class="quizCntnt">
+
+        <table border="0" cellpadding="0" cellspacing="0" class="quizTbl" id="quizTbl30" style="display:none">
+          <tr>
+            <th colspan="4" align="left">
+          <h5>
+            Based on your answers, we recommend that you select <label style="color: rgb(248, 155, 75); text-decoration: none;">30</label> days as the number of days you should be able to go through the startup planning process, and be ready to launch!
+          </h5>
+          </th>
+          </tr>
+          <tr><td height="15" colspan="4">&nbsp;</td></tr>
+        </table>
+
+        <table border="0" cellpadding="0" cellspacing="0" class="quizTbl" id="quizTbl60" style="display:none">
+          <tr>
+            <th colspan="4" align="left">
+          <h5>
+            Based on your answers, we recommend that you select <label style="color: rgb(248, 155, 75); text-decoration: none;">60</label> days as the number of days you should be able to go through the startup planning process, and be ready to launch!
+          </h5>
+          </th>
+          </tr>
+          <tr><td height="15" colspan="4">&nbsp;</td></tr>
+        </table>
+
+        <table border="0" cellpadding="0" cellspacing="0" class="quizTbl" id="quizTbl120" style="display:none">
+          <tr>
+            <th colspan="4" align="left">
+          <h5>
+            Based on your answers, we recommend that you select <label style="color: rgb(248, 155, 75); text-decoration: none;">120</label> days as the number of days you should be able to go through the startup planning process, and be ready to launch!
+          </h5>
+          </th>
+          </tr>
+          <tr><td height="15" colspan="4">&nbsp;</td></tr>
+        </table>
+
+        <table border="0" cellpadding="0" cellspacing="0" class="quizTbl" id="quizTbl">
+          <tr>
+            <th colspan="4" align="left">
+          <h5>
+            Answer the following three questions and we'll help you determine how long it should take you to go through the startup planning process.
+          </h5>
+          </th>
+          </tr>
+          <tr>
+            <th width="2%">&nbsp;</th>
+            <th width="86%">
+              <span id="quiz-error" style="float: left; font-size: 14px; font-weight: normal; color: #FF3636;"></span>
+              &nbsp;
+            </th>
+            <th width="6%">Yes</th>
+            <th width="6%">No</th>
+          </tr>
+
+          <tr>
+            <td class="qstnTd">
+              1.
+            </td>
+            <td id="question1">
+              Do you have significant managerial experience in the industry of your product or service?
+            </td>
+            <td align="center">
+              <input type="radio" id="qs_1" name="qs_1" value="yes"/>
+            </td>
+            <td align="center">
+              <input type="radio" id="qs_2" name="qs_1" value="no"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="qstnTd">
+              2.
+            </td>
+            <td id="question1">
+              Have you started a business before?
+            </td>
+            <td align="center">
+              <input type="radio" id="qs_3" name="qs_2" value="yes"/>
+            </td>
+            <td align="center">
+              <input type="radio" id="qs_4" name="qs_2" value="no"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="qstnTd">
+              3.
+            </td>
+            <td id="question1">
+              Do you think that you'll be seeking investment from outside sources (banks or investors)?
+            </td>
+            <td align="center">
+              <input type="radio" id="qs_5" name="qs_3" value="yes"/>
+            </td>
+            <td align="center">
+              <input type="radio" id="qs_6" name="qs_3" value="no"/>
+            </td>
+          </tr>
+          <tr>
+            <td height="15" colspan="4">&nbsp;</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="quizFtr" id="submitBtn" style="height: 25px; display:block;">
+    <button class="globalBtn" style="float: right; margin-top: 0;" onclick="giveTimeSpan();" >Submit</button>
+  </div>
+
+  <div class="quizFtr" id="closeBtn" style="height: 25px; display:none;">
+<%#*<button class="globalBtn" style="float: right; margin-top: 0;" onclick="closePopUp();" >Close</button>%>
+    <button class="globalBtn" style="float: right; margin-top: 0;" onclick="$.fn.colorbox.close();" >Close</button>
+  </div>
+
+</div>

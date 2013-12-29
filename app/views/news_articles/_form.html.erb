@@ -1,0 +1,40 @@
+<% form_for news_article do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.check_box :is_internal %>
+    <%= f.label :is_internal %>
+  </p>
+  <p>
+    <%= f.label :news_provider_id, "News Provider" %>
+    <br />
+    <%= f.collection_select(:news_provider_id, NewsProvider.for_news_articles, :id, :title, {:prompt => true}) %>
+  </p>
+  <p>
+    <%= f.label :news_date %>
+    <br />
+    <%= f.date_select :news_date %>
+  </p>
+  <p>
+    <%= f.label :title %>
+    <br />
+    <%= f.text_field :title, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :url %>
+    <br />
+    <%= f.text_field :url, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :summary %>
+    <br />
+    <%= f.text_area :summary, :size => "100x15", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :description %>
+    <br />
+    <%= f.text_area :description, :size => "100x15", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>

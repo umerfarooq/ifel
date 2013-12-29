@@ -1,0 +1,19 @@
+<h1>Edit MarketingTextMessages</h1>
+
+<% form_for @marketing_text_message do |f| %>
+  <%= f.error_messages %>
+  <%= hidden_field_tag "back", @back %>
+  <p>
+    <%= f.label :title %>
+    <br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :content %>
+    <br />
+    <%= f.text_area :content, :class => "adminEditor",:maxlength => 400 %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>

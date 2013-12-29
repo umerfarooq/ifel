@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  statement: MyString
+  comment: MyString
+
+two:
+  statement: MyString
+  comment: MyString

@@ -1,0 +1,15 @@
+      <div class="alrightMsg">
+            <h1><%= @success_banner.title %></h1>
+            <h2 class="msg1" class="breakWord"><%= @success_banner.content%></h2>
+            <h2 class="msg2"><%= "Stage #{section.sequence_number}: "%><%= link_to section.title, "#{roadmap_path}?is_section_detail=true&section=#{section.id}#section_head_#{section.sequence_number.to_s}" %></h2>
+            <%items = get_incomplete_items_of_section(section)%>
+            <%unless items.blank?%>
+            <ul>
+              <%(items[0..2] || []).each do |item| %>
+            <li><%= image_tag("alright-list-blt.jpg") %><%=  "#{item.sequence_number}. "%><%= link_to item.title, :controller=>"projects", :action=>"show", :is_item_detail=>true, :item=>item.id%></li>
+            <%end%>
+            </ul>
+            <%end%>
+            
+            <%=link_to image_tag("cancel-icn.png",:class=>"cancelBtnBanner"),"JavaScript:void(0);", :onclick=>"banner_slideUp()"%>
+      </div>

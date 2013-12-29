@@ -1,0 +1,20 @@
+<h4>
+  <%= tamplate_category.title %>
+</h4>
+<div class="inbxDv">
+  <% if tamplate_category.template_documents.blank? %>
+    <p>No template file found.</p>
+  <% end %>
+        <% tamplate_category.template_documents.each do |template_document| %>
+    <div>
+      <h5>
+        <%= template_document.title %>
+      </h5>
+      <p class="inbxBdy">
+        <%= template_document.description %>
+      </p>
+      <%= link_to "Download", download_template_document_path(template_document), :target => "_blank", :class => "cmntyLnk" %>
+    </div>
+    <br />
+  <% end %>
+</div>

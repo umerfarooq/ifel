@@ -1,0 +1,19 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :resources_templates_tab } %>
+
+<div class="admnRitCol">
+<h2>Edit Template Category</h2>
+
+<% form_for @template_category do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.label :title %> <br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.submit :update %>
+  </p>
+  <p>
+    <%= link_to '<< Back', url_for(:back) %>
+  </p>
+<% end %>
+</div>

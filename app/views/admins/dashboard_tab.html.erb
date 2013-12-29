@@ -1,0 +1,288 @@
+
+<script type="text/javascript">
+    function edit_notifications(type){
+      if($("a#"+type+"_edit_link").text()=="EDIT"){
+        $("a#"+type+"_edit_link").text("CANCEL");
+        $("#"+type+"_title_label").hide();
+        $("#"+type+"_content_label").hide();
+        $("#"+type+"_title_field").show();
+        $("#"+type+"_content_field").show();
+        $("#"+type+"_update_btn").show();
+        $("#chars-left").show();
+      }else{
+        $("a#"+type+"_edit_link").text("EDIT")
+        $("#"+type+"_title_label").show();
+        $("#"+type+"_content_label").show();
+        $("#"+type+"_title_field").hide();
+        $("#"+type+"_content_field").hide();
+        $("#"+type+"_update_btn").hide();
+        $("#chars-left").hide();
+      }
+
+    }
+
+        function edit_notifications_without_title(type){
+      if($("a#"+type+"_edit_link").text()=="EDIT"){
+        $("a#"+type+"_edit_link").text("CANCEL");
+        $("#"+type+"_content_label").hide();        
+        $("#"+type+"_content_field").show();
+        $("#"+type+"_update_btn").show();
+        $("#chars-left").show();
+      }else{
+        $("a#"+type+"_edit_link").text("EDIT")
+        $("#"+type+"_content_label").show();
+        $("#"+type+"_content_field").hide();
+        $("#"+type+"_update_btn").hide();
+        $("#chars-left").hide();
+      }
+
+    }
+  </script>
+
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :dashboard_tab } %>
+<div class="admnRitCol">
+  <div class="admnQuizDv">
+
+<table width="200" border="0" cellspacing="0" class="admnQuiztbl">
+  <tr>
+    <td colspan="5"><h4 style="color: black">Dashboard Notification Banner Contents</h4><span id="chars-left" style="color:red"></span></td>
+  </tr>
+  <tr>
+      <% form_for @notification_banner_content[:notification_banner_first_col], :url => update_banner_notifications_dashboard_path(@notification_banner_content[:notification_banner_first_col]) do |f| %>
+        <tr>
+        <td colspan="5">
+          <h5 style="color:black"><%= f.label :title, @notification_banner_content[:notification_banner_first_col].title, :id=>'notification_banner_first_col_title_label' %></h5>
+          <%= f.text_field :title, :size => '40', :id=>'notification_banner_first_col_title_field', :class => 'dispNone' %>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5">
+          <%= f.label :content, @notification_banner_content[:notification_banner_first_col].content, :id=>'notification_banner_first_col_content_label' %>
+          <%= f.text_area :content, :size => "100x2", :id=>'notification_banner_first_col_content_field', :class => 'dispNone', :onkeyup=>"countLimit('notification_banner_first_col_content_field');" %><span id="info-chars"></span>
+        </td>
+       
+        <td>
+          <%= link_to "EDIT", '#.', :id => "notification_banner_first_col_edit_link", :onclick=>"edit_notifications('notification_banner_first_col')" %>
+          <%= f.submit 'Update', :class => 'dispNone', :id=>'notification_banner_first_col_update_btn' %>
+        </td>
+         </tr>
+      <% end %>
+   </tr>
+
+     <tr>
+      <% form_for @notification_banner_content[:notification_banner_second_col], :url => update_banner_notifications_dashboard_path(@notification_banner_content[:notification_banner_second_col]) do |f| %>
+        <tr>
+        <td colspan="5">
+          <h5 style="color:black"><%= f.label :title, @notification_banner_content[:notification_banner_second_col].title, :id=>'notification_banner_second_col_title_label' %></h5>
+          <%= f.text_field :title, :size => '40', :id=>'notification_banner_second_col_title_field', :class => 'dispNone' %>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5">
+          <%= f.label :content, @notification_banner_content[:notification_banner_second_col].content, :id=>'notification_banner_second_col_content_label' %>
+          <%= f.text_area :content, :size => "100x2", :id=>'notification_banner_second_col_content_field', :class => 'dispNone', :onkeyup=>"countLimit('notification_banner_second_col_content_field');" %><span id="info-chars"></span>
+        </td>
+
+        <td>
+          <%= link_to "EDIT", '#.', :id => "notification_banner_second_col_edit_link", :onclick=>"edit_notifications('notification_banner_second_col')" %>
+          <%= f.submit 'Update', :class => 'dispNone', :id=>'notification_banner_second_col_update_btn' %>
+        </td>
+         </tr>
+      <% end %>
+   </tr>
+
+        <tr>
+      <% form_for @notification_banner_content[:notification_banner_third_col], :url => update_banner_notifications_dashboard_path(@notification_banner_content[:notification_banner_third_col]) do |f| %>
+        <tr>
+        <td colspan="5">
+          <h5 style="color:black"><%= f.label :title, @notification_banner_content[:notification_banner_third_col].title, :id=>'notification_banner_third_col_title_label' %></h5>
+          <%= f.text_field :title, :size => '40', :id=>'notification_banner_third_col_title_field', :class => 'dispNone' %>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5">
+          <%= f.label :content, @notification_banner_content[:notification_banner_third_col].content, :id=>'notification_banner_third_col_content_label' %>
+          <%= f.text_area :content, :size => "100x2", :id=>'notification_banner_third_col_content_field', :class => 'dispNone', :onkeyup=>"countLimit('notification_banner_third_col_content_field');" %><span id="info-chars"></span>
+        </td>
+
+        <td>
+          <%= link_to "EDIT", '#.', :id => "notification_banner_third_col_edit_link", :onclick=>"edit_notifications('notification_banner_third_col')" %>
+          <%= f.submit 'Update', :class => 'dispNone', :id=>'notification_banner_third_col_update_btn' %>
+        </td>
+         </tr>
+      <% end %>
+   </tr>
+     <tr>
+    <td colspan="5"></td>
+  </tr>
+    <tr>
+    <td colspan="5"></td>
+  </tr>
+    <tr>
+    <td colspan="5"><h4 style="color: black">Dashboard Success Banner Contents</h4></td>
+   </tr>
+   <tr>
+      <% form_for @success_banner, :url => update_banner_notifications_dashboard_path(@success_banner) do |f| %>
+        <tr>
+        <td colspan="5">
+          <h5 style="color:black"><%= f.label :title, @success_banner.title, :id=>'success_banner_title_label' %></h5>
+          <%= f.text_field :title, :size => '40', :id=>'success_banner_title_field', :class => 'dispNone' %>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5">
+          <%= f.label :content, @success_banner.content, :id=>'success_banner_content_label' %>
+          <%= f.text_area :content, :size => "100x2", :id=>'success_banner_content_field', :class => 'dispNone', :onkeyup=>"countLimit('success_banner_content_field');" %><span id="info-chars"></span>
+        </td>
+
+        <td>
+          <%= link_to "EDIT", '#.', :id => "success_banner_edit_link", :onclick=>"edit_notifications('success_banner')" %>
+          <%= f.submit 'Update', :class => 'dispNone', :id=>'success_banner_update_btn' %>
+        </td>
+         </tr>
+      <% end %>
+   </tr>
+      <tr>
+      <% form_for @no_success_banner, :url => update_banner_notifications_dashboard_path(@no_success_banner) do |f| %>
+        <tr>
+        <td colspan="5">
+          <h5 style="color:black"><%= f.label :title, @no_success_banner.title, :id=>'no_success_banner_title_label' %></h5>
+          <%= f.text_field :title, :size => '40', :id=>'no_success_banner_title_field', :class => 'dispNone' %>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5">
+          <%= f.label :content, @no_success_banner.content, :id=>'no_success_banner_content_label' %>
+          <%= f.text_area :content, :size => "100x2", :id=>'no_success_banner_content_field', :class => 'dispNone', :onkeyup=>"countLimit('no_success_banner_content_field');" %><span id="info-chars"></span>
+        </td>
+
+        <td>
+          <%= link_to "EDIT", '#.', :id => "no_success_banner_edit_link", :onclick=>"edit_notifications('no_success_banner')" %>
+          <%= f.submit 'Update', :class => 'dispNone', :id=>'no_success_banner_update_btn' %>
+        </td>
+         </tr>
+      <% end %>
+   </tr>
+  <tr>
+    <td colspan="5"></td>
+  </tr>
+    <tr>
+    <td colspan="5"></td>
+  </tr>
+  <tr>
+    <td colspan="5"><h4 style="color: black">Dashborad Toot Tip Content</h4><span id="chars-left" style="color:red"></span></td>
+  </tr>
+
+   <tr>
+      <% form_for @tool_tip_text, :url => update_banner_notifications_dashboard_path(@tool_tip_text) do |f| %>
+        <tr>
+        <td colspan="5">
+          <h5 style="color:black"><%= f.label :title, @tool_tip_text.title, :id=>'tool_tip_text_title_label' %></h5>
+          <%= f.text_field :title, :size => '40', :id=>'tool_tip_text_title_field', :class => 'dispNone' %>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5">
+          <%= f.label :content, @tool_tip_text.content, :id=>'tool_tip_text_content_label' %>
+          <%= f.text_area :content, :size => "100x2", :id=>'tool_tip_text_content_field', :class => 'dispNone', :onkeyup=>"countLimit('tool_tip_text_content_field');" %><span id="info-chars"></span>
+        </td>
+
+        <td>
+          <%= link_to "EDIT", '#.', :id => "tool_tip_text_edit_link", :onclick=>"edit_notifications('tool_tip_text')" %>
+          <%= f.submit 'Update', :class => 'dispNone', :id=>'tool_tip_text_update_btn' %>
+        </td>
+         </tr>
+      <% end %>
+   </tr>
+
+  <tr>
+    <td colspan="5"></td>
+  </tr>
+    <tr>
+    <td colspan="5"></td>
+  </tr>
+  <tr>
+    <td colspan="5"><h4 style="color: black">Dashborad First Time Login Banner Content</h4><span id="chars-left" style="color:red"></span></td>
+  </tr>
+
+   <tr>
+      <% form_for @first_time_login[:title_with_text], :url => update_banner_notifications_dashboard_path(@first_time_login[:title_with_text]) do |f| %>
+        <tr>
+        <td colspan="5">
+          <h5 style="color:black"><%= f.label :title, @first_time_login[:title_with_text].title, :id=>'first_time_login_title_label' %></h5>
+          <%= f.text_field :title, :size => '40', :id=>'first_time_login_title_field', :class => 'dispNone' %>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5">
+          <%= f.label :content, @first_time_login[:title_with_text].content, :id=>'first_time_login_content_label' %>
+          <%= f.text_area :content, :size => "100x2", :id=>'first_time_login_content_field', :class => 'dispNone', :onkeyup=>"countLimit('first_time_login_content_field');" %><span id="info-chars"></span>
+        </td>
+
+        <td>
+          <%= link_to "EDIT", '#.', :id => "first_time_login_edit_link", :onclick=>"edit_notifications('first_time_login')" %>
+          <%= f.submit 'Update', :class => 'dispNone', :id=>'first_time_login_update_btn' %>
+        </td>
+       </tr>
+      <% end %>
+   </tr>
+      <tr>
+        <td colspan="5">
+          <strong>Content under H2 Heading Font</strong>
+        </td>
+      </tr>
+
+      <tr>
+      <% form_for @first_time_login[:h2_content], :url => update_banner_notifications_dashboard_path(@first_time_login[:h2_content]) do |f| %>
+        <tr>
+        <td colspan="5">
+          <%= f.label :content, @first_time_login[:h2_content].content, :id=>'first_time_login_h2_content_label' %>
+          <%= f.text_area :content, :size => "100x2", :id=>'first_time_login_h2_content_field', :class => 'dispNone', :onkeyup=>"countLimit('first_time_login_h2_content_field');" %><span id="info-chars"></span>
+        </td>
+
+        <td>
+          <%= link_to "EDIT", '#.', :id => "first_time_login_h2_edit_link", :onclick=>"edit_notifications_without_title('first_time_login_h2')" %>
+          <%= f.submit 'Update', :class => 'dispNone', :id=>'first_time_login_h2_update_btn' %>
+        </td>
+       </tr>
+      <% end %>
+   </tr>
+
+       <tr>
+        <td colspan="5">
+          <strong>Content under H3 Heading Font</strong>
+        </td>
+      </tr>
+
+      <tr>
+      <% form_for @first_time_login[:h3_content], :url => update_banner_notifications_dashboard_path(@first_time_login[:h3_content]) do |f| %>
+        <tr>
+        <td colspan="5">
+          <%= f.label :content, @first_time_login[:h3_content].content, :id=>'first_time_login_h3_content_label' %>
+          <%= f.text_area :content, :size => "100x2", :id=>'first_time_login_h3_content_field', :class => 'dispNone', :onkeyup=>"countLimit('first_time_login_h3_content_field');" %><span id="info-chars"></span>
+        </td>
+
+        <td>
+          <%= link_to "EDIT", '#.', :id => "first_time_login_h3_edit_link", :onclick=>"edit_notifications_without_title('first_time_login_h3')" %>
+          <%= f.submit 'Update', :class => 'dispNone', :id=>'first_time_login_h3_update_btn' %>
+        </td>
+       </tr>
+      <% end %>
+   </tr>
+
+
+
+
+
+</table>
+  </div>
+</div>
+<script>
+  //bkLib.onDomLoaded(function(){
+  function countLimit(element){
+    $('#'+element).keyup(function(){
+      limitCharsForSimpleTextArea(element, 180, 'chars-left');
+    });
+  }
+  //});
+</script>

@@ -1,0 +1,88 @@
+<% item_6_05 = @project.sections.find_by_sequence_number(6).items.find_by_sequence_number(5) %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Workshop In Business Opportunities</title>
+  </head>
+
+  <body>
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" align="left" style="font-family:Arial, Helvetica, sans-serif;">
+      <tbody>
+        <tr>
+          <td >
+            <a target="_blank" href="http://wibo.wickedstart.com">
+              <img border="0" alt="Workshop In Business Opportunities" src="http://wibo.wickedstart.com/images/wibo-logo.jpg?1328660340">
+            </a>
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding:10px 0;">
+              <b>THE FIRST STOP FOR GETTING YOUR BUSINESS IDEA OFF THE GROUND</b>
+            </p>
+            <hr noshade size="1" color="#226DC8">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;">
+              <%= "Dear #{@project.user.first_name}," %>
+            </p>
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              <strong>
+                "I wish it grew on trees, but it takes hard work to
+                make money."—Jim Cramer, financial TV host
+              </strong>
+            </p>
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              Finding money is often a challenging part of starting a
+              business. And asking someone else for money to start your
+              business can be the biggest challenge of all. But, you've
+              already done the work to create your vision, create a
+              prototype, and write your plan.
+            </p>
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              Now is the time when you get to sell others on your idea.
+              You'll hear challenges and objections you haven't thought
+              of before, but after spending time on the action item for
+              creating your pitch, you will have a lot of answers and
+              know where to get more of them.
+            </p>
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+            </p>
+
+            <% unless item_6_05.blank? %>
+              <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+                We have resources to help you through this phase—don't
+                forget to take advantage of them. You can do it! If you
+                haven't done so already, create your list of
+                <%= "#{link_to "potential investors", display_item_url(item_6_05, :host => SITE_HOST_NAME), :style => "color:#f89b4b; text-decoration:none;"}." %>
+                We'll help give you some places to start.
+              </p>
+            <% end %>
+
+            <br />
+            <br />
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              Sincerely,
+            </p>
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              Workshop In Business Opportunities
+            </p>
+            <br />
+            <!--<p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;">
+              <span><a target="_blank" style="color: rgb(248, 155, 75); text-decoration: none;" href="http://wibo.wickedstart.com/privacy_policy">Privacy Policy</a></span>
+            </p>-->
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" height="30" bgcolor="#f89b4b" align="center">
+            <span><a target="_blank" style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; color: rgb(255, 255, 255); text-decoration: none; font-size: 16px; font-weight: bold;" href="http://wibo.wickedstart.com">wibo.wickedstart.com</a></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

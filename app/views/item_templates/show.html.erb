@@ -1,0 +1,263 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'jquery-1.4.2.min' %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      //var eg_description = '<%#= @item_template.example_description %>';
+      $("div#edit_example_description_div").hide();
+      $("a#edit_example_description_link").click(function (event){
+        //if($("a#message_edit_link").text() == "EDIT") {
+        //$("#item_template_example_description").val(eg_description);
+        $("div#show_example_description_div").hide();
+        $("div#edit_example_description_div").show();
+        //} else {
+        //$("a#message_edit_link").text("EDIT");
+        //$("div#message_show").show();
+        //$("div#message_edit").hide();
+        //}
+        event.preventDefault();
+      });
+    });
+  </script>
+<% end %>
+
+<%if params[:type] == 'wibo' %>
+  <%= render :partial => "admins/admin_roadmap_menu", :locals => { :active_admin_roadmap_tab => :wibo_roadmap_tab } %>
+<%else%>
+  <%= render :partial => "admins/admin_roadmap_menu", :locals => { :active_admin_roadmap_tab => :ifel_roadmap_tab } %>
+<%end%>
+
+<div class="admnRitCol">
+  <h2>
+    <%= link_to "All Section Templates", section_templates_path(:type=>params[:type]), :style => "font-size: 20px" %>
+    |
+    <%= link_to "All Item Templates", item_templates_path(:type=>params[:type]), :style => "font-size: 20px" %>
+  </h2>
+  <br />
+
+  <h4>
+<%#=h "Checklist Item #{@item_template.item_number} - "%>
+<%#*<br />%>
+<%#*<br />%>
+    <%= link_to "Section #{@item_template.section_template.name}", section_template_item_templates_path(@item_template.section_template, :type=>params[:type]), :style => "font-size: 16px" %>
+    <%=h "- Checklist Item #{@item_template.sequence_number} - #{@item_template.state.title.upcase}"%>
+<%#=h "Section #{@item_template.section_template.name}: Checklist Item #{@item_template.sequence_number} : " %>
+  </h4>
+  <p>
+    <strong>
+      <% if @item_template.state.is_published? %>
+        <%= link_to 'EDIT', edit_item_template_path(@item_template, :type=>params[:type]) %>
+        |
+        <%= link_to 'INACTIVATE', inactivate_item_template_path(@item_template, :type=>params[:type]) %>
+      <% elsif @item_template.state.is_activated? %>
+        <%= link_to 'EDIT', edit_item_template_path(@item_template, :type=>params[:type]) %>
+        |
+        <%= link_to 'PUBLISH', publish_item_template_path(@item_template, :type=>params[:type]) %>
+        |
+        <%= link_to 'INACTIVATE', inactivate_item_template_path(@item_template, :type=>params[:type]) %>
+      <% else %>
+        <%= link_to 'EDIT', edit_item_template_path(@item_template, :type=>params[:type]) %>
+        |
+        <%= link_to 'ACTIVATE', activate_item_template_path(@item_template, :type=>params[:type]) %>
+      <% end %>
+<%#= "| #{link_to 'MOVE-UP', move_up_item_template_path(@item_template)}" unless @item_template.on_top? %>
+<%#= "| #{link_to 'MOVE-DOWN', move_down_item_template_path(@item_template)}" unless @item_template.on_bottom? %>
+    </strong>
+  </p>
+<%#*<p>%>
+<%#=h "Checklist Number: #{@item_template.item_number} - Section Squence Number: #{@item_template.sequence_number}" %>
+<%#*</p>%>
+  <p>
+    ITEM NUMBER:
+    <strong>
+      <%= @item_template.item_number %>
+    </strong>
+    |
+    <%= (@item_template.has_textbox) ? "HAS_TEXTBOX" : "NO_TEXTBOX" %>
+    |
+    <%= (@item_template.has_upload) ? "HAS_UPLOAD" : "NO_UPLOAD" %>
+    |
+    WEIGHTAGE:
+    <strong>
+      <%= "#{@item_template.percent}%" %>
+    </strong>
+  </p>
+  <p>
+    <strong>Title:</strong>
+    <%=h @item_template.title %>
+  </p>
+  <p>
+    <strong>Definition:</strong>
+    <%= @item_template.definition %>
+  </p>
+  <hr />
+  <p>
+    <strong>Description:</strong>
+    <%= @item_template.description %>
+  </p>
+  <hr />
+  Example Type:
+  <strong>
+    <%= (@item_template.is_example_simple) ? "SIMPLE" : "ATTACHMENTS" %>
+    |
+    <%= link_to "Toggle", toggle_example_type_item_template_path(@item_template, :type=>params[:type]) %>
+    |
+    <%= link_to "Edit Description", edit_item_template_path(@item_template, :type=>params[:type]), :id => "edit_example_description_link" %>
+  </strong>
+  <br />
+  <br />
+  <div id="show_example_description_div">
+    <strong>Example Description:</strong>
+    <%= @item_template.example_description %>
+  </div>
+  <div id="edit_example_description_div" style="display: none">
+    <% form_for @item_template do |f| %>
+      <%= f.label :example_description %>
+      <br />
+      <%= f.text_area :example_description, :size => "100x5" %>
+      <br />
+      <%= f.submit 'Update' %>
+    <% end %>
+  </div>
+  <br />
+  <strong>
+    ATTACHED EXAMPLES
+    |
+    <%= link_to "Add Example", new_item_template_example_path(@item_template, :type=>params[:type]) %>
+  </strong>
+  <% unless @item_template.examples.blank? %>
+    <table cellpadding="5px" style="text-align: left">
+      <tr>
+        <th>Name</th>
+        <th>Document</th>
+        <th>STATE</th>
+        <th style="width: 320px">AVAILABLE ACTIONS</th>
+      </tr>
+      <% @item_template.examples.each do |example| %>
+        <tr>
+          <td>
+            <%= link_to example.name, item_template_example_path(@item_template, example, :type=>params[:type]) %>
+          </td>
+          <td>
+            <%= link_to example.document.original_filename, example.document.url, :title => example.document.original_filename, :target => "_blank" %>
+          </td>
+          <td>
+            <%= example.state.title.upcase %>
+          </td>
+          <td>
+            <%= link_to 'EDIT', edit_item_template_example_path(@item_template, example, :type=>params[:type]) %>
+            |
+            <% if example.state.is_published? %>
+              <%= link_to 'INACTIVATE', inactivate_item_template_example_path(@item_template, example, :type=>params[:type]) %>
+            <% elsif example.state.is_activated? %>
+              <%= link_to 'PUBLISH', publish_item_template_example_path(@item_template, example, :type=>params[:type]) %>
+              |
+              <%= link_to 'INACTIVATE', inactivate_item_template_example_path(@item_template, example, :type=>params[:type]) %>
+            <% else %>
+              <%= link_to 'ACTIVATE', activate_item_template_example_path(@item_template, example, :type=>params[:type]) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  <hr />
+
+  <strong>
+    TEMPLATES
+    |
+<%#= link_to "Associate Templates", templatify_item_template_path(@item_template) %>
+    <%= link_to "Update Templates Associations", new_item_template_templatification_path(@item_template, :type=>params[:type]) %>
+  </strong>
+
+  <% unless @item_template.templatifications.blank? %>
+    <table cellpadding="5px" style="text-align: left">
+      <tr>
+        <th>TITLE</th>
+        <th>ASSOCIATION STATE</th>
+  <%#*<th>Edit</th>%>
+  <%#*<th>PUBLISH</th>%>
+  <%#*<th>DISSOCIATE</th>%>
+        <th style="width: 320px">AVAILABLE ACTIONS</th>
+      </tr>
+      <% @item_template.templatifications.each do |templatification| %>
+        <tr>
+          <td>
+            <%= link_to templatification.template_document.document.original_filename, templatification.template_document.document.url, :title => templatification.template_document.document.original_filename, :target => "_blank" %>
+          </td>
+          <td>
+    <%#= (template_document.is_active) ? "Active" : "Inactive" %>
+            <%= templatification.state.title.upcase %>
+          </td>
+    <%#*<td>%>
+    <%#= link_to "EDIT" %>
+    <%#*</td>%>
+          <td>
+    <%#= link_to 'EDIT', edit_item_template_example_path(@item_template, example) %>
+    <%#*|%>
+            <% if templatification.state.is_activated? %>
+              <%= link_to 'PUBLISH', publish_item_template_templatification_path(@item_template, templatification, :type=>params[:type]) %>
+              |
+            <% end %>
+            <%= link_to 'DISSOCIATE', item_template_templatification_path(@item_template, templatification, :type=>params[:type]), :confirm => 'Are you sure?', :method => :delete %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  <hr />
+
+  <strong>
+    RESOURCES
+    |
+    <%= link_to "Update Resources Associations", new_item_template_resourcification_path(@item_template,:type=>params[:type]) %>
+  </strong>
+  <% unless @item_template.resourcifications.blank? %>
+    <table cellpadding="5px" style="text-align: left">
+      <tr>
+        <th>TITLE</th>
+        <th>URL</th>
+  <%#*<th>is_active</th>%>
+  <%#*<th>Edit</th>%>
+  <%#*<th>PUBLISH</th>%>
+  <%#*<th>DISSOCIATE</th>%>
+        <th>ASSOCIATION STATE</th>
+        <th style="width: 320px">AVAILABLE ACTIONS</th>
+      </tr>
+      <% unless @item_template.resourcifications.blank? %>
+        <% @item_template.resourcifications.each do |resourcification| %>
+          <tr>
+            <td>
+              <%= resourcification.resource.title %>
+            </td>
+            <td>
+              <%= link_to resourcification.resource.url, resourcification.resource.url, :target => "_blank" %>
+            </td>
+            <td>
+              <%= resourcification.state.title.upcase %>
+      <%#= (resourcification.resource.is_active) ? "Active" : "Inactive" %>
+            </td>
+      <%#*<td>%>
+      <%#= link_to "EDIT" %>
+      <%#*</td>%>
+      <%#*<td>%>
+      <%#= link_to "PUBLISH", publish_item_template_resourcification_path(@item_template, rfcn) %>
+      <%#*</td>%>
+      <%#*<td>%>
+      <%#= link_to 'DISSOCIATE', item_template_resourcification_path(@item_template, rfcn), :confirm => 'Are you sure?', :method => :delete %>
+      <%#*</td>%>
+            <td>
+      <%#= link_to 'EDIT', edit_item_template_example_path(@item_template, example) %>
+      <%#*|%>
+              <% if resourcification.state.is_activated? %>
+                <%= link_to 'PUBLISH', publish_item_template_resourcification_path(@item_template, resourcification, :type=>params[:type]) %>
+                |
+              <% end %>
+              <%= link_to 'DISSOCIATE', item_template_resourcification_path(@item_template, resourcification, :type=>params[:type]), :confirm => 'Are you sure?', :method => :delete %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  <% end %>
+</div>

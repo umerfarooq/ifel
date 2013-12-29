@@ -1,0 +1,67 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :radar_tab } %>
+
+<% title "#{@news_article.title}" %>
+
+<div class="admnRitCol">
+
+  <h1>
+    <%= @news_article.title %>
+  </h1>
+
+  <p>
+    STATE:
+    <strong>
+      <%= @news_article.state.title.upcase %>
+    </strong>
+  </p>
+
+  <p>
+    INTERNAL:
+    <strong>
+      <%= @news_article.internal? %>
+    </strong>
+  </p>
+
+  <p>
+    NEWS PROVIDER:
+    <strong>
+      <%= @news_article.news_provider.title %>
+    </strong>
+  </p>
+
+  <p>
+    TITLE:
+    <strong>
+      <%= @news_article.title %>
+    </strong>
+  </p>
+
+  <p>
+    DATE:
+    <strong>
+      <%= @news_article.news_date %>
+    </strong>
+  </p>
+
+  <p>
+    URL:
+    <strong>
+      <%= link_to @news_article.url, @news_article.url %>
+    </strong>
+  </p>
+
+  <p>
+    SUMMARY:
+    <strong>
+      <%= @news_article.summary %>
+    </strong>
+  </p>
+
+  <p>
+    DESCRIPTION:
+    <strong>
+      <%= @news_article.description %>
+    </strong>
+  </p>
+
+</div>

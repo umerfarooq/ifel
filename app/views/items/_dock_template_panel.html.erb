@@ -1,0 +1,38 @@
+<div class="filesColLeft">
+  <h2>Templates</h2>
+  <% unless templates.blank? %>
+    <div class="filesList">
+      <ul>
+        <% templates.each do |template| %>
+          <li>
+            <a href="JavaScript:void(0);" id="template_opener_<%= template.id.to_s %>" onclick="showPanel('<%= template.id.to_s %>', 'template');">
+              <%=  image_tag helper_get_file_extension(template.document_file_name) %>
+              <p><%= sanitize template.name %></p>
+            </a>
+          </li>
+        <%end%>
+      </ul>
+    </div>
+  <%else%>
+    <div class="filesList noOverFlow">
+      No Matching Selection Available for this Action Item
+    </div>
+  <%end%>
+</div>
+<% unless templates.blank? %>
+  <% templates.each_with_index do |template,index| %>
+    <div class="filesColRight <%= (index!=0) ? 'dispNone' : '' %>" id="template_panel_<%= template.id.to_s %>">
+      <div class="iconCol">
+        <%=  image_tag helper_get_file_extension_big_icon(template.document_file_name) %>
+        <%= link_to image_tag('download-btn.png'), download_template_document_path(template) %>
+        <!--<a href="#"><img src="images/share-btn.png" /></a>-->
+      </div>
+      <div class="filesDetailCom">
+        <h3><%= sanitize template.title %></h3>
+        <p class="byP">by <span>Wicked Start</span></p>
+        <p>Summary <br /><%= sanitize template.description %></p>
+        <p><%= helper_document_viewer_software_message(template.document_file_name) %></p>
+      </div>
+    </div>
+  <%end%>
+<%end%>

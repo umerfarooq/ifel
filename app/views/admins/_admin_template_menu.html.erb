@@ -1,0 +1,21 @@
+<div class="admnlftCol">
+  <ul class="admnLnks">
+    
+    <!--<li>
+      <%# if active_admin_template_tab == :items_tab %>
+        <%#*<a href="<%= item_templates_path %>" class="active">Action Item Templates</a>%>
+      <%# else %>
+        <%#*<a href="<%= item_templates_path %>">Action Item Templates</a>%>
+      <%# end %>
+    </li>-->
+    
+    <li>
+      <% if active_admin_template_tab == :templates_tab %>
+        <a href="/template_documents" class="active">Edit Template</a>
+      <% else %>
+        <a href="/template_documents">Edit Template</a>
+      <% end %>
+    </li>
+    
+  </ul>
+</div>

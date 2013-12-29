@@ -1,0 +1,8 @@
+<%= render :partial => "admins/admin_client_information_menu", :locals => { :active_admin_client_information_tab => :radar_tab } %>
+
+<% title "Edit News Provider" %>
+
+<div class="admnRitCol">
+  <h1>Edit News Provider</h1>
+  <%= render :partial => 'form', :locals => {:news_provider => @news_provider} %>
+</div>

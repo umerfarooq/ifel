@@ -1,0 +1,6 @@
+<% form_for obj do |f| %>
+   <p class="admnP"><%= f.text_area :content , :cols=>'45', :rows=>'5'%></p>
+   State : <%= f.select :state_id, State.all.collect {|c| [ c.title, c.id ] },:size=>5 ,:class=>"lstBx"%><br/>
+   <%= f.hidden_field :title, :value => title %>
+   <%= f.submit 'Save'  %>
+<% end %>

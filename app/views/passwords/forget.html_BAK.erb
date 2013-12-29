@@ -1,0 +1,133 @@
+<% content_for :head do %>
+  <%#= javascript_include_tag "jquery-1.4.2.min" %>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#dummy_user_name").focus(function (){
+        $(this).hide();
+        $(this).blur();
+        $("#login").val("");
+        $("#login").show();
+        $("#login").focus();
+      });
+      $("#dummy_email").focus(function (){
+        $(this).hide();
+        $(this).blur();
+        $("#email").val("");
+        $("#email").show();
+        $("#email").focus();
+      });
+      $("#login").blur(function (){
+        if($(this).val().length == 0){
+          $(this).hide();
+          $("#dummy_user_name").show();
+        }
+      });
+      $("#email").blur(function (){
+        if($(this).val().length == 0){
+          $(this).hide();
+          $("#dummy_email").show();
+        }
+      });
+      //$("#login").hide();
+      //$("#email").hide();
+    });
+  </script>
+<% end %>
+
+<div class="frgtPwd-Dv">
+  <div class="frgtPwd-Lft">
+    <% form_tag passwords_path do %>
+      <table border="0" cellpadding="0" cellspacing="0" class="lftTbl">
+        <% unless @error.blank? %>
+          <tr style="color: #D33">
+            <td>
+              <%= @error %>
+              &nbsp;
+            </td>
+          </tr>
+          <% @error = "" %>
+        <% end %>
+        <tr>
+          <td><h1>FORGOT PASSWORD</h1></td>
+        </tr>
+        <tr>
+          <td class="frgtMsg">
+            Please enter your username or email with which you registered
+            and we'll send you your username and link to reset your password
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input value="username" style="color: #999999; font-style: italic" type="text" class="txtFld" id="dummy_user_name" name="dummy_user_name" />
+            <%= text_field_tag :login, @login, :class => 'txtFld', :style => "display:none" %>
+          </td>
+        </tr>
+        <tr>
+          <td class="orTxt">OR</td>
+        </tr>
+        <tr>
+          <td>
+            <input value="Email-address" style="color: #999999; font-style: italic" type="text" class="txtFld" id="dummy_email" name="dummy_email"/>
+            <%= text_field_tag :email, @email , :class => 'txtFld', :style => "display:none" %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= recaptcha_tags %>
+          </td>
+        </tr>
+        <tr>
+          <td class="lnksTd">
+            <%= submit_tag 'Submit', :class => "globalBtn", :style => "margin-bottom:25px;" %>
+          </td>
+        </tr>
+      </table>
+
+    <% end %>
+  </div>
+
+  <div class="frgtPwd-Rit">
+    <table border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="right" valign="bottom" class="blockCrnr"><img src="/images/rgstr-right-top.jpg" width="427" height="9" /></td>
+      </tr>
+      <tr>
+        <td height="200" align="right" valign="top" class="frgtBlock">
+          <table width="200" border="0" cellpadding="0" cellspacing="0" class="frgtBlockTbl">
+            <tr>
+              <td align="left" class="frgtTtl">FEATURES AND BENEFITS INCLUDED WITH YOUR WICKEDSTART ACCOUNT:</td>
+            </tr>
+            <tr>
+              <td align="left" class="blockBdy"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="frgtIcnTd"><img src="/images/icons/grph-icn-s.jpg" width="56" height="36" /></td>
+                    <td class="rgstrTxt">Personalized roadmap of action items to help you manage the startup process, each step of the way.</td>
+                  </tr>
+                  <tr>
+                    <td class="frgtIcnTd"><img src="/images/icons/edit-icn-s.jpg" width="56" height="36" /></td>
+                    <td class="rgstrTxt">Get access to templates, examples and links to expert resources to help streamline the process.</td>
+                  </tr>
+                  <tr>
+                    <td class="frgtIcnTd"><img src="/images/icons/comment-icn-s.jpg" width="56" height="43" /></td>
+                    <td class="rgstrTxt">Connect to the Wicked Start Community to ask and answer questions and share experiences with peers.</td>
+                  </tr>
+                  <tr>
+                    <td class="frgtIcnTd"><img src="/images/icons/info-icn-s.jpg" width="56" height="36" /></td>
+                    <td class="rgstrTxt">Email alert and notification systems to let you know when a deadline is approaching.</td>
+                  </tr>
+                  <tr>
+                    <td class="frgtIcnTd"><img src="/images/icons/folder-icn-s.jpg" width="56" height="36" /></td>
+                    <td class="rgstrTxt">Maintain a centralized "hub" to manage your files and important startup documents.</td>
+                  </tr>
+                </table></td>
+            </tr>
+          </table></td>
+      </tr>
+      <tr>
+        <td align="right" valign="top" class="blockCrnr"><img src="/images/rgstr-right-bot.jpg" width="427" height="9" /></td>
+      </tr>
+    </table>
+  </div>
+
+</div>

@@ -1,0 +1,68 @@
+<div class="cmntyTtlDv">
+  <% if @message_main.blank? %>
+  <%#*<h3>Main Success Stories</h3>%>
+    <p>
+      Main marketing message for Community.
+    </p>
+  <% else %>
+  <%#*<h3>%>
+  <%#= @message_main.title %>
+  <%#*</h3>%>
+    <p>
+      <%= @message_main.content %>
+    </p>
+  <% end %>
+</div>
+
+<%= render :partial => "left_column" %>
+
+<div class="RitCol">
+  <h4>
+    <%= @heading %>
+  </h4>
+  <% if @messages.blank? %>
+    <div class="inbxDv">
+      <%= "You have no messages. Have a question? #{link_to "Ask", new_message_path} the Wicked Start community." %>
+      <%# if @user && @user.id == current_user.id %>
+        <%# if @message_no_mymsg.blank? %>
+          <%#= "You have no messages. Have a question? #{link_to "Ask", new_message_path} the Wicked Start community." %>
+        <%# else %>
+          <%#= @message_no_mymsg %>
+        <%# end %>
+      <%# else %>
+        <%# if @message_no_msg.blank? %>
+          <%#*No message available to display in this category.%>
+        <%# else %>
+          <%#= @message_no_msg %>
+        <%# end %>
+      <%# end %>
+    </div>
+  <% else %>
+    <% @messages.each do |msg| %>
+      <div class="inbxDv">
+        <h5>
+          <%= link_to msg.title, message_comments_path(msg) %>
+        </h5>
+        <p class="inbxLnks">
+          <%#= link_to "#{pluralize(msg.comments_for(current_user).size, "Response")}", message_comments_path(msg)+"#comments" %>
+          <%= link_to "#{pluralize(msg.comments.appropriate.for_user(current_user).count, "Response")}", message_comments_path(msg)+"#comments" %>
+          |
+          Posted by
+          <% if current_user and (msg.user_id == current_user.id) %>
+      <%#= link_to "ME", messages_path(:user => msg.user_id) %>
+            <%= link_to "ME", user_messages_path(msg.user) %>
+          <% else %>
+            <%= link_to msg.user.screen_name.capitalize, user_messages_path(msg.user) %>
+      <%#= link_to msg.user.screen_name.capitalize, messages_path(:user => msg.user_id) %>
+          <% end %>
+          <%= "about #{link_to msg.message_category.title, messages_path(:category => msg.message_category_id)}" unless msg.message_category.blank? %>
+    <%#= "about #{link_to msg.message_category.title, message_category_messages_path(msg.message_category)}" %>
+          <span style="float: right">
+            <%= msg.created_at.strftime("%m/%d/%Y") %>
+          </span>
+        </p>
+      </div>
+    <% end %>
+    <%= will_paginate @messages %>
+  <% end %>
+</div>

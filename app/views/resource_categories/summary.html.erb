@@ -1,0 +1,26 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :resources_templates_tab } %>
+
+<div class="admnRitCol">
+<h2>Edit Summary Type</h2>
+<br />
+
+<% form_for @marketing_multimedia_message, :url => update_summary_resource_category_path(@marketing_multimedia_message), :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.label :Summary %> <br />
+    <%= f.text_area :description, :size => "100x10", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :photo %>
+    <br />
+    <%= image_tag @marketing_multimedia_message.content.url %>
+    <br />
+    <%= f.file_field :content %>
+  </p>
+  <br />
+  <p>
+    <%= f.submit :Update %>
+  </p>
+  <%= link_to '<< Back', url_for(:back) %>
+<%end%>
+</div>

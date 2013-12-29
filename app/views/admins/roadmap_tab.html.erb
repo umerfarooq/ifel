@@ -1,0 +1,223 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'jquery-1.4.2.min' %>
+  <script type="text/javascript">
+    function edit_content(content_type) {
+      var msg_title = $("#"+content_type+"_title").val();
+      var msg_content = $("#"+content_type+"_content").val();
+      if($("a#"+content_type+"_edit_link").text() == "EDIT") {
+        $("a#"+content_type+"_edit_link").text("CANCEL");
+        $("#"+content_type+"_title").val(msg_title);
+        $("#"+content_type+"_content").val(msg_content);
+        $("#"+content_type+"_show").hide();
+        $("#"+content_type+"_edit").show();
+      } else {
+        $("a#"+content_type+"_edit_link").text("EDIT");
+        $("#"+content_type+"_show").show();
+        $("#"+content_type+"_edit").hide();
+      }
+    }
+    function edit_tooltips(type){
+      if($("a#"+type+"_edit_link").text()=="EDIT"){
+        $("a#"+type+"_edit_link").text("CANCEL");
+        $("#"+type+"_title_label").hide();
+        $("#"+type+"_content_label").hide();
+        $("#"+type+"_title_field").show();
+        $("#"+type+"_content_field").show();
+        $("#"+type+"_update_btn").show();
+      }else{
+        $("a#"+type+"_edit_link").text("EDIT")
+        $("#"+type+"_title_label").show();
+        $("#"+type+"_content_label").show();
+        $("#"+type+"_title_field").hide();
+        $("#"+type+"_content_field").hide();
+        $("#"+type+"_update_btn").hide();
+      }
+
+    }
+  </script>
+<% end %>
+
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :roadmap_tab } %>
+<div class="admnRitCol">
+  <%unless @roadmap_contents[:dock_bar_help].blank?%>
+    <div>
+      <h4>
+        DOCK BAR HELP
+        |
+        <%= link_to "EDIT", '#.', :id => "dock_help_edit_link", :onclick=>"edit_content('dock_help')" %>
+      </h4>
+      <br />
+
+      <div id="dock_help_show">
+        <table style="text-align: left;">
+          <tr>
+            <th width="20%">Title</th>
+            <th width="80%">Summary</th>
+          </tr>
+          <tr>
+            <td><%= @roadmap_contents[:dock_bar_help].title.to_s %></td>
+            <td><%= @roadmap_contents[:dock_bar_help].content.to_s %></td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="dock_help_edit" style="display: none">
+        <% form_for @roadmap_contents[:dock_bar_help], :url => update_contents_project_path(@roadmap_contents[:dock_bar_help]), :method=>:put do |f| %>
+          <table>
+            <tr>
+              <th><%= f.label :title %></th>
+              <th><%= f.label :content, 'Summary' %></th>
+            </tr>
+            <tr>
+              <td>
+                <%= f.text_field :title, :size => "20", :id=>'dock_help_title' %>
+              </td>
+              <td>
+                <%= f.text_area :content, :size => "80x5", :id=>'dock_help_content', :class => "adminEditor" %>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><%= f.submit 'Update and Publish' %></td>
+            </tr>
+          </table>
+
+        <% end %>
+      </div>
+      <br />
+    </div>
+  <%end%>
+
+  <%unless @roadmap_contents[:overdue_notification].blank?%>
+    <div>
+      <h4>
+        OVERDUE NOTIFICATION
+        |
+        <%= link_to "EDIT", '#.', :id => "overdue_notification_edit_link", :onclick=>"edit_content('overdue_notification')" %>
+      </h4>
+      <br />
+
+      <div id="overdue_notification_show">
+        <table style="text-align: left;">
+          <tr>
+            <th width="20%">Title</th>
+            <th width="80%">Summary</th>
+          </tr>
+          <tr>
+            <td><%= @roadmap_contents[:overdue_notification].title.to_s %></td>
+            <td><%= @roadmap_contents[:overdue_notification].content.to_s %></td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="overdue_notification_edit" style="display: none">
+        <% form_for @roadmap_contents[:overdue_notification], :url => update_contents_project_path(@roadmap_contents[:overdue_notification]), :method=>:put do |f| %>
+          <table>
+            <tr>
+              <th><%= f.label :title %></th>
+              <th><%= f.label :content, 'Summary' %></th>
+            </tr>
+            <tr>
+              <td>
+                <%= f.text_field :title, :size => "20", :id=>'overdue_notification_title' %>
+              </td>
+              <td>
+                <%= f.text_area :content, :size => "80x5", :id=>'doverdue_notification_content', :class => "adminEditor" %>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><%= f.submit 'Update and Publish' %></td>
+            </tr>
+          </table>
+
+        <% end %>
+      </div>
+      <br />
+    </div>
+  <%end%>
+
+  <div>
+    <h4>
+      TOOLTIPS  <span id="chars-left" style="color:red"></span>
+    </h4>
+    <br />
+    <table width="100%">
+      <tr style="text-align:left;">
+        <th width="15%">
+          Tip About
+        </th>
+        <th width="15%">
+          Title
+        </th>
+        <th width="50%">
+          Content
+        </th>
+        <th width="20%">
+          Action
+        </th>
+      </tr>
+
+      <%unless @roadmap_contents[:items_in_progress].blank?%>
+        <tr id="items_in_progress_show">
+          <% form_for @roadmap_contents[:items_in_progress], :url => update_contents_project_path(@roadmap_contents[:items_in_progress]) do |f| %>
+            <td width="15%">Items In Progress</td>
+            <td width="15%">
+              <%= f.label :title, @roadmap_contents[:items_in_progress].title, :id=>'items_in_progress_title_label' %>
+              <%= f.text_field :title, :size => '15', :id=>'items_in_progress_title_field', :class => 'dispNone' %>
+            </td>
+            <td width="50%">
+              <%= f.label :content, @roadmap_contents[:items_in_progress].content, :id=>'items_in_progress_content_label' %>
+              <%= f.text_area :content, :size => "45x3", :id=>'items_in_progress_content_field', :class => 'dispNone', :onkeyup=>"countLimit('starting_block_content_field');" %><span id="info-chars"></span>
+            </td>
+            <td width="20%">
+              <%= link_to "EDIT", '#.', :id => "items_in_progress_edit_link", :onclick=>"edit_tooltips('items_in_progress')" %>
+              <%= f.submit 'Update', :class => 'dispNone', :id=>'items_in_progress_update_btn' %>
+            </td>
+          <% end %>
+        </tr>
+      <%end%>
+
+      <%unless @roadmap_contents[:upcoming_items].blank?%>
+        <tr id="upcoming_items_show">
+          <% form_for @roadmap_contents[:upcoming_items], :url => update_contents_project_path(@roadmap_contents[:upcoming_items]) do |f| %>
+            <td width="15%">Upcoming Items</td>
+            <td width="15%">
+              <%= f.label :title, @roadmap_contents[:upcoming_items].title, :id=>'upcoming_items_title_label' %>
+              <%= f.text_field :title, :size => '15', :id=>'upcoming_items_title_field', :class => 'dispNone' %>
+            </td>
+            <td width="50%">
+              <%= f.label :content, @roadmap_contents[:upcoming_items].content, :id=>'upcoming_items_content_label' %>
+              <%= f.text_area :content, :size => "45x3", :id=>'upcoming_items_content_field', :class => 'dispNone', :onkeyup=>"countLimit('upcoming_items_content_field');" %><span id="info-chars"></span>
+            </td>
+            <td width="20%">
+              <%= link_to "EDIT", '#.', :id => "upcoming_items_edit_link", :onclick=>"edit_tooltips('upcoming_items')" %>
+              <%= f.submit 'Update', :class => 'dispNone', :id=>'upcoming_items_update_btn' %>
+            </td>
+          <% end %>
+        </tr>
+      <%end%>
+
+      <%unless @roadmap_contents[:upcoming_todos].blank?%>
+        <tr id="upcoming_todos_show">
+          <% form_for @roadmap_contents[:upcoming_todos], :url => update_contents_project_path(@roadmap_contents[:upcoming_todos]) do |f| %>
+            <td width="15%">Upcoming Todos</td>
+            <td width="15%">
+              <%= f.label :title, @roadmap_contents[:upcoming_todos].title, :id=>'upcoming_todos_title_label' %>
+              <%= f.text_field :title, :size => '15', :id=>'upcoming_todos_title_field', :class => 'dispNone' %>
+            </td>
+            <td width="50%">
+              <%= f.label :content, @roadmap_contents[:upcoming_todos].content, :id=>'upcoming_todos_content_label' %>
+              <%= f.text_area :content, :size => "45x3", :id=>'upcoming_todos_content_field', :class => 'dispNone', :onkeyup=>"countLimit('upcoming_todos_content_field');" %><span id="info-chars"></span>
+            </td>
+            <td width="20%">
+              <%= link_to "EDIT", '#.', :id => "upcoming_todos_edit_link", :onclick=>"edit_tooltips('upcoming_todos')" %>
+              <%= f.submit 'Update', :class => 'dispNone', :id=>'upcoming_todos_update_btn' %>
+            </td>
+          <% end %>
+        </tr>
+      <%end%>
+    </table>
+    <br />
+  </div>
+</div>

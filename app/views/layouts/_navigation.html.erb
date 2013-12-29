@@ -1,0 +1,240 @@
+<% if current_user_is_admin? %>
+
+  <div class="nav">
+    <ul class="navMnu">
+      <li>
+        <% if active_tab == :marketing %>
+          <%= link_to "<span class='navLft'></span>Marketing", home_path('home'), :class => "active" %>
+        <% else %>
+          <%= link_to "<span class='navLft'></span>Marketing", home_path('home') %>
+        <% end %>
+      </li>
+      <li>
+        <% if active_tab == :checklist %>
+          <%= link_to "Checklist", section_templates_path, :class => "active" %>
+        <% else %>
+          <%= link_to "Checklist", section_templates_path %>
+        <% end %>
+      </li>
+      <li>
+  <%# if active_tab == :templates_resources %>
+        <% if active_tab == :resource_center %>
+          <%= link_to "Templates / Resources", list_template_categories_path, :class => "active" %>
+        <% else %>
+          <%= link_to "Templates / Resources", list_template_categories_path %>
+        <% end %>
+      </li>
+      <li>
+        <% if active_tab == :billing_tab %>
+          <%= link_to "Billing", billing_tab_admins_path, :class => "active" %>
+        <% else %>
+          <%= link_to "Billing", billing_tab_admins_path %>
+        <% end %>
+      </li>
+      <li>
+        <% if active_tab == :reporting_tab %>
+          <%= link_to "Reports", reporting_tab_admins_path, :class => "active" %>
+        <% else %>
+          <%= link_to "Reports", reporting_tab_admins_path %>
+        <% end %>
+      </li>
+    </ul>
+  <%#*<ul class="navMnu">%>
+  <%#*<li><a href="#"><span class="navLft"></span>ADMIN NAV</a></li>%>
+  <%#*<li><a href="#">ADMIN NAV</a></li>%>
+  <%#*<li><a href="#" class="active">ADMIN NAV</a></li>%>
+  <%#*<li><a href="#">ADMIN NAV</a></li>%>
+  <%#*<li><a href="#">ADMIN NAV<span class="navRite"></span></a></li>%>
+  <%#*</ul>%>
+    <div class="ntfyDv">
+      <span class="ntfySpan">
+  <%#= image_tag("icons/ntfy-icn.gif", :size => "22*20", :alt => "Notifications", :align => "top") %>
+        <strong>
+  <%#= flash[:notice] %>
+        </strong>
+      </span>
+    </div>
+  </div>
+<% elsif current_user %>
+  <div class="nav">
+    <ul class="navMnu">
+      <li>
+        <% if active_tab == :launch_list %>
+          <%= link_to "<span class='navLft'></span>STARTING BLOCK", projects_path, :class => "active" %>
+        <% else %>
+          <%= link_to "<span class='navLft'></span>STARTING BLOCK", projects_path %>
+        <% end %>
+      </li>
+      <% if current_user.project.blank? %>
+        <li class ="myFlz">
+          MY FILES
+        </li>
+      <% else %>
+        <li>
+          <% if active_tab == :my_files %>
+            <%= link_to "MY FILES", documents_path, :class => "active" %>
+          <% else %>
+      <%# if current_user.project.blank? %>
+      <%#= link_to "MY FILES", documents_path, 'disabled'%>
+      <%# else %>
+            <%= link_to "MY FILES", documents_path %>
+      <%# end %>
+          <% end %>
+        </li>
+      <% end %>
+      <li>
+        <% if active_tab == :community %>
+          <%= link_to "COMMUNITY", messages_path, :class => "active" %>
+        <% else %>
+          <%= link_to "COMMUNITY", messages_path %>
+        <% end %>
+      </li>
+      <li>
+        <% if active_tab == :resource_center %>
+          <%= link_to "RESOURCE CENTER", resource_categories_path, :class => "active" %>
+        <% else %>
+          <%= link_to "RESOURCE CENTER", resource_categories_path %>
+        <% end %>
+      </li>
+      <li>
+        <% if active_tab == :on_the_radar %>
+          <%= link_to "ON THE RADAR<span class='navRite'></span>", news_articles_path, :class => "active" %>
+        <% else %>
+          <%= link_to "ON THE RADAR<span class='navRite'></span>", news_articles_path %>
+        <% end %>
+      </li>
+    </ul>
+    <div class="ntfyDv">
+      <span class="ntfySpan">
+        <%= image_tag("icons/ntfy-icn.gif", :size => "22*20", :alt => "Notifications", :align => "top") %>
+        <% if current_user %>
+          <% if current_user.new_message_count > 0 %>
+            <%= link_to "You have #{pluralize(current_user.new_message_count, "new response")}".upcase, user_messages_path(current_user) %>
+          <% else %>
+            Need help? Ask a question of the Wicked Start
+            <%= link_to "Community", messages_path %>
+          <% end %>
+        <% else %>
+          <strong>
+    <%#= flash[:notice] %>
+          </strong>
+        <% end %>
+      </span>
+      <div class="srchSpan">
+  <%#*<form action="" method="post">%>
+  <%#*<input type="text" class="srchFld" />%>
+  <%#*<input type="submit" value="Search" class="srchBtn" />%>
+  <%#*</form>%>
+        <% form_tag search_projects_path, :method => 'get' do %>
+          <%= text_field_tag SEARCH_FIELD, @query, :class => 'srchFld' %>
+          <%= submit_tag 'Search', :name => nil, :class => "srchBtn" %>
+        <% end %>
+  <%# form_tag '/projects/search', :method=>'get' do %>
+  <%#= text_field_tag 'keyword', nil, :class => 'srchFld' %>
+  <%#= submit_tag 'Search', :class => "srchBtn" %>
+  <%# end %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="nav-pblc">
+    <ul class="pblcMnu">
+      <li>
+        <% if active_tab == :home %>
+          <%= link_to "<span class=\"pblcLft\"></span>Home", home_path('home'), :class => "active" %>
+        <% else %>
+          <%= link_to "<span class=\"pblcLft\"></span>Home", home_path('home') %>
+        <% end %>
+      </li>
+      <li>
+        <% if active_tab == :how_lauch_pad_works %>
+          <%= link_to "<span class=\"pblcLft\"></span>How It Works", home_path('how_it_works'), :class => "active" %>
+    <%#= link_to "<span class=\"pblcLft\"></span>How It Works", how_it_works_path, :class => "active" %>
+        <% else %>
+          <%= link_to "<span class=\"pblcLft\"></span>How It Works", home_path('how_it_works') %>
+    <%#= link_to "<span class=\"pblcLft\"></span>How It Works", how_it_works_path %>
+        <% end %>
+      </li>
+  <%#*<li>%>
+  <%# if active_tab == :about_us %>
+  <%#= link_to "<span class=\"pblcLft\"></span>About Us", about_us_path, :class => "active" %>
+  <%# else %>
+  <%#= link_to "<span class=\"pblcLft\"></span>About Us", about_us_path %>
+  <%# end %>
+  <%#*</li>%>
+      <li>
+        <% if active_tab == :success_stories %>
+          <%= link_to "<span class=\"pblcLft\"></span>Success Stories", success_stories_path, :class => "active" %>
+        <% else %>
+          <%= link_to "<span class=\"pblcLft\"></span>Success Stories", success_stories_path %>
+        <% end %>
+      </li>
+      <li>
+        <% if active_tab == :resources %>
+          <%= link_to "<span class=\"pblcLft\"></span>Resources", resources_path, :class => "active" %>
+        <% else %>
+          <%= link_to "<span class=\"pblcLft\"></span>Resources", resources_path %>
+        <% end %>
+      </li>
+      <li>
+        <% if active_tab == :blog %>
+          <%= link_to "<span class=\"pblcLft\"></span>Blog", "/blog", :class => "active" %>
+        <% else %>
+          <%= link_to "<span class=\"pblcLft\"></span>Blog", "/blog" %>
+        <% end %>
+      </li>
+      <li>
+        <% if active_tab == :on_the_radar %>
+          <%= link_to "<span class=\"pblcLft\"></span>On the Radar", news_articles_path, :class => "active" %>
+        <% else %>
+          <%= link_to "<span class=\"pblcLft\"></span>On the Radar", news_articles_path %>
+        <% end %>
+      </li>
+      <li>
+        <% if active_tab == :about_us %>
+          <%= link_to "<span class=\"pblcLft\"></span>About Us", about_us_path, :class => "active" %>
+        <% else %>
+          <%= link_to "<span class=\"pblcLft\"></span>About Us", about_us_path %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+<% end %>
+
+
+<div style="clear:both;"></div>
+<% unless flash[:error].blank? %>
+  <div class="ws-alert ws-alert-error ws-rounded" id="error-box">
+    <img alt="Alert icon" class="icon master-sprite" src="/images/pixel.gif" />
+    <div class="ws-alert-content">
+      <%= flash[:error] %>
+    </div>
+    <button class="close master-sprite" onclick="$(this).parent().hide()">
+      close
+    </button>
+  </div>
+<% end %>
+
+<% unless flash[:notice].blank? %>
+  <div class="ws-alert ws-alert-info ws-rounded" id="error-box">
+    <img alt="Alert icon" class="icon master-sprite" src="/images/pixel.gif" />
+    <div class="ws-alert-content">
+      <%= flash[:notice] %>
+    </div>
+    <button class="close master-sprite" onclick="$(this).parent().hide()">
+      close
+    </button>
+  </div>
+<% end %>
+
+<% unless flash[:success].blank? %>
+  <div class="ws-alert ws-alert-success ws-rounded" id="error-box">
+    <img alt="Alert icon" class="icon master-sprite" src="/images/pixel.gif" />
+    <div class="ws-alert-content">
+      <%= flash[:success] %>
+    </div>
+    <button class="close master-sprite" onclick="$(this).parent().hide()">
+      close
+    </button>
+  </div>
+<% end %>

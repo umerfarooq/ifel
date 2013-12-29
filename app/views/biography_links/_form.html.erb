@@ -1,0 +1,19 @@
+<%= f.error_messages :header_message => nil, :message => nil %>
+<p>
+  <%= f.label :biography_link_category_id, "Link Category" %>
+  <br />
+  <%= f.collection_select(:biography_link_category_id, BiographyLinkCategory.published, :id, :title, {:prompt => true}) %>
+</p>
+<p>
+  <%= f.label :text %>
+  <br />
+  <%= f.text_field :text, :size => "75" %>
+</p>
+<p>
+  <%= f.label :url %>
+  <br />
+  <%= f.text_field :url, :size => "75" %>
+</p>
+<p>
+  <%= f.submit "Submit" %>
+</p>

@@ -1,0 +1,29 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :common_questions_tab } %>
+
+<% title "Edit Common Question, #{@question.statement.camelize}" %>
+
+<div class="admnRitCol">
+  <span>
+    <%= link_to "All Sections", list_common_questions_path, :class => 'font20px'  %>
+    <%= link_to("| All Questions", edit_common_question_path(@question.parent, :is_statement => 'true', :section_template_id => @question.parent.section_template_id.to_s), :class => 'font20px') if @question.at_first_level?  %>
+    <%  if @question.at_second_level? %>
+      <%= link_to("| All Questions", edit_common_question_path(@question.parent.parent, :is_statement => 'true', :section_template_id => @question.parent.parent.section_template_id.to_s), :class => 'font20px')  %>
+      <%= link_to("| All Answers", edit_common_question_path(@question.parent, :parent_id => @question.parent.parent.id.to_s), :class => 'font20px')  %>
+    <%end%>
+  </span>
+  <h1 class="marginTop">
+    <%= "Edit, #{'Section '+@question.section_template.sequence_number.to_s+': '+@question.section_template.title.concat(': ') if @question.at_root_level?} #{'Section '+@question.parent.section_template.sequence_number.to_s+': '+@question.parent.section_template.title.concat(': ') if @question.at_first_level?} #{@question.parent.statement.concat(': ') if @question.at_second_level?}#{@question.statement}" %>
+  </h1>
+  <%= render :partial => "form", :locals => {:common_question => @question} %>
+
+  <% if @question.at_root_level? %>
+    <%= render :partial => "sub_questions", :locals => {:common_question => @question} %>
+  <%  elsif @question.at_first_level? %>
+    <%= render :partial => "sub_answers", :locals => {:common_question => @question} %>
+  <% end %>
+
+  <p>
+    <%= link_to '<< Back', url_for(:back) %>
+  </p>
+
+</div>

@@ -1,0 +1,8 @@
+<div class="communityShare">
+  <% if @current_user.community_profile.blank? %>
+    <% profile_path = "#{edit_user_path(@current_user)}#community-profile" %>
+    <h4><%=link_to "Add a detailed description about yourself", profile_path, :target => '_blank' %></h4>
+  <%else%>
+    <p class="breakWord"><%= strip_tags truncate(@current_user.community_profile, 100) %></p>
+  <%end%>
+</div>

@@ -1,0 +1,71 @@
+<% content_for :javascripts do %>
+  <%#= javascript_include_tag 'jquery-1.4.2.min' %>
+
+  <script defer async type="text/javascript">
+    $(document).ready(function() {
+      var msg_title = '<%= @main_banner_message.title %>';
+      var msg_content = '<%= @main_banner_message.content %>';
+
+      $("a#message_edit_link").click(function (event){
+        if($("a#message_edit_link").text() == "EDIT") {
+          $("a#message_edit_link").text("CANCEL");
+          $("#marketing_text_message_title").val(msg_title);
+          $("#marketing_text_message_content").val(msg_content);
+          $("div#message_show").hide();
+          $("div#message_edit").show();
+        } else {
+          $("a#message_edit_link").text("EDIT");
+          $("div#message_show").show();
+          $("div#message_edit").hide();
+        }
+        event.preventDefault();
+      });
+      
+    });
+  </script>
+<% end %>
+
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :home_page_tab } %>
+
+<div class="admnRitCol">
+  <h4>
+    HOME PAGE
+    |
+<%= link_to "EDIT", edit_marketing_text_message_path(@main_banner_message), :id => "message_edit_link" %>
+  </h4>
+  <br />
+  <%unless @main_banner_message.blank?%>
+    <div id="message_show">
+      <strong>
+        Title
+      </strong>
+      <h5>
+        <%= @main_banner_message.title %>
+      </h5>
+      <br />
+      <strong>
+        Sub Title
+      </strong>
+      <p>
+        <%= @main_banner_message.content %>
+      </p>
+    </div>
+
+    <div id="message_edit" style="display: none">
+      <% form_for @main_banner_message do |f| %>
+        <%= f.label :title %>
+        <br />
+        <%= f.text_field :title %>
+        <br />
+        <%= f.label :content %>
+        <br />
+        <%= f.text_area :content, :size => "100x5", :class => "adminEditor" %>
+        <br />
+        <%= f.submit 'Update and Publish' %>
+        <br />
+      <% end %>
+    </div>
+  <%end%>
+  <br />
+</div>
+

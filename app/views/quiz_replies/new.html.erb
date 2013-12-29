@@ -1,0 +1,119 @@
+<% title "#{@quiz_reply.quiz.main_title}?" %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+
+  <h1>COMMON QUESTIONS</h1>
+  <ul id="breadcrumb">
+  </ul>
+  <div class="clear"></div>
+
+  <h2 class="headLine">
+    <%= "#{h(@quiz_reply.quiz.main_title)}?" %>
+  </h2>
+
+  <% if session[:quiz_path] == Quiz.first.path %>
+    <div class="floatL width450 alignC marginTop50">
+    <% else %>
+      <div class="floatL width450 alignC marginTop">
+      <% end %>
+      <%= image_tag @quiz_reply.quiz.picture.url, :alt => (@quiz_reply.quiz.main_title unless @quiz_reply.quiz.picture.blank?), :class => 'inlineImg' %>
+    </div>
+    <div class="floatR width450 gutterMarginLeft">
+      <div class="quizMainText">
+        <%= ((@quiz_reply.quiz.main_text)) %>
+      </div>
+    </div>
+  </div> <!-- End of Sub page Wrapper -->
+
+  <div id="ContentBottom" style="min-height:100px;">
+    <h3 class="subHeadLine gutterMarginLeft30px">
+      <%=h @quiz_reply.quiz.sub_title %>
+    </h3>
+    <div id="sideBarLeft" class="gutterMarginLeft30px noTopMargin">
+      <%= ((@quiz_reply.quiz.sub_text)) %>
+    </div>
+    <% form_for @quiz_reply, :class => "quizForm" do |quiz_reply_form| %>
+      <% if @quiz_reply.point_based? %>
+        <table width="733" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="30" align="center"><strong>YES</strong></td>
+            <td width="80" align="center"><strong>SOMETIMES</strong></td>
+            <td width="30" align="center"><strong>NO</strong></td>
+            <td width="593">&nbsp;</td>
+          </tr>
+          <% quiz_reply_form.fields_for :answers do |answer_fields| %>
+            <tr>
+              <td width="30" align="center">
+                <%= answer_fields.radio_button :statement, "yes" %>
+              </td>
+              <td width="80" align="center">
+                <%= answer_fields.radio_button :statement, "sometimes" %>
+              </td>
+              <td width="30" align="center">
+                <%= answer_fields.radio_button :statement, "no" %>
+              </td>
+              <td width="593">
+                <p>
+                  <%= answer_fields.label :question, answer_fields.object.question.statement %>
+                </p>
+              </td>
+            </tr>
+          <% end %>
+          <tr>
+            <td colspan="4" align="left" class="last">
+              <p>
+                <%= quiz_reply_form.object.quiz.field_label %>
+                <%= quiz_reply_form.text_field :email, :class => "txtField" %>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4" align="center" class="last">
+              <%= quiz_reply_form.submit "Submit", :class => "bntSubmitQuiz", :name => nil %>
+              <%= hidden_field_tag "back_url", @back_url %>
+            </td>
+          </tr>
+        </table>
+      <% else %>
+        <table width="733" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="30" align="center"><strong>YES</strong></td>
+            <td width="30" align="center"><strong>NO</strong></td>
+            <td width="673">&nbsp;</td>
+          </tr>
+          <% quiz_reply_form.fields_for :answers do |answer_fields| %>
+            <tr>
+              <td width="30" align="center">
+                <%= answer_fields.radio_button :statement, "yes" %>
+              </td>
+              <td width="30" align="center">
+                <%= answer_fields.radio_button :statement, "no" %>
+              </td>
+              <td width="673">
+                <p>
+                  <%= answer_fields.label :question, answer_fields.object.question.statement %>
+                </p>
+              </td>
+            </tr>
+          <% end %>
+          <tr>
+            <td colspan="3" align="left" class="last">
+              <p>
+                <%= quiz_reply_form.object.quiz.field_label %>
+                <%= quiz_reply_form.text_field :email, :class => "txtField" %>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" align="center" class="last">
+              <%= quiz_reply_form.submit "Submit", :class => "bntSubmitQuiz", :name => nil %>
+              <%= hidden_field_tag "back_url", @back_url %>
+            </td>
+          </tr>
+        </table>
+      <% end %>
+      <%= hidden_field_tag "current_quiz_path", @quiz_reply.quiz.path %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,123 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'jquery-1.4.2.min' %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var msg_title = '<%= @main_title.title %>';
+      var msg_content = '<%= @main_title.content %>';
+
+      $("a#message_edit_link").click(function (event){
+        if($("a#message_edit_link").text() == "EDIT") {
+          $("a#message_edit_link").text("CANCEL");
+          $("#marketing_text_message_title").val(msg_title);
+          $("#marketing_text_message_content").val(msg_content);
+          $("div#message_show").hide();
+          $("div#message_edit").show();
+        } else {
+          $("a#message_edit_link").text("EDIT");
+          $("div#message_show").show();
+          $("div#message_edit").hide();
+        }
+        event.preventDefault();
+      });
+
+    });
+  </script>
+<% end %>
+
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :partners_tab } %>
+
+<div class="admnRitCol">
+  <h4>
+    PARTNERS PAGE
+    |
+    <%= link_to "EDIT", "#.", :id => "message_edit_link" %>
+  </h4>
+  <br />
+  <%unless @main_title.blank?%>
+    <div id="message_show">
+      <strong>
+        Title
+      </strong>
+      <h5>
+        <%= @main_title.title %>
+      </h5>
+      <br />
+      <strong>
+        Sub Title
+      </strong>
+      <p>
+        <%= @main_title.content %>
+      </p>
+    </div>
+
+    <div id="message_edit" style="display: none">
+      <% form_for @main_title do |f| %>
+        <%= f.label :title %>
+        <br />
+        <%= f.text_field :title %>
+        <br />
+        <%= label_tag 'sub_title', 'Sub Title' %>
+        <br />
+        <%= f.text_area :content, :size => "100x5", :class => "adminEditor" %>
+        <br />
+        <%= f.submit 'Update and Publish' %>
+        <br />
+      <% end %>
+    </div>
+  <%end%>
+  <br />
+  
+  <h4>
+    WICKED START Partners
+    |
+    <%= link_to "Add Partner", new_partner_path %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>      
+      <th>
+        Partner Company Name
+      </th>
+      <th>
+        Title
+      </th>
+      <th>
+        STATE
+      </th>
+      <th>
+        AVAILABLE ACTIONS
+      </th>
+    </tr>
+    <% unless @partners.blank? %>
+      <% @partners.each do |partner| %>
+        <tr>
+          
+          <td>
+            <%= sanitize partner.company_name.camelize %>
+          </td>
+          <td>
+            <%= truncate(sanitize(partner.list_title.camelize), 120) %>
+          </td>
+          <td>
+            <%= partner.state.title.upcase %>
+          </td>
+          <td>
+            <%= link_to 'EDIT', edit_partner_path(partner) %>
+            |
+            <% if partner.published? %>
+              <%= link_to 'INACTIVATE', inactivate_partner_path(partner) %>
+            <% elsif partner.activated? %>
+              <%= link_to 'PUBLISH', publish_partner_path(partner) %>
+              |
+              <%= link_to 'INACTIVATE', inactivate_partner_path(partner) %>
+            <% else %>
+              <%= link_to 'ACTIVATE', activate_partner_path(partner) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+</div>

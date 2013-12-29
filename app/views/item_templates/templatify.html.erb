@@ -1,0 +1,41 @@
+<p>
+  <strong>
+    <%=h "#{@item_template.item_number} #{@item_template.title}" %>
+  </strong>
+</p>
+
+<strong>TEMPLATES</strong>
+<% form_tag templatificate_item_template_path(@item_template) do %>
+<table>
+  <tr>
+    <th>
+      Template Title
+    </th>
+    <th>
+      is_active
+    </th>
+    <th>
+      Associate
+    </th>
+  </tr>
+  <% @template_documents.each do |template_document| %>
+    <tr>
+      <td>
+        <%= link_to template_document.document.original_filename, template_document.document.url, :title => template_document.document.original_filename, :target => "_blank" %>
+      </td>
+      <td>
+        <%= (template_document.is_active) ? "Active" : "Inactive" %>
+      </td>
+      <td>
+        <%= check_box_tag 'template_ids', template_document.id %>
+        <%#= link_to "X" %>
+      </td>
+    </tr>
+  <% end %>
+    <tr>
+      <td colspan="3">
+        <%= submit_tag "Submit" %>
+      </td>
+    </tr>
+</table>
+<% end %>

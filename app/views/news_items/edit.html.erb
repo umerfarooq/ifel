@@ -1,0 +1,48 @@
+<h2>Edit news item</h2>
+
+<% form_for @news_item, :html => { :multipart => true } do |f| %>
+  <br />
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.label :title %> <br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :headline %> <br />
+    <%= f.text_field :headline %>
+  </p>
+  <p>
+    <%= f.label :provider %> <br />
+    <%= f.collection_select(:news_provider_id, NewsProvider.all, :id, :name, {:prompt => true}) %>
+  </p>
+  <p>
+    <%= f.label :news_date %><br />
+    <%= f.date_select :news_date %>
+  </p>
+  <p>
+    <%= f.label :category %> <br />
+    <%= f.collection_select(:news_category_id, NewsCategory.all, :id, :title, {:prompt => true}) %>
+  </p>
+  <p>
+    <%= f.label :summary %> <br />
+    <%= f.text_area :summary %>
+  </p>
+  <p>
+    <%= f.label :body %> <br />
+    <%= f.text_area :body %>
+  </p>
+  <p>
+    <%= f.label :url %> <br />
+    <%= f.text_field :url %>
+  </p>
+  <p>
+    <%= f.label :document %> <br />
+    <%= f.file_field :document %>
+  </p>
+  <p>
+    <%= f.submit :update %>
+  </p>
+  <p>
+    <%= link_to '<< Back', url_for(:back) %>
+  </p>
+<% end %>

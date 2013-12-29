@@ -1,0 +1,516 @@
+<% content_for :head do %>
+
+  <%#= javascript_include_tag "jquery-1.4.2.min" %>
+
+  <script type="text/javascript">
+    //var go;
+    $(document).ready(function (){
+      $("#respond_button").click(function (){
+        $("#response_heading").html("Your answer will be viewable to all WickedStart users");
+        $("#comment_is_private").val(false);
+        $("#comment_body").val("");
+        $("#error_messages_td").text("");
+        //$("#respond_buttons_tr").hide();
+        //$("#respond_message_div").show();
+        //$("#respond_buttons_span").hide("fast", function (){
+        //  $("#respond_message_div").show("fast", function (){});
+        //});
+        $("#respond_buttons_span").hide();
+        $("#respond_message_div").show();
+      });
+      //var user_screen_name = escape(<%= @message.user.screen_name.capitalize %>);
+      var user_screen_name = "<%= @message.user.screen_name.capitalize.gsub(/([:~!<>="])/,'\\\\\1') %>";
+      //go = user_screen_name;
+      $("#reply_privately_link").click(function (event){
+        $("#response_heading").html("Your answer will only be viewable to "+user_screen_name);
+        $("#comment_is_private").val(true);
+        $("#comment_body").val("");
+        $("#error_messages_td").text("");
+        //$("#respond_buttons_tr").hide();
+        //$("#respond_message_div").show();
+        // $("#respond_buttons_span").hide("fast", function (){
+        // $("#respond_message_div").show("fast", function (){});
+        // });
+        $("#respond_buttons_span").hide();
+        $("#respond_message_div").show();
+        //$("#reply_privately_message_div").show();
+        //$("#respond_message_div").slideToggle("medium", function (){
+        //  if ($("#respond_button").attr("value") === "Discard")
+        //    $("#respond_button").attr("value", "Respond");
+        //  else $("#respond_button").attr("value", "Discard");
+        //});
+        event.preventDefault();
+      });
+      $("#cancel_reply_link").click(function (event){
+        //$("#respond_message_div").hide();
+        //$("#respond_buttons_tr").show();
+        //$("#respond_message_div").hide("fast", function (){
+        //  $("#respond_buttons_span").show("fast", function (){});
+        //});
+        $("#respond_message_div").hide();
+        $("#respond_buttons_span").show();
+
+        //$("#respond_message_div").slideToggle("medium", function (){
+        //  if ($("#respond_button").attr("value") === "Discard")
+        //    $("#respond_button").attr("value", "Respond");
+        //  else $("#respond_button").attr("value", "Discard");
+        //});
+        event.preventDefault();
+      });
+      $("#new_comment").submit(function (){
+        if($.trim($("#comment_body").val()) == "") {
+          $("#error_messages_td").text("Response can't be blank");
+          return false;
+        } else {
+          return true;
+        }
+      });
+    });
+  </script>
+<% end %>
+
+
+
+<%= render :partial => "messages/left_column" %>
+<div class="RitCol">
+  <div class="inbxDv">
+    <div class="inbxLft">
+      <strong>
+        <%= @message.user.screen_name.capitalize %>
+      </strong>
+    </div>
+    <div class="sndrMsgDv">
+      <div class="sndrTtl">
+        <h3>
+          <%= @message.title %>
+        </h3>
+      </div>
+      <div class="sndrMsg">
+        <%= @message.body %>
+        <p>
+          <span class="dateText">
+            <%#= "#{link_to "EDIT", edit_message_path(@message)} |" if @message.user == current_user %>
+            <%= "#{link_to "EDIT", edit_message_path(@message)} |" if can? :update, @message %>
+            Posted:
+            <%= @message.created_at.strftime("%m/%d/%Y") %>
+          </span>
+<%#*<span class="pstdSpan">%>
+          <span class="rating">
+            <%= link_to "Report as Inappropriate", report_abuse_message_path(@message) %>
+          </span>
+        </p>
+      </div>
+    </div>
+    <div class="btnSpan" id="respond_buttons_span">
+      <input id="respond_button" type="button" value="Respond" class="inptBtn" />
+      <a id="reply_privately_link" href="#" class="cnclLnk">Reply Privately</a>
+    </div>
+  </div>
+  <div class="inbxRplyDv" id="respond_message_div" style="display: none">
+    <% form_for @comment, :url => message_comments_url(@message) do |f| %>
+      <table border="0" cellpadding="0" cellspacing="0" class="cmpozTbl">
+        <tr>
+          <td class="lblTd">&nbsp;</td>
+          <td><h4>Your Response</h4></td>
+        </tr>
+        <% unless f.error_messages.blank? %>
+          <tr>
+            <td class="lblTd">&nbsp;</td>
+            <td id="error_messages_td" style="color:#CC3333">
+              &nbsp;
+              <%= f.error_messages :header_message => nil, :message => nil %>
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <td class="lblTd">&nbsp;</td>
+          <td id="response_heading">Your answer will be viewable to all WickedStart users</td>
+        </tr>
+        <tr>
+          <td class="lblTd">&nbsp;</td>
+          <td>
+            <%= f.text_area :body, :size => "45x10", :class => "cmpozTxt3" %>
+            <%= f.hidden_field :is_private, :value => true %>
+            <%= f.hidden_field :message_id, :value => @message.id %>
+          </td>
+        </tr>
+        <tr>
+          <td class="lblTd">&nbsp;</td>
+          <td align="right">
+            <a id="cancel_reply_link" href="#" class="cnclLnk">Cancel</a>
+            <%= f.submit :submit, :value => "Post", :class => "inptBtn" %>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+  <div id="comments">
+    <%# unless @comments_for_me.blank? %>
+    <% unless @comments.blank? %>
+      <h4 class="responces">Responses</h4>
+      <%# @comments_for_me.each do |comment| %>
+      <% @comments.each do |comment| %>
+
+        <div class="inbxDv" id="<%= "comment_#{comment.id}" %>">
+          <div class="inbxLft">
+    <%#*<div class="uzflLnk">%>
+            <p>
+              <strong>
+                <%= comment.user.screen_name.capitalize %>
+    <%# if comment.is_new == false %>
+    <%#= comment.user.screen_name.capitalize %>
+    <%# else %>
+    <%#= comment.user.screen_name.capitalize %>
+    <%#*<blink> new</blink>%>
+    <%# end %>
+              </strong>
+            </p>
+            <p>
+              <span style="margin-top: 10px;">
+                <% if comment.is_private %>
+                  Private Message
+                <% else %>
+                  <%= "<strong>#{comment.thumbs_up}</strong> found this useful" if comment.thumbs_up > 0 %>
+                  <%#*<strong>%>
+                    <%#= comment.rating %>
+                  <%#*</strong>%>
+                  <%#*found this useful%>
+                <% end %>
+              </span>
+            </p>
+          </div>
+    <%#*<div class="sndrMsgDv noBg">%>
+          <div class="inboxComment">
+            <p>
+              <%= comment.body %>
+            </p>
+
+            <div class="commentFooter">
+              <p class="dateText">
+                <%= "#{link_to "EDIT", edit_message_comment_path(@message, comment)} |" if comment.user == current_user %>
+                Posted:
+                <%= comment.created_at.strftime("%m/%d/%Y") %>
+              </p>
+              <div class="rating">
+                <% if comment.rated_by?(current_user) %>
+                  <% if comment.rated_positively_by?(current_user) %>
+                    <%= image_tag "thumbup-active.jpg", :alt => "ThumbsUp-Active" %>
+                    <%= image_tag "thumbdown.jpg", :alt => "ThumbsDown-Inactive" %>
+                  <% else %>
+                    <%= image_tag "thumbup.jpg", :alt => "ThumbsUp-Inactive" %>
+                    <%= image_tag "thumbdown-active.jpg", :alt => "ThumbsDown-Active" %>
+                  <% end %>
+                <% else %>
+                  <%= link_to image_tag("thumbup.jpg", :alt => "ThumbsUp"), thumbsup_message_comment_path(@message, comment) %>
+                  <%= link_to image_tag("thumbdown.jpg", :alt => "ThumbsDown"), thumbsdown_message_comment_path(@message, comment) %>
+                <% end %>
+
+                <%= link_to "Report as Inappropriate", report_abuse_message_comment_path(@message, comment) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <%#= will_paginate @comments_for_me %>
+      <%= will_paginate @comments %>
+    <% end %>
+  </div>
+</div>
+
+ <%#*# TODO [8/5/10 5:46 PM] => DELETE COMMENTS IN NEXT BUILD%>
+
+<%#*<div class="inbxDv">%>
+<%#*<div class="sndrNme">%>
+<%#*Jamal Khan%>
+<%#*</div>%>
+<%#*<div class="sndrTtl">%>
+<%#*Message-1 Title%>
+<%#*</div>%>
+<%#*<div class="uzflLnk">%>
+<%#*Was This Useful<br />%>
+<%#*<a href="#">Yes</a>%>
+<%#*|%>
+<%#*<a href="#">No</a>%>
+<%#*</div>%>
+<%#*<div class="sndrMsg">%>
+<%#*You are about to enter newsgroups hosted on the Internet. Microsoft is not response for and does not endorse the content of the newsgroups in any way. Your use of, or reliance on, the content of the newsgroups is at your own risk.%>
+<%#*Windows XP is loaded with new tools and programs that ensure the privacy and security of your data, and help you operate your computer at peak performance. Learn how to assign a password, lock your computer, back up files and folders, and more to protect the contents of your computer. Discover how to manage computer components, services, and system tools; and how to work with disk management and encryption features.%>
+<%#*<br /><br />%>
+<%#*Posted : 05/15/2010%>
+<%#*|%>
+<%#*<a href="#">Report as Inappropriate </
+<%#*<td class="lblTd">&nbsp;</td>%>
+<%#*<td valign="top">Was This Useful<br />%>
+<%#*<a href="#">Yes</a> | <a href="#">No</a>%>
+<%#*</td>%>
+<%#*<td>%>
+<%#= @message.body %>
+<%#*</td>%>
+<%#*</tr>%>
+<%#*<tr>%>
+<%#*<td class="lblTd">&nbsp;</td>%>
+<%#*<td class="lblTd">&nbsp;</td>%>
+<%#*</tr>%>
+<%#*<tr>%>
+<%#*<td valign="top" class="lblTd">&nbsp;</td>%>
+<%#*<td>%>
+<%#*Posted :%>
+<%#= @message.created_at.strftime("%m/%d/%Y") %>
+<%#*|%>
+<%#*<a href="#">TODO: Report as Inappropriate</a>%>
+<%#= link_to "Report as Inappropriate", report_abuse_message_path(@message) %>
+<%#*</td>%>
+<%#*<br /><br />%>
+<%#*<span class="btnSpan">%>
+<%#*<img src="images/respond-btn.jpg" align="absmiddle" class="inptBtn" />%>
+<%#*<a href="#" class="cnclLnk">Reply Privately</a>%>
+<%#*</span>%>
+<%#*</div>%>
+<%#*</div>%>
+
+
+<%#*<style>%>
+<%#*</style>%>
+<%#*.posted-on{ padding-left:400px;  padding:3px; font-size:11px;  position:absolute; left:-140px;}%>
+<%#*.ratings{ float:right; position:relative; margin-top:40px; width:200px; height:26px;  border:solid 1px #c8c8c8; background-color:#f1f1f1;}%>
+<%#*.ratings a{ display:inline-block; vertical-align:middle;}%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%# if @confirmation_message %>
+<%#*<p class="inbxMsg">%>
+<%#= @confirmation_message %>
+<%#*</p>%>
+<%# else %>
+<%# end %>
+
+
+
+
+
+
+
+
+
+
+
+
+<%#*<div class="uzflLnk">%>
+<%#*Was This Useful<br />%>
+<%#*<a href="#">Yes</a> | <a href="#">No</a>%>
+<%#*</div>%>
+
+
+
+
+
+<%#*<img src="images/respond-btn.jpg" align="absmiddle" class="inptBtn" />%>
+<%#*<a href="#" class="cnclLnk">Reply Privately</a>%>
+
+
+
+
+
+
+<%#*<div class="inbxDv">%>
+<%#*<table width="200" border="0" cellpadding="0" cellspacing="0" class="cmpozTbl">%>
+<%#*<tr>%>
+<%#*<td class="lblTd">%>
+<%#= @message.user.screen_name.capitalize %>
+<%#*</td>%>
+<%#*<td>%>
+<%#*<h3>%>
+<%#= @message.title %>
+<%#*</h3>%>
+<%#*</td>%>
+<%#*</tr>%>
+<%#*<tr>%>
+<%#*<td class="lblTd">&nbsp;</td>%>
+<%#*<td valign="top">Was This Useful<br />%>
+<%#*<a href="#">Yes</a> | <a href="#">No</a>%>
+<%#*</td>%>
+<%#*<td>%>
+<%#= @message.body %>
+<%#*</td>%>
+<%#*</tr>%>
+<%#*<tr>%>
+<%#*<td class="lblTd">&nbsp;</td>%>
+<%#*<td class="lblTd">&nbsp;</td>%>
+<%#*</tr>%>
+<%#*<tr>%>
+<%#*<td valign="top" class="lblTd">&nbsp;</td>%>
+<%#*<td>%>
+<%#*Posted :%>
+<%#= @message.created_at.strftime("%m/%d/%Y") %>
+<%#*|%>
+<%#*<a href="#">TODO: Report as Inappropriate</a>%>
+<%#= link_to "Report as Inappropriate", report_abuse_message_path(@message) %>
+<%#*</td>%>
+<%#*</tr>%>
+<%#*<tr id="respond_buttons_tr">%>
+<%#*<td class="lblTd">&nbsp;</td>%>
+<%#*<td>%>
+<%#*<input id="respond_button" type="image" src="../images/respond-btn.jpg" class="inptBtn" />%>
+<%#*<input id="respond_button" type="button" value="Respond" class="inptBtn" />%>
+<%#*<a id="reply_privately_link" href="#" class="cnclLnk">Reply Privately</a>%>
+<%#*&nbsp;%>
+<%#*</td>%>
+<%#*</tr>%>
+<%#*</table>%>
+<%#*</div>%>
+
+
+
+
+
+<%#*<textarea name="textarea" id="textarea" cols="45" rows="5" class="cmpozTxt2">Enter Message here</textarea>%>
+
+
+<%#*<input id="respond_button" type="button" value="Post" style="float: left; padding: 0 10px; margin-right: 10px; height: 26px; font-weight: bold; color: #FFFFFF; background: transparent url(/images/btn-bg-rpt.jpg) repeat-x scroll left top; border: medium none;" />%>
+<%#*<input type="image" src="/images/post-btn.jpg" class="inptBtn" />%>
+
+
+<%# @message.comments_for(current_user).each do |comment| %>
+<%# next if( comment.is_private && (current_user.id != @message.user_id) && (current_user.id != comment.user_id)) %>
+<%# @message.comments.all(:order => 'rating DESC').each do |comment| %>
+<%# next if( comment.is_private && (current_user.id != @message.user_id) && (current_user.id != comment.user_id)) %>
+<%#*<div class="sndrNme">%>
+<%#= comment.user.screen_name.capitalize %>
+<%#*</div>%>
+<%#*<div class="sndrTtl">%>
+<%#*Message-1 Title%>
+<%#*</div>%>
+
+
+
+<%#*<div class="sndrNme">%>
+<%#= @message.user.screen_name.capitalize %>
+<%#*</div>%>
+
+
+
+
+<%# if comment.id == @comment_id && (@confirm == 'rating-old' || @confirm == 'rating-new') && @action == 'thumbsup'%>
+<%#= link_to image_tag("thumbup-active.jpg", :alt => "TumbsUp-Active"), thumbsup_message_comment_path(@message, comment) %>
+<%# else %>
+<%#= link_to image_tag("thumbup.jpg", :alt => "TumbsUp"), thumbsup_message_comment_path(@message, comment) %>
+<%# end %>
+<%# if comment.id == @comment_id && (@confirm == 'rating-old' || @confirm == 'rating-new') && @action == 'thumbsdown'%>
+<%#= link_to image_tag("thumbdown-active.jpg", :alt => "TumbsDown-Active"), thumbsdown_message_comment_path(@message, comment) %>
+<%# else %>
+<%#= link_to image_tag("thumbdown.jpg", :alt => "TumbsDown"), thumbsdown_message_comment_path(@message, comment) %>
+<%# end %>
+
+
+
+
+<%# unless flash[:notice].blank? %>
+<%#*<p class="inbxMsg">%>
+<%#= flash[:notice] %>
+<%#*</p>%>
+<%# end %>
+
+
+
+
+
+
+      <%# elsif comment.rating %>
+
+      <%# if comment.is_rated_by?(current_user) %>
+      <%#*Rated at%>
+      <%#*<strong>%>
+      <%#= comment.rating %>
+      <%#*</strong>%>
+      <%#*<br />%>
+      <%# else %>
+      <%#*Was This Useful<br />%>
+      <%#= link_to "Yes", thumbsup_message_comment_path(@message, comment) %>
+      <%#*|%>
+      <%#= link_to "No", thumbsdown_message_comment_path(@message, comment) %>
+      <%#*<a href="#">Yes</a> | <a href="#">No</a>%>
+      <%# end %>
+
+
+
+
+
+
+
+    <%#*<br /><br />%>
+    <%#*Posted :%>
+    <%#= comment.created_at.strftime("%m/%d/%Y") %>
+    <%#*|%>
+    <%#*<a href="#">Report as Inappropriate</a>%>
+    <%#= link_to "Report as Inappropriate", report_abuse_message_comment_path(@message, comment) %>
+    <%#*.posted-on{ padding-left:400px;  padding:3px; font-size:11px;  position:absolute; left:-140px;}%>
+
+    <%#*<div class="ratings">%>
+    <%#*<div style="border: 1px solid red; text-align: right; margin-top: 10px">%>
+    <%#*<span class="posted-on">%>
+
+
+
+
+
+
+
+
+
+
+    <%#*<div class="inbxDv" id="%>
+    <%#= "comment_#{comment.id}" %>
+    <%#*">%>
+    <%#*<table width="200" border="0" cellpadding="0" cellspacing="0" class="cmpozTbl">%>
+    <%#*<tr>%>
+    <%#*<td valign="top">%>
+    <%#*<strong>%>
+    <%#= comment.user.screen_name %>
+    <%#*</strong>%>
+    <%#*<br />%>
+    <%#= comment.user.screen_name %>
+    <%# if comment.is_private %>
+    <%#*Private%>
+    <%# else %>
+    <%# if comment.is_rated_by?(current_user) %>
+    <%#*Rated at%>
+    <%#*<strong>%>
+    <%#= comment.rating %>
+    <%#*</strong>%>
+    <%#*<br />%>
+    <%# else %>
+    <%#*Was This Useful<br />%>
+    <%#= link_to "Yes", thumbsup_message_comment_path(@message, comment) %>
+    <%#*|%>
+    <%#= link_to "No", thumbsdown_message_comment_path(@message, comment) %>
+    <%#*<a href="#">Yes</a> | <a href="#">No</a>%>
+    <%# end %>
+    <%# end %>
+    <%#*</td>%>
+    <%#*<td valign="top">%>
+    <%#= comment.body %>
+    <%#*</td>%>
+    <%#*</tr>%>
+    <%#*<tr>%>
+    <%#*<td valign="top" class="lblTd">&nbsp;</td>%>
+    <%#*<td>%>
+    <%#*Posted :%>
+    <%#= comment.created_at.strftime("%m/%d/%Y") %>
+    <%#*|%>
+    <%#*<a href="#">Report as Inappropriate</a>%>
+    <%#= link_to "Report as Inappropriate", report_abuse_message_comment_path(@message, comment) %>
+    <%#*</td>%>
+    <%#*</tr>%>
+    <%#*</table>%>
+    <%#*</div>%>

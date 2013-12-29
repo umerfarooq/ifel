@@ -1,0 +1,15 @@
+<ul id="breadcrumb">
+  <li>
+    <%= link_to "Feed wall", feedwall_path, :class => ("current" if(selected == :feedwall)) %>
+  </li>
+  <li>
+    <%= link_to "Community Profile", community_profile_path, :class => ("current" if(selected == :community_profile)) %>
+  </li>
+  <li>
+    <%= link_to "Topic Categories", topic_categories_path, :class => ("current" if(selected == :topic_categories)) %>
+  </li>
+  <li>
+    <%= link_to "Networking/Support", '/forum' %>
+  </li>
+</ul>
+<div class="clear"></div>

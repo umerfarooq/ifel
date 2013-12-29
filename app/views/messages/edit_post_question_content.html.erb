@@ -1,0 +1,24 @@
+<%= render :partial => "admins/admin_client_information_menu", :locals => { :active_admin_client_information_tab => :community_tab } %>
+
+<div class="admnRitCol">
+
+
+  <h1>Edit Post Question Content Page</h1>
+
+  <% form_for @marketing_text_message, :url => update_post_question_content_message_path(@marketing_text_message) do |f| %>
+    <%= f.error_messages %>
+    <p>
+      <%= f.label :title %>
+      <br />
+      <%= f.text_field :title %>
+    </p>
+    <p>
+      <%= f.label :content %>
+      <br />
+      <%= f.text_area :content, :class => "adminEditor" %>
+    </p>
+    <p>
+      <%= f.submit 'Update' %>
+    </p>
+  <% end %>
+</div>

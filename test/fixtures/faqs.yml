@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  question: MyString
+  answer: MyText
+  status: MyString
+  is_active: false
+
+two:
+  name: MyString
+  question: MyString
+  answer: MyText
+  status: MyString
+  is_active: false

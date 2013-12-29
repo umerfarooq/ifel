@@ -1,0 +1,11 @@
+<% form_remote_for @topic,  :url => { :action => "activate_orphan" }  do |q| %>
+  <p>
+    <%= label_tag :name, @topic.name %>
+  </p>
+  <p>
+    <%= q.select(:item_template,options_from_collection_for_select(display_test, :id, :name, @topic.item_template.collect { |ti| ti.id }),{:prompt=> false}, {:multiple=>true}) %>
+  </p>
+  <p>
+    <%= q.submit :Update %>
+  </p>
+<% end %>

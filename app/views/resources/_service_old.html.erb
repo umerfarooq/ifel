@@ -1,0 +1,36 @@
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    function loadCategoryContent(categoryId){
+      $('#category_panel_'+categoryId).load('/resources/'+categoryId+'/load_category_content/');
+    }
+    function loadSectionCategoryContent(categoryId, sectionId){
+      $('#category_panel_'+categoryId).load('/resources/load_category_content/'+categoryId+"/"+sectionId);
+    }
+    function loadAllContent(sectionId){
+      $('#all_content_panel').load('/resources/'+sectionId+'/load_all_content/');
+    }
+
+    function display_more_service_providers(display_check){
+     showProgressBar();
+      $.get('/resources/display_more_service_providers', {
+      'display_more_check':display_check
+    },function(data){
+      hideProgressBar();
+      $('#all_content_panel').html(data);
+    },'html');
+    
+    }
+    
+  </script>
+<% end %>
+
+<div class="resourcesContentWrapper">
+  <div id = "all_content_panel">
+    <%unless top_categories.blank? %>
+      <div id = "category_panel_<%=  top_categories.id.to_s %>">
+        <%= render :partial => '/resources/service_category', :locals => {:resource_category => top_categories, :section_template => section_template, :is_section_selected => is_section_selected, :limit => 11, :display_more_check=>10} %>
+      </div>
+    <%end%>
+    <br/>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<% title "The Latest Small Business Startup News" %>
+<% meta "The latest entrepreneur news with information concerning people interested in starting their own business." %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" unless logged_in? %>
+
+  <h1>ABOUT US</h1>
+
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :news} %>
+
+  <div id="contentLarge">
+    <% unless logged_in? %>
+      <% (@news_articles[0..2] || []).each do |news_article| %>
+        <div class="news noBorder">
+          <div class="newsLogo">
+            <%= link_to image_tag(news_article.news_provider.logo.url(:small), :alt => news_article.news_provider.title), news_article.news_provider.url , :target=>'_blank' if news_article.news_provider.present? %>
+          </div>
+          <div class="newsLst">
+            <%= link_to (news_article.title)+'<span class="offSiteLink"></span>', news_article.url , :target => '_blank' %>
+            <span class="meta">
+              <%= ws_date_format(news_article.news_date) %>
+            </span>
+            <p>
+              <%= news_article.summary %>
+              <%= link_to "Read more", news_article if news_article.internal? %>
+            </p>
+            <%= render :partial => 'shared/share_widget' %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="clear"></div>
+      <div id="ContentMiddle" class="marginBtm25">
+        <h3 class="header wide680 marginBtm25">Featured In</h3>
+        <div class="rectNews">
+          <% @featured_news_articles.each_with_index do |article, iterator| %>
+            <%= link_to image_tag(article.news_provider.logo.url(:featured), :alt => article.news_provider.title, :class => (iterator == 0 )? 'first':''), article if article.news_provider.present? %>
+          <% end %>
+        </div>
+      </div>
+    <%end%>
+
+    <div class="newsCategory <%= 'noBorder' if logged_in? %>">
+      <% (helper_news_articles_to_show(@news_articles) || []).each do |news_article| %>
+        <% content_tag :div, :class => "news #{'noBorder noMargin' if(news_article == @news_articles.last)}" do %>
+          <% unless logged_in? %>
+            <div class="newsLogo">
+              <%= helper_news_provider_logo(news_article) %>
+            </div>
+          <%end%>
+          <%= link_to news_article.title, helper_news_source(news_article) , :target => '_blank'%>
+          <span class="meta">
+            <%= "#{news_article.feeder.title} | " if helper_is_external_news?(news_article) %><%=  "#{ws_date_format(helper_news_date(news_article))}" %>
+          </span>
+
+          <% unless logged_in? %>
+            <p>
+              <%= news_article.summary %> <%= (link_to "Read more", news_article if news_article.internal?) if helper_is_internal_news?(news_article) %>
+            </p>
+            <span class="st_facebook_button" displayText="Facebook"></span><span class="st_twitter_button" displayText="Tweet"></span><span class="st_email_button" displayText="Share"></span><span class="st_sharethis_button" displayText="ShareThis"></span>
+          <%else%>
+            <p><%=truncate(strip_tags(news_article.summary),200) %></p>
+          <%end%>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+  <%= render :partial => "shared/aboutus_sidebar_events", :locals => { :upcomming_events => @upcomming_events } %>
+</div> <!-- End of Sub page Wrapper -->

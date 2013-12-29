@@ -1,0 +1,45 @@
+<%= render :partial => "/admins/admin_client_information_menu", :locals => { :active_admin_client_information_tab => :community_tab } %>
+<div class="admnRitCol">
+  <h4>
+    TOPIC
+  </h4>
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>NAME</th>
+      <th>STATE</th>
+      <th style="width: 320px">AVAILABLE ACTIONS</th>
+    </tr>
+    <% @topics.each do |topic| %>
+      <tr>
+        <td style="width: 350px">
+          <span id="topic_name_span_<%= topic.id %>">
+            <%=h topic.name %>
+          </span>
+        </td>
+        <td>
+          <%= topic.state.title.upcase %>
+        </td>
+        <td>
+          <%= link_to 'EDIT', edit_topic_path(topic) %>
+          |
+          <% if topic.state.is_published? %>
+            <%= link_to 'INACTIVATE', inactivate_topic_path(topic) %>
+          <% elsif topic.state.is_activated? %>
+            <%= link_to 'PUBLISH', publish_topic_path(topic) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_topic_path(topic) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_topic_path(topic) %>
+          <% end %>
+          |
+          <%= link_to 'DELETE', topic_path(topic), :method => :delete, :confirm => "Are you sure?" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <hr />
+  <p>
+    <%= link_to '<< Back', community_tab_admins_url %>
+  </p>
+</div>

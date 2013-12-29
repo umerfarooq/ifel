@@ -1,0 +1,82 @@
+<style>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  html,body{height: 100%;}
+  #Playout {
+    width: 900px;
+    margin: auto;
+    font-family: inherit;
+    position: relative;
+    min-height: 100%;
+  }
+  #Pheader {
+    height: 170px;
+    margin-bottom: 15px;
+  } 
+  .Plogo{
+    float: left;
+    width: 340px;
+    padding: 10px;
+
+  }
+  .Pmid{
+    float: left;
+    width:400px;
+    padding: 10px;
+  }
+  .Pdate{
+    float: left;
+    width: 100px;
+    padding: 10px;
+  }
+  #Pcontent {
+    padding: 10px 10px 40px 10px;
+  }
+
+  #Pcontent p {
+    margin-bottom: 10px;
+  }
+
+  .PsectionHeading { font-weight: bold; font-size: 18px;}
+  .PitemHeading { font-weight: bold; font-size: 16px;}
+
+  #Pfooter{
+    bottom:0;
+    left:0;
+    width:100%;
+    position: absolute;
+    text-align: center; 
+  }
+</style>
+
+<head><meta http-equiv="Content-type" content="text/html; charset=utf-8" /></head>
+
+<body onload="javascript:window.print();">
+  <div id="Playout">
+
+    <div id="Pheader">
+      <% image_url =  (@current_user.company.logo.url(:profile_view) if @current_user.company.logo.exists?(:profile_view) ) if @current_user.company.present? %>
+      <div class="Plogo"><img src="<%= image_url %>" /></div>
+      <div class="Pmid PsectionHeading"><%= @current_user.business_idea %></div>
+      <div class="Pdate"><%= Date.today.strftime("%m/%d/%y").to_s %></div>  
+    </div>  
+
+    <div id="Pcontent">
+      <p class="PsectionHeading"><%= @section.title.to_s %></p>
+      <% @section.items.each do |item| %>
+        <% if item.user_answer.present? %>
+          <p class="PitemHeading"><%= item.title.to_s %></p>
+          <p><%= item.user_answer %></p>
+        <%end%>
+      <%end%>
+      <div class="push"></div>
+    </div>
+
+    <div id="Pfooter">
+      Powered by <a href="http://www.wickedstart.com" target="_blank">Wicked Start.com</a>
+    </div>
+
+  </div>
+</body>

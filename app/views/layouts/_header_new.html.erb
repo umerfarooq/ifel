@@ -1,0 +1,31 @@
+<% content_for :javascripts do %>
+  <script>
+    $(document).ready(function(){
+      $("#dropArrow").click(function(){
+        if ($("#profileModel").is(':hidden'))
+          $("#profileModel").fadeIn('slow');
+        else{
+          $("#profileModel").fadeOut('slow');
+        }
+        return false;
+      });
+
+      $('#dropArrow').click(function(e) {
+        e.stopPropagation();
+      });
+      $(document).click(function() {
+        $('#profileModel').fadeOut('slow');
+
+      });
+    });
+  </script>
+<%end%>
+
+<h1 class="logo">
+  <%#= link_to image_tag( (configurations.logo.exists?(:header)) ? configurations.logo.url(:header) : 'wibo-logo.jpg'), root_path, :title => "Home" %>
+  <%= link_to image_tag((!@current_user or @current_user.associated_with_ifel) ? 'banner-ifel.jpg' : 'banner.jpg' ), root_url, :title => 'Home' %>
+</h1>
+<!--<div class="headTxt">
+ Get going NYU!
+</div>-->
+

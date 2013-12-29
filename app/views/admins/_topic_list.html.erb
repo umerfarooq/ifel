@@ -1,0 +1,307 @@
+<%content_for :javascripts do%>
+  <script>
+    $(document).ready(function()
+    {
+      $('#association_type').val('new');
+      $("form#new_topic").submit(function()
+      {
+        var topics, section_item, topic_item = '-1';
+        if($("#item_ids").val()!=null){
+          topic_item = $("#item_ids").val();
+        }
+        if($("#section_ids").val()!=null){
+          section_item = $("#section_ids").val();
+        }
+        var assoc_type = $("#association_type").val();
+        var name = $('#name').val();
+        if($("#topic_ids").val()!=null){
+          topics = $("#topic_ids").val(); 
+        }   
+        if(assoc_type == 'new' && name == "")
+        {
+          $('#error_text').text("Please enter a valid name for topic");
+          $('#error_text').show();
+        }
+        else
+        {
+          $.ajax({
+            type: "POST",
+            url: "/topics",
+            data: {
+              'name':name,
+              'item_templates' :topic_item,
+              'section_templates' :section_item,
+              'topics' : topics,
+              'association_type' : assoc_type
+            },
+            success: function(data)
+            {
+              if(data.success){
+                $('#error_text').css('backgroundColor','#EFEF00')
+                $('#error_text').text("Thank you, your topic has been posted.");
+                $('#error_text').show();
+                $('#name').val("");
+                //$("#item_ids").val("");
+                //$("#topic_ids").val("");
+                //$("#section_ids").val("");
+              }
+              else{
+                $('#error_text').text("Problem, Your topics have not been posted.");
+                $('#error_text').show();
+              }
+            },
+            dataType:'json'
+          });
+        }
+        return false
+      });
+      $("#id_name").change(function(){
+        var section = $("#id_name").val();
+
+        $.get('/topics/topic_items_on_category', {
+          'category':section
+        }, function(data){
+          $('#topic_items').html(data);
+        },'html')
+
+      });
+
+      $("#item_id").change(function(event){
+        $.get('/topics/select_topic_on_item', {
+          'item':$("#item_id").val()
+        }, function(data){
+          $('#topic_item_list').html(data);
+        },'html')
+      });
+
+      $("#section_id").change(function(event){
+        $.get('/topics/select_topic_on_section', {
+          'section':$("#section_id").val()
+        }, function(data){
+          $('#topic_section_list').html(data);
+        },'html')
+      });
+    });
+    function unmark_as_default(type, id){
+      $.post("/topics/"+id+"/unmark_template_as_default", {'type':type,'_method':'put'},
+      function(data){
+        if(type=='item'){
+          $('#topic_item_list').html(data);
+        }else{
+          $('#topic_section_list').html(data);
+        }
+      }, 'html');
+    }
+    function mark_as_default(type, id){
+      $.post("/topics/"+id+"/mark_template_as_default", {'type':type,'_method':'put'},
+      function(data){
+        if(type=='item'){
+          $('#topic_item_list').html(data);
+        }else{
+          $('#topic_section_list').html(data);
+        }
+      }, 'html');
+    }
+    function inactivate_template_topic(type, id){
+      $.post("/topics/"+id+"/inactivate_template", {'type':type,'_method':'put'},
+      function(data){
+        if(type=='item'){
+          $('#topic_item_list').html(data);
+        }else{
+          $('#topic_section_list').html(data);
+        }
+      }, 'html');
+    }
+    function activate_template_topic(type, id){
+      $.post("/topics/"+id+"/activate_template", {'type':type,'_method':'put'},
+      function(data){
+        if(type=='item'){
+          $('#topic_item_list').html(data);
+        }else{
+          $('#topic_section_list').html(data);
+        }
+      }, 'html');
+    }
+    function publish_template_topic(type, id){
+      $.post("/topics/"+id+"/publish_template", {'type':type,'_method':'put'},
+      function(data){
+        if(type=='item'){
+          $('#topic_item_list').html(data);
+        }else{
+          $('#topic_section_list').html(data);
+        }
+      }, 'html');
+    }
+  
+    function chose_topic_box(type){
+      if(type=='new'){
+        $('#new_topic_box').show();
+        $('#existing_topic_box').hide();
+        $('#association_type').val('new');
+        $("#topic_ids").val("");  
+        $("#new_topic_link").removeClass('blueLink').addClass('greyLink');
+        $("#existing_topic_link").removeClass('greyLink').addClass('blueLink');
+      }else
+        if(type=='existing'){
+          $('#new_topic_box').hide();
+          $('#existing_topic_box').show();  
+          $('#association_type').val('existing');      
+          $("#name").val("");
+          $("#new_topic_link").removeClass('greyLink').addClass('blueLink');
+          $("#existing_topic_link").removeClass('blueLink').addClass('greyLink');
+        }
+    }
+  </script>
+<%end%>
+
+<div class="admnQuizDv">
+  <% form_tag '/topics', :id=>'new_topic', :method=>:post do%>
+    <table width="200" border="0" cellspacing="0" class="admnQuiztbl">
+      <tr>
+        <td colspan="5" style="color: black"><h4 style="color:black">Message Topics</h4></td>
+      </tr>
+      <td colspan="5"></td>
+      <tr>
+        <td colspan="5">
+          <h5><%= link_to 'Add New Topic', "javascript:chose_topic_box('new');", :id => 'new_topic_link', :class => 'greyLink' %> | <%= link_to 'Associate Existing Topic', "javascript:chose_topic_box('existing');", :id => 'existing_topic_link' %></h5>
+          <p style="color: red"><%= errors %></p>
+          <label id="error_text" style="color: red;"></label>
+        </td>
+      </tr>
+      <%= hidden_field_tag 'association_type', :value => 'new'  %>
+      <tr id="new_topic_box">
+        <td>
+          Enter Name:
+        </td>
+        <td colspan="4">
+          <p class="admnP">
+            <%= text_field_tag(:name ,"", :cols=>'45', :rows=>'5', :maxlength => 25, :style => "width:300px")%>
+            <%= link_to "List All Topics", topics_path %>
+          </p>
+        </td>
+      </tr>
+
+      <tr id="existing_topic_box" style="display: none;">
+        <td>
+          Select Topic:
+        </td>
+        <td colspan="4">
+          <p class="admnP">
+            <%= select_tag "topic_ids",options_from_collection_for_select(helper_display_topics, :id, :name),{:multiple=>true, :prompt=> false}%>
+          </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          All Categories
+        </td>
+        <td>
+          <%= select_tag "section_ids",options_from_collection_for_select(helper_display_sections, :id, :title),{:multiple=>true, :prompt=> false}%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          Items of all Category
+        </td>
+        <td>
+          <%= select_tag "item_ids",options_from_collection_for_select(helper_display_items_concatenated_with_sections, :id, :name),{:multiple=>true, :prompt=> false}%>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <p><%= submit_tag 'Save', :class => "submit" %></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="5"></td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+
+<table width="200" border="0" cellspacing="0" class="admnQuiztbl">
+  <tr>
+    <td colspan="5"></td>
+  </tr>
+  <tr>
+    <td colspan="2"><h5 style="color: black">TOPICS FOR ITEMS </h5>
+      <% items = helper_display_items_concatenated_with_sections %></td>
+    <td><%= collection_select( :item, :id, items, :id, :name, {:prompt => true}, {:style => "width:300px"})  %></td>
+  </tr>
+  <tr>
+    <td colspan="5"></td>
+  </tr>
+</table>
+
+<div id="topic_item_list">
+  <%=render :partial=>"admins/topics_according_to_item_list", :locals=>{:topics=>topics}%>
+</div>
+
+<table width="200" border="0" cellspacing="0" class="admnQuiztbl">
+  <tr>
+    <td colspan="5"></td>
+  </tr>
+  <tr>
+    <td colspan="2"><h5 style="color: black">TOPICS FOR SECTIONS </h5>
+      <% sections = helper_display_sections %></td>
+    <td><%= collection_select( :section, :id, sections, :id, :title, {:prompt => true}, {:style => "width:300px"})  %></td>
+  </tr>
+  <tr>
+    <td colspan="5"></td>
+  </tr>
+</table>
+
+<div id="topic_section_list">
+  <%=render :partial=>"admins/topics_according_to_section_list", :locals=>{:topics=>topics}%>
+</div>
+<br />
+<br />
+
+<%orphan_topics = orphan_topic%>
+<%unless orphan_topics.blank?%>
+  <table width="200" border="0" cellspacing="0" class="admnQuiztbl">
+    <tr>
+      <td colspan="5">
+        <h5 style="color: black">ORPHAN TOPICS</h5>
+      </td>
+    </tr>
+    <%orphan_topics.each do |tpc|%>
+      <tr>
+        <td colspan="5">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= tpc.name %>
+        </td>
+        <td>
+          <%if(tpc.is_orphan)%>
+            <%= link_to 'ACTIVATE ORPHAN TOPIC', activate_orphan_topic_topic_path(tpc) %>
+      <%#*|%>
+      <%#= link_to 'EDIT', edit_topic_path(topic) %>
+          <%else%>
+            <% if(tpc.state == (State.find_by_name('publish'))) %>
+              <%= link_to 'EDIT', edit_topic_path(topic) %>
+              |
+              <%= link_to 'INACTIVATE', inactivate_topic_path(tpc) %>
+            <% elsif(tpc.state == (State.find_by_name('activate'))) %>
+              <%= link_to 'EDIT', edit_topic_path(tpc) %>
+              |
+              <%= link_to 'PUBLISH', publish_topic_path(tpc) %>
+              |
+              <%= link_to 'INACTIVATE', inactivate_topic_path(tpc) %>
+            <% else %>
+              <%= link_to 'EDIT', edit_topic_path(tpc) %>
+              |
+              <%= link_to 'ACTIVATE', activate_topic_path(tpc) %>
+            <% end %>
+          <%end%>
+        </td>
+      </tr>
+    <%end%>
+  </table>
+<%end%>
+

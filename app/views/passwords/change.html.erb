@@ -1,0 +1,49 @@
+<% title "Change Password" %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+
+  <h1>Change Password</h1>
+<%#*<h2 class="headLine">Did you forget your username or password?</h2>%>
+  <h3 class="subHeadLine">Please enter your new password.</h3>
+  <% form_for @user, :url => password_path, :method => "put" do |f| %>
+  <%# form_tag passwords_path(@perishable_user_id), :method => "put" do %>
+    <table cellspacing="0" cellpadding="0" border="0" class="frmLogin">
+      <tbody>
+        <tr>
+          <td colspan="2">
+            <%= error_messages_for :user, :header_message => nil, :message => nil %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= f.label :password %>
+          </td>
+          <td >
+            <%= f.password_field :password %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= f.label :password_confirmation %>
+          </td>
+          <td >
+            <%= f.password_field :password_confirmation %>
+          </td>
+        </tr>
+        <tr>
+          <th align="left" colspan="2">&nbsp;</th>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <%= f.submit "Update my password and log me in", :class => "bntSubmit", :name => nil %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+  <div class="clear"></div>
+</div>

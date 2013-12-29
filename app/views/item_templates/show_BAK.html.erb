@@ -1,0 +1,138 @@
+<div id="liteBx-Cntainer" style="height:620px;">
+  <% content_for :head do %>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#previous_item_template_link").click(function (data){
+          $.get("<%= item_template_path(@item_template.previous) %>", function (data){
+            $("#liteBx-Cntainer").parent().html(data);
+          });
+          return false;
+        });
+        $("#next_item_template_link").click(function (data){
+          $.get("<%= item_template_path(@item_template.next) %>", function (data){
+            $("#liteBx-Cntainer").parent().html(data);
+          });
+          return false;
+        });
+  });
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#exampleAllLink").click(function (){
+          $("#exampleAllSpan").slideToggle('fast', function (){
+            if($("a#exampleAllLink").text() == "<< View Less Examples")
+              $("a#exampleAllLink").html("View All Examples >>");
+            else $("a#exampleAllLink").html("<< View Less Examples");
+          });
+          return false;
+        });
+      });
+    </script>
+  <% end %>
+
+  <div class="liteBxBdy">
+    <div class="liteBxTtl">
+      <h1>
+        <strong>
+          BUSINESS_NAME_h3r3
+        </strong>
+        <br />
+        <%=h "#{@item_template.sequence_number}. #{@item_template.title}" %>
+      </h1>
+    </div>
+    <%#*<div class="liteBxCntnt2" style="height:550px;">%>
+    <div class="liteBxCntnt2">
+      <div class="liteBxLft">
+        <h5>DEFINITION</h5>
+        <p class="litBxTxt">
+          <%= @item_template.description %>
+        </p>
+      </div>
+      <div class="liteBxRit">
+        <div class="litBxRtSpn1">
+          <h5>EXAMPLE</h5>
+          <% if @item_template.is_example_simple %>
+            <span class="ltBxRitTxt">
+              <%= @item_template.example_description %>
+            </span>
+          <% else %>
+            <p class="ltBxRitTxt">
+              <% @item_template.examples[0..2].each do |example| %>
+                <%= link_to image_tag("icons/pdf-icn.jpg", :alt => "PDF-ICON")+"<br />"+example.document.original_filename.slice(0,10), example.document.url, :class => "pdfIcn", :title => example.document.original_filename %>
+              <% end %>
+              <% if @item_template.examples.size > 3 %>
+                <span id="exampleAllSpan" style='display:none'>
+                  <% @item_template.examples[3..@item_template.examples.size-1].each do |example| %>
+                    <%= link_to image_tag("icons/pdf-icn.jpg", :alt => "PDF-ICON")+"<br />"+example.document.original_filename.slice(0,10), example.document.url, :class => "pdfIcn", :title => example.document.original_filename %>
+                  <% end %>
+                </span>
+              <% end %>
+              <br />
+            </p>
+            <% if @item_template.examples.size > 3 %>
+              <p>
+                <a id="exampleAllLink" title="View All Examples" href="#" class="exmplLnk">View All Examples >></a>
+              </p>
+            <% end %>
+          <% end %>
+        </div>
+        <% if @item_template.template_documents.size > 0 %>
+          <div class="litBxRtSpn1">
+            <h5>TEMPLATES</h5>
+            <p class="ltBxRitTxt">
+              <% @item_template.template_documents.each do |template_document| %>
+                <%= link_to "#{template_document.title} >>", template_document.document.url, :target => "_blank" %>
+                <br />
+              <% end %>
+            </p>
+          </div>
+        <% end %>
+        <% if @item_template.resources.size > 0 %>
+          <div class="litBxRtSpn1">
+            <h5>RESOURCES</h5>
+            <p class="ltBxRitTxt">
+              <% @item_template.resources.each do |resource| %>
+                <%= link_to "#{resource.title} >>", resource.url_absolute, :target => "_blank" %>
+                <br />
+              <% end %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="litBxCntBtm">
+      <form action="" method="get">
+        <% if @item_template.has_textbox || @item_template.has_upload %>
+          <h5>WRITE YOUR ANSWER HERE OR UPLOAD YOUR OWN DOCUMENT</h5>
+        <% end %>
+        <% if @item_template.has_textbox %>
+          <textarea rows="" cols="" class="answrArea">Enter Text here</textarea>
+        <% end %>
+        <% if @item_template.has_upload %>
+          <input type="button" value="Upload Files to My Documents " class="uplodBtn" />
+        <% end %>
+        <span class="chkBxSpan">
+          <input type="checkbox" />THIS CHICKLIST ITEM IS COMPLETE<br />
+          <input type="checkbox" />THIS ITEM IS NOT APPLICABLE TO MY BUSINESS
+        </span>
+      </form>
+    </div>
+  </div>
+  <div class="litBxFtr">
+    <span class="ltBxFtrSpan">
+      <%= "Section #{@item_template.section_template.name}: #{@item_template.section_template.title}" %>
+    </span>
+    <span class="ltBxFtrLnks">
+      <%= link_to "<< Previous", @item_template.previous, :id => "previous_item_template_link" %>
+      | Item
+      <%= @item_template.sequence_number %>
+      out of
+      <%= @item_template.section_template.item_count %>
+      in Section
+      <%= @item_template.section_template.name %>
+      |
+      <%= link_to "Next >>", @item_template.next, :id => "next_item_template_link" %>
+    </span>
+  </div>
+</div>
+<%#*</div>%>

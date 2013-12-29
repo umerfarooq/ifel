@@ -1,0 +1,18 @@
+<script>
+  function searchUsers(){
+      var searchable = $('#search_user').val();
+
+      $.get('/users/search', { 'q' : searchable }, function(data){
+        $('#usrsListing').html(data);
+      }, 'html');
+    }
+</script>
+<%= render :partial => "admins/admin_profile_menu", :locals => { :active_admin_profile_tab => :role_tab } %>
+<div class="admnRitCol" style="height: 500px; overflow: scroll;">
+
+  <div class="enterRoledv">
+    <h4> ROLES </h4>
+    <%= text_field_tag :search_user,'', :size=>'80', :class=>'summeryText' %><%= link_to image_tag('btn-search.png'),'#.', :onclick=>'searchUsers();', :class=>'summerySearch'%>
+  </div>
+  <div id="usrsListing" class="roleUserList"><%= render :partial => 'roles_panel', :locals=>{:users => @users, :sections => @section_templates} %></div>
+</div>

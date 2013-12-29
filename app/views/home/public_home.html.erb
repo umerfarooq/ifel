@@ -1,0 +1,220 @@
+<% content_for :ads do %>
+  <span class="ad1">
+    <%= image_tag "AD - Privacy Policy - Building150px.jpg", :alt => "Privacy Policy Image" %>
+  </span>
+<% end %>
+
+<%# content_for :js_includes do %>
+<%#= javascript_include_tag 'jquery-1.4.2.min' %>
+<%#= javascript_include_tag 'jquery.colorbox-min' %>
+<%#= javascript_include_tag 'application' %>
+<%#= javascript_include_tag 'public' %>
+<%#= stylesheet_link_tag 'colorbox' %>
+<%# end %>
+
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("a#ownerTextLink").click( function() {
+        ownerTextLinkClick();
+        return false;
+      });
+      $("#bio_video_link").colorbox();
+      $("#quiz_link").colorbox({ onComplete:setQuizColorboxHeight });
+    });
+  </script>
+<% end %>
+
+<div class="launchHedr">
+  <div class="lftMnTxt">
+    <p class="wlcome"><i>Start the business you've <br />always dreamed of...</i></p>
+    <p class="prtnrMsg">
+      Wicked Start is the tool you need to successfully start your own business today!
+    </p>
+  </div>
+  <div class="ritMnLnk">
+    <p class="lnkP">
+      Is Your Business Idea Viable?<br />
+      <%= link_to "Take our free quiz now! >>", new_quiz_path, :id => "quiz_link" %>
+    </p>
+    <p class="lnkP">
+      10 Steps to Start Up<br />
+      <%= link_to "Your free guide! >>", home_path('ten_steps') %>
+    </p>
+  </div>
+  <div class="fetres">
+    <p class="lstblt"><img src="/images/check-icon.gif" width="29" height="31" align="absmiddle" alt="check-mark" />Personalized roadmap of action items</p>
+    <p class="lstblt"><img src="/images/check-icon.gif" width="29" height="31" align="absmiddle" alt="check-mark" />Easy-to-use planning tools and resources</p>
+    <p class="lstblt"><img src="/images/check-icon.gif" width="29" height="31" align="absmiddle" alt="check-mark" />Guidance from peers and experts</p>
+  </div>
+  <div class="WrkBtn">
+    <%= link_to image_tag("/images/how-it-work-orange.jpg", :alt => "How-It-Works"), home_path('how_it_works') %>
+    <%= link_to image_tag("/images/free-trial-green.jpg", :alt => "Free-7-Day-Trial"), signup_path %>
+  </div>
+</div>
+
+<div class="launchOwnr">
+  <span class="launchTopBg" style="width:99.7%; margin-top: -14px;"></span>
+  <span class="launchownrPic" style="margin-top:5px;">
+<%# if @founder_biography.blank? %>
+<%#= image_tag "Bryan200x200.jpg", :alt => "BryanPic", :size => "100x100" %>
+<%# elsif @founder_biography.video.exists? %>
+<%#= image_tag @founder_biography.photo.url(:small), :alt => "PIC-#{@founder_biography.name}" %>
+<%#= link_to image_tag("play-btn.png", :alt => "PIC-#{@founder_biography.name}"), flvplayer_biographies_path(:video_path => @founder_biography.url_for_video_player), :id => "bio_video_link" , :class => 'playBtn'%>
+<%# else %>
+<%#= image_tag @founder_biography.photo.url(:small), :alt => "PIC-#{@founder_biography.name}" %>
+<%# end %>
+    <%= image_tag "ws_video_image.gif", :alt => "WICKEDSTART-VIDEO" %>
+    <%= link_to image_tag("play-btn.png", :alt => "WICKEDSTART-VIDEO"), "http://www.youtube.com/watch?v=6k3Y1C-rmTM", :class => 'playBtn', :target => "_blank" %>
+  </span>
+  <span class="launchownrTxt">
+    <p style="padding-top:0px;">
+      <em>
+        Why Wicked Start? (In 2 Minutes)
+      </em>
+    </p>
+    <p>
+      <em>
+        Starting a new business can be as exciting as it can be daunting.
+        The reality is that with millions of new businesses being started
+        each year in this country, about 50% will fail in the first 5 years.
+        Why? Most fail because of poor or inadequate planning.
+      </em>
+    </p>
+    <div id="ownerTextMore" style='display:none'>
+      <p>
+        <em>
+          You want to start your business and change the world. 
+          We want to help you get going. Wicked Start can help you
+          manage the startup process. With your personalized roadmap
+          you’ll have a series of concrete action steps like planning,
+          funding, structuring and marketing, all managed according to
+          your own timeline. To learn more, watch
+          <%= %/“#{link_to "Why Wicked Start? In 2 Minutes", "http://www.youtube.com/watch?v=6k3Y1C-rmTM", :target => "_blank"}.”/ %>
+<%#*“Why Wicked Start? In 2 Minutes.”%>
+        </em>
+      </p>
+    </div>
+    <a id="ownerTextLink" href="#" style="display:block;"> More &gt;&gt;</a>
+    <p class="ownrNme">Bryan Janeczko, Wicked Start Founder</p>
+    <p class ="social-links">
+      <a href="http://www.facebook.com/wickedstart" target="_blank"><img src="/images/icons/FaceBook_48x48.png" alt="Become a fan on facebook" /></a>
+      <a href="http://twitter.com/wickedstart" target="_blank"><img src="/images/icons/Twitter_48x48.png" alt="Follow us on twitter" /></a>
+      <a href="http://www.youtube.com/watch?v=HnlGiBkLAo8&feature=related" target="_blank"><img src="/images/icons/Youtube_48x48.png" alt="Watch our youtube channel" /></a>
+    </p>
+  </span>
+</div>
+
+<div class="ctgryDv">
+  <span class="launchCtgry ctgr1Bg">
+    <h3>
+      <%= link_to "START UP SMART BLOG", "/blog" %>
+    </h3>
+    <% if @blog_feeds.blank? %>
+      <% if @message_no_rf.blank? %>
+        <h5>
+          No blog feed available to display.
+        </h5>
+      <% else %>
+        <h5>
+          <%= @message_no_rf.content %>
+        </h5>
+      <% end %>
+    <% else %>
+      <% @blog_feeds.each do |blog_feed| %>
+        <h5>
+          <%= blog_feed.title %>
+        </h5>
+        <span class="dteSpan">
+          <%= ws_date_format(blog_feed.date) %>
+        </span>
+        <p>
+    <%#= blog_feed.description.slice(0, 200) %>
+          <%= truncate(strip_tags(blog_feed.description), :length => FRONT_MODULES_BLOG_PUBLIC_LENGTH) %>
+          <%= link_to "Read more >>", blog_feed.link %>
+        </p>
+      <% end %>
+    <% end %>
+  </span>
+  <span class="launchCtgry2 ctgr2Bg">
+    <h3>
+      <%= link_to "ON THE RADAR", news_articles_path %>
+    </h3>
+    <% if @news_articles.blank? %>
+      <% if @message_no_na.blank? %>
+        <h5>
+          No news article available to display.
+        </h5>
+      <% else %>
+        <h5>
+          <%= @message_no_na.content %>
+        </h5>
+      <% end %>
+    <% else %>
+      <% @news_articles.each do |news_article| %>
+        <h5 style="margin-top:0px;">
+          <%= news_article.headline %>
+        </h5>
+        <span class="dteSpan">
+          <%= news_article.news_date.strftime("%m/%d/%y") %>
+        </span>
+        <p>
+          <%= news_article.brief %>
+          <%= link_to "Read more >>", news_article.url, :target => "_blank" %>
+        </p>
+      <% end %>
+      <h3>
+  <%#*<a href="http://www.twitter.com/wickedstart" target="_blank">WICKED START ON TWITTER</a>%>
+        <%= link_to "WICKED START ON TWITTER", TWITTER_WS_URL, :target => "_blank" %>
+      </h3>
+      <% if @twitter_feeds.blank? %>
+        <% if @message_no_tf.blank? %>
+          <h5>
+            No twitter feed available to display.
+          </h5>
+        <% else %>
+          <h5>
+            <%= @message_no_tf.content %>
+          </h5>
+        <% end %>
+      <% else %>
+        <% @twitter_feeds.each do |twitter_feed| %>
+          <h5 style="margin-top:0px;">
+      <%#= twitter_feed.title.slice(0, 80) %>
+            <%= truncate(strip_tags(twitter_feed.title), :length => FRONT_MODULES_TWITTER_LENGTH) %>
+          </h5>
+          <span class="dteSpan">
+            <%= ws_date_format(twitter_feed.date) %>
+          </span>
+          <p>
+            <%= link_to "Read more >>", twitter_feed.link, :target => "_blank"%>
+          </p>
+        <% end %>
+      <% end %>
+    <% end %>
+  </span>
+  <span class="launchCtgry ctgr3Bg">
+    <h3>
+      <%= link_to "SUCCESS STORIES", success_stories_path %>
+    </h3>
+    <% if @featured_success_story.blank? %>
+      <% if @message_no_fss.blank? %>
+        <h5>
+          No featured success story available to display.
+        </h5>
+      <% else %>
+        <h5>
+          <%= @message_no_fss.content %>
+        </h5>
+      <% end %>
+    <% else %>
+      <p>
+        <span class="launchownrPic">
+          <%= image_tag @featured_success_story.logo.url(:small), :align => "left" %>
+        </span>
+        <%= @featured_success_story.brief %>
+        <%= link_to "Read more >>", @featured_success_story %>
+      </p>
+    <% end %>
+  </span>
+</div>

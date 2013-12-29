@@ -1,0 +1,42 @@
+<%= render :partial => "admins/admin_profile_menu", :locals => { :active_admin_profile_tab => :mentor_tab } %>
+
+<div class="admnRitCol">
+  <h1>Edit Mentor</h1>  
+  <%= render :partial => 'form', :locals => {:mentor => @mentor} %> 
+  <div style="clear: both" />
+  <br />
+  <hr />
+  <strong>
+    <%= "Associated Users" %>
+  </strong>
+  |
+  <%= link_to "Associate User", associate_user_mentor_path(@mentor) %>
+  <br />
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>USER NAME</th>
+      <th>INDUSTRY</th>
+      <th>BUSINESS IDEA</th>
+      <th style="width: 320px">AVAILABLE ACTIONS</th>
+    </tr>
+    <% @mentor.users.name_wise.each do |user| %>
+      <tr>
+        <td>
+          <%= user.name %>
+        </td>
+        <td>
+          <%= user.industry.title rescue 'N/A' %>
+        </td>
+        <td>
+          <%= user.business_idea %>
+        </td>
+        <td>
+          <%= link_to 'Dissociate', dissociate_mentor_user_path(user), :method => :put %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <p>
+    <%= link_to '<< Back', url_for(:back) %>
+  </p>
+</div>

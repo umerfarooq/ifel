@@ -1,0 +1,24 @@
+<%unless resources.blank? %>
+  <%# (resources[0..4] || []).each do |resource| %>
+  <% resources.each do |resource| %>
+    <%resource_object = Resource.find(resource.id)%>
+    <div class="resourcesList">
+
+      <%if resource_object.has_image?%>
+        <%= image_tag resource_object.content.url(:resource_library) %>
+      <%end%>
+      <% section = resource_object.item_templates.first.section_template %>
+      <%if resource_object.resource_category_id == 8 %>
+        <h4><%= link_to resource_object.title, "#{service_provider_resources_path}##{section.title.downcase.gsub(' ','_')}", :target => '_blank'%></h4>
+      <%else%>
+        <h4><%= link_to resource_object.title, "#{resource_library_resources_path}##{section.title.downcase.gsub(' ','_')}", :target => '_blank'%></h4>
+      <%end%>
+      <p class="dateP"><%=ws_date_format(resource_object.created_at)%></p>
+      <p class="breakWord"><%=resource_object.description%>
+    <%#= strip_tags truncate(resource_object.description, 450) %><%#= link_to "read more", :controller=>"resources",:action=>"index" %>
+      </p>
+    </div>
+  <%end%>
+<%else%>
+  <h4>No resources available</h4>
+<%end%>

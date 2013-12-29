@@ -1,0 +1,435 @@
+<%= render :partial => "admins/admin_client_information_menu", :locals => { :active_admin_client_information_tab => :radar_tab } %>
+
+<div class="admnRitCol">
+
+  <h4>
+    NEWS PROVIDERS
+    |
+    <%= link_to "Add News Provider", new_news_provider_path %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>SEQ</th>
+      <th>TITLE</th>
+      <th>URL</th>
+      <th>RSS_LINK?</th>
+      <th>FEED COUNT</th>
+      <th>STATE</th>
+      <th style="width: 320px">AVAILABLE ACTIONS</th>
+    </tr>
+<%# @news_providers.each do |news_provider| %>
+    <% for news_provider in @news_providers %>
+      <tr>
+        <td>
+          <%= news_provider.sequence_number %>
+        </td>
+        <td>
+          <%= link_to truncate(news_provider.title,30), news_provider %>
+        </td>
+        <td>
+          <%= link_to truncate(news_provider.url.slice(7, news_provider.url.length-7),30), news_provider.url, :target => "_blank" unless news_provider.url.blank? %>
+        </td>
+        <td>
+  <%#= (news_provider.is_rss_provider) ? "#{link_to news_provider.rss_link.slice(7, news_provider.rss_link.length-7), news_provider.rss_link, :target => "_blank"}" : "NOT RSS PROVIDER" %>
+          <% if news_provider.is_rss_provider %>
+            <%= link_to truncate(news_provider.rss_link.slice(7, news_provider.rss_link.length-7),30), news_provider.rss_link, :target => "_blank" %>
+          <% else %>
+            NOT RSS PROVIDER
+          <% end %>
+        </td>
+        <td>
+          <% if news_provider.is_rss_provider %>
+            <%= "#{news_provider.feed_count} - #{news_provider.front_module_count}" %>
+          <% else %>
+            N/A
+          <% end %>
+        </td>
+        <td>
+          <%= news_provider.state.title.upcase %>
+        </td>
+        <td>
+          <%= link_to 'EDIT', edit_news_provider_path(news_provider) %>
+          |
+
+          <% if news_provider.state.is_published? %>
+            <%= link_to 'INACTIVATE', inactivate_news_provider_path(news_provider) %>
+          <% elsif news_provider.state.is_activated? %>
+            <%= link_to 'PUBLISH', publish_news_provider_path(news_provider) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_news_provider_path(news_provider) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_news_provider_path(news_provider) %>
+          <% end %>
+          |
+          <%= link_to 'DELETE', news_provider_path(news_provider), :confirm => 'Are you sure?', :method => :delete %>
+          <%= "| #{link_to 'MOVE-UP', move_up_news_provider_path(news_provider)}" unless news_provider.on_top? %>
+          <%= "| #{link_to 'MOVE-DOWN', move_down_news_provider_path(news_provider)}" unless news_provider.on_bottom? %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <hr />
+  <br />
+
+
+  <h4>
+    NEWS ARTICLES
+    |
+    <%= link_to "Add News Article", new_news_article_path %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>DATE</th>
+      <th>TITLE</th>
+      <th>URL</th>
+      <th>STATE</th>
+      <th style="width: 170px">AVAILABLE ACTIONS</th>
+    </tr>
+    <% @news_articles.each do |news_article| %>
+      <tr>
+        <td>
+          <%= news_article.news_date %>
+        </td>
+        <td>
+          <%= link_to truncate(news_article.title,30), display_news_article_path(news_article) %>
+        </td>
+        <td>
+          <%= link_to truncate(news_article.url,30), news_article.url, :target => "_blank" unless news_article.url.blank? %>
+        </td>
+        <td>
+          <%= news_article.state.title.upcase %>
+        </td>
+        <td>
+          <% if news_article.state.is_featurified? %>
+            <%= link_to 'EDIT', edit_news_article_path(news_article) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_news_article_path(news_article) %>
+          <% elsif news_article.state.is_published? %>
+            <%= link_to 'EDIT', edit_news_article_path(news_article) %>
+            |
+            <%= link_to 'FEATURIFY', featurify_news_article_path(news_article) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_news_article_path(news_article) %>
+          <% elsif news_article.state.is_activated? %>
+            <%= link_to 'PUBLISH', publish_news_article_path(news_article) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_news_article_path(news_article) %>
+          <% else %>
+            <%= link_to 'EDIT', edit_news_article_path(news_article) %>
+            |
+            <%= link_to 'ACTIVATE', activate_news_article_path(news_article) %>
+          <% end %>
+          |
+          <%= link_to 'DELETE', news_article_path(news_article), :confirm => 'Are you sure?', :method => :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <hr />
+  <br />
+
+
+  <%#*<!--<h4>%>
+    <%#*WHITE PAPERS%>
+    <%#*|%>
+    <%#= link_to "Add White Paper", new_white_paper_path %>
+  <%#*</h4>%>
+  <%#*<br />%>
+
+  <%#*<table cellpadding="5px" style="text-align: left">%>
+    <%#*<tr>%>
+      <%#*<th>SEQ</th>%>
+      <%#*<th>TITLE</th>%>
+      <%#*<th>PUBLIC?</th>%>
+      <%#*<th>PAPER</th>%>
+      <%#*<th>STATE</th>%>
+      <%#*<th style="width: 320px">AVAILABLE ACTIONS</th>%>
+    <%#*</tr>%>
+<%# @white_papers.each do |white_paper| %>
+    <%# for white_paper in @white_papers %>
+      <%#*<tr>%>
+        <%#*<td>%>
+          <%#= white_paper.sequence_number %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= link_to truncate(white_paper.title,30), white_paper %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= (white_paper.is_internal) ? "INTERNAL" : "PUBLIC" %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= link_to white_paper.paper_file_name, white_paper.paper.url, :target => "_blank" if white_paper.paper.file? %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= white_paper.state.title.upcase %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= link_to 'EDIT', edit_white_paper_path(white_paper) %>
+          <%#*|%>
+          <%# if white_paper.state.is_published? %>
+            <%#= link_to 'INACTIVATE', inactivate_white_paper_path(white_paper) %>
+          <%# elsif white_paper.state.is_activated? %>
+            <%#= link_to 'PUBLISH', publish_white_paper_path(white_paper) %>
+            <%#*|%>
+            <%#= link_to 'INACTIVATE', inactivate_white_paper_path(white_paper) %>
+          <%# else %>
+            <%#= link_to 'ACTIVATE', activate_white_paper_path(white_paper) %>
+          <%# end %>
+          <%#= "| #{link_to 'MOVE-UP', move_up_white_paper_path(white_paper)}" unless white_paper.on_top? %>
+          <%#= "| #{link_to 'MOVE-DOWN', move_down_white_paper_path(white_paper)}" unless white_paper.on_bottom? %>
+          <%#*|%>
+          <%#= link_to 'DELETE', white_paper_path(white_paper), :confirm => 'Are you sure?', :method => :delete %>
+        <%#*</td>%>
+      <%#*</tr>%>
+    <%# end %>
+  <%#*</table>%>
+  <%#*<hr />%>
+  <%#*<br />-->%>
+
+
+  <%#*<!--<h4>%>
+    <%#*EVENT TYPES%>
+    <%#*|%>
+    <%#= link_to "Add Event Type", new_event_category_path %>
+  <%#*</h4>%>
+  <%#*<br />%>
+  <%#*<table cellpadding="5px" style="text-align: left">%>
+    <%#*<tr>%>
+      <%#*<th>DATE</th>%>
+
+      <%#*<th>TITLE</th>%>
+      <%#*<th>STATE</th>%>
+      <%#*<th style="width: 170px">AVAILABLE ACTIONS</th>%>
+    <%#*</tr>%>
+    <%# @event_categories.each do |event| %>
+      <%#*<tr>%>
+        <%#*<td>%>
+          <%#= event.creation_date %>
+        <%#*</td>%>
+
+        <%#*<td>%>
+          <%#= truncate(event.title,30) %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= event.state.title.upcase %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= link_to 'EDIT', edit_event_category_path(event) %>
+          <%#*|%>
+          <%# if event.published? %>
+            <%#= link_to 'INACTIVATE', inactivate_event_category_path(event) %>
+          <%# elsif event.activated? %>
+            <%#= link_to 'PUBLISH', publish_event_category_path(event) %>
+            <%#*|%>
+            <%#= link_to 'INACTIVATE', inactivate_event_category_path(event) %>
+          <%# else %>
+            <%#= link_to 'ACTIVATE', activate_event_category_path(event) %>
+          <%# end %>
+          <%#*|%>
+          <%#= link_to 'DELETE', event_category_path(event), :confirm => 'Are you sure?', :method => :delete %>
+        <%#*</td>%>
+      <%#*</tr>%>
+    <%# end %>
+  <%#*</table>%>
+  <%#*<hr />%>
+  <%#*<br />%>
+
+  <%#*<h4>%>
+    <%#*EVENTS PROVIDERS%>
+    <%#*|%>
+    <%#= link_to "Add Events Provider", new_events_provider_path %>
+  <%#*</h4>%>
+  <%#*<br />%>
+
+  <%#*<table cellpadding="5px" style="text-align: left">%>
+    <%#*<tr>%>
+      <%#*<th>TITLE</th>%>
+      <%#*<th>URL</th>%>
+      <%#*<th>RSS_LINK?</th>%>
+      <%#*<th>STATE</th>%>
+      <%#*<th style="width: 320px">AVAILABLE ACTIONS</th>%>
+    <%#*</tr>%>
+    <%# for events_provider in @events_providers %>
+      <%#*<tr>%>
+        <%#*<td>%>
+          <%#= link_to truncate(events_provider.title,30), events_provider %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= link_to truncate(events_provider.url.slice(7, events_provider.url.length-7),30), events_provider.url, :target => "_blank" unless events_provider.url.blank? %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%# if events_provider.rss_link.blank? %>
+            <%#*NOT RSS PROVIDER%>
+          <%# else %>
+            <%#= link_to truncate(events_provider.rss_link.slice(7, events_provider.rss_link.length-7),30), events_provider.rss_link, :target => "_blank" %>
+          <%# end %>
+        <%#*</td>%>
+
+        <%#*<td>%>
+          <%#= events_provider.state.title.upcase %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= link_to 'EDIT', edit_events_provider_path(events_provider) %>
+          <%#*|%>
+
+          <%# if events_provider.state.is_published? %>
+            <%#= link_to 'INACTIVATE', inactivate_events_provider_path(events_provider) %>
+          <%# elsif events_provider.state.is_activated? %>
+            <%#= link_to 'PUBLISH', publish_events_provider_path(events_provider) %>
+            <%#*|%>
+            <%#= link_to 'INACTIVATE', inactivate_events_provider_path(events_provider) %>
+          <%# else %>
+            <%#= link_to 'ACTIVATE', activate_events_provider_path(events_provider) %>
+          <%# end %>
+          <%#*|%>
+          <%#= link_to 'DELETE', events_provider_path(events_provider), :confirm => 'Are you sure?', :method => :delete %>
+        <%#*</td>%>
+      <%#*</tr>%>
+    <%# end %>
+  <%#*</table>%>
+  <%#*<hr />%>
+  <%#*<br />%>
+
+  <%#*<h4>%>
+    <%#*EVENTS%>
+    <%#*|%>
+    <%#= link_to "Add Event", new_event_path %>
+  <%#*</h4>%>
+  <%#*<br />%>
+
+  <%#*<table cellpadding="5px" style="text-align: left">%>
+    <%#*<tr>%>
+      <%#*<th>DATE</th>%>
+      <%#*<th>TITLE</th>%>
+      <%#*<th>URL</th>%>
+      <%#*<th>STATE</th>%>
+      <%#*<th style="width: 170px">AVAILABLE ACTIONS</th>%>
+    <%#*</tr>%>
+    <%# @events.each do |event| %>
+      <%#*<tr>%>
+        <%#*<td>%>
+          <%#= event.event_start_date %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= link_to truncate(event.title,30), display_event_path(event) %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= link_to truncate(event.url,30), event.url, :target => "_blank" unless event.url.blank? %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= event.state.title.upcase %>
+        <%#*</td>%>
+        <%#*<td>%>
+
+          <%# if event.state.is_featurified? %>
+            <%#= link_to 'EDIT', edit_event_path(event) %>
+            <%#*|%>
+            <%#= link_to 'INACTIVATE', inactivate_event_path(event) %>
+          <%# elsif event.state.is_published? %>
+            <%#= link_to 'EDIT', edit_event_path(event) %>
+            <%#*|%>
+            <%#= link_to 'FEATURIFY', featurify_event_path(event) %>
+            <%#*|%>
+            <%#= link_to 'INACTIVATE', inactivate_event_path(event) %>
+          <%# elsif event.state.is_activated? %>
+            <%#= link_to 'PUBLISH', publish_event_path(event) %>
+            <%#*|%>
+            <%#= link_to 'INACTIVATE', inactivate_event_path(event) %>
+          <%# else %>
+            <%#= link_to 'EDIT', edit_event_path(event) %>
+            <%#*|%>
+            <%#= link_to 'ACTIVATE', activate_event_path(event) %>
+          <%# end %>
+          <%#*|%>
+          <%#= link_to 'DELETE', event_path(event), :confirm => 'Are you sure?', :method => :delete %>
+        <%#*</td>%>
+      <%#*</tr>%>
+    <%# end %>
+  <%#*</table>-->%>
+  
+  <!--<hr />
+  <br />
+
+  <h4>
+    PROMOTIONS
+    |
+    <%#= link_to "Add Promotion", new_promotion_path %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>DATE</th>
+      <th>TYPE</th>
+      <th>MODULE TITLE</th>
+      <th>PROMOTION TITLE</th>
+      <th>URL</th>
+      <th>STATE</th>
+      <th style="width: 170px">AVAILABLE ACTIONS</th>
+    </tr>
+    <%# @promotions.each do |promotion| %>
+      <tr>
+        <td>
+          <%#= promotion.creation_date %>
+        </td>
+        <td>
+          <%#= promotion.kind %>
+        </td>
+        <td>
+          <%#= link_to truncate(promotion.head_title,30), display_promotion_path(promotion) %>
+        </td>
+        <td>
+          <%#= link_to truncate(promotion.sub_title,30), display_promotion_path(promotion) %>
+        </td>
+        <td>
+          <%#
+          target = ""
+          unless promotion.url.blank?
+            if promotion.is_external
+              target = "_blank"
+            end
+          end
+        %>
+          <%#= link_to truncate(promotion.url,30), promotion.url, :target => target %>
+        </td>
+        <td>
+          <%#= promotion.state.title.upcase %>
+        </td>
+
+        <td>
+          <%# if promotion.featurified? %>
+            <%#= link_to 'EDIT', edit_promotion_path(promotion) %>
+            |
+            <%#= link_to 'INACTIVATE', inactivate_promotion_path(promotion) %>
+          <%# elsif promotion.published? %>
+            <%#= link_to 'EDIT', edit_promotion_path(promotion) %>
+            <%#if promotion.is_partner_promotion?%>
+              |
+              <%#= link_to 'FEATURIFY', featurify_promotion_path(promotion)  %>
+            <%#end%>
+
+            |
+            <%#= link_to 'INACTIVATE', inactivate_promotion_path(promotion) %>
+          <%# elsif promotion.activated? %>
+            <%#= link_to 'PUBLISH', publish_promotion_path(promotion) %>
+            |
+            <%#= link_to 'INACTIVATE', inactivate_promotion_path(promotion) %>
+          <%# else %>
+            <%#= link_to 'EDIT', edit_promotion_path(promotion) %>
+            |
+            <%#= link_to 'ACTIVATE', activate_promotion_path(promotion) %>
+          <%# end %>
+          |
+          <%#= link_to 'DELETE', promotion_path(promotion), :confirm => 'Are you sure?', :method => :delete %>
+        </td>
+      </tr>
+    <%# end %>
+  </table>
+  <hr />
+  <br />-->
+
+</div>

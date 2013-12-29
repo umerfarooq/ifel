@@ -1,0 +1,48 @@
+<%= render :partial => "admins/admin_template_menu", :locals => { :active_admin_template_tab => :templates_tab } %>
+
+<div class="admnRitCol">
+
+  <h2>Add a new Template</h2>
+  <br />
+
+  <% form_for @template_document, :html => { :multipart => true } do |f| %>
+    <%= f.error_messages :header_message => nil, :message => nil %>
+    <p>
+      <%= f.label :name %>
+      <br />
+      <%= f.text_field :name, :size => "100" %>
+    </p>
+    <p>
+      <%= f.label :template_category_id, "Category" %>
+      <br />
+  <%#= f.collection_select(:template_category_id, TemplateCategory.find_all_by_state_id(State.find_by_name('publish').id), :id, :title, {:prompt => true}) %>
+      <%= f.collection_select(:template_category_id, TemplateCategory.published, :id, :title, {:prompt => true}) %>
+    </p>
+    <p>
+      <%= f.label :title %>
+      <br />
+      <%= f.text_field :title, :size => "100" %>
+    </p>
+    <p>
+      <%= f.label :description %>
+      <br />
+      <%= f.text_area :description, :size => "100x20", :class => "adminEditor" %>
+    </p>
+    <p>
+      <%= f.label :document %>
+      <br />
+      <%= f.file_field :document %>
+    </p>
+    <p>
+      <%= f.label :search_terms %>
+      (Seperated by spaces)<br />
+      <%= f.text_field :search_terms, :size => "100" %>
+    </p>
+    <p>
+      <%= f.submit :add %>
+    </p>
+  <%#*<p>%>
+  <%#= link_to '<< Back', url_for(:back) %>
+  <%#*</p>%>
+  <% end %>
+</div>

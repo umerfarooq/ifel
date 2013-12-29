@@ -1,0 +1,62 @@
+<% title "#{@biography.name}, #{@biography.title}" %>
+<% meta "WickedStart’s team is dedicated to helping you start a small business by developing the best set of tools imaginable to ensure your success, built an their years of entrepreneurial experience and success." %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+
+  <h1>ABOUT US</h1>
+
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :team} %>
+
+  <div id="sideBarLeft">
+    <ul class="teamNameListing">
+      <% @biographies.each do |biography| %>
+        <li class="<%= (biography.equal?(@biographies.last)) ? 'borderLess' : '' %>">
+          <% link_to biography, :class => ("current" if(biography == @biography)) do %>
+            <h3 class="headerLink">
+              <%= biography.name %>
+            </h3>
+            <p>
+              <%= biography.title %>
+            </p>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div id="content">
+    <h2 class="headLine">
+      <%= @biography.name %>
+    </h2>
+    <h3 class="subHeadLine">
+      <%= @biography.title %>
+    </h3>
+    <%= @biography.description %>
+  </div>
+
+  <div id="sideBarRight">
+    <%= image_tag @biography.photo.url(:team), :alt => @biography.name %>
+    <% if @biography.video.exists? %>
+      <%= link_to "View Video Introduction", flvplayer_biographies_path(:video_path => @biography.url_for_video_player), :onclick => "$(this).colorbox()" %>
+    <% end %>
+
+    <% @biography_link_categories.each do |category| %>
+      <% next if @biography.biography_links.with_category(category).published.blank? %>
+      <ul>
+        <h3 class="header">
+          <%= category.title %>
+        </h3>
+        <% @biography.biography_links.with_category(category).each do |link| %>
+          <li>
+            <%= (link_to link.text, link.url, :target => '_blank') if link.published?%>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+  </div>
+
+</div> <!-- End of Sub page Wrapper -->
+
+<div class="clear"></div>

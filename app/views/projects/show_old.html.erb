@@ -1,0 +1,93 @@
+<% content_for :js_includes do %>
+  <%#= javascript_include_tag "jquery-1.4.2.min" %>
+  <%#= javascript_include_tag 'jquery.colorbox-min' %>
+  <%#= javascript_include_tag 'jquery.colorbox' %>
+  <%= javascript_include_tag 'ajaxupload' %>
+  <%= javascript_include_tag 'dateinput.min' %>
+  <%= javascript_include_tag 'jScrollPane' %>
+  <%= javascript_include_tag 'jquery.mousewheel' %>
+  <%= javascript_include_tag 'application' %>
+  <%= javascript_include_tag 'checklist' %>
+<% end %>
+
+<% content_for :css_includes do %>
+  <%#= stylesheet_link_tag 'colorbox' %>
+  <%= stylesheet_link_tag 'dateinput-skin1' %>
+  <%= stylesheet_link_tag 'jScrollPane' %>
+<% end %>
+
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    prev_project_percentage = 0;
+    project_opened = <%= @project.id %>;
+    section_opened = <%= @open_section.id %>;
+    //project_summary_path = "<%= summary_project_path(@project) %>";
+    $(document).ready(function (){
+      //$("a#section_dt_link_"+section_opened).click();
+      lpReady();
+      displayPopupAndSetProgress();
+    });
+    function displayPopupAndSetProgress() {
+  <%= "lpSetProjectProgressBar('#{@project.percent}');" %>
+  <% if @display_type == "Item" %>
+    <%= "$('a#item_link_#{@open_item.id}').click();" %>
+  <% elsif @display_type == "Section" %>
+      $("a#introduction_link_"+section_opened).click();
+  <% end %>
+  }
+  </script>
+<% end %>
+
+<div class="chkLstDv">
+  <div class="chkLstHdng">
+    <h2>YOUR WICKED START ROAD MAP</h2>
+    Get ready to launch your business by checking off each item in your personalized roadmap.
+    <%= %/#{link_to "Click Here", @tour_video, :onclick => "$(this).colorbox()"} to view "How it Works"./ unless @tour_video.blank? %>
+  </div>
+  <div class="trckPrgrs">
+    <span class="tracLft"></span>
+    <div class="tracBg">
+      <h5>TRACK YOUR PROGRESS</h5>
+      <div class="tracDv">
+        <div id="tracPrcntgDiv" class="tracPrcntg">
+          <span class="tracLines"></span>
+          <span id="tracValueSpan" class="tracValue">
+            <%= "#{@project.percent} %" %>
+          </span>
+        </div>
+      </div>
+    </div>
+    <span class="tracRit"></span></div>
+  <div class="showAreaDv">
+    <div class="showTop"></div>
+    <div class="showBg">
+      <div class="dateDv">
+        <span id="sections_progressbar_view_span">
+          <h6>
+            <%= link_to "SHOW DUE DATES >>", "#" ,:id => "show_due_dates_link" %>
+          </h6>
+          <div class="lftPrcntg">
+            <%= render :partial => '/sections/link_progress', :collection => @project.sections %>
+          </div>
+        </span>
+        <span id="sections_date_view_span">
+          <h6>
+            <%=  link_to "SHOW PROGRESS >>", "#" ,:id => "show_progress_link" %>
+          </h6>
+          <div class="lftPrcntg">
+            <%= render :partial => '/sections/link_duedate', :collection => @project.sections %>
+<%# @project.sections.each do |section| %>
+<%#= render :partial => '/sections/link_duedate', :locals => {:section => section} %>
+<%# end %>
+          </div>
+        </span>
+      </div>
+<%#*<div class="ovrViewDv" id="div_section_overview">%>
+<%#*</div>%>
+      <%= render :partial => '/sections/section', :collection => @project.sections %>
+    </div>
+    <div class="showBot"></div>
+  </div>
+</div>
+
+<%= render :partial => "three_columns" %>

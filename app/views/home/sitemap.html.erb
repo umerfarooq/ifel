@@ -1,0 +1,167 @@
+<% title "SITEMAP" %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+
+  <h1>SITEMAP</h1>
+  <div class="clear"></div>
+
+  <div id="sitemap">
+    <ul>
+      <li>
+        <%= link_to 'HOME', public_home_path %>
+      </li>
+
+      <li>
+        <%= link_to 'FEATURES', features_path %>
+        <ul>
+          <li>
+            <%= link_to 'Overview', features_path %>
+            <!--<ul>
+              <%# unless @features.blank? %>
+                <%# @features.each do |feature| %>
+                  <%#*<li>%>
+                    <%#= link_to feature.title, detail_feature_path(feature) %>
+                    <%# unless feature.children.published.blank? %>
+                      <%#*<ul>%>
+                        <%# feature.children.published.sequence_wise.each do |child| %>
+                          <%#*<li><%= link_to child.title, detail_feature_path(child) %></li>%>
+                        <%#end%>
+                      <%#*</ul>%>
+                    <%#end%>
+                  <%#*</li>%>
+                <%#end%>
+              <%#end%>
+            </ul>-->
+          </li>
+          <li>
+            <%= link_to 'Why Choose Wicked Start?', why_wicked_start_features_path %>
+          </li>
+          <li>
+            <%= link_to 'Tour', (detail_feature_path(Feature.get_parents.published.first) rescue features_path) %>
+            <!--<ul>
+              <%# unless @features.blank? %>
+                <%# @features.each do |feature| %>
+                  <%#*<li>%>
+                    <%#= link_to feature.title, detail_feature_path(feature) %>
+                    <%# unless feature.children.published.blank? %>
+                      <%#*<ul>%>
+                        <%# feature.children.published.sequence_wise.each do |child| %>
+                          <%#*<li><%= link_to child.title, detail_feature_path(child) %></li>%>
+                        <%#end%>
+                      <%#*</ul>%>
+                    <%#end%>
+                  <%#*</li>%>
+                <%#end%>
+              <%#end%>
+            </ul>-->
+          </li>
+          <li>
+            <%= link_to 'Sign Up', signup_path %>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <%= link_to 'COMMON QUESTIONS', common_questions_path %>
+      </li>
+
+      <li>
+        <%= link_to 'SUCCESS STORIES', success_stories_path %>
+        <ul>
+          <li>
+            <%= link_to 'Overview', success_stories_path %>
+          </li>
+        </ul>
+        <%# unless @success_stories.blank? %>
+          <%#*<ul>%>
+            <%# @success_stories.each do |story| %>
+              <%#*<li>%>
+                <%#= link_to story.name, success_story_path(story) %>
+              <%#*</li>%>
+            <%#  end %>
+          <%#*</ul>%>
+        <%# end %>
+      </li>
+
+      <li>
+        <%= link_to 'BLOG', '/blog' %>
+        <ul>
+          <li>
+            <%= link_to 'Overview', '/blog' %>
+          </li>
+          <li>
+            <%= link_to 'IN THE TRENCCHES', '/blog/inthetrenches' %>
+          </li>
+          <li>
+            <%= link_to 'START UP SMART', '/blog/startingpoint' %>
+          </li>
+          <li>
+            <%= link_to 'TENSTEPS TO STARTUP', '/blog/tenstepstostartup' %>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <%= link_to 'ABOUT US', about_us_path %>
+        <ul>
+          <li>
+            <%= link_to 'Overview', about_us_path %>
+            <%# unless @biographies.blank? %>
+              <%#*<ul>%>
+                <%# @biographies.each do |biography| %>
+                  <%#*<li><%= link_to biography.name, biography_path(biography) %><%#</li>%>
+                <%# end %>
+              <%#*</ul>%>
+            <%# end %>
+          </li>
+
+          <li>
+            <%= link_to 'Team', biographies_path %>
+            <%# unless @biographies.blank? %>
+              <%#*<ul>%>
+                <%# @biographies.each do |biography| %>
+                  <%#*<li><%= link_to biography.name, biography_path(biography) %><%#</li>%>
+                <%# end %>
+              <%#*</ul>%>
+            <%# end %>
+          </li>
+
+          <li>
+            <%= link_to 'News', news_articles_path %>
+            <%# unless @news_articles.blank? %>
+              <%#*<ul>%>
+                <%# @news_articles.each do |news| %>
+                  <%#*<li><%= link_to news.title, news_article_path(news) %><%#</li>%>
+                <%# end %>
+              <%#*</ul>%>
+            <%# end %>
+          </li>
+          
+          <li>
+            <%= link_to 'Events', events_path %>
+            <%# unless @events.blank? %>
+              <%#*<ul>%>
+                <%# @events.each do |event| %>
+                  <%#*<li><%= link_to event.title, event_path(event) %><%#</li>%>
+                <%# end %>
+              <%#*</ul>%>
+            <%# end %>
+          </li>
+          
+          <li>
+            <%= link_to 'White Papers', white_papers_path %>
+          </li>
+
+          <li>
+            <%= link_to 'Contact Us', contact_us_path %>
+          </li>
+          
+        </ul>
+      </li>
+
+    </ul>
+
+  </div>
+
+</div>

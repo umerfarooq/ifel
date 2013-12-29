@@ -1,0 +1,29 @@
+<%content_for :javascripts do%>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      closeAllOtherPanels(<%= @panel_id %>,<%= @sections.length %>, '<%= @closeAllSliders %>');
+    });
+  </script>
+<%end%>
+
+<%unless @sections.blank?%>
+  <%@sections.each_with_index do|section,index|%>
+    <% statement_object = section.common_question %>
+    <% unless statement_object.blank? %>
+      <% if statement_object.published? %>
+
+        <div class="slide" id="slider_<%= index.to_s %>">
+          <a href="JavaScript:void(0);" onclick="toggleSlide('<%= index.to_s %>',<%= @sections.length.to_s %>);" class="btn-slide" id="btn_slide_<%= index %>">
+            <%=  section.title.camelize %>
+            <span> | <%= statement_object.statement.camelize rescue '' %></span>
+          </a>
+        </div>
+
+        <%  sub_questions = statement_object.children.published.sequence_wise rescue nil %>
+        <%  unless sub_questions.blank? %>
+          <%= render :partial => 'questions_panel', :locals => {:index => index, :sub_questions => sub_questions, :section => section, :statement_object => statement_object } %>
+        <%end%>
+      <%end%>
+    <%end%>
+  <%end%>
+<%end%>

@@ -1,0 +1,64 @@
+<%= render :partial => "admin_sub_menu", :locals => { :active_admin_sub_tab => :home_page_tab } %>
+
+<div class="admnRitCol">
+<div class="admnCntDv">
+<h4>Launch Pad Introduction <a href="#">Edit</a></h4>
+<%= render :partial => "marketing_message", :locals=>{:obj=>@marketing_message, :title=>'Home Page Introduction'} %>
+
+</div>
+<div class="admnImgDv">
+<p class="imgP"><img src="../images/book.jpg" /></p>
+<p class="uplodBtn"><a href="#"><img src="../images/uplod-img-btn.jpg" width="110" height="26" /></a></p>
+</div>
+</div>
+
+<div class="admnRitCol">
+<div class="admnCntDv">
+<h4>Launch Pad General Message <a href="#">Edit</a></h4>
+<%= render :partial => "marketing_message", :locals=>{:obj=>@marketing_message_general, :title=>'Founder Message'} %>
+</div>
+<div class="admnImgDv">
+<p class="imgP"><img src="../images/book.jpg" /></p>
+<p class="uplodBtn"><a href="#"><img src="../images/uplod-img-btn.jpg" width="110" height="26" /></a></p>
+</div>
+</div>
+<% if false %>
+<div class="admnRitCol">
+<div class="admnQuizDv">
+<table width="200" border="0" cellspacing="0" class="admnQuiztbl">
+  <tr>
+    <td colspan="5"><h4>Quiz</h4><%= link_to "Add New Question", new_question_path %></td>
+    </tr>
+  <%@questions.each do |question|%>
+  <%#*<tr>%>
+    <%#*<td colspan="5" valign="middle"><a href="#"><img src="../images/theme/add-qstn-btn.jpg" width="130" height="26" /></a> <a href="#"><img src="../images/update-answr-btn.jpg" width="130" height="26" /></a></td>%>
+  <%#*</tr>%>
+  <tr>
+    <td><%= question.sequence%></td>
+    <td><%= question.statement%></td>
+    <td><%= (question.state)? question.state.title : ''%></td>
+    <td class="quzIcnTd">
+      <%#*<a href="#"><img src="../images/icons/edit-icn.jpg" alt="Edit" width="18" height="16" /></a>%>
+      <%= link_to "Edit", edit_question_path(question) %>
+    </td>
+    <td class="quzIcnTd">
+      <%#*<a href="#"><img src="../images/icons/pblisch-icn.jpg" alt="Publish" width="16" height="16" /></a>%>
+      <%= link_to "Publish", change_state_questions_path(:id => question.id,:state => 'P') %>
+    </td>
+    <td class="quzIcnTd">
+      <%#*<a href="#"><img src="../images/icons/deleet-icn.jpg" alt="Delete" width="17" height="16" /></a>%>
+      <%= link_to "Deactivate", change_state_questions_path(:id => question.id,:state => 'X') %>
+    </td>
+  </tr>
+
+  <% end %>
+
+  <%#*<tr>%>
+    <%#*<td>&nbsp;</td>%>
+    <%#*<td colspan="4"><a href="#"><img src="../images/save-btn.jpg" align="absmiddle" /></a> <a href="#"><img src="../images/publish-btn.jpg" align="absmiddle" /></a> <a href="#" class="cnclLnk">Cancel</a></td>%>
+  <%#*</tr>%>
+</table>
+</div>
+
+</div>
+<% end %>

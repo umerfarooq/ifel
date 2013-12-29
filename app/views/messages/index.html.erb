@@ -1,0 +1,86 @@
+<% content_for :head do %>
+  <style>
+    .ui-autocomplete {
+      max-height: 100px;
+      overflow-y: auto;
+      /* prevent horizontal scrollbar */
+      overflow-x: hidden;
+      /* add padding to account for vertical scrollbar */
+      padding-right: 20px;
+    }
+
+    * html .ui-autocomplete {
+      height: 100px;
+    }
+  </style>
+<%end%>
+
+<% content_for :javascripts do %>
+  <script>
+    function slide_SearchForm() {
+      $(".communityFeed").hide();
+    }
+    
+    $(document).ready(function(){
+
+      $(".slidingDiv").hide();
+
+      $('.show_hide').click(function(){
+        $(".slidingDiv").slideDown(1000, function(){
+          $('#pstQuesBtn').hide();
+          var topic_data = <%= get_all_topics().to_json %>;
+          $("#message_topics").tokenInput(topic_data,{theme: "facebook",preventDuplicates: true});
+        });
+      });
+      
+    });
+
+    function post_question_slider(){
+    
+      //$(".slidingDiv").show();
+      $(".slidingDiv").slideDown(1000, function(){
+        $('#pstQuesBtn').hide();
+        var topic_data = <%= get_all_topics().to_json %>;
+        $("#message_topics").tokenInput(topic_data,{theme: "facebook",preventDuplicates: true});
+      });
+    }
+  </script>
+<%end%>
+
+<%if !@post_quest.blank?%>
+  <%if @post_quest%>
+    <% content_for :javascripts do %>
+      <script>
+        $(document).ready(function(){
+          post_question_slider();
+        });
+      </script>
+    <%end%>
+  <%end%>
+<%end%>
+
+<div class="subPageWrapper">
+  <h1>COMMUNITY</h1>
+  <%= render :partial => 'shared/community_breadcrumbs', :locals=>{:selected => :feedwall} %>
+  <div class="clear"></div>
+  <div class="communitySearch">
+    <%= render :partial => 'search_bar', :locals=>{:options=>{}}%>
+    <%= render :partial => 'post_question_panel' %>
+  </div>
+  <div class="sep"></div>
+  <div class="slidingDiv">
+    <%= render :partial => "messages/new_message" %>
+  </div>
+  <div class="communityTopics" style="padding-top: 10px;">
+    <!-- All searched and by default Answers-->
+    <div id="communityFeed">
+
+      <%if @is_msg_partial %>
+        <%= render :partial=> "messages/message_detail_page", :locals=>{:message => @message_for_detail, :topic=>@topic_id} %>
+      <%else%>
+        <%= render :partial => "messages/default_search", :locals=>{:messages => @feedwall_messages, :topic=>@topic_id } %>
+      <%end%>
+    </div>
+
+  </div>
+</div>

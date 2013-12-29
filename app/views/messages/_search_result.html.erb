@@ -1,0 +1,16 @@
+<% messages.each do |msg| %>
+<div class="feed">
+<%= link_to msg.body, "",:class => "feedTitle"%>
+<div id=<%="follow_"+msg.id%> >
+ <%=render :partial=>"message_details", :locals=>{:msg=> msg}%>
+</div>
+<div class="feedContent">
+<div class="feedImage"><img src="images/feed-icon.png" /></div>
+<div class="feedDesc">
+<%= recent_comment_of_message(msg) %>
+<a href="#">Read more...</a>
+</div>
+</div>
+</div>
+<%end%>
+<div class="displayBtnDv"><a href="JavaScript:void(0);"><img src="images/display-question-btn.png" /></a></div>

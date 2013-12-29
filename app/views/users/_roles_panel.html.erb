@@ -1,0 +1,177 @@
+<%content_for :javascripts do%>
+  <script>
+    function mark_as_employee(id,path){
+      var string = " can't be marked as employee";
+      if($("#mark_as_employee_"+id).attr('checked')){
+        status = true;
+        string = " has been marked as employee";
+      }else{
+        status = false;
+        string = " has been unmarked as being employee";
+      }
+      $.post(path,{ '_method' : 'put','mark_as_employee' : status}, function(data){
+        if(data.success){
+          if(status){
+            //alert($("#mark_as_employee_"+id).attr('checked'));
+            $('#statusRow').css("color","blue").html(data.screen_name+string);
+          }else{
+            //alert($("#mark_as_employee_"+id).attr('checked'));
+            $('#statusRow').css("color","blue").html(data.screen_name+string);
+          }
+        }else{
+          //alert($("#mark_as_employee_"+id).attr('checked'));
+          $('#statusRow').css("color","red").html(data.screen_name+string);
+        }
+      }, 'json');
+    }
+
+    function mark_as_expert(id,path){
+      var string = " can't be marked as expert";
+      if($("#mark_as_expert_"+id).attr('checked')){
+        status = true;
+        experted_section = $("#experted_section_"+id).val();
+        string = " has been marked as expert";
+      }else{
+        status = false;
+        experted_section = null;
+        string = " has been unmarked as being expert";
+      }
+      
+      $.post(path,{'_method' : 'put', 'mark_as_expert' : status, 'experted_section' : experted_section}, function(data){
+        if(data.success){
+          if(status){
+            $('#statusRow').css("color","blue").html(data.screen_name+string);
+          }else{
+            $('#statusRow').css("color","blue").html(data.screen_name+string);
+         
+          }
+        }else{
+          $('#statusRow').css("color","red").html(data.screen_name+string);
+        }
+      }, 'json');
+    }
+    
+    function assign_mentor(id,path){
+      var mentor_id = $("#mentor_"+id).val();
+      if(mentor_id != "" && mentor_id != null){
+        $.post(path,{'_method' : 'put', 'mentor_id' : mentor_id}, function(data){
+          if(data.success){
+            $('#statusRow').css("color","blue").html(data.screen_name+" has been assigned "+data.mentor_name+" as mentor.");
+          }else{
+            $('#statusRow').css("color","red").html(data.screen_name+" has not been assigned "+data.mentor_name+" as mentor.");
+          }
+        }, 'json');
+      }else{
+        $('#statusRow').css("color","red").html("Please select Mentor to assign");
+      }    
+    }
+    
+    $(document).ready(function(){
+      $('input[name="is_blocked"]').click(function(){
+        if($(this).is(':checked')){
+          blocked = '1'
+          notice = 'blocked'
+        }else{
+          blocked = '0'
+          notice = 'unblocked'
+        }
+        $.post('/users/'+this.value+'/block_or_unblock', {'blocked' : blocked, '_method' : 'put'}, function(data){
+          if(data.success){
+            $('#statusRow').css("color","blue").html(data.screen_name+" has been "+notice);
+          }else{
+            $('#statusRow').css("color","red").html(data.screen_name+" has not been "+notice);
+          }
+        }, 'json');
+      });
+      $("input[name='mark_as_expert']").each(function(){
+        if($(this).is(':checked')){
+          $("#experted_sections_"+$(this).attr('user_id')).show();
+        }
+      });
+    });
+    
+    function toggle_experted_panel(id){
+      if($("#mark_as_expert_"+id).attr('checked')){
+        $("#experted_sections_"+id).show();
+      }else{
+        $("#experted_sections_"+id).hide();
+      
+        $.post("/users/"+id+"/unmark_as_expert",{'_method' : 'put'}, function(data){
+          //if(data.success){
+          window.location.reload();
+          //$('#statusRow').css("color","blue").html(data.screen_name+" is no more a Community Expert. ");
+          //}else{
+          //$('#statusRow').css("color","red").html("Changes can't be saved due to Internal System problem.");
+          //}
+        }, 'json');
+      }
+
+    }
+  </script>
+<%end%>
+
+<table width="100%">
+  <tr><td colspan="3" id="statusRow"></td></tr>
+  <tr style="text-align:left;">
+    <th width="15%">
+      Name
+    </th>
+    <!--<th width="10%">
+      Screen Name
+    </th>-->
+    <th width="10%">
+      Industry
+    </th>
+    <th width="5%">
+      Block
+    </th>
+    <th width="35%">
+      Roles
+    </th>
+    <th width="35%" style="font-size: 10px;">
+      Hold CTRL (Windows) or Command (Mac) to select multiple sections
+    </th>
+  </tr>
+  <% unless users.blank? %>
+    <% users.each do |user| %>
+      <tr>
+        <td width="15%">
+          <%= link_to sanitize(user.name), user_path(user) %>
+        </td>
+        <!--<td width="10%">
+    <%#= sanitize user.screen_name %>
+        </td>-->
+        <td width="10%">
+          <%= (user.industry.title rescue 'N/A') %>
+        </td>
+        <td width="5%">
+          <%= check_box_tag(:is_blocked, user.id.to_s, user.is_blocked) %>
+        </td>
+        <td width="35%">
+          Employee <%= check_box_tag :mark_as_employee, 'Employee', user.is_employee?, :onclick => "mark_as_employee('#{user.id.to_s}','#{mark_as_employee_user_path(user)}');", :id=> "mark_as_employee_#{user.id.to_s}" %>
+          Community Expert<%= check_box_tag :mark_as_expert, 'Expert', user.is_community_expert?, :onclick => "toggle_experted_panel('#{user.id.to_s}');", :id=> "mark_as_expert_#{user.id.to_s}", :user_id => user.id.to_s %>
+
+    <%#= link_to 'Mark Experted Sections', experted_sections_user_path(user) %>          
+    <%#= select_tag :experted_section, options_from_collection_for_select(sections, :id, :title, user.experted_section), :id=> "experted_section_#{user.id.to_s}" %>
+        </td>
+        <td width="35%" id="experted_sections_<%= user.id.to_s %>" style="display: none;">
+          <%form_for user, :url => update_experted_sections_user_path(user) do |f| %>      
+      <%#= collection_select :user, :experted_sections, sections, :id, :title, { :selected => user.experted_sections }, { :multiple => true, :name => 'user[experted_sections][]' } -%>
+
+            <%= select_tag :experted_section, options_from_collection_for_select(sections, :id, :title, (user.experted_sections.map { |i| i.to_i  } if user.experted_sections)), { :multiple => true, :name => 'user[experted_sections][]' } %>      
+            <%= f.submit 'Submit' %>
+          <%end%>
+        </td>
+
+        <!--<td width="25%">
+    <%#= select(:user, :mentor_id, options_from_collection_for_select(mentors, "id", "name", (user.mentor.id if user.mentor.present?)),{ :include_blank => true}, :id=> "mentor_#{user.id.to_s}")  %>          
+    <%#= submit_tag('Assign', :id=>"mentor_assign_#{user.id.to_s}", :onclick=>"assign_mentor('#{user.id.to_s}','#{assign_mentor_user_path(user)}');") %>
+        </td>-->
+      </tr>
+      <tr><td colspan="5"><hr/></td></tr>
+    <%end%>
+  <%else%>
+    No User Exists
+  <%end%>
+
+</table>

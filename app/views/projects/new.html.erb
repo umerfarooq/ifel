@@ -1,0 +1,125 @@
+<div class="wlcmDv">
+  <span class="wlcmTxt">
+    <h3>Welcome to your Wicked Start Starting Block</h3>
+    You're at the Starting Block where you will create your own personalized
+    roadmap of action items to get going with your business idea.
+    <%= "#{link_to "Click Here", @tour_video, :onclick => "$(this).colorbox()"} to see how it works." unless @tour_video.blank? %>
+  </span>
+
+</div>
+<% form_for @project, :html => { :multipart => true } do |proj| %>
+  <div style="clear:both;"></div>
+  <% unless @project.errors.blank? %>
+    <div class="ws-alert ws-alert-error ws-rounded" id="error-box">
+      <img alt="Alert icon" class="icon master-sprite" src="/images/pixel.gif" />
+      <div class="ws-alert-content">
+        <%= proj.error_messages :header_message => nil, :message => nil %>
+      </div>
+      <button class="close master-sprite" onclick="$(this).parent().hide()">
+        close
+      </button>
+    </div>
+  <% end %>
+  <div class="chkLstDv" style ="background:none;">
+    <div class="showAreaDv">
+      <div class="showTop"></div>
+      <div class="showBg">
+        <div class="getStrtDv">
+          <h3>LET'S GET STARTED!</h3>
+          <div class="gtStrtTxt">
+            <span class="gtSpan">
+              Answer the following three questions to create your personalized roadmap to help get your business off the ground.
+            </span>
+            <div class="gtSpan">
+              <h6>
+                <%=  proj.label :business_name, "1. What's your idea or Business Name?" %>
+              </h6>
+              <%=  proj.text_field :business_name, :class=>"gtTxtFld"%>
+            </div>
+            <div class="gtSpan">
+              <h6>
+                <%=  proj.label :start_date, "2. Enter the Date when you plan to begin starting your business" %>
+              </h6>
+              <%= proj.date_select :start_date, :class=>"ddTxt", :start_year=>Time.now.year,:end_year=>Time.now.year+5 %>
+            </div>
+            <div class="gtSpan">
+              <h6>
+                <%=  proj.label :max_days, "3. How long do you expect your planning process to last?" %>
+                <%= link_to 'Need Guidance?', guidance_projects_path, :onclick => "$(this).colorbox()", :style => "" %>
+              </h6>
+              <table width="100%" border="0" cellpadding="0" cellspacing="0" class="dayTbl">
+                <tr>
+                  <td width="10%" valign="middle">
+                    <%=  proj.radio_button(:max_days, "30")%>
+                  </td>
+                  <td width="90%" valign="middle">
+                    30 Days
+                  </td>
+                </tr>
+                <tr>
+                  <td width="10%" valign="middle">
+                    <%=  proj.radio_button(:max_days, "60", :checked => true)%>
+                  </td>
+                  <td width="90%" valign="middle">
+                    60 Days
+                  </td>
+                </tr>
+                <tr>
+                  <td width="10%" valign="middle">
+                    <%=  proj.radio_button(:max_days, "120")%>
+                  </td>
+                  <td width="90%" valign="middle">
+                    120 Days
+                  </td>
+                </tr>
+                <tr>
+                  <td width="10%" valign="middle">
+                    <%=  proj.radio_button(:max_days, "0")%>
+                  </td>
+                  <td width="90%" valign="middle">
+                    N/A
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="gtSpan">
+              <h6>
+                <%= link_to 'Click here to preview your personalized roadmap of action items?', overview_section_templates_path, :onclick => "$(this).colorbox()" %>
+              </h6>
+            </div>
+            <div class="gtSpan" style="text-align:center; border-bottom:none;">
+              <%= image_submit_tag "/images/go-btn.jpg" %>
+            </div>
+          </div>
+        </div>
+        <div class="getWrkDv">
+          <h3>HOW IT WORKS!</h3>
+          <div class="gtWrkTxt">
+            <div class="gtWrkSpan">
+              <h5>STEP 1</h5>
+              Click on a <strong>SECTION</strong> on the left
+            </div>
+            <div class="gtWrkSpan">
+              <h5>STEP 2</h5>
+              Click on a corresponding <strong>ACTION ITEM</strong> on the right to access valuable information about the step in the startup process.
+            </div>
+            <div class="gtWrkSpan">
+              <h5>STEP 3</h5>
+              Within each <strong>ACTION ITEM</strong> you’ll gain access to examples, templates and resources to help you along the way. When you are done with that action item, simply mark it as <strong>COMPLETE</strong> and monitor your progress using our <strong>PROGRESS TRACKING BAR</strong>.
+            </div>
+          </div>
+          <div class="wrkImgDv">
+            <img src="/images/step-img1.jpg" alt="Step1 &amp; 2" />
+            <img src="/images/step-img2.jpg" alt="Step 3" />
+          </div>
+          <div class="noteSpan">
+            <h5>HELPFUL TOOL</h5>
+            When you have questions about the process, post a message to our <strong>COMMUNITY</strong> message board, or post you documents to <strong>MY FILES</strong> to manage your entire startup process.
+          </div>
+        </div>
+      </div>
+      <div class="showBot"></div>
+    </div>
+  </div>
+<% end %>
+<%= render :partial => "three_columns" %>

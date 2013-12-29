@@ -1,0 +1,68 @@
+<% form_for partner, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.label :company_name %>
+    <br />
+    <%= f.text_field :company_name, :size => "75" %>
+  </p>
+  <p>
+    <%= label_tag :list_title, 'Title on List Page (You can see this on Partners list page)' %>
+    <br />
+    <%= f.text_field :list_title, :size => "75" %>
+  </p>
+
+  <p>
+    <%= label_tag :first_show_title, 'Title on Detail Page' %>
+    <br />
+    <%= f.text_field :first_show_title, :size => "75", :title => 'Detail Page Title', :class => 'defaultText' %>    
+  </p>
+  <p>
+    <%= label_tag :second_show_title, 'Sub-Title on Detail Page' %>
+    <br />
+    <%= f.text_field :second_show_title, :size => "75", :title => 'Detail Page Sub-title', :class => 'defaultText' %>
+  </p>
+  <p>
+    <%= f.label :summary %>
+    <br />
+    <%= f.text_area(:summary, :size => "100x15", :class=>"adminEditor") %>
+  </p>
+  <p>
+    <%= f.label :description %>
+    <br />
+    <%= f.text_area :description, :size => "100x15", :class=>"adminEditor" %>
+  </p>
+  <p>
+    <%=  label_tag 'Logo (w: 125px, h: 75px)' %>
+    <%= image_tag partner.logo.url, :alt => partner.company_name %>
+    <br />
+    <%= f.file_field :logo %>
+  </p>
+  <p>
+    <%= f.label :url_text %>
+    <br />
+    <%= f.text_field :url_text, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :url %>
+    <br />
+    <%= f.text_field :url, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :button_text %>
+    <br />
+    <%= f.text_field :button_text, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :button_url %>
+    <br />
+    <%= f.text_field :button_url, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :promo_text %>
+    <br />
+    <%= f.text_area :promo_text, :size => "100x10", :class=>"adminEditor" %>
+  </p>
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>

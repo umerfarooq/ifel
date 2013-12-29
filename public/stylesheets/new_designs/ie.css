@@ -1,0 +1,24 @@
+.subPageWrapper { height:100%;}
+#loginModel form{ margin:30px 15px; font-size:14px; padding:0; margin-bottom:0 !important;}
+form span{ line-height:22px; height:22px;}
+iframe{ border:0;}
+
+.bntSignUpToday, .bntLogin, .bntSubmit{float:left; text-indent:-9999px; overflow:hidden; line-height:0px; font-size:0px; }
+
+/*.frmSignup {
+background:url("/images/GoDaddySslSeal.jpg") no-repeat scroll right 585px transparent !important;
+}*/
+.go-daddy{
+    position: absolute;
+    bottom:0px;
+    left:450px;
+
+}
+.tourBtn a.btnTakeTour {text-indent: 3px !important;}
+.topLinks a.btnSignUp {text-indent: -10px !important;}
+.frmContactUs .submitBtn { text-indent:0px !important; }
+
+.frmSignup td{ padding:5px 0;}
+.frmSignup td.captchaBox{ padding-left:20px;}
+.frmSignup h2{ margin:10px 0; text-transform:uppercase;}
+.frmSignup label{ font-weight:bold;}

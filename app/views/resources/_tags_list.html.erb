@@ -1,0 +1,14 @@
+<ul id="list">
+  <%unless tags.blank? %>
+    <li><strong>All Tags</strong><span></span></li>
+    <% tags.each_with_index do |tag, index| %>
+      <li class="li_all_tags <%= (index <= 50)  ? 'dispBlock' : 'dispNone' %>">
+        <%= link_to tag.tag_name.split(' ').map {|w| (w.capitalize if (w!='a' && w!='an' && w!='is' && w!='and' && w!='am') ) }.join(' '), 'JavaScript:void(0);' , :id => "rl_tags_#{tag.tag_id.to_s}", :onclick=>"loadTags('#{tag.tag_id.to_s}', false)" %><span><%= tag.no_of_tags %></span>
+      </li>
+    <%end%>
+    <%if tags.length > 50%>
+      <%=link_to "[view more]", "JavaScript:void(0);", :id=>"view_more_tags",:onclick=>"view_all_tags()"%>
+    <%end%>
+  <%end%>
+  <div class="clear"></div>
+</ul>

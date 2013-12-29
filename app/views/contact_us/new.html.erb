@@ -1,0 +1,99 @@
+<% title "Contact Us" %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+
+  <h1>ABOUT US</h1>
+
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :contact_us} %>
+
+  <h2 class="headLine">Let's Talk!</h2>
+  <div class="clear"></div>
+  <div id="contactMap">
+    <div class="contacts">
+      <h3 class="header">Office (Optional)</h3>
+      <p class="address">Addres Line 1<br />
+        Addres Line 2<br />
+        City, State, 12345
+      </p>
+      <p class="numbers">
+        Office (212) 555-1234<br />
+        Fax: (212) 555-1235
+      </p>
+    </div>
+    <div class="map">
+      <iframe src='http://www.enterprisewizard.co.uk/viewMap.asp?mapTitle=&locationName=&location=Address&country=US&countryname=United%20States&street=1040%206th%20Ave&City=NY&State=&Zip=10018&MarkerSymbol=m1.png&MarkerShadow=on&PreFillComment=on&Comment=&mapType=NORMAL&zoomLevel=10&AllowDrag=off&NavigationControl=large&TypeSelector=on&CenterPoint=Automatic&CenteredOnLat=0&CenteredOnLng=0&mapWidth=292&mapHeight=302' style='width:292px;height:302px;border:0px;' scrolling='no' marginwidth='0' marginheight='0' ></iframe><br>
+      <a href="#">View Larger Map</a>
+    </div>
+    <div class="contacts">
+      <h3 class="header">Media/Press Inquiries</h3>
+      <p>JS2 Communications<br>
+        Elizabeth Cahill<br>
+        (212) 905-6287<br>
+        <a href="#">ecahill@js2comm.com</a>
+      </p>
+    </div>
+  </div>
+  <% form_for (@contact_us , :html => { :class => "frmContactUs"}) do |f| %>
+    <table>
+
+      <tbody>
+        <tr>
+          <td colspan="2">
+            <%= f.error_messages :header_message => nil, :message => nil %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>*</span>
+            <%= f.label :first_name %>
+          </td>
+          <td>
+            <%= f.text_field :first_name, :class => "text1" %>
+            <%= f.text_field :last_name, :class => "text1" %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>*</span>
+            <%= f.label :email%>
+          </td>
+          <td>
+            <%= f.text_field :email, :class => "text1"%>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>*</span>
+            <%= f.label :subject %>
+          </td>
+          <td>
+            <%= f.text_field :subject , :class => "text1"%>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>*</span>
+            <%= f.label :message %>
+          </td>
+          <td>
+            <%= f.text_area :message, :size => "45x5" %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <%= submit_tag 'Submit', :class => "submitBtn" %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+</div> <!-- End of Sub page Wrapper -->
+<div class="clear"></div>
+<div id="ContentBottom">
+  <div class="rectAds">
+    <a href="#"><img src="images/banner-293.jpg" class="first" /></a>
+    <a href="#"><img src="images/banner-293.jpg" /></a>
+    <a href="#"><img src="images/banner-293.jpg" /></a>
+  </div>
+</div>

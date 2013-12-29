@@ -1,0 +1,26 @@
+<% form_tag '/add_todo', :id=>'add_todo_form', :method=>:post  do %>
+  <a style="float:right" id="closeTodoPopup">Close</a>
+  <fieldset>
+    <legend>KEEP TRACK OF ALL YOUR STARTUP TODOS</legend>
+    <label style="font-weight: normal; margin-top: 5px;">Have an additional task you want to keep track of for this action item? Keep track of all your startup to-dos here.</label>
+    <table style="width:100%;">
+      <tr>
+        <td style="text-align: center;padding-top: 5px; font-weight: normal;">
+          <label id="notice" style="color: red;"></label>
+        </td>
+      </tr>
+      <tr> 
+        <td><%= text_field_tag 'todo[title]','', :title => 'Task', :class => "defaultText", :size => '30' %></td>
+      </tr>
+      <tr>
+        <td><%= text_field_tag 'todo[due_date]','', :title => 'Deadline', :class => "defaultText",  :size => '15' %></td>
+      </tr>
+      <!--<tr>
+        <td><%#= check_box_tag 'todo[is_completed]',''%></td>
+      </tr>-->
+      <tr>  
+        <td><%= submit_tag 'Submit', :class => "submit" %></td>
+      </tr>
+    </table>
+  </fieldset>
+<% end %>

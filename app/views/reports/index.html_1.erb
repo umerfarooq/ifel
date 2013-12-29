@@ -1,0 +1,18 @@
+<h1><%= @type_heading %></h1> <br />
+
+<% form_tag(:controller => 'reports',:action => @type) do %>
+  From :<%= date_select("report", "from", :include_blank => true) %>  To:<%= date_select("report", "to", :include_blank => true )%>
+    <%= submit_tag 'Generate Report' %>
+<% end %>
+<h2><%= yr = @end_date.year %> </h2> <br />
+<% @end_date.step((@start_date-1.month), -1.month) do |dat| %>
+  <% if yr > dat.year  %>
+    <h2><%= dat.year %></h2><br />
+    <%= link_to @type_text_year, :controller => "reports", :action => @type , :date => dat.to_s, :year=> "1"  %>
+
+  <% else %>
+    <%= link_to @type_text_month, :controller => "reports", :action => @type , :date => dat.to_s, :year=> "0"  %>
+  <% end %>
+  <%= dat.strftime("%B %Y").upcase%> <br />
+  <% yr = dat.year %>
+<% end %>

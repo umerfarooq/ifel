@@ -1,0 +1,317 @@
+<%content_for :javascripts do%>
+  <%= javascript_include_tag 'jquery.blockUI'  %>
+  <script>
+    function banner_slideUp(banner_name) {
+      $("#notification_banner").slideUp(1000);
+      if(banner_name == "notification")
+      {
+        $.post('/dashboards/cancel_notification_banner', {'_method':'put'}, function(){}, 'json');
+      }
+      else
+      {
+        $.post('/dashboards/cancel_progress_banner', {'_method':'put'}, function(){}, 'json');
+      }
+    }
+  </script>  
+<%end%>
+
+<% if @current_user.is_logged_in_for_the_first_time? and !session['first_time_box_cacelled'] %>
+  <%content_for :javascripts do%>
+    <script>
+      $(document).ready(function() {
+        $.blockUI({ message: $('#splashBox'), css:{cursor: null, backgroundColor: null, border: null}});
+        //overlayCss:{opacity: 1}
+        $('.closeBox').click(function(){
+          $.unblockUI();
+          $.post('/dashboards/cancel_notification_box', {'_method':'put'}, function(){
+            //document.getElementById("tracNotice").className = 'tracNotificationWithZindex';
+            //$('#tracNotice').addClass('tracNotificationWithZindex');         
+          }, 'json');
+        });
+      });
+    </script>
+  <%end%>
+<%  end %>
+
+
+<%if !@is_section_detail.blank?%>
+  <%if @section_for_detail.sequence_number > 3%>
+    <%content_for :javascripts do%>
+      <script>
+        $(document).ready(function(){
+          Default_section();
+        });
+      </script>
+    <%end%>
+  <%end%>
+<%end%>
+
+<% if @current_user.is_logged_in_for_the_first_time? and !session['notification_banner_closed'] %>
+  <div id ="notification_banner" >
+    <%= render :partial=>"/dashboards/congratulations_banner" %>
+  </div>
+<%end%>
+
+<div class="tracBg">
+  <h1>Road Map Progress Tracker</h1>
+  <div class="tracDv">
+    <% project_percentage = "#{@project.percent.to_s}%" %>
+    <%
+    if @project.percent.to_i == 100
+      tracPrcntgClass = "tracPrcntgGreen"
+    else
+      tracPrcntgClass = "tracPrcntg"
+    end
+  %>
+
+    <div class=<%=tracPrcntgClass %>  style="width:<%= project_percentage %>;">
+      <span class="tracValue <%= (@project.percent.to_i < 5) ? 'floatL' : 'floatR' %>"><%= project_percentage %></span>
+    </div>
+    <span class="tracLines"></span>
+    <% if helper_is_no_progress_at_all? @project %>
+      <div class="tracNotificationWithZindex">Visit your customized Road Map to begin completing tasks and tracking your overall progress results.</div>
+    <%end%>
+  </div>
+
+  <% unless @project.end_date.blank? %>
+    <% project_datewise_percentage = "#{helper_datewise_percentage(@project).to_s}%" %>
+    <div class="tracBottomBar" style="width:<%= project_datewise_percentage %>;"></div>
+    <div class="projectDates">
+      <span class="startingDate"><%= (ws_date_format_with_abreviated_month @project.start_date).upcase %></span>
+      <span class="endingDate"><%= (ws_date_format_with_abreviated_month @project.end_date).upcase %></span>
+    </div>
+  <%end%>
+</div>
+
+<% unless @project.end_date.blank? %>
+  <% unless session['overdue_notice_cancelled'] %>
+    <% if helper_is_overdue? @project %>
+      <div class="notificationMsg">
+        <h1><%= sanitize @roadmap_contents[:overdue_notification].title %></h1>
+        <p><%= sanitize @roadmap_contents[:overdue_notification].content %></p>
+        <img src="/images/cancel-icn.png" />
+        <%= image_tag "cancel-icn.png", :id=>'cancel_overdue_notice' %>
+      </div>
+      <%content_for :javascripts do%>
+        <script>showOverdueNoticeBar();</script>
+      <%end%>      
+    <% end %>
+  <%end%>
+<%end%>
+
+<div class="roadMap3Col">
+
+  <div class="cols">
+
+    <h3 class="title">
+      Action Items In Progress <img src="/images/info-icon.png" onmouseover="showInfoPanel('item_in_prog_info');" onmouseout="hideInfoPanel('item_in_prog_info');" />
+      <div id="item_in_prog_info" class="floatR dispNone itemInProgInforoadmap">
+        <%= render :partial => 'shared/info_tooltip', :locals => { :tip => @roadmap_contents[:items_in_progress] }  %>
+      </div>
+    </h3>
+<%# if @project.is_in_progress? %>
+    <% unless @recent_items.blank? %>
+      <% @recent_items.each_with_index do |item, index| %>
+
+        <div class="<%= (index==0) ? 'dispBlock' : 'dispNone recentItems' %>">
+          <h3 class="bltTitle"><%=  helper_section_name_suffixed_by_sequence_and_colon item.section %> 〉</h3>
+          <h3 class="qstn"><%= helper_item_title_suffixed_by_sequence item %></h3>
+          <p class="msg">Last modified by <a href="<%= profile_path  %>">You</a> at <%= ws_date_abbriviated_month_format_with_time_and_meridiem_first(item.updated_at) %><br />
+            <%  section_deadline = item.section.due_date %>
+            <% if section_deadline.present? %>
+              Deadline: <span class="<%= helper_choose_date_color(section_deadline,item.section.percent_completed.to_i) %>"><%= ws_date_format_with_abreviated_month(section_deadline) %><%=  helper_choose_date_icon_small(section_deadline, item.section.percent_completed.to_i) %></span>
+            <%end%>
+          </p>
+        </div>
+      <%end%>
+      <p class="moreItems"><a href="JavaScript:void(0);" onclick="showActionItems();" title="view more">View More</a></p>
+    <%else%>
+      <%= image_tag("img-ready-set-go.jpg") %>
+      <h3 class="imageText">WANT TO GET STARTED?</h3>
+      <p class="imageMsg borderLess">Click here to begin the startup process by completing the action items in step 1, The Starting Block.</p>
+    <%end%>
+<%#else%>
+<%#= image_tag("img-ready-set-go.jpg") %>
+<%#*<h3 class="imageText">WANT TO GET STARTED?</h3>%>
+<%#*<p class="imageMsg borderLess">Click here to begin the startup process by completing the action items in step 1, The Starting Block.</p>%>
+<%#end%>
+  </div>
+
+
+  <div class="cols">
+
+    <h3 class="title">
+      Upcoming Action Items <img src="/images/info-icon.png" onmouseover="showInfoPanel('upcoming_item_info');" onmouseout="hideInfoPanel('upcoming_item_info');" />
+      <div id="upcoming_item_info" class="floatR dispNone itemUpcomingInforoadmap">
+        <%= render :partial => 'shared/info_tooltip', :locals => { :tip => @roadmap_contents[:upcoming_items] }  %>
+      </div>
+    </h3>
+    <% unless @closely_due_section.blank? %>
+      <h3 class="bltTitle"><%=  helper_section_name_suffixed_by_sequence_and_colon @closely_due_section %> 〉</h3>
+      <h3 class="imageText">
+        <%= helper_item_title_suffixed_by_sequence @closely_due_section.first_applicable_but_not_completed_item %>
+      </h3>
+      <p class="msg">Deadline: <span class="<%= helper_choose_date_color(@closely_due_section.due_date, @closely_due_section.percent_completed.to_i) %>"><%= ws_date_format_with_abreviated_month(@closely_due_section.due_date) %> <%=  helper_choose_date_icon_small(@closely_due_section.due_date, @closely_due_section.percent_completed.to_i) %></span></p>
+    <%else%>
+      <!--<div class="dispBlock">-->
+      <%= image_tag("img-stars-alert.jpg") %>
+      <h3 class="imageText">WANT TO KEEP TRACK OF YOUR MILESTONES?</h3>
+      <p class="imageMsg borderLess">Set your section deadlines and we'll notify you when things are coming due.</p>
+    <%end%>
+  </div>
+
+  <div class="cols">
+    <h3 class="title">
+      To-Do List <img src="/images/info-icon.png" onmouseover="showInfoPanel('upcoming_todo_info');" onmouseout="hideInfoPanel('upcoming_todo_info');" /><!--<a id="add_todo" href="#." style="float: right">Add</a>-->
+      <div id="upcoming_todo_info" class="floatR dispNone upcomingTodoInforoadmap">
+        <%= render :partial => 'shared/info_tooltip', :locals => { :tip => @roadmap_contents[:upcoming_todos] }  %>
+      </div>
+    </h3>
+    <!--<div id="addTodoPanel">
+<%#= render :partial => "add_todo_popup" %>
+    </div>
+    <div id="sentConfirmPanel" class="addTodoPanelPos" style="display: none;">
+      New Todo has been Added!
+    </div>-->
+    <% unless @upcoming_todos.blank? %>
+
+      <% @upcoming_todos.each_with_index do|todo, index| %>
+        <div class="width215 <%= (index==0) ? 'dispBlock' : 'dispNone upcomingTodos' %>">
+          <h3 class="bltTitle"><%= sanitize todo.title %></h3>
+          <p class="msg">Created by <a href="<%= profile_path %>">You</a> at <%= ws_date_format_with_time_and_meridiem_first(todo.created_at) %>,<br />Deadline: <span class="<%= helper_choose_date_color(todo.due_date) %>"><%= ws_date_format(todo.due_date) %> <%=  helper_choose_date_icon_small(todo.due_date) %></span></p>
+        </div>
+      <%end%>
+      <p class="moreTodos"><a href="JavaScript:void(0);" onclick="showUpcomingTodos();" title="view more">View More</a></p>
+    <%else%>
+      <%= image_tag("img-to-do-list.jpg") %>
+      <h3 class="imageText">KEEP TRACK OF YOUR TO-DO LIST?</h3>
+      <p class="imageMsg borderLess">Coming Soon.</p>
+    <%end%>
+  </div>
+</div>
+
+<div class="sep"></div>
+<div class="startUpRodaMpaTitle">
+  <h1>Your Start-Up Road Map</h1>
+  <div class="startUpTitleBar">
+    <!--<div class="checkBxDv">
+      <input type="checkbox" id="select_all_sections" />
+    </div>-->
+    <div class="stepTitle">Step</div>
+    <div class="percentageTitle">Percentage Completed</div>
+    <div class="updatedDate">Last Updated</div>
+    <div class="deadlineDate">Deadline</div>
+  </div>
+</div>
+<%# form_tag '/projects/print_roadmap_steps', :id => "print_roadmap_form", :class => "floatL"  do %>
+<!--<div id="actions_menu" class="actions_menu">
+<%#= select_tag :print_option, options_for_select([
+['Select an action to perform', 'none'],
+['Print Roadmap Steps and Action Items (w/notes only)','items_with_notes_only'],
+['Print Roadmap Steps and Action Items (only)','items_only'],
+['Print Roadmap Steps and Action Items(w/details)','items_with_details_only'],
+['Print Roadmap Steps and Action Items (w/details & my notes)','items_with_details_and_notes']])    
+%>
+</div>-->
+<% @sections.each_with_index do|section, index| %>
+
+  <% if section.section_template.belongs_to_ifel %>
+
+    <div id ="section_head_<%=section.sequence_number.to_s%>"  class="roadMapTitle">
+      <!--<div class="checkBxDv">
+    <%#= check_box_tag "sections[]", section.id.to_s, false, :class => 'sectionBox'  %>
+      </div>-->
+      <div class="stepTitle2">
+        <a id="btn_slide" class="btn-slide" onclick="toggleSectionPanel('<%= section.sequence_number.to_s %>');" href="JavaScript:void(0);">
+          <img src="/images/theme/down-arrow.png" id="slide_arrow_<%= section.id.to_s %>" /> <%= helper_section_name_suffixed_by_sequence section %>
+        </a>
+        <span>| </span><span style="font-size: 14px;"><%= sanitize section.section_template.title_comment.to_s %></span>
+      </div>
+      <% section_percentage = "#{section.percent_completed.to_s}%" %>
+      <div class="percentageTitle"><span class="prcntgValueSmall"><%= section_percentage %> Completed</span>
+        <div class="percentBarSmall">
+          <%
+          if section.percent_completed.to_i == 100
+            smallPrcntBarClass = "smallPrcntBarGreen"
+          else
+            smallPrcntBarClass = "smallPrcntBar"
+          end
+        %>
+          <div class=<%=smallPrcntBarClass%> style="width:<%= section_percentage %>;">
+          </div>
+          <span class="smallBarLines"></span>
+        </div>
+      </div>
+
+      <div class="updatedDate"><%= ws_date_format_with_abreviated_month section.updated_at %></div>
+      <div id="deadline_container_<%= section.id.to_s %>">
+        <%= render :partial => "section_deadline", :locals => {:section => section} %>
+      </div>
+      <div class="roadmapPrint">
+        <%= link_to image_tag('chart-icon.png', :size => '25x23'), download_section_template_path(section.section_template) if section.section_template.chart.exists? %>
+        <% note_document = helper_get_note_document(section) %>
+        <%if note_document%>
+          <%= link_to image_tag('icn-down.png'), download_document_path(note_document), :title => 'Download'  %>
+        <%else%>
+          <%= link_to image_tag('icn-down.png'), 'JavaScript:void(0);', :title => 'Download', :onclick=>"JavaScript:alert('There is currently no file to download. You must first save your Notes in the action items for this step.');"  %>
+        <%end%>
+        <%= link_to image_tag('print-icn-my-files.png'), print_notes_section_path(section), :target=>'_blank', :title => 'Print Notes' %>
+      </div>
+
+    </div>
+
+    <div class="sliderWrapper <%= (index==2) ? 'marginBtm0' : '' %>" id="action_items_panel_<%= section.sequence_number.to_s %>">
+      <div class="roadMapListItems">
+        <ol>
+          <%section.items.sequence_wise.each do|item|%>
+            <li><%= link_to truncate(sanitize(item.title), 80),'JavaScript:void(0);',:onclick=> "open_section_item('#{item_path(item)}');" %>
+              <span><img src="images/<%= helper_get_state_icon_name_roadmap item %>.png" class="padTop8" /></span></li>
+          <%end%>
+        </ol>
+      </div>
+
+      <div class="videoStepWrapper" >
+        <% if section.section_template.is_multimedia_video %>
+                                                                        <!--<span id="step_image_<%#= section.sequence_number.to_s %>"><%#= image_tag "step-#{section.sequence_number.to_s}.gif", :onclick=>"showSectionVideo('#{section.sequence_number.to_s}');" %></span>
+                                                                        <span id="step_video_<%#= section.sequence_number.to_s %>" class="dispNone">--><%#= render :partial => 'shared/flvplayer', :locals => {:video_path => section.section_template.url_for_video_player, :width => '360', :height => '250', :padding => '0' } %><!--</span>-->
+      <%#= player({:file => section.section_template.url_for_video_player,:image => "/images/step-#{section.sequence_number.to_s}.gif", :icons => false }, { :id => "jw_player_#{section.sequence_number.to_s}", :width => '344', :height => '218' } ) %>
+          <%= render :partial => '/shared/jwplayer', :locals => {:options => {:player_id=>"jw_player_#{section.sequence_number.to_s}", :video_file=>section.section_template.url_for_video_player, :image=>"/images/step-#{section.sequence_number.to_s}.gif"}} %>
+        <%else%>
+          <%= image_tag section.section_template.multimedia.url %>
+        <%end%>
+        <p><%= sanitize section.introduction %></p>
+      </div>
+      <div class="clear"></div>
+    </div>
+  <%end%>
+<%end%>
+<%#end%>
+<!--<div class="additionalSections">
+<%#= image_tag 'show-step-btn.jpg' %>
+</div>-->
+<%content_for :javascripts do%>
+  <script>
+    openSectionPanel('<%= @section_number_to_open %>');
+    function roadmap_redirect()
+    {
+      $.post('/dashboards/cancel_notification_box', {'_method':'put'}, function(){
+        //$.unblockUI();
+        window.location = '/roadmap';
+      }, 'json');
+    
+    }
+  </script>
+<%end%>
+
+<div id="splashBox" class="dbWelcomeMsg dispNone">
+  <h1><%= @first_time_login[:title_with_text].title %></h1>
+  <h3><%= @first_time_login[:h3_content].content%></h3>
+  <p><%= @first_time_login[:title_with_text].content %></p>
+  <h2><%= @first_time_login[:h2_content].content %></h2>
+  <!--<p>
+<%#= link_to image_tag('not-now-btn.png'), 'JavaScript:void(0);' , :class=>'closeBox'%>
+<%#= link_to image_tag('lets-go-btn.png'), 'JavaScript:void(0);', :onclick=>"roadmap_redirect();"%>
+  </p>-->
+  <%= link_to image_tag('cancel-icn.png', :class=>'cancelBtnSplash'), 'JavaScript:void(0);' , :class=>'closeBox'  %>
+</div>
+

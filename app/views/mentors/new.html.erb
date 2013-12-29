@@ -1,0 +1,9 @@
+<%= render :partial => "admins/admin_profile_menu", :locals => { :active_admin_profile_tab => :mentor_tab } %>
+
+<div class="admnRitCol">
+  <h1>New Mentor</h1>  
+  <%= render :partial => 'form', :locals => {:mentor => @mentor} %>
+  <p>
+    <%= link_to '<< Back', url_for(:back) %>
+  </p>
+</div>

@@ -1,0 +1,27 @@
+<% title "Partners - About Us" %>
+<% meta "WickedStart’s team is dedicated to helping you start a small business by developing the best set of tools imaginable to ensure your success, built an their years of entrepreneurial experience and success." %>
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+  <h1>ABOUT US</h1>
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :partners} %>
+  <div class="clear"></div>
+
+  <h2 class="headLine alignC">
+    <%= sanitize @partner.show_title %>
+  </h2>
+  <div class="sep marginTop marginBtm"></div>
+  <div class="partnersDetail">
+    <%= @partner.description %><br/><br/><br/>
+    <p><%= link_to '< Return to the Wicked Start Partners Page', partners_path %></p>
+  </div><!-- End of Partners List -->
+
+  <div class="partnersRightCol">
+    <p><%= image_tag @partner.logo.url(:large), :alt=> @partner.company_name %></p>
+    <p>
+      <!--<a href="#"><span></span><%#= sanitize @partner.button_text %></a>-->
+      <%= (link_to "<span></span>"+sanitize(@partner.button_text), @partner.button_url, :target => '_blank') unless @partner.button_text.blank? %>
+    </p>
+    <p><%= @partner.promo_text %></p>
+  </div>
+
+</div> <!-- End of Sub page Wrapper -->

@@ -1,0 +1,53 @@
+<%# javascript("nicEdit") %>
+<%# content_for :javascripts do %>
+  <script type="text/javascript">
+    //$(document).ready(function (){
+    //  description_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('biography_description');
+    //});
+  </script>
+<%# end %>
+
+<% form_for biography, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.label :name %>
+    <br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.check_box :is_founder %>
+    <%= f.label :is_founder %>
+  </p>
+  <p>
+    <%= f.label :title %>
+    <br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :description %>
+    <br />
+    <%= f.text_area :description, :size => "100x15", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :photo %>
+    <br />
+    <%= f.file_field :photo %>
+  </p>
+  <p>
+    <%= f.label :photo_alt %>
+    <br />
+    <%= f.text_field :photo_alt %>
+  </p>
+  <%#*<p>%>
+    <%#= f.check_box :has_video %>
+    <%#= f.label :has_video %>
+  <%#*</p>%>
+  <p>
+    <%= f.label :video %>
+    <br />
+    <%= f.file_field :video %>
+  </p>
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>

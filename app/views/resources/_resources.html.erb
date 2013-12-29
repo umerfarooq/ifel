@@ -1,0 +1,21 @@
+<div id="resource_section_content_panel">
+  <% resource_categories.each do |category| %>
+    <div class="floatL resourcesTopDescription"> 
+      <% resources = category.resources.published.sorted.only(5) %>
+      <div class="resourcesContentWrapper">
+        <div class="resourceType">
+          <div class="resourcesPost">             
+            <h3 class="postItem-title"><%= category.title.to_s %></h3>    
+            <div id="resources_list_<%= category.id.to_s %>">
+              <%= render :partial => 'resources_list', :locals => {:resources=>resources} %>
+            </div>
+          </div>
+        </div>
+      </div>        
+      <h3 style="text-align: center;" id="view_more_<%= category.id.to_s %>">
+        <%=  link_to "[View More #{category.title} Resources]",'JavaScript:void(0);', :onclick=>"load_all_resources('#{category.id.to_s}')" if (!resources.blank? and resources.length > 4) %>
+      </h3>
+    </div>
+  <%end%>
+</div>
+<div style="display: none;" id="temp_resources_block"></div>

@@ -1,0 +1,130 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'style' %>
+
+  <script type="text/javascript">
+    function toggleHideElement (elementId, elementToggleImgId)
+    {
+  <%#*alert(elementId)%>
+    var element,elementImgToggle;
+    if (document.all){
+      element = document.all[elementId];
+      elementImgToggle = document.all[elementToggleImgId]
+    }else if (document.getElementById){
+      element = document.getElementById(elementId);
+      elementImgToggle = document.getElementById(elementToggleImgId);
+    }if (element && element.style)
+      if (element.style.display == 'none')
+    {
+      element.style.display = '';
+      elementImgToggle.src="/images/icons/minus-icn.jpg";
+    }
+    else
+    {
+      element.style.display = 'none';
+      elementImgToggle.src="/images/icons/plus-icn.jpg";
+    }
+  }
+  </script>
+<% end %>
+<body onload="javascript:window.print();">
+  <div class="PrntMnDv">
+    <div class="PrntMnCntnt">
+      <div class="liteBxTtl">
+        <h1><strong>
+            <%= @project.business_name %>
+          </strong>
+          <br />
+          LAUNCH LIST OVERVIEW
+        </h1>
+        <span class="closBtn">
+          <a href="#">
+            <img src="images/close-btn.jpg" alt="" width="14" height="14" />
+          </a>
+        </span>
+      </div>
+
+      <div class="prntBdy">
+        <div class="prntCntnt">
+          <div class="prntViewLstDv">
+            <div class="prntColTtlDv">
+              <span class="prntCol1Ttl">Section</span>
+              <span class="prntCol2Ttl">Due Date</span>
+
+            </div>
+            <% @project.sections.each do |section| %>
+              <div class="prntViewTtlDv">
+                <p class="prntCol1"><img id="imgToggle<%= section.id %>" alt="" src="/images/icons/minus-icn.jpg" onclick="toggleHideElement('divSectionItems<%=section.id%>','imgToggle<%=section.id%>')"/>
+                  <span>
+                    <%= section.title%>
+                  </span>
+                </p>
+                <p class="prntCol2">
+                  <% if section.due_date.blank? %>
+                    N/A
+                  <% else %>
+                    <%= section.due_date.strftime("%m/%d/%Y").upcase %>
+                  <% end %>
+                </p>
+                <p class="prntCol3"></p>
+              </div>
+
+              <div class="prntDtl" id="divSectionItems<%= section.id %>">
+                <div class="prntViewsbTtl">
+                  SECTION
+                  <%= section.name %>
+                  INTRODUCTION
+                </div>
+
+                <% section.items.each do |item| %>
+                  <div class="prntDtlTxt">
+                    <a href="#">
+
+                      <% if item.is_complete || item.is_not_applicable %>
+                        <%= image_tag "icons/good.jpg", :alt => "COMPLETE",:width=>"12",:height=>"12", :align=>"absmiddle" %>
+                      <% else %>
+                        <%= image_tag "icons/cancel.jpg", :alt => "INCOMPLETE", :width=>"12",:height=>"12", :align=>"absmiddle"%>
+                      <% end %>
+                    </a>
+                    <span class="prntTxtTtl">
+                      <%= item.title %>
+                    </span>
+                    <br />
+    <%#*<span class="prntTxtTtl">%>
+    <%#*Description :%>
+    <%#= item.definition %>
+    <%#*</span>%>
+    <%#*<br />%>
+    <%#*<span class="prntTxtTtl">%>
+    <%#*Answer :%>
+    <%#= item.user_answer %>
+    <%#*</span>%>
+    <%#*<br />%>
+                  </div>
+                <% end %>
+
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+<%#*<div class="litBxFtr" style="padding-right:20px; padding-left:0px;" id="divPrintBtn">%>
+<%#*<a HREF="javascript://" onclick="printDoc();"><img src="/images/print-btn.jpg" alt="" /></a>%>
+<%#*</div>%>
+      </div>
+
+    </div>
+    <div class="prntFtr">
+      <span class="PrntSpan">
+        <%= @project.business_name %>
+      </span>
+      <span class="PrntSpan2">http://www.wickedstart.com/</span>
+    </div>
+  </div>
+</body>
+<script>
+  function printDoc() {
+    document.getElementById("divPrintBtn").style.display = 'none';
+    window.print();
+    window.close();
+  }
+</script>

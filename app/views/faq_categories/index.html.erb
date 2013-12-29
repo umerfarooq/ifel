@@ -1,0 +1,131 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'jquery-1.4.2.min' %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+  <% @faq_categories.each do |faq_category| %>
+      $("#edit_faq_category_link_<%= faq_category.id %>").click(function(event) {
+        if($(this).text() == "EDIT") {
+          $("#faq_category_title_span_<%= faq_category.id %>").hide();
+          $("#edit_faq_category_title_span_<%= faq_category.id %>").show();
+          $(this).text("CANCEL");
+        } else {
+          $("#faq_category_title_span_<%= faq_category.id %>").show();
+          $("#edit_faq_category_title_span_<%= faq_category.id %>").hide();
+          $(this).text("EDIT");
+        }
+        event.preventDefault();
+        return false;
+      });
+  <% end %>
+  });
+  </script>
+<% end %>
+
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :faqs_tab } %>
+
+<div class="admnRitCol">
+
+
+  <h4>
+    FAQ CATEGORIES
+    |
+    <%= link_to "Add Faq Categpry", new_faq_category_path %>
+  </h4>
+
+  <table cellpadding="5px">
+    <% @faq_categories.each do |faq_category| %>
+      <tr>
+        <td style="width: 350px">
+          <span id="faq_category_title_span_<%= faq_category.id %>">
+            <%=sanitize(faq_category.title, :tags => '%w(span a)', :attributes => '%w(style href)') %>
+          </span>
+        </td>
+        <td>
+          <%= faq_category.state.title.upcase %>
+        </td>
+        <td>
+          <% if(faq_category.state == (State.find_by_name('publish'))) %>
+            <%= link_to 'EDIT', edit_faq_category_path(faq_category) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_faq_category_path(faq_category) %>
+          <% elsif(faq_category.state == (State.find_by_name('activate'))) %>
+            <%= link_to 'EDIT', edit_faq_category_path(faq_category) %>
+            |
+            <%= link_to 'PUBLISH', publish_faq_category_path(faq_category) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_faq_category_path(faq_category) %>
+          <% else %>
+            <%= link_to 'EDIT', edit_faq_category_path(faq_category) %>
+            |
+            <%= link_to 'ACTIVATE', activate_faq_category_path(faq_category) %>
+          <% end %>
+          |
+          <%= link_to 'DELETE', faq_category_path(faq_category), :method => :delete, :confirm => "Are you sure?" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <hr />
+  <br />
+
+  <h4>
+    WICKED START FAQS
+    |
+    <%= link_to "Add Faq", new_faq_path %>
+  </h4>
+  <br />
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>
+        Category
+      </th>
+      <th>
+        Question
+      </th>
+      <th>
+        Public?
+      </th>
+      <th>
+        STATE
+      </th>
+      <th>
+        AVAILABLE ACTIONS
+      </th>
+    </tr>
+    <% @faqs.each do |faq| %>
+      <tr>
+        <td>
+          <%=sanitize(faq.faq_category.title, :tags=>'%w(span a)', :attributes => '%w(style href)') %>
+        </td>
+        <td>
+          <%= link_to sanitize(faq.question), '#' %>
+        </td>
+        <td>
+          <%= faq.is_public %>
+        </td>
+        <td>
+          <%= faq.state.title.upcase %>
+        </td>
+        <td>
+          <% if(faq.state == (State.find_by_name('publish'))) %>
+            <%= link_to 'EDIT', edit_faq_path(faq) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_faq_path(faq) %>
+          <% elsif(faq.state == (State.find_by_name('activate'))) %>
+            <%= link_to 'EDIT', edit_faq_path(faq) %>
+            |
+            <%= link_to 'PUBLISH', publish_faq_path(faq) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_faq_path(faq) %>
+          <% else %>
+            <%= link_to 'EDIT', edit_faq_path(faq) %>
+            |
+            <%= link_to 'ACTIVATE', activate_faq_path(faq) %>
+          <% end %>
+          |
+          <%= link_to 'DELETE', faq_path(faq), :method => :delete, :confirm => "Are you sure?" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

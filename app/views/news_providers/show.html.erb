@@ -1,0 +1,67 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :radar_tab } %>
+
+<% title "#{@news_provider.title}" %>
+
+<div class="admnRitCol">
+
+  <h1>
+    <%= @news_provider.title %>
+  </h1>
+
+  <p>
+    STATE:
+    <strong>
+      <%= @news_provider.state.title.upcase %>
+    </strong>
+  </p>
+
+  <p>
+    TITLE:
+    <strong>
+      <%= @news_provider.title %>
+    </strong>
+  </p>
+
+  <p>
+    URL:
+    <strong>
+      <%= link_to @news_provider.url, @news_provider.url %>
+    </strong>
+  </p>
+
+  <p>
+    RSS PROVIDER?
+    <strong>
+      <%= @news_provider.rss_provider? %>
+    </strong>
+  </p>
+
+  <% if @news_provider.rss_provider? %>
+    <p>
+      RSS LINK:
+      <strong>
+        <%= link_to @news_provider.rss_link, @news_provider.rss_link %>
+      </strong>
+    </p>
+
+    <p>
+      FEED COUNT:
+      <strong>
+        <%= @news_provider.feed_count %>
+      </strong>
+    </p>
+
+    <p>
+      FRONT MODULE COUNT:
+      <strong>
+        <%= @news_provider.front_module_count %>
+      </strong>
+    </p>
+  <% end %>
+
+  <p>
+    LOGO:
+    <%= image_tag @news_provider.logo.url %>
+  </p>
+
+</div>

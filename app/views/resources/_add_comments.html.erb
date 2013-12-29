@@ -1,0 +1,23 @@
+<div >
+  <%unless comments.blank? %>
+    <% comments.each do |comment| %>
+      <div class="userReview">
+        <strong><%= comment.user.screen_name.capitalize %> :</strong>
+        <p>
+          <%= comment.body %>
+        </p>
+      </div>
+    <%end%>
+  <%end%>
+
+  <% form_for :comment , :html => {:method => :put, :multipart => true} do |f| %>
+    <fieldset>
+      <legend>Add Your Comment</legend>
+      <p>
+        <%= f.text_area :body, :id =>"body_#{resource.id.to_s}"%>
+        <%= f.submit :Post, :onclick => "save_comments('#{resource.id.to_s}'); return false;" %>
+      </p>
+    </fieldset>
+
+  <%end%>
+</div>

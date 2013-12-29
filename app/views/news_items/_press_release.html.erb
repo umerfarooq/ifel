@@ -1,0 +1,14 @@
+<div class="newsDv">
+  <span class="newsImg">
+    <%= image_tag press_release.news_provider.logo.url(:small) %>
+    <%#*<img src="images/new-src-logo.jpg" />%>
+  </span>
+  <span class="newz">
+    <strong><%= press_release.title %>: </strong> <%= ws_date_format(press_release.news_date) %>
+    <br />
+    <%= press_release.news_summary %>
+    <br />
+    <%= link_to "Read more...", press_release %>
+  </span>
+</div>
+

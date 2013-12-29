@@ -1,0 +1,110 @@
+<% javascript("nicEdit") %>
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    $(document).ready(function (){
+      //quote_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('success_story_quote');
+      //before_quote_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('success_story_before_quote');
+      //after_quote_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('success_story_after_quote');
+    });
+  </script>
+<% end %>
+
+<% form_for success_story, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.label :story_title %>
+    <br />
+    <%= f.text_field :story_title, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :quote %>
+    <br />
+    <%= f.text_area :quote, :size => "100x15", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :before_quote %>
+    <br />
+    <%= f.text_area :before_quote, :size => "100x15", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :after_quote %>
+    <br />
+    <%= f.text_area :after_quote, :size => "100x15", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :summary %> <br />
+    <%= f.text_area :summary, :size => "100x15", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :photo %>
+    <%= image_tag success_story.photo.url, :alt => success_story.name unless success_story.photo.blank? %>
+    <br />
+    <%= f.file_field :photo %>
+  </p>
+  <p>
+    <%= f.label :photo_alt %>
+    <br />
+    <%= f.text_field :photo_alt %>
+  </p>
+  <p>
+    <%= f.label :name %>
+    <br />
+    <%= f.text_field :name, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :title %>
+    <br />
+    <%= f.text_field :title, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :company_name %>
+    <br />
+    <%= f.text_field :company_name, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :founded %>
+    <br />
+    <%= f.text_field :founded %>
+  </p>
+  <p>
+    <%= f.label :industry_id, "Industry" %>
+    <br />
+    <%= f.collection_select(:industry_id, Industry.published, :id, :title, {:prompt => true}) %>
+  </p>
+  <p>
+    <%= f.label :employee_count %>
+    <br />
+    <%= f.text_field :employee_count %>
+  </p>
+  <p>
+    <%= f.label :url %>
+    <br />
+    <%= f.text_field :url, :size => "75" %>
+  </p>
+
+  
+
+  <p>
+    <%= f.label :logo %>
+    <%= image_tag success_story.logo.url, :alt => success_story.company_name unless success_story.logo.blank? %>
+    <br />
+    <%= f.file_field :logo %>
+  </p>
+
+  <p>
+    <%= f.label :banner %>
+    <%= image_tag success_story.banner.url, :alt => success_story.name unless success_story.banner.blank? %>
+    <br />
+    <%= f.file_field :banner %>
+  </p>
+
+  <p>
+    <%= f.label :banner_alt %>
+    <br />
+    <%= f.text_field :banner_alt %>
+  </p>
+
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>

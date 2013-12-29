@@ -1,0 +1,38 @@
+<div class="tourContent">
+  <h3 class="subHeadLine"><%= child.title %></h3>
+  <ul class="videoListing">
+<%#*<li><a href="#" class="current"><img src="/images/icons/thumbnail-01.jpg" /><span class="videoIcon"><img src="/images/video-active.png" /></span></a></li>%>
+    <% parent.children.published.sequence_wise.each do |chld| %>
+      <li>
+        <%= link_to image_tag(chld.photo.url(:thumb)), '#', :class => (chld == child )? 'current':'', :onclick => 'showSubFeature("'+chld.id.to_s+'");', :id => 'feature_'+chld.id.to_s %>
+        <% if chld.video.exists? %>
+          <span class="videoIcon">
+    <%#*<img src="/images/video-active.png" />%>
+            <%= link_to image_tag("/images/video-active.png"), '#', :onclick => 'showSubFeature("'+chld.id.to_s+'");', :id => 'feature_'+chld.id.to_s %>
+          </span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<div class="tourVideoBusiness">
+<%#*<img src="/images/bzns-video.jpg" />%>
+  <% if child.video.exists? %>
+    <% if child.photo.exists? %>
+      <div class="featuredVideo" style="background:url(<%= child.photo.url(:medium) %>) left top no-repeat;">
+        <%#= link_to image_tag(child.photo.url(:medium)), flvplayer_features_path(:video_path => child.url_for_video_player), :onclick => "$(this).colorbox()" %>
+        <%#= image_tag child.photo.url(:medium) %>
+    <%#*<img src="/images/btn_play.png" />%>
+        <div class="videoButton">  <%= link_to image_tag("/images/btn_play.png"), flvplayer_features_path(:video_path => child.url_for_video_player, :width => '590', :height=> '479'), :onclick => "$(this).colorbox()" %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <% if child.photo.exists? %>
+      <%= image_tag child.photo.url(:medium) %>
+    <% end %>
+  <% end %>
+  <p>
+    <%= child.description %>
+  </p>
+</div>

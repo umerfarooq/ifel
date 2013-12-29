@@ -1,0 +1,149 @@
+<% title "WickedStart Team, Here To Help You Succeed At Starting A Small Business" %>
+<% meta "WickedStart’s team is dedicated to helping you start a small business by developing the best set of tools imaginable to ensure your success, built on their years of entrepreneurial experience and success." %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" unless current_user %>
+
+  <h1>ABOUT US</h1>
+
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :overview} %>
+
+  <h2 class="headLine marginBtm">
+    <%#*We Help Entrepreneurs Navigate the Start-Up Process%>
+    Our Team Is Here to Help You Succeed at Starting a Small Business
+  </h2>
+
+  <%#*<h3 class="header marginTop">%>
+    <%#*Introducing the Wicked Start Team%>
+  <%#*</h3>%>
+
+  <ul class="teamPhotoListing">
+    <% @biographies.each_with_index do |biography, iterator| %>
+      <% content_tag :li, :class => ("special" if (iterator % 5) == 4 ) do %>
+        <%= link_to image_tag(biography.photo.url(:team), :alt => biography.photo_alt), biography %>
+        <h3 class="headerLink">
+          <%= biography.name %>
+          <br />
+          <span>
+            <%= biography.title %>
+          </span>
+        </h3>
+      <% end %>
+    <% end %>
+  </ul>
+
+  <p>
+    The name Wicked Start, while irreverent and fun, is also a play on a
+    slang definition of “wicked,” meaning masterful. A "wicked start" is a
+    masterful way of starting a business. At Wicked Start, we believe
+    entrepreneurs and small business owners are on the forefront of
+    business today, leading change and innovation with great ideas.
+  </p>
+  <p>
+    Starting a business is one of the biggest decisions that you will ever
+    make, and it can be as daunting as it is exciting. To be successful,
+    you must take lots of personal, financial and planning considerations
+    into account. At Wicked Start, our objective is to combine a practical,
+    manageable business approach with a dose of “heart” to manage these
+    considerations during the entire start-up process. This “heart” is
+    compassion, which plays an instrumental role in how you create, drive and
+    build a successful business on based on principles, integrity, and
+    best practices. By injecting compassion into your solutions, you will
+    find a healthier business in the long term and a healthier bottom line.
+  </p>
+</div> <!-- End of Sub page Wrapper -->
+
+
+
+<div id="ContentBottom">
+
+  <div class="wickedstartNewsWidget">
+    <h3 class="header"><%= link_to "Wicked Start In the News", news_articles_path %></h3>
+
+    <% @news_articles.each do |news_article| %>
+      <div class="newsItem">
+        <%= link_to image_tag(news_article.news_provider.logo.url(:small), :alt => news_article.news_provider.title), news_article.news_provider.url, :target=>'_blank' if news_article.news_provider.present?%>
+        <div class="newsDesc">
+          <h3>
+            <%= link_to "#{news_article.title} <span class='offSiteLink'></span>", news_article.url , :target=>'_blank'%>
+          </h3>
+          <span class="meta">
+            <%= ws_date_format(news_article.news_date) %>
+          </span>
+          <p>
+            <%= news_article.summary %>
+            <%= link_to "Read more", news_article if news_article.internal? %>
+          </p>
+        </div><!-- End of newsDesc -->
+      </div><!-- End of NewsItem -->
+    <% end %>
+
+
+<%#*<div class="newsItem">%>
+<%#*<a href="#"><img src="images/echelon-logo.jpg" alt="Logo" /></a>%>
+<%#*<div class="newsDesc">%>
+<%#*<h3><a href="#">Small Biz Bill Wins Kudos/Frowns</a><span class="offSiteLink"></span></h3>%>
+<%#*<span class="meta">September 21, 2010 </span>%>
+<%#*<p>The reaction to the Senate passage of the Small Business Jobs and Credit Act was mostly positive. Democrats won a 61-38 vote to pass the legislation, joined by two Republicans. The measure would establish a $30 billion government fund to help open up lending for small businesses. <a href="#">Read more</a> </p>%>
+<%#*</div><!-- End of newsDesc -->%>
+<%#*</div><!-- End of NewsItem -->%>
+
+
+<%#*<div class="newsItem">%>
+<%#*<a href="#"><img src="images/mitecnews-logo.jpg" alt="Logo" /></a>%>
+<%#*<div class="newsDesc">%>
+<%#*<h3><a href="#">Small Biz Bill Wins Kudos/Frowns</a><span class="offSiteLink"></span></h3>%>
+<%#*<span class="meta">September 21, 2010 </span>%>
+<%#*<p>The reaction to the Senate passage of the Small Business Jobs and Credit Act was mostly positive. Democrats won a 61-38 vote to pass the legislation, joined by two Republicans. The measure would establish a $30 billion government fund to help open up lending for small businesses. <a href="#">Read more</a> </p>%>
+<%#*</div><!-- End of newsDesc -->%>
+<%#*</div><!-- End of NewsItem -->%>
+
+
+  </div><!-- End of wickedstartNewsWidget -->
+
+
+  <%#*<div class="twitterFeedWidget">%>
+    <%#*<h3 class="header">Twitter Feed</h3>%>
+    <%#*<p>New tax deductions of small businesses, so take advantage!%>
+      <%#*<a href="#">http://bit.ly/97ilHl</a>%>
+      <%#*<span class="meta"><small>12:20 PM Oct 20th via CoTweet</small></span>%>
+    <%#*</p>%>
+    <%#*<p>New tax deductions of small businesses, so take advantage!%>
+      <%#*<a href="#">http://bit.ly/97ilHl</a>%>
+      <%#*<span class="meta"><small>12:20 PM Oct 20th via CoTweet</small></span>%>
+    <%#*</p>%>
+  <%#*</div>%>
+  <div class="twitterFeedWidget">
+    <h3 class="header"><%= link_to "Twitter Feed", TWITTER_WS_URL, :target => "_blank" %></h3>
+    <% if @twitter_feeds.blank? %>
+      <p>
+        <% if @message_no_tf.blank? %>
+          No twitter feed available to display.
+        <% else %>
+          <%= @message_no_tf.content %>
+        <% end %>
+      </p>
+    <% else %>
+      <% @twitter_feeds.each do |twitter_feed| %>
+        <p>
+          <%= truncate(strip_tags(twitter_feed.title), :length => FRONT_MODULES_TWITTER_LENGTH) %><br/>
+          <%= link_to truncate(strip_tags(twitter_feed.link), :length => FRONT_MODULES_TWITTER_LINK_LENGTH), twitter_feed.link %>
+          <span class="meta">
+            <small>
+              <%= twitter_feed.date.strftime("%I:%M %p %b %d") %>
+              <%#= " via CoTweet" %>
+            </small>
+          </span>
+        </p>
+      <% end %>
+    <% end %>
+  </div>
+
+
+
+
+
+</div>
+
+
+

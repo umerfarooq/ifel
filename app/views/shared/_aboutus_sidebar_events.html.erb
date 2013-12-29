@@ -1,0 +1,28 @@
+<div id="sideBarRight2Col">
+  <h3 class="header">Upcoming Events</h3>
+  <% upcomming_events.each do |event| %>
+    <%= image_tag event.picture.url(:small), :alt => event.title %>
+    <%= link_to event.title, event %>
+    <p>
+      <% if event.event_start_date == event.event_end_date %>
+        <%= ws_date_format(event.event_start_date) %>,
+        <%= event.city %>,
+        <%= event.geo_state %>
+      <%else%>
+        <%= ws_date_format(event.event_start_date) %> -
+        <%= ws_date_format(event.event_end_date) %>,
+        <%= event.city %>,
+        <%= event.geo_state %>
+      <% end %>
+    </p>
+  <% end %>
+  <!--<p>
+    <a href="#">
+      <img src="images/banner-214.jpg" alt="Marketing Element" />
+    </a>
+  </p>-->
+</div>
+
+
+
+

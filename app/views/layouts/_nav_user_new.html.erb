@@ -1,0 +1,41 @@
+<ul>
+<%# if current_user %>
+<%#*<li>%>
+<%#= link_to "STARTING BLOCK", projects_path, :class => ("current" if(@active_tab == :launch_list) ) %>
+<%#*</li>%>
+<%#else%>
+<%#*<li>%>
+<%#*STARTING BLOCK%>
+<%#*</li>%>
+<%#end%>
+  <% if current_user.blank? or current_user.project.blank?%>
+    <li>
+      START-UP WORKSPACE
+    </li>
+  <% else %>
+    <li>
+      <%= link_to "START-UP WORKSPACE", dashboard_path, :class => ("current" if(@active_tab == :startup_workspace) ) %>
+  <%#= link_to "MY FILES", documents_path, :class => ("current" if(@active_tab == :my_files) ) %>
+    </li>
+  <% end %>
+
+  <li>
+    <%= link_to "COMMUNITY", feedwall_path, :class => ("current" if(@active_tab == :community) ) %>
+  </li>
+
+  <% if current_user %>
+    <li>
+      <%= link_to "RESOURCES", resources_path, :class => ("current" if(@active_tab == :resource_center) ) %>
+    </li>
+  <%else%>
+    <li>
+      RESOURCES
+    </li>
+  <%end%>
+  <li>
+    <%= link_to "NEWS AND EVENTS", news_articles_path, :class => ("current" if(@active_tab == :on_the_radar) ) %>
+  </li>
+  
+  
+
+</ul>

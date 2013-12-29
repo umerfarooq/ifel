@@ -1,0 +1,51 @@
+<% title "Promotions - About Us" %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+
+  <h1>ABOUT US</h1>
+
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :promotions} %>
+
+  <div id="contentLarge">
+    <% @promotions.each do |promotion| %>
+
+      
+      <div class="newsCategory">
+        <h3 class="header">
+          <%= link_to (image_tag promotion.picture.url(:small), :alt => promotion.title),promotion.url, :class=>'floatR', :target=>'_blank' %>
+          <%= promotion.title %>
+        </h3>
+        <% content_tag :div, :class => "news noBorder #{'noMargin' if(promotion == @promotions.last)}" do %>
+          <%= link_to promotion.title, promotion %>
+          <span class="meta">
+            <%= ws_date_format(promotion.created_at) %>
+          </span>
+          <p>
+            <%= promotion.description %>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <%#*<div id="sideBarRight2Col">%>
+    <%#*<h3 class="header">%>
+      <%#*Recent News%>
+    <%#*</h3>%>
+    <%# unless @latest_news_article.blank? %>
+      <%#*<h3>%>
+        <%#= link_to @latest_news_article.title, @latest_news_article %>
+      <%#*</h3>%>
+      <%#*<span class="meta">%>
+        <%#= @latest_news_article.news_date.strftime("%B %d, %Y") %>
+      <%#*</span>%>
+      <%#*<p>%>
+        <%#= @latest_news_article.summary %>
+        <%#= link_to "Read more", @latest_news_article %>
+      <%#*</p>%>
+    <%# end %>
+    <%#*<p><a href="#"><img src="images/banner-214.jpg" alt="Marketing Element" /></a></p>%>
+  <%#*</div>%>
+
+</div> <!-- End of Sub page Wrapper -->

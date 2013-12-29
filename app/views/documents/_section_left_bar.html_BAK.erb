@@ -1,0 +1,39 @@
+<script>
+  //  function show_section_template(section_id){
+  //    document.getElementById('loading_'+section_id).innerHTML='<img src="images/sec_loading.gif">';
+  //    $.get("/documents/show_section_templates/"+section_id, function(data){
+  //      document.getElementById('right_column').innerHTML=data;
+  //      document.getElementById('loading_'+section_id).innerHTML='';
+  //    });
+  //  }
+</script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".temp_cat_link").click(function (){
+      jQuery.get($(this).attr("href"), function(response){
+        $("#right_column").html(response);
+      });
+      //jQuery.get($(this).attr("href"));
+      return false;
+    });
+  });
+</script>
+<div class="lftCol">
+  <div class="lftPnl">
+    <h5>Categories</h5>
+    <div class="pnlBdy">
+      <table style="width:157px;">
+        <% @tamplate_categories.each do |cat| %>
+          <tr>
+            <td>
+  <%#=  link_to cat.title, "#",  :class=>"cmntyLnk", :id=>cat.id.to_s, :onclick=>"show_section_template('#{cat.id}')"%>
+              <%=  link_to cat.title, show_section_templates_document_path(:id => cat.id),  :class=>"cmntyLnk temp_cat_link", :id=>cat.id.to_s%>
+            </td>
+            <td><span id="loading_<%=cat.id%>"></span></td>
+          </tr>
+        <%end%>
+      </table>
+    </div>
+  </div>
+</div>
+<span style="display:none"><%=image_tag "sec_loading.gif"%></span>

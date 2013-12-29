@@ -1,0 +1,59 @@
+<h4>
+  Answers
+  |
+  <%= link_to "Add Answer", new_common_question_path(:parent_id => common_question.id) %>
+</h4>
+<br />
+
+<table cellpadding="5px" style="text-align: left">
+  <tr>
+    <th>
+      Seq
+    </th>
+    <th>
+      Title
+    </th>
+    <th>
+      Description
+    </th>
+    <th>
+      STATE
+    </th>
+    <th>
+      AVAILABLE ACTIONS
+    </th>
+  </tr>
+  <%  unless common_question.children.blank? %>
+    <% common_question.children.sort_by { |obj| obj.sequence_number  }.each do |child| %>
+      <tr>
+        <td>
+          <%= child.sequence_number %>
+        </td>
+        <td width="20%">
+          <%= truncate(child.statement.camelize,50) %>
+        </td>
+        <td width="50%">
+          <%= truncate(strip_tags(child.description.camelize),140) %>
+        </td>
+        <td>
+          <%= child.state.title.upcase %>
+        </td>
+        <td>
+          <%= link_to 'EDIT', edit_common_question_path(child, :parent_id => common_question.id) %>
+          |
+          <% if child.published? %>
+            <%= link_to 'INACTIVATE', inactivate_common_question_path(child) %>
+          <% elsif child.activated? %>
+            <%= link_to 'PUBLISH', publish_common_question_path(child) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_common_question_path(child) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_common_question_path(child) %>
+          <% end %>
+          <%#= "| #{link_to 'MOVE-UP', move_up_common_answer_path(child)}" unless child.on_top? %>
+          <%#= "| #{link_to 'MOVE-DOWN', move_down_common_answer_path(child)}" unless child.on_bottom? %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

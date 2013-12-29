@@ -1,0 +1,33 @@
+<ul id="breadcrumb">
+  <li>
+    <%= link_to "Overview", about_us_path, :class => ("current" if(current == :overview)) unless logged_in? %>
+  </li>
+  <li>
+    <%= link_to "Team", biographies_path, :class => ("current" if(current == :team)) unless logged_in? %>
+  </li>
+  <li>
+    <%= link_to "News", news_articles_path, :class => ("current" if(current == :news)) %>
+  </li>
+  <li>
+    <%= link_to "Events", events_path, :class => ("current" if(current == :events)) %>
+  </li>
+  <%#*<li>%>
+    <%#= link_to "Press Release", "#", :class => ("current" if(current == :press_release)) %>
+  <%#*</li>%>
+  <li>
+    <%= link_to "White Papers", white_papers_path, :class => ("current" if(current == :white_papers)) %>
+  </li>
+   <li>
+    <%= link_to "Partners", partners_path, :class => ("current" if(current == :partners)) unless logged_in? %>
+  </li>
+  <li>
+    <%= link_to "BLOGS", SITE_BLOG_PATH, :class => ("current" if(current == :blogs)) unless logged_in? %>
+  </li>
+  <li>
+    <%= link_to "Contact Us", contact_us_path, :class => ("current" if(current == :contact_us)) unless logged_in? %>
+  </li>
+  <!--<li>
+    <%#= link_to "Promotions", promotions_path, :class => ("current" if(current == :promotions)) %>
+  </li>-->
+</ul>
+<div class="clear"></div>

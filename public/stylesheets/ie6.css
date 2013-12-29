@@ -1,0 +1,28 @@
+ul.navMnu li a .navRite	{ _margin-top:-59px; }
+.showAreaDv .showBg		{ _margin-top:-12px; }
+.showAreaDv .showBot	{ _margin-bottom:-12px; }
+/*.ovrViewDv				{ _padding-left:5px; }*/
+.ovrViewDv h3			{ width:95%; }
+.ovrViewDv .dedline		{ _width:95%; }
+.ovrViewTxt h5			{ _width:93%; }
+.ovrViewTxt h5 a		{ _margin-top:-18px; }
+.qstnsArea				{ _width:95%; }
+.qstnLst				{ _width:98%; }
+.qstnLst li a			{ _margin-top:-35px; }
+
+/*.main-Cntnt .adDv		{ _margin-right:2px; }*/
+.ovrViewDtl td h6 a		{ _margin-top:-18px; }
+.liteBxCntnt .ovrViewTbl{ _width:97.5%; }
+.litBxFtr img			{ _margin-bottom:-3px; }
+
+.liteBxTtl				{ _margin-left:5px; }
+.liteBxCntnt			{ width:97%; margin-left:5px; }
+.litBxFtr			{ margin-left:1px; }
+.liteBxCntnt2			{ width:99%; margin-left:5px; }
+
+.launchTtl				{ margin-top:-5px; margin-left:0px; width:95.7% }
+.faqBnrDv h3 			{ width:95%; }
+
+ul.pblcMnu li a			{ padding:10px 12px 0px 0px; }
+ul.pblcMnu li a:hover	{ padding:10px 12px 0px 0px; }
+ul.pblcMnu li a.active	{ padding:10px 12px 0px 0px; }

@@ -1,0 +1,24 @@
+<% title "Information on Funding, Planning and Structuring Your New Business"%>
+<% meta "Hundreds of articles, whitepapers and information on funding, planning, and structuring a small business." %>
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'ws.resources'  %>
+<%end%>
+
+<div class="subPageWrapper">
+  <% if current_user.blank? %>
+    <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+  <%end%>
+  <h1><%= sanitize @resource_content[:main_content].title %></h1>
+  <div class="clear"></div>
+  <h2 class="leadInText ">
+    <%= strip_tags @resource_content[:main_content].content %>
+  </h2>
+  <%  unless @resource_content[:main_content].content.blank? %>
+    <div class="sep"></div>
+  <%end%>
+  <div class="clear"></div>
+  <div class="resource_right_pannel_content">
+    <%= render :partial => 'resources', :locals => {:resource_categories => @resource_categories } %>
+    <%= render :partial => 'tags', :locals => {:tags => @tags } %>
+  </div>
+</div>

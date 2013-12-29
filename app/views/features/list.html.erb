@@ -1,0 +1,171 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'jquery-1.4.2.min' %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var msg_title = '<%= @why_wicked_start_page.title %>';
+      var msg_content = '<%= @why_wicked_start_page.content %>';
+
+      $("a#message_edit_link").click(function (event){
+        if($("a#message_edit_link").text() == "EDIT") {
+          $("a#message_edit_link").text("CANCEL");
+          $("#marketing_text_message_title").val(msg_title);
+          $("#marketing_text_message_content").val(msg_content);
+          $("div#message_show").hide();
+          $("div#message_edit").show();
+        } else {
+          $("a#message_edit_link").text("EDIT");
+          $("div#message_show").show();
+          $("div#message_edit").hide();
+        }
+        event.preventDefault();
+      });
+
+    });
+  </script>
+<% end %>
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :features_tab } %>
+<div class="admnRitCol">
+  <h4>
+    WICKED START Why Choose Wicked Start?
+    |
+    <%= link_to "EDIT", edit_marketing_text_message_path(@why_wicked_start_page), :id => "message_edit_link" %>
+  </h4>
+  <br />
+  <%unless @why_wicked_start_page.blank?%>
+    <div id="message_show">
+      <strong>
+        Title
+      </strong>
+      <h5>
+        <%= @why_wicked_start_page.title %>
+      </h5>
+      <br />
+      <strong>
+        Content
+      </strong>
+      <p>
+        <%= @why_wicked_start_page.content %>
+      </p>
+
+      <!--<table style="width:100%">
+        <tr>
+          <th>
+            LINK TITLE
+          </th>
+          <th>
+            LINK URL
+          </th>
+          <th>
+            STATE
+          </th>
+          <th>
+            AVAILABLE ACTIONS
+          </th>
+        </tr>
+        <%# unless @why_wicked_start_page.marketing_text_links.blank? %>
+          <%# @why_wicked_start_page.marketing_text_links.each do |link| %>
+            <tr>
+              <td>
+                <%#=  sanitize link.link_text %>
+              </td>
+              <td>
+                <%#=  sanitize link.link_url %>
+              </td>
+              <td>
+                <%#= link.state.title.upcase %>
+              </td>
+              <td>
+                <%# if link.published? %>
+                  <%#= link_to 'INACTIVATE', inactivate_marketing_text_link_path(link) %>
+                <%# elsif link.activated? %>
+                  <%#= link_to 'PUBLISH', publish_marketing_text_link_path(link) %>
+                  <%#*|%>
+                  <%#= link_to 'INACTIVATE', inactivate_marketing_text_link_path(link) %>
+                <%# else %>
+                  <%#= link_to 'ACTIVATE', activate_marketing_text_link_path(link) %>
+                <%# end %>
+              </td>
+            </tr>
+          <%#  end %>
+        <%#end%>
+      </table>-->
+    </div>
+    <div id="message_edit" style="display: none">
+      <% form_for @why_wicked_start_page do |f| %>
+        <%= f.label :title %>
+        <br />
+        <%= f.text_field :title %>
+        <br />
+        <%= f.label :content %>
+        <br />
+        <%= f.text_area :content, :size => "100x5" %>
+        <br />
+        <%= f.submit 'Update and Publish' %>
+        <br />
+      <% end %>
+    </div>
+  <%end%>
+  <br />
+
+  <h4>
+    WICKED START Features
+    |
+    <%= link_to "Add Feature", new_feature_path(:is_parent => true) %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>
+        Seq
+      </th>
+      <th>
+        Name
+      </th>
+<%#*<th>%>
+<%#*Title%>
+<%#*</th>%>
+      <th>
+        STATE
+      </th>
+      <th>
+        AVAILABLE ACTIONS
+      </th>
+    </tr>
+    <% @features.each do |feature| %>
+      <tr>
+        <td>
+          <%= feature.sequence_number %>
+        </td>
+        <td>
+          <%= feature.name %>
+        </td>
+        <td>
+          <%= feature.title %>
+        </td>
+        <td>
+          <%= feature.state.title.upcase %>
+        </td>
+        <td>
+          <%= link_to 'SHOW', feature %>
+          |
+          <%= link_to 'EDIT', edit_feature_path(feature, :is_parent => true) %>
+          |
+          <% if feature.published? %>
+            <%= link_to 'INACTIVATE', inactivate_feature_path(feature) %>
+          <% elsif feature.activated? %>
+            <%= link_to 'PUBLISH', publish_feature_path(feature) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_feature_path(feature) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_feature_path(feature) %>
+          <% end %>
+          <%= "| #{link_to 'MOVE-UP', move_up_feature_path(feature)}" unless feature.on_top? %>
+          <%= "| #{link_to 'MOVE-DOWN', move_down_feature_path(feature)}" unless feature.on_bottom? %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>

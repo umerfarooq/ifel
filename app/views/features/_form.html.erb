@@ -1,0 +1,67 @@
+<%# javascript("nicEdit") %>
+<%# content_for :javascripts do %>
+  <!--<script type="text/javascript">
+    $(document).ready(function (){
+      description_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('feature_description');
+    });
+  </script>-->
+<%# end %>
+
+<% form_for feature, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+
+  <% unless params[:is_parent] %>
+    <p>
+      <%= f.label :parent %>
+      <br />
+      <%= f.collection_select :parent_id, Feature.roots, :id, :name, :selected => params[:parent_id].to_i,:include_blank => true %>
+    <%#= f.select :country_id, Country.all.collect {|c| [ c.name, c.id ] }, :selected => [Country.find_by_name('United States').id],:class=>"LstFld"%>
+    </p>
+  <% end %>
+  <p>
+    <%= label_tag 'Feature Name' %>
+    <br />
+    <%= f.text_field :name %>
+  </p>
+  <% unless params[:is_parent] %>
+    <p>
+      <%= f.label :title %>
+      <br />
+      <%= f.text_field :title %>
+    </p>
+  <%end%>
+  <!--<p>
+  <%#= f.label :sub_title %>
+    <br />
+  <%#= f.text_field :sub_title %>
+  </p>-->
+  <p>
+    <%= label_tag 'Summary' %>
+    <br />
+    <%= f.text_area :description, :size => "100x15", :class=>"adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :photo %>
+    <%= image_tag feature.photo.url(:small), :alt => feature.name unless feature.photo.blank? %>
+    <br />
+    <%= f.file_field :photo %>
+  </p>
+  <p>
+    <%= f.label :photo_alt %>
+    <br />
+    <%= f.text_field :photo_alt %>
+  </p>
+  <%#*<p>%>
+  <%#= f.check_box :has_video %>
+  <%#= f.label :has_video %>
+  <%#*</p>%>
+  <%#*<p>%>
+    <%#= f.label :video %>
+    <%#= image_tag feature.video.url, :alt => feature.name unless feature.video.blank? %>
+    <%#*<br />%>
+    <%#= f.file_field :video %>
+  <%#*</p>%>
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>

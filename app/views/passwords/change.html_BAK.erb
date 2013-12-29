@@ -1,0 +1,57 @@
+<%#*<div style="margin-top: -14px; margin-bottom: 15px;" class="launchTopBg"></div>%>
+
+<h2>Change Password</h2>
+<br />
+<br />
+<h4>Welcome <%= @user.first_name %></h4>
+
+<p>Please enter your new password.</p>
+<br />
+<br />
+
+<% form_tag password_path(@perishable_user_id), :method => "put" do %>
+<%#= hidden_field_tag "_method", "put" %>
+<%#= hidden_field_tag "user[id]", @perishable_user_id %>
+  <table cellpadding="2" cellspacing="0" border="0">
+    <tr>
+      <td colspan="2">
+        <%= error_messages_for :user, :header_message => nil, :message => nil %>
+      </td>
+  <%# unless @error.blank? %>
+  <%#*<tr style="color: #D33">%>
+  <%#*<td colspan="2">%>
+  <%#= @error %>
+  <%#*&nbsp;%>
+  <%#*</td>%>
+  <%#*</tr>%>
+  <%# @error = "" %>
+  <%# end %>
+    </tr>
+    <tr>
+      <td align="right">
+        <%= label :user, "New Password" %>
+      </td>
+      <td>
+        <%= password_field :user, :password, :value => "" %>
+      </td>
+    </tr>
+    <tr>
+      <td align="right">
+        <%= label :user, "Password Confirmation" %>
+      </td>
+      <td>
+        <%= password_field :user, :password_confirmation, :value => "" %>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><%= submit_tag 'Update my password and log me in', :class => "globalBtn", :style => "margin-bottom:25px;" %>
+  <%#= submit_tag 'send me email' %></td>
+    </tr>
+  </table>
+<% end %>
+

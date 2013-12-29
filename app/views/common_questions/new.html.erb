@@ -1,0 +1,8 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :common_questions_tab } %>
+
+<% title  "NEW Common Question" %>
+
+<div class="admnRitCol">
+  <h1>NEW</h1>
+  <%= render :partial => "form", :locals => {:common_question => @question} %>
+</div>

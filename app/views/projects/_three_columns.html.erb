@@ -1,0 +1,123 @@
+<% content_for :ads do %>
+  <% if @project.blank? || @project.new_record? %>
+    <span class="ad1">
+      <%= image_tag "Startingblockintro150.jpg", :alt => "Starting Block Image 1" %>
+    </span>
+  <% else %>
+    <% @project.sections.each do |section| %>
+      <span id="<%= "starting_block_ad_#{section.id}" %>" class="ad1" style="display: none">
+      <%#= link_to image_tag(section.section_template.side_bar_image.url, :alt => "Section Side Bar Image"), play_marketing_multimedia_messages_path(:multimedia => section.section_template.multimedia.url(:original, false)), :onclick => "$(this).colorbox({overlayClose:false})" %>
+        <%= link_to image_tag(section.section_template.side_bar_image.url, :alt => "Section Side Bar Image"), play_marketing_multimedia_messages_path(:multimedia => section.section_template.url_for_video_player), :onclick => "$(this).colorbox({overlayClose:false})" %>
+      </span>
+    <% end %>
+  <% end %>
+  <%#a href="mailto:info@wickedstart.com?subject=Feedback">Send us your feedback</a> %>
+<% end %>
+
+<div class="threeColDv">
+  <div class="col1">
+    <h4>
+      <%= link_to "COMMUNITY: RECENT MESSAGES", messages_path %>
+    </h4>
+    <div class="colSpan">
+      <% if @messages.blank? %>
+        <% if @message_no_rm.blank? %>
+          <h5>
+            No recent messages available to display.
+          </h5>
+        <% else %>
+          <h5>
+            <%= @message_no_rm.content %>
+          </h5>
+        <% end %>
+      <% else %>
+        <% @messages.each do |message| %>
+          <h5>
+    <%#= link_to message.title, message %>
+            <%= message.title %>
+          </h5>
+          <span class="pstd-Dte">
+            <%= message.created_at.strftime("Posted on %m/%d/%Y") %>
+          </span>
+          <span class='pstd-msg'>
+    <%#= truncate(message.body, :length => FRONT_MODULES_MESSAGE_LENGTH, :separator => ' ') # RAILS 3 %>
+            <%= truncate(strip_tags(message.body), :length => FRONT_MODULES_MESSAGE_LENGTH) %>
+            <br />
+            <%= link_to "Read More >>", message %>
+            <span class='msgLnk'>
+              <%= link_to pluralize(message.comments.appropriate.for_user(current_user).size, "Response"), message_comments_path(message)+"#comments" %>
+            </span>
+          </span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col1 cntrCol">
+    <h4>
+      <%= link_to "ON THE RADAR: NEWS", news_articles_path %>
+    </h4>
+    <div class="colSpan">
+      <% if @feeds.blank? %>
+        <% if @message_no_na.blank? %>
+          <h5>
+            No news articles available to display.
+          </h5>
+        <% else %>
+          <h5>
+            <%= @message_no_na.content %>
+          </h5>
+        <% end %>
+      <% else %>
+        <% @feeds.each do |feed| %>
+          <h5>
+            <%= feed.title %>
+          </h5>
+          <span class="pstd-Dte">
+            <%= feed.date.strftime("%m/%d/%y") %>
+          </span>
+          <span class='pstd-msg'>
+    <%#= Utilities.white_list_custom(feed.description).slice(0, 100)+ " ..." %>
+    <%#= truncate(sanitize(feed.description, :tags => %w(a em b i strong p br)), :length => FRONT_MODULES_RADAR_INTERNAL_LENGTH) %>
+            <%= truncate(strip_tags(feed.description), :length => FRONT_MODULES_RADAR_INTERNAL_LENGTH) %>
+            <br />
+            <%= link_to "More >>", feed.link, :target => "_blank" %>
+    <%#= link_to "More >>", feed.guid.content, :target => "_blank" %>
+          </span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col1">
+    <h4>
+      <%= link_to "BLOG", SITE_BLOG_PATH , :target => '_blank'%>
+    </h4>
+    <div class="colSpan">
+      <% if @blog_feeds.blank? %>
+        <% if @message_no_rf.blank? %>
+          <h5>
+            No blog feed available to display.
+          </h5>
+        <% else %>
+          <h5>
+            <%= @message_no_rf.content %>
+          </h5>
+        <% end %>
+      <% else %>
+        <% @blog_feeds.each do |blog_feed| %>
+          <h5>
+            <%= blog_feed.title %>
+          </h5>
+          <span class="pstd-Dte">
+            <%= blog_feed.date.strftime("%m/%d/%y") %>
+          </span>
+          <span class='pstd-msg'>
+            <%= truncate(strip_tags(blog_feed.description), :length => FRONT_MODULES_BLOG_INTERNAL_LENGTH) %>
+            <%#= blog_feed.description.slice(0, 190) %>
+            <br />
+            <%= link_to "Read More >>", blog_feed.link , :target => '_blank'%>
+          </span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

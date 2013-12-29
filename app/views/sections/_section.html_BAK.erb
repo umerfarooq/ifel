@@ -1,0 +1,32 @@
+<%#* SHOULD BE REPLACING SECTION_OVERVIEW_PARTIAL %>
+<%#*WHAT THE HELL IS THIS FILE AND FROM WHERE IT IS BEING CALLED%>
+<h6>SHOW DUE DATES >></h6>
+<div class="ovrViewTxt">
+  <h3>
+    <%=@section.name%>:  <%= @section.title %>
+  </h3>
+  <span class="dedline">
+    DEADLINE:
+    <%= ws_date_format(@section.due_date).upcase %>
+    |
+    <%= link_to "EDIT", "#", :style => "font-size:11px" %>
+  </span>
+  <h5>
+    <%= link_to "Section Introduction", introduction_section_path(@section), :onclick=>"$(this).colorbox()" %>
+    <%#= image_tag "icons/info-icn.gif", :alt => "UNKNOWN", :size => "20x20", :style => "float:right; margin-right:5px;" %>
+  </h5>
+  <div class="qstnsArea">
+    <ul class="qstnLst">
+      <% @section.items.each do |item| %>
+        <li>
+          <%= link_to item.title, edit_item_path(item), :id => "item_link_#{item.item_number}", :style => "color:#333333", :onclick => "$(this).colorbox()" %>
+          <% if item.is_complete || item.is_not_applicable %>
+            <%= image_tag "icons/good.jpg", :alt => "COMPLETE", :style => "float:right; margin-top:13px; margin-right:5px; " %>
+          <% else %>
+            <%= image_tag "icons/cancel.jpg", :alt => "INCOMPLETE", :style => "float:right; margin-top:13px; margin-right:5px; " %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

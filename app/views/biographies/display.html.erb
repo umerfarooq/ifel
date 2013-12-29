@@ -1,0 +1,148 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :about_us_tab } %>
+
+<h1>
+  <%= "#{@biography.name} | #{@biography.title}" %>
+</h1>
+
+<p>
+  STATUS:
+  <strong>
+    <%= @biography.state.title.upcase %>
+  </strong>
+  |
+  <%= link_to 'EDIT', edit_biography_path(@biography) %>
+  |
+  <% if @biography.state.is_published? %>
+    <%= link_to 'INACTIVATE', inactivate_biography_path(@biography) %>
+  <% elsif @biography.state.is_activated? %>
+    <%= link_to 'PUBLISH', publish_biography_path(@biography) %>
+    |
+    <%= link_to 'INACTIVATE', inactivate_biography_path(@biography) %>
+  <% else %>
+    <%= link_to 'ACTIVATE', activate_biography_path(@biography) %>
+  <% end %>
+</p>
+
+<p>
+  NAME:
+  <strong>
+    <%= @biography.name %>
+  </strong>
+</p>
+
+<p>
+  TITLE:
+  <strong>
+    <%= @biography.title %>
+  </strong>
+</p>
+
+<p>
+  FOUNDER:
+  <strong>
+    <%= @biography.founder? ? "YES" : "NO" %>
+  </strong>
+</p>
+
+<p>
+  <strong>DESCRIPTION:</strong>
+  <%= @biography.description %>
+</p>
+<p>
+  <strong>PHOTO:</strong>
+  <br />
+  <%= image_tag @biography.photo.url(:small) %>
+</p>
+
+<% if @biography.video.exists? %>
+  <p>
+    <strong>VIDEO:</strong>
+    <br />
+  <div style="z-index:0;  ">
+    <object width='360' height='270' id='flvPlayer'>
+      <param name='allowFullScreen' value='true' />
+      <param name='movie' value='/flvplayer/player.swf?movie=<%= @biography.video.url(nil, false) %>&bgcolor=0xff7800&fgcolor=0x7ef54f&volume=50&autoload=on&autorewind=on&clickurl=&clicktarget=' />
+      <embed src='/flvplayer/player.swf?movie=<%= @biography.video.url(nil, false) %>&bgcolor=0xff7800&fgcolor=0x7ef54f&volume=50&autoload=on&autorewind=on&clickurl=&clicktarget=' width='320' height='240' allowFullScreen='true' type='application/x-shockwave-flash' >
+    </object>
+  </div>
+  </p>
+<% end %>
+
+<br />
+<br />
+
+<h2>
+  Biography Links
+</h2>
+
+<% BiographyLinkCategory.all.each do |biography_link_category| %>
+  <p>
+    Link Category:
+    <strong>
+      <%= biography_link_category.title %>
+    </strong>
+    |
+    <strong>
+      <%= biography_link_category.state.title %>
+    </strong>
+    |
+    <%= link_to "ADD LINK", new_biography_biography_link_path(@biography) %>
+  </p>
+
+  <% unless @biography.biography_links.with_category(biography_link_category.id).blank? %>
+    <table cellpadding="5px" style="text-align: left">
+      <tr>
+        <th>
+          SEQ
+        </th>
+        <th>
+          TEXT
+        </th>
+        <th>
+          URL
+        </th>
+        <th>
+          STATE
+        </th>
+        <th>
+          AVAILABLE ACTIONS
+        </th>
+      </tr>
+      <% @biography.biography_links.with_category(biography_link_category.id).sequence_wise.each do |biography_link| %>
+        <tr>
+          <td>
+            <%= biography_link.sequence_number %>
+          </td>
+          <td>
+            <%= biography_link.text %>
+          </td>
+          <td>
+            <%= link_to biography_link.url, biography_link.url %>
+          </td>
+          <td>
+            <%= biography_link.state.title.upcase %>
+          </td>
+          <td>
+            <%= link_to 'SHOW', biography_link %>
+            |
+            <%= link_to 'EDIT', edit_biography_biography_link_path(@biography, biography_link) %>
+            |
+            <% if biography_link.published? %>
+              <%= link_to 'INACTIVATE', inactivate_biography_link_path(biography_link) %>
+            <% elsif biography_link.activated? %>
+              <%= link_to 'PUBLISH', publish_biography_link_path(biography_link) %>
+              |
+              <%= link_to 'INACTIVATE', inactivate_biography_link_path(biography_link) %>
+            <% else %>
+              <%= link_to 'ACTIVATE', activate_biography_link_path(biography_link) %>
+            <% end %>
+            <%= "| #{link_to 'MOVE-UP', move_up_biography_link_path(biography_link)}" unless biography_link.on_top? %>
+            <%= "| #{link_to 'MOVE-DOWN', move_down_biography_link_path(biography_link)}" unless biography_link.on_bottom? %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  <br />
+<% end %>
+

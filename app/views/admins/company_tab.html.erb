@@ -1,0 +1,374 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'jquery-1.4.2.min' %>
+  <script type="text/javascript">
+    function edit_content(content_type) {
+      var msg_title = $("#"+content_type+"_title").val();
+      var msg_content = $("#"+content_type+"_content").val();
+      if($("a#"+content_type+"_edit_link").text() == "EDIT") {
+        $("a#"+content_type+"_edit_link").text("CANCEL");
+        $("#"+content_type+"_title").val(msg_title);
+        $("#"+content_type+"_content").val(msg_content);
+        $("#"+content_type+"_show").hide();
+        $("#"+content_type+"_edit").show();
+      } else {
+        $("a#"+content_type+"_edit_link").text("EDIT");
+        $("#"+content_type+"_show").show();
+        $("#"+content_type+"_edit").hide();
+      }
+    }
+    function edit_tooltips(type){
+      if($("a#"+type+"_edit_link").text()=="EDIT"){
+        $("a#"+type+"_edit_link").text("CANCEL");
+        $("#"+type+"_title_label").hide();
+        $("#"+type+"_content_label").hide();
+        $("#"+type+"_title_field").show();
+        $("#"+type+"_content_field").show();
+        $("#"+type+"_update_btn").show();
+      }else{
+        $("a#"+type+"_edit_link").text("EDIT")
+        $("#"+type+"_title_label").show();
+        $("#"+type+"_content_label").show();
+        $("#"+type+"_title_field").hide();
+        $("#"+type+"_content_field").hide();
+        $("#"+type+"_update_btn").hide();
+      }
+
+    }
+  </script>
+<% end %>
+
+<%= render :partial => "admins/admin_profile_menu", :locals => { :active_admin_profile_tab => :company_tooltips } %>
+<div class="admnRitCol">
+  <%unless @startup_workspace_contents[:company].blank?%>
+    <div>
+      <h4>
+        WIBO COMPANY DESCRIPTION
+        |
+        <%= link_to "EDIT", "javascript:javascript.void(0);", :id => "company_description_edit_link", :onclick=>"edit_content('company_description')" %>
+      </h4>
+      <br />
+      <%unless @startup_workspace_contents[:company][:description].blank?%>
+        <div id="company_description_show">
+          <table style="text-align: left;">
+            <tr>
+              <th width="20%">Title</th>
+              <th width="80%">Description</th>
+            </tr>
+            <tr>
+              <td><%= @startup_workspace_contents[:company][:description].title.to_s %></td>
+              <td><%= @startup_workspace_contents[:company][:description].content.to_s %></td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="company_description_edit" style="display: none">
+          <% form_for @startup_workspace_contents[:company][:description], :url => update_company_content_company_path(@startup_workspace_contents[:company][:description]), :method=>:put do |f| %>
+            <table>
+              <tr>
+                <th><%= f.label :title %></th>
+                <th><%= f.label :content, 'Description' %></th>
+              </tr>
+              <tr>
+                <td>
+                  <%= f.text_field :title, :size => "20", :id=>'company_description_title' %>
+                </td>
+                <td>
+                  <%= f.text_area :content, :size => "80x5", :id=>'company_description_content', :class => "adminEditor" %>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.submit 'Update and Publish' %></td>
+              </tr>
+            </table>
+
+          <% end %>
+        </div>
+      <%end%>
+      <br />
+    </div>
+
+    <div>
+      <h4>
+        IFEL COMPANY DESCRIPTION
+        |
+        <%= link_to "EDIT", "javascript:javascript.void(0);", :id => "company_ifel_description_edit_link", :onclick=>"edit_content('company_ifel_description')" %>
+      </h4>
+      <br />
+      <%unless @startup_workspace_contents[:company][:ifel_description].blank?%>
+        <div id="company_ifel_description_show">
+          <table style="text-align: left;">
+            <tr>
+              <th width="20%">Title</th>
+              <th width="80%">Description</th>
+            </tr>
+            <tr>
+              <td><%= @startup_workspace_contents[:company][:ifel_description].title.to_s %></td>
+              <td><%= @startup_workspace_contents[:company][:ifel_description].content.to_s %></td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="company_ifel_description_edit" style="display: none">
+          <% form_for @startup_workspace_contents[:company][:ifel_description], :url => update_company_content_company_path(@startup_workspace_contents[:company][:ifel_description]), :method=>:put do |f| %>
+            <table>
+              <tr>
+                <th><%= f.label :title %></th>
+                <th><%= f.label :content, 'Description' %></th>
+              </tr>
+              <tr>
+                <td>
+                  <%= f.text_field :title, :size => "20", :id=>'company_ifel_description_title' %>
+                </td>
+                <td>
+                  <%= f.text_area :content, :size => "80x5", :id=>'company_ifel_description_content', :class => "adminEditor" %>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.submit 'Update and Publish' %></td>
+              </tr>
+            </table>
+
+          <% end %>
+        </div>
+      <%end%>
+      <br />
+    </div>
+
+    <div>
+      <h4>
+        WIBO TOOLTIPS  <span id="chars-left" style="color:red"></span>
+      </h4>
+      <br />
+      <table width="100%" class="company_tooltip">
+        <tr style="text-align:left;">
+          <th width="15%">
+            Tip About
+          </th>
+          <th width="15%">
+            Title
+          </th>
+          <th width="50%">
+            Content
+          </th>
+          <th width="20%">
+            Action
+          </th>
+        </tr>
+
+        <%unless @startup_workspace_contents[:company][:identity_tip].blank?%>
+          <tr id="identity_tip_show">
+            <% form_for @startup_workspace_contents[:company][:identity_tip], :url => update_company_content_company_path(@startup_workspace_contents[:company][:identity_tip]) do |f| %>
+              <td width="15%">Identity</td>
+              <td width="15%">
+                <%= f.label :title, @startup_workspace_contents[:company][:identity_tip].title, :id=>'identity_tip_title_label' %>
+                <%= f.text_field :title, :size => '15', :id=>'identity_tip_title_field', :class => 'dispNone' %>
+              </td>
+              <td width="50%">
+                <%= f.label :content, @startup_workspace_contents[:company][:identity_tip].content, :id=>'identity_tip_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'identity_tip_content_field', :class => 'dispNone', :onkeyup=>"countLimit('identity_tip_content_field');" %><span id="info-chars"></span>
+              </td>
+              <td width="20%">
+                <%= link_to "EDIT", '#.', :id => "identity_tip_edit_link", :onclick=>"edit_tooltips('identity_tip')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'identity_tip_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company][:identity_tip]), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company][:general_information_tip].blank?%>
+          <tr id="general_information_tip_show">
+            <% form_for @startup_workspace_contents[:company][:general_information_tip], :url => update_company_content_company_path(@startup_workspace_contents[:company][:general_information_tip]) do |f| %>
+              <td width="15%">General Information</td>
+              <td width="15%">
+                <%= f.label :title, @startup_workspace_contents[:company][:general_information_tip].title, :id=>'general_information_tip_title_label' %>
+                <%= f.text_field :title, :size => '15', :id=>'general_information_tip_title_field', :class => 'dispNone' %>
+              </td>
+              <td width="50%">
+                <%= f.label :content, @startup_workspace_contents[:company][:general_information_tip].content, :id=>'general_information_tip_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'general_information_tip_content_field', :class => 'dispNone', :onkeyup=>"countLimit('general_information_tip_content_field');" %><span id="info-chars"></span>
+              </td>
+              <td width="20%">
+                <%= link_to "EDIT", '#.', :id => "general_information_tip_edit_link", :onclick=>"edit_tooltips('general_information_tip')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'general_information_tip_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company][:general_information_tip]), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company][:contact_information_tip].blank?%>
+          <tr id="contact_information_tip_show">
+            <% form_for @startup_workspace_contents[:company][:contact_information_tip], :url => update_company_content_company_path(@startup_workspace_contents[:company][:contact_information_tip]) do |f| %>
+              <td width="15%">Contact Information</td>
+              <td width="15%">
+                <%= f.label :title, @startup_workspace_contents[:company][:contact_information_tip].title, :id=>'contact_information_tip_title_label' %>
+                <%= f.text_field :title, :size => '15', :id=>'contact_information_tip_title_field', :class => 'dispNone' %>
+              </td>
+              <td width="50%">
+                <%= f.label :content, @startup_workspace_contents[:company][:contact_information_tip].content, :id=>'contact_information_tip_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'contact_information_tip_content_field', :class => 'dispNone', :onkeyup=>"countLimit('contact_information_tip_content_field');" %><span id="info-chars"></span>
+              </td>
+              <td width="20%">
+                <%= link_to "EDIT", '#.', :id => "contact_information_tip_edit_link", :onclick=>"edit_tooltips('contact_information_tip')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'contact_information_tip_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company][:contact_information_tip]), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company][:summary_tip].blank?%>
+          <tr id="summary_tip_show">
+            <% form_for @startup_workspace_contents[:company][:summary_tip], :url => update_company_content_company_path(@startup_workspace_contents[:company][:summary_tip]) do |f| %>
+              <td width="15%">Summary</td>
+              <td width="15%">
+                <%= f.label :title, @startup_workspace_contents[:company][:summary_tip].title, :id=>'summary_tip_title_label' %>
+                <%= f.text_field :title, :size => '15', :id=>'summary_tip_title_field', :class => 'dispNone' %>
+              </td>
+              <td width="50%">
+                <%= f.label :content, @startup_workspace_contents[:company][:summary_tip].content, :id=>'summary_tip_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'summary_tip_content_field', :class => 'dispNone', :onkeyup=>"countLimit('summary_tip_content_field');" %><span id="info-chars"></span>
+              </td>
+              <td width="20%">
+                <%= link_to "EDIT", '#.', :id => "summary_tip_edit_link", :onclick=>"edit_tooltips('summary_tip')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'summary_tip_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company][:summary_tip]), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+      </table>
+      <br />
+    </div>
+
+    <div>
+      <h4>
+        IFEL TOOLTIPS  <span id="chars-left" style="color:red"></span>
+      </h4>
+      <br />
+      <table width="100%" class="company_tooltip">
+        <tr style="text-align:left;">
+          <th width="15%">
+            Tip About
+          </th>
+          <th width="15%">
+            Title
+          </th>
+          <th width="50%">
+            Content
+          </th>
+          <th width="20%">
+            Action
+          </th>
+        </tr>
+
+        <%unless @startup_workspace_contents[:company][:ifel_identity_tip].blank?%>
+          <tr id="ifel_identity_tip_show">
+            <% form_for @startup_workspace_contents[:company][:ifel_identity_tip], :url => update_company_content_company_path(@startup_workspace_contents[:company][:ifel_identity_tip]) do |f| %>
+              <td width="15%">Identity</td>
+              <td width="15%">
+                <%= f.label :title, @startup_workspace_contents[:company][:ifel_identity_tip].title, :id=>'ifel_identity_tip_title_label' %>
+                <%= f.text_field :title, :size => '15', :id=>'ifel_identity_tip_title_field', :class => 'dispNone' %>
+              </td>
+              <td width="50%">
+                <%= f.label :content, @startup_workspace_contents[:company][:ifel_identity_tip].content, :id=>'ifel_identity_tip_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'ifel_identity_tip_content_field', :class => 'dispNone', :onkeyup=>"countLimit('ifel_identity_tip_content_field');" %><span id="info-chars"></span>
+              </td>
+              <td width="20%">
+                <%= link_to "EDIT", '#.', :id => "ifel_identity_tip_edit_link", :onclick=>"edit_tooltips('ifel_identity_tip')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'ifel_identity_tip_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company][:ifel_identity_tip]), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company][:ifel_general_information_tip].blank?%>
+          <tr id="ifel_general_information_tip_show">
+            <% form_for @startup_workspace_contents[:company][:ifel_general_information_tip], :url => update_company_content_company_path(@startup_workspace_contents[:company][:ifel_general_information_tip]) do |f| %>
+              <td width="15%">General Information</td>
+              <td width="15%">
+                <%= f.label :title, @startup_workspace_contents[:company][:ifel_general_information_tip].title, :id=>'ifel_general_information_tip_title_label' %>
+                <%= f.text_field :title, :size => '15', :id=>'ifel_general_information_tip_title_field', :class => 'dispNone' %>
+              </td>
+              <td width="50%">
+                <%= f.label :content, @startup_workspace_contents[:company][:ifel_general_information_tip].content, :id=>'ifel_general_information_tip_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'ifel_general_information_tip_content_field', :class => 'dispNone', :onkeyup=>"countLimit('ifel_general_information_tip_content_field');" %><span id="info-chars"></span>
+              </td>
+              <td width="20%">
+                <%= link_to "EDIT", '#.', :id => "ifel_general_information_tip_edit_link", :onclick=>"edit_tooltips('ifel_general_information_tip')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'ifel_general_information_tip_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company][:ifel_general_information_tip]), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company][:ifel_contact_information_tip].blank?%>
+          <tr id="ifel_contact_information_tip_show">
+            <% form_for @startup_workspace_contents[:company][:ifel_contact_information_tip], :url => update_company_content_company_path(@startup_workspace_contents[:company][:ifel_contact_information_tip]) do |f| %>
+              <td width="15%">Contact Information</td>
+              <td width="15%">
+                <%= f.label :title, @startup_workspace_contents[:company][:ifel_contact_information_tip].title, :id=>'ifel_contact_information_tip_title_label' %>
+                <%= f.text_field :title, :size => '15', :id=>'ifel_contact_information_tip_title_field', :class => 'dispNone' %>
+              </td>
+              <td width="50%">
+                <%= f.label :content, @startup_workspace_contents[:company][:ifel_contact_information_tip].content, :id=>'ifel_contact_information_tip_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'ifel_contact_information_tip_content_field', :class => 'dispNone', :onkeyup=>"countLimit('ifel_contact_information_tip_content_field');" %><span id="info-chars"></span>
+              </td>
+              <td width="20%">
+                <%= link_to "EDIT", '#.', :id => "ifel_contact_information_tip_edit_link", :onclick=>"edit_tooltips('ifel_contact_information_tip')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'ifel_contact_information_tip_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company][:ifel_contact_information_tip]), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+        <%unless @startup_workspace_contents[:company][:ifel_summary_tip].blank?%>
+          <tr id="ifel_summary_tip_show">
+            <% form_for @startup_workspace_contents[:company][:ifel_summary_tip], :url => update_company_content_company_path(@startup_workspace_contents[:company][:ifel_summary_tip]) do |f| %>
+              <td width="15%">Summary</td>
+              <td width="15%">
+                <%= f.label :title, @startup_workspace_contents[:company][:ifel_summary_tip].title, :id=>'ifel_summary_tip_title_label' %>
+                <%= f.text_field :title, :size => '15', :id=>'ifel_summary_tip_title_field', :class => 'dispNone' %>
+              </td>
+              <td width="50%">
+                <%= f.label :content, @startup_workspace_contents[:company][:ifel_summary_tip].content, :id=>'ifel_summary_tip_content_label' %>
+                <%= f.text_area :content, :size => "45x3", :id=>'ifel_summary_tip_content_field', :class => 'dispNone', :onkeyup=>"countLimit('ifel_summary_tip_content_field');" %><span id="info-chars"></span>
+              </td>
+              <td width="20%">
+                <%= link_to "EDIT", '#.', :id => "ifel_summary_tip_edit_link", :onclick=>"edit_tooltips('ifel_summary_tip')" %>
+                <%= f.submit 'Update', :class => 'dispNone', :id=>'ifel_summary_tip_update_btn' %>
+                |          
+                <%= link_to "DELETE", marketing_text_message_path(@startup_workspace_contents[:company][:ifel_summary_tip]), :method => :delete, :confirm => "Are you sure?" %>
+              </td>
+            <% end %>
+          </tr>
+        <%end%>
+
+      </table>
+      <br />
+    </div>
+  <%end%>
+</div>
+<script>
+  //bkLib.onDomLoaded(function(){
+  function countLimit(element){
+    $('#'+element).keyup(function(){
+      limitCharsForSimpleTextArea(element, 300, 'chars-left');
+    });
+  }
+  //});
+</script>

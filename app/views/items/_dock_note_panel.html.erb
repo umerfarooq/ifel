@@ -1,0 +1,24 @@
+<div class="filesColLeft">
+  <h2>Notes</h2>
+  <div class="filesList noOverFlow">
+    <span id="note_notification"></span>
+    <%=text_area_tag :note %>
+    <br /><br />
+    <%= link_to image_tag('submit-note-btn.png',:class=>'notebtn'), 'JavaScript:void(0);', :onclick=>'addNote();' %>
+  </div>
+</div>
+
+<div class="noteColRight">
+  <h4>Previous Notes</h4>
+  <% if notes.present? %>
+    <% notes.each do |note|  %>
+      <div class="noteRecord">
+        <p class="dateTimeP"><%=  ws_slash_separated_date_format(note.created_at) %> @ <%= ws_time_format_with_meridiem_and_timezone(note.created_at.to_time) %></p>
+        <p class="breakWord"><%= sanitize note.description %></p>
+        <p class="contactP">by <%= link_to 'You', profile_path, :target => '_blank' %></p><!-- | <a href="#">SHARE</a></p>-->
+      </div>
+    <%end%>
+  <%else%>
+    No Matching Selection Available for this Action Item
+  <%end%>
+</div>

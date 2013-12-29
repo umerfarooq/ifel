@@ -1,0 +1,34 @@
+<% form_for @partner_request, :url => { :controller => :partners, :action => :become_partner_request }, :html=> {:id=>'partner_request_form', :method=>:post}  do |f| %>
+  <fieldset>
+    <legend>BECOME A WICKED START PARTNER TODAY!</legend>
+    <label style="font-weight: normal; margin-top: 5px;">Send us your contact information and someone will contact you shortly about possible partnership opportunities.</label>
+    <table style="width:100%;">
+      <tr>
+        <td style="text-align: center;padding-top: 5px; font-weight: normal;">
+          <label id="notice" style="color: red;"></label>
+        </td>
+      </tr>
+      <tr>
+        
+        <td><%= f.text_field :company_name, :title => 'Company Name', :class => "defaultText" %></td>
+      </tr>
+      <tr>
+        
+        <td><%= f.text_field :contact_name, :title => 'Contact Name', :class => "defaultText" %></td>
+      </tr>
+      <tr>
+        
+        <td><%= f.text_field :phone_number, :title => 'Phone Number', :class => "defaultText" %></td>
+      </tr>
+      <tr>
+        
+        <td><%= f.text_field :email, :title => 'Email', :class => "defaultText" %></td>
+      </tr>
+      <tr>
+  
+        <td><%= f.submit :submit, :class => "submit" %></td>
+      </tr>
+    </table>
+
+  </fieldset>
+<% end %>

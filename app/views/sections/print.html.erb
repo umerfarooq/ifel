@@ -1,0 +1,86 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'style' %>
+<% end %>
+
+
+<body onload="javascript:window.print();">
+  <div class="PrntMnDv">
+    <div class="PrntMnCntnt">
+      <div class="liteBxTtl">
+        <h1><strong>
+            <%= @section.project.business_name %>
+          </strong>
+          <br />
+        </h1>
+          <h2> SECTION OVERVIEW </h2>
+        
+        <span class="closBtn">
+<%#a href="#">
+<img src="images/close-btn.jpg" alt="" width="14" height="14" />
+</a%>
+        </span>
+      </div>
+
+      <div class="prntBdy">
+        <div class="prntCntnt">
+          <div class="prntViewLstDv">
+            
+<%# @section.project.sections.each do |section| %>
+            
+            <div class="prntDtl" id="divSectionItems<%= @section.id %>">
+              <div class="prntViewsbTtl">
+                <h3>
+                  SECTION
+                  <%= @section.name %>:
+                  <%= @section.title%>
+                </h3>
+              </div>
+              <% @section.items.each do |item| %>
+                <div class="prntDtlTxt">
+                  <a href="#">
+                    <% if item.ended? %>
+                      <%= image_tag "icons/good.jpg", :alt => "COMPLETE", :size => "12x12" %>
+                    <% elsif item.edited? %>
+                      <%= image_tag "icons/pending.jpg", :alt => "EDITED", :size => "12x12" %>
+                    <% else %>
+                      <%= image_tag "icons/cancel.jpg", :alt => "INCOMPLETE", :size => "12x12" %>
+                    <% end %>
+                  </a>
+                  <span class="prntTxtTtl">
+                    <b> <%= item.title %> </b>
+                  </span>
+                  <br />
+                  <div class="liteBxCntnt2">
+                    <div class="liteBxLft">
+                      <div class="scrollingDiv">
+                        <span class="prntTxtTtl">
+                          <h5>DEFINITION</h5>
+                          <p class="litBxTxt">
+                            <%= item.definition %>
+                          </p>
+                          <h4>User Notes: </h4>
+                          <p class="litBxTxt">
+                            <%= item.user_answer %>
+                          </p>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script type="text/javascript">
+  function printDoc() {
+    document.getElementById("divPrintBtn").style.display = 'none';
+    window.print();
+    window.close();
+  }
+</script>

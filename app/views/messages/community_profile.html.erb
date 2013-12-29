@@ -1,0 +1,134 @@
+<%content_for :javascripts do%>
+  <script>
+    $(document).ready(function(){
+      $(".postMsgBtn").hide();
+      $('#message_update_div').hide();
+    });
+
+    function edit_message_body() {
+    
+      $("#message_div").hide();
+      $("#message_update_div").show();
+    }
+
+    function update_message_body(message_id) {
+      if($("#body").val() == "")
+      {
+        $("#message_update_error1").text("Question text can't be left blank.");
+      }
+      else {
+        $.get('/messages/update_message_body', {
+          'message':message_id,'body':$("#body").val(), 'content':"community_profile"
+        }, function(data){
+          $("#message_div").html(data);
+        },'html')
+        $("#message_update_div").hide();
+        $("#message_div").show();
+        $("#message_update_error1").text("");
+      }
+    }
+
+  <%#*function postMsgBtnClick() {%>
+  <%#*$(".postMsgBtn").show();%>
+  <%#*$(".txtFld").val("Wicked Start is now free for all subscribers!");%>
+  <%#*}%>
+  </script>
+<%end%>
+
+
+<div class="subPageWrapper">
+  <h1>COMMUNITY</h1>
+  <%= render :partial => 'shared/community_breadcrumbs', :locals=>{:selected => :community_profile} %>
+  <div class="clear"></div>
+  <div class="communitySearch">
+    <p>
+      <%= render :partial => 'search_bar', :locals=>{:options=>{:class=>'communityProfile'}} %>
+      <%= link_to image_tag("theme/view-topics-btn.png",:class=>'dispInline'),{:controller=>"messages", :action=>"topic_categories"},{:class=>'viewAllTopics'} %>
+    </p>
+  </div>
+  <div class="sep"></div>    
+  <div class="communityTopics">
+    <div class="communityFeed">
+      <% unless @message.blank? %>
+        <div class="feedResponse">
+          <h3>Responses to Your Questions</h3>
+          <div id="message_div">
+            <%= render :partial=> "message_content", :locals=>{:message => @message} %>
+          </div>
+
+          <p><label id="message_update_error1" style="color: red;"></label></p>
+          <div id="message_update_div">
+            <h2><%= text_field_tag :body,@message.body, :size=>55 %> <%= link_to "Update", "JavaScript:void(0);",:onclick=>"update_message_body(#{@message.id})"%></h2>
+            <p class="votes"><%= @message.likings_count %> Votes</p>
+          </div>
+          <% unless @comment.blank? %>
+            <div class="responseContent">
+              <div class="responseImage">
+                <% comment = @comment.first
+                comment_user = comment.user
+              %>
+                <%= image_tag (comment_user.profile_picture.exists?(:profile)) ? comment_user.profile_picture.url(:profile) : '/images/no-image-small.jpg' %>
+              </div>
+              <h6>
+                <span class="userName"><%= comment_user.screen_name %></span>
+                <span class="breakWord"><%= ", '#{strip_tags truncate(comment_user.community_profile,50)}'" if comment_user.community_profile.present? %></span>
+              </h6>
+
+              <p class="profComment">
+                <%= strip_tags comment.body %> <%=  link_to " Read Post...", :controller=>"messages", :action=>"index", :is_msg_partial=> true, :message_for_detail=>@message.id %>
+              </p>
+            </div>
+          <% end %>
+        </div>
+      <%else%>
+        <div class="feedResponse">
+          <h3><%= "You currently have no questions posted to the community. #{link_to('Click here', "#{feedwall_path}?post_quest=true")} to post one now" %></h3>
+        </div>
+      <%end%>
+    </div>
+    <div class="communityRightCol">
+      <!-- <div class="communityProfile">
+         <h3>Your Profile Detail</h3>
+         <img src="images/expert.jpg" /><br/><br/>
+         <p><strong><%#=  message_following_count(@message.first)%></strong><br />Following</p><p><strong>10</strong><br />Followers</p><p class="noBorder"><strong>155</strong><br />@Mentions</p>
+       </div>-->
+      <!--<div class="communityFollow">
+        <h3><span>Following</span> 12 Topics.Find Topics</h3>
+        <table width="100%" border="0" cellpadding="5" cellspacing="0">
+          <tr>
+            <td><img src="images/cancel-community.jpg" /></td>
+            <td><h3>Home Business</h3></td>
+            <td align="right"><a href="#"><img src="images/unfollow-btn.png"></a></td>
+          </tr>
+          <tr>
+            <td><img src="images/cancel-community.jpg" /></td>
+            <td><h3>Investors</h3></td>
+            <td align="right"><a href="#"><img src="images/unfollow-btn.png"></a></td>
+          </tr>
+          <tr>
+            <td><img src="images/cancel-community.jpg" /></td>
+            <td><h3>Tourism</h3></td>
+            <td align="right"><a href="#"><img src="images/unfollow-btn.png"></a></td>
+          </tr>
+          <tr>
+            <td><img src="images/cancel-community.jpg" /></td>
+            <td><h3>Bakeries</h3></td>
+            <td align="right"><a href="#"><img src="images/unfollow-btn.png"></a></td>
+          </tr>
+          <tr>
+            <td><img src="images/cancel-community.jpg" /></td>
+            <td><h3>Startups</h3></td>
+            <td align="right"><a href="#"><img src="images/unfollow-btn.png"></a></td>
+          </tr>
+          <tr>
+            <td class="noBorder">&nbsp;</td>
+            <td class="noBorder"><a href="#">View All Topics</a></td>
+            <td class="noBorder">&nbsp;</td>
+          </tr>
+        </table>
+      </div>-->
+    </div>
+
+  </div><!-- Community Topics -->
+
+</div> <!-- End of Sub page Wrapper -->

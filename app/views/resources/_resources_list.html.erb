@@ -1,0 +1,51 @@
+<% resources.each do |resource| %>
+  <div class="postItem">
+    <div class="imgbox">
+      <% if resource.content.exists?(:resource_library) %>
+        <div class="combine_images">
+          <%= link_to image_tag(resource.content.url(:resource_library), :class=>'bannerSize'), ((resource.url.blank?) ? "javascript:void(0);" : resource.url  ), :target => ((resource.url.blank?) ? "_self" : "_blank"  ) ,:onclick => 'save_click_track("'+resource.id.to_s+'","'+((current_user.blank?)?'0':current_user.id.to_s)+'")' %>
+        </div>
+      <%else%>
+        <div>
+          <%=  sanitize(resource.html_image, :tags=>'a img') unless resource.html_image.blank? %>
+        </div>
+      <%end%>
+      <% if resource.banner.exists? :service_provider %>
+        <div class="combine_images">
+          <%= link_to image_tag(resource.banner.url(:service_provider), :class=>'bannerSize'), resource.banner_url, :target =>"_blank" %>
+        </div>
+      <%else%>
+        <div class="combine_images">
+          <%=  sanitize(resource.html_banner, :tags=>'a img') unless resource.html_banner.blank? %>
+        </div>
+      <%end%>
+    </div>
+    <div class="postItemDesc">
+      <h3><%= resource.title %></h3>
+      <%= resource.description %> <br />
+      <%= (resource.html_url.blank?) ? "#{link_to(((resource.url_mask.blank?) ? resource.url : resource.url_mask ) , resource.url, :target => '_blank',:onclick => 'save_click_track("'+resource.id.to_s+'","'+((current_user.blank?)?'0':current_user.id.to_s)+'")')}" : (sanitize(resource.html_url))  %>
+      <div class="clear"></div>
+      <%  unless current_user.blank?%>
+        <div class="actionLinksWrapper">
+          <%= render :partial => 'ratings', :locals => {:resource =>resource} %>
+        </div>
+      <%end%>
+      <div class="clear"></div>
+      <div class="tags">
+        <%unless resource.tag_list.blank?%>
+          <dd>Tags:</dd>
+          <dt><%=resource.tag_list%></dt>
+        <%end%>
+        <div class="clear"></div>
+        <%unless resource.pricings.blank?%>
+          <dd>Price:</dd>
+          <%= resource.pricings.map(&:title).join(', ').each { |p| "<dt>#{p}</dt>" } %>
+        <%end%>
+      </div>
+    </div>
+  </div>
+<%end%>
+
+
+
+

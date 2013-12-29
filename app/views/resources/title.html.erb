@@ -1,0 +1,26 @@
+<%= render :partial => "admins/admin_resource_menu", :locals => { :active_admin_resource_tab => :title_tab } %>
+<div class="admnRitCol">
+  <h4>
+    RESOURCE PAGE
+    |
+    <%= link_to "EDIT", edit_content_message_resource_path(@main_content_message), :id => "message_edit_link" %>
+  </h4>
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>PAGE TITLE</th>
+      <th>DESCRIPTION</th> 
+    </tr>
+
+    <%unless @main_content_message.blank?%>
+      <tr>
+        <td style="width: 150px">
+          <%= @main_content_message.title %>
+        </td>
+        <td style="width: 850px">
+          <%= @main_content_message.content %>
+        </td>
+      </tr>
+    <%end%>
+  </table>
+</div>

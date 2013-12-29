@@ -1,0 +1,34 @@
+<div style="clear:both;"></div>
+<% unless flash[:error].blank? %>
+  <div class="ws-alert ws-alert-error ws-rounded" id="error-box">
+    <img alt="Alert icon" class="icon master-sprite" src="/images/pixel.gif" />
+    <div class="ws-alert-content">
+      <%= flash[:error] %>
+    </div>
+    <button class="close master-sprite" onclick="$(this).parent().hide()">
+      close
+    </button>
+  </div>
+<% end %>
+<% unless flash[:notice].blank? %>
+  <div class="ws-alert ws-alert-info ws-rounded" id="error-box">
+    <img alt="Alert icon" class="icon master-sprite" src="/images/pixel.gif" />
+    <div class="ws-alert-content">
+      <%= flash[:notice] %>
+    </div>
+    <button class="close master-sprite" onclick="$(this).parent().hide()">
+      close
+    </button>
+  </div>
+<% end %>
+<% unless flash[:success].blank? %>
+  <div class="ws-alert ws-alert-success ws-rounded" id="error-box">
+    <img alt="Alert icon" class="icon master-sprite" src="/images/pixel.gif" />
+    <div class="ws-alert-content">
+      <%= flash[:success] %>
+    </div>
+    <button class="close master-sprite" onclick="$(this).parent().hide()">
+      close
+    </button>
+  </div>
+<% end %>

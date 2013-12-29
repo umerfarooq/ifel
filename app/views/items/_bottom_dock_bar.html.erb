@@ -1,0 +1,29 @@
+<div class="dockbar">
+  <% unless session['dock_help_closed'] %>
+    <div class="dockBarHelp" style="display:block;">
+      <% dock_bar_help = @item_contents[:dock_bar_help] %>
+      <h5><%= sanitize dock_bar_help.title %></h5>
+      <p><%= truncate(sanitize(dock_bar_help.content),200) %></p>
+      <span></span>
+      <%= link_to image_tag('cancel-icn.png'), 'JavaScript:void(0);', :onclick=>"closeDockHelp();" %>
+    </div>
+  <%end%>
+  <div class="dockbarHeader">
+    <a id="task_dock_arrow" href="JavaScript:void(0);" class="taskDockBtn opener taskDocUpArrow">
+      Task Dock
+    </a>
+    <img src="images/theme/icn-next-item.jpg" /><img src="images/theme/icn-next-item.jpg" />
+    <a href="JavaScript:void(0);" container="files" class="current opener">FILES</a>
+    <a href="JavaScript:void(0);" container="resources" class="opener">RESOURCES</a>
+    <!--<a href="JavaScript:void(0);" container="templates" class="opener">TEMPLATES</a>-->
+    <a href="JavaScript:void(0);" container="examples" class="opener">EXAMPLES</a>
+    <a href="JavaScript:void(0);" container="question" class="opener">POST QUESTION TO COMMUNITY</a>
+    <!--<a href="JavaScript:void(0);" container="notes" class="opener">NOTES</a>-->
+  </div>
+  <div id="files" class="dockbarSlider dispNone"></div>
+  <div id="resources" class="dockbarSlider dispNone"></div>
+  <!--<div id="templates" class="dockbarSlider dispNone"></div>-->
+  <div id="examples" class="dockbarSlider dispNone"></div>
+  <div id="question" class="dockbarSlider dispNone"><%= render :partial => '/items/dock_question_panel', :locals => {:item => item} %></div>
+  <!--<div id="notes" class="dockbarSlider dispNone"></div>-->
+</div>

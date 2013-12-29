@@ -1,0 +1,35 @@
+<% title "SEARCH RESULTS" %>
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+  <h1>Search Results</h1>
+  <div class="clear"></div>
+  <div class="searchList">
+    <% if @search_results.blank? %>
+      Your search -
+      <b>
+        <%= @query %>
+      </b>
+      - did not match any results.
+    <% else %>
+      <% @search_results.each do |result| %>
+        <% unless result.blank? %>  
+          <div class="searchItem <%= (result==@search_results.last) ? 'borderLess' : '' %>">
+            <h5>
+              <%= "#{helper_get_class_name(result)}:  #{(result.class == Comment) ? result.message.title : result.title}" %>
+            </h5>
+
+            <div class="searchDesc">
+              <p><%= result.updated_at %></p>
+              <p><%= truncate( helper_get_summary(result), :length => SEARCH_RESULT_LENGTH) %>
+                <%  unless (result.class == Message or result.class == Comment) and !current_user %>
+                  <%= link_to ">>", helper_get_link(result) , :class => 'search_result_item', :target => helper_get_target(result) %>  
+                <%end%>
+              </p>
+            </div>
+          </div>
+        <%end%>
+      <% end %>
+      <%= will_paginate @search_results %>
+    <% end %>
+  </div>
+</div>

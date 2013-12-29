@@ -1,0 +1,7 @@
+<div id = "ratings_panel_<%=  resource.id.to_s %>">
+  <%= render :partial => 'liking', :locals => {:resource =>resource} %>
+</div>
+<br />
+<div class="resourcesUserReview" id = "comment_panel_<%=  resource.id.to_s %>" style="display: none">
+  <%= render :partial => 'add_comments', :locals => {:resource =>resource, :comments => nil} %>
+</div>

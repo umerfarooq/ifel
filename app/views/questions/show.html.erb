@@ -1,0 +1,98 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :quizzes_tab } %>
+
+<% title "#{@question.quiz.main_title} # #{@question.sequence_number}" %>
+
+<h1>
+  <%= "#{@question.quiz.main_title} # #{@question.sequence_number}" %>
+</h1>
+
+<p>
+    <%= link_to @question.quiz.main_title.upcase, @question.quiz %>
+</p>
+
+<br />
+<br />
+
+<h2>
+  <%= @question.statement %>
+</h2>
+
+<p>
+  <%= link_to "EDIT", edit_quiz_question_path(@question, @question.quiz) %>
+  |
+  <% if @question.state.is_published? %>
+    <%= link_to 'INACTIVATE', inactivate_question_path(@question) %>
+  <% elsif @question.state.is_activated? %>
+    <%= link_to 'PUBLISH', publish_question_path(@question) %>
+    |
+    <%= link_to 'INACTIVATE', inactivate_question_path(@question) %>
+  <% else %>
+    <%= link_to 'ACTIVATE', activate_question_path(@question) %>
+  <% end %>
+</p>
+
+<br />
+<br />
+
+<p>
+  STATE:
+  <strong>
+    <%= @question.state.title %>
+  </strong>
+</p>
+
+<p>
+  QUIZ:
+  <strong>
+    <%= @question.quiz.main_title %>
+  </strong>
+</p>
+
+<p>
+  SEQUENCE NUMBER:
+  <strong>
+    <%= @question.sequence_number %>
+  </strong>
+</p>
+
+<p>
+  STATEMENT:
+  <strong>
+    <%= @question.statement %>
+  </strong>
+</p>
+
+<% if @question.point_based? %>
+  <p>
+    POINTS ON YES:
+    <strong>
+      <%= @question.points_yes %>
+    </strong>
+  </p>
+  <p>
+    POINTS ON SOMETIMES:
+    <strong>
+      <%= @question.points_sometimes %>
+    </strong>
+  </p>
+  <p>
+    POINTS ON NO:
+    <strong>
+      <%= @question.points_no %>
+    </strong>
+  </p>
+<% else %>
+  <p>
+    COMMENT:
+    <strong>
+      <%= @question.comment %>
+    </strong>
+  </p>
+
+  <p>
+    RESPONSE IF NEGATIVE ANSWER:
+    <strong>
+      <%= @question.response_no %>
+    </strong>
+  </p>
+<% end %>

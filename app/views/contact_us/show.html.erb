@@ -1,0 +1,123 @@
+<script>
+  function openExternalLink(link){
+    window.open(link,'_blank');
+  }
+</script>
+<% title "Contact Us for Help Starting a Business" %>
+<% meta "WickedStart's contact information for entrepreneurs and small businesses to get the help they need." %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" unless current_user %>
+
+  <h1>ABOUT US</h1>
+
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :contact_us} %>
+
+  <h2 class="headLine">Let's Talk!</h2>
+  <div class="clear"></div>
+  <div id="contactMap">
+    <div class="contacts">
+      <h3 class="header">Office</h3>
+      <p class="address">349 5th Avenue <br />
+        New York, NY 10016
+      </p>
+      <p class="numbers">
+        Office (646) 863-4939
+      </p>
+    </div>
+    <div class="map">
+      <iframe src='http://www.enterprisewizard.co.uk/viewMap.asp?mapTitle=&locationName=&location=Address&country=US&countryname=United%20States&street=1040%206th%20Ave&City=NY&State=&Zip=10018&MarkerSymbol=m1.png&MarkerShadow=on&PreFillComment=on&Comment=&mapType=NORMAL&zoomLevel=10&AllowDrag=off&NavigationControl=large&TypeSelector=on&CenterPoint=Automatic&CenteredOnLat=0&CenteredOnLng=0&mapWidth=292&mapHeight=302' style='width:292px;height:302px;border:0px;' scrolling='no' marginwidth='0' marginheight='0' ></iframe><br>
+      <a href="#">View Larger Map</a>
+    </div>
+    <div class="contacts">
+      <h3 class="header">Tech Support</h3>
+      <p>Office (646) 863-4939 ext. 102 <br />
+        Email techsupport@wickedstart.com
+      </p>
+    </div>
+  </div>
+
+  <% form_for (@contact_us , :html => { :class => "frmContactUs"}) do |f| %>
+
+    <table width="608" cellspacing="5" cellpadding="5">
+      <tbody>
+        <tr>
+          <td colspan="3"><%= f.error_messages :header_message => nil, :message => nil %></td>
+        </tr>
+        <tr>
+          <td width="10" align="center"><span>*</span></td>
+          <td width="100" align="left">
+            <label for="contact_us_first_name"><%= label_tag :name,'Name' %></label>
+          </td>
+          <td width="798">
+            <%= f.text_field :first_name, :class => "text1 defaultText",:title=>'First Name' %>
+            <%= f.text_field :last_name, :class => "text1 defaultText",:title=>'Last Name' %>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="10" align="center"><span>*</span></td>
+          <td width="100" align="left">
+            <label for="contact_us_email"><%= f.label :email%></label></td>
+          <td width="798">
+            <%= f.text_field :email, :class => "text1"%>
+          </td>
+        </tr>
+        <tr>
+          <td width="10" align="center"><span>*</span></td>
+          <td width="100" align="left">
+            <label for="contact_us_subject"><%= f.label :subject %></label></td>
+          <td width="798">
+  <%#= f.text_field :subject , :class => "text1"%>
+            <%= f.select(:subject_id, subject_choices.map { |subject| [subject.title, subject.id] }, :include_blank => true) %>
+          </td>
+        </tr>
+        <tr>
+          <td width="10" align="center" style="vertical-align:top;"><span>*</span></td>
+          <td width="100" align="left" style="vertical-align:top;">
+            <label for="contact_us_message"><%= f.label :message %></label></td>
+          <td width="798">
+            <%= f.text_area :message, :size => "45x5" %>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" colspan="3"><span>*</span><label>= Required Fields</label></td>
+
+        </tr>
+
+        <tr>
+          <td colspan="3">
+            <%= submit_tag 'Submit', :class => "submitBtn" %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+  <!--<div id="liveChatWidget" class="marginBtm">
+    <div id="lpButDivID-1278944190290"></div>
+    <script type="text/javascript" charset="UTF-8" src="https://server.iad.liveperson.net/hc/21508013/?cmd=mTagRepstate&site=21508013&buttonID=1&divID=lpButDivID-1278944190290&bt=1&c=1"></script>
+  </div>-->
+</div> <!-- End of Sub page Wrapper -->
+
+<div class="clear"></div>
+<div id="ContentBottom">
+  <div class="rectAds">
+    <div class="bannerNoBorder291W borderGrey1px areyouanentrepreneur_bg" onclick="openExternalLink('<%=quiz_path('am-i-an-entrepreneur')%>');" onmouseover="this.style.cursor='pointer'">
+      <img style="margin-left:55px;" src="/images/banners/are_you_an_entreprenuer_titles.gif" alt="Are Your An Entrepreneur" width="231" height="63" border="0" class="alignIMGRight" />
+      <p class="bannerText colorGrayLight marginLeft75">Take our quiz to see if you have what it takes to be an entrepreneur and start your business.
+        <!--See if you have what it takes to nurture your idea and start your business.--><br /><a href="#.">&raquo; Take the Entrepreneur Quiz</a></p>
+    </div>
+    <div class="bannerNoBorder291W borderGrey1px" onclick="openExternalLink('http://blog.entrepreneur.com/2010/12/getting-your-business-up-in-running-in-10-steps-thats-wicked.php');" onmouseover="this.style.cursor='pointer'">
+      <img src="/images/banners/banner_logo_entrepreneur.gif" alt="Entrepeneur Magazine" width="273" height="59" border="0" class="bottomBorder" />
+      <div class="hRule"></div>
+      <p class="quoteText">&quot;If you're overwhelmed by the multitude of tasks associated with starting a business&hellip; Wicked Start may be just the tool for you.&quot;</p>
+      <p class="alignTextRight bannerText colorGrayLight"><a href="#.">—Mikal Belicove, Entrepreneur Magazine</a></p>
+    </div>
+
+    <div class="bannerNoBorder291W borderGrey1px" onclick="openExternalLink('http://www.levininstitute.org/');" onmouseover="this.style.cursor='pointer'">
+      <img src="/images/banners/banner_logo_levin_institute.gif" alt="The LEVIN Institute" width="273" height="52" border="0" />
+      <div class="hRule"></div>
+      <p class="quoteText">"There's a lot of information out there…and it's overwhelming. Wicked Start offers a suite of online tools to help you manage the startup process, and is the only one I've seen so far that lets you track your progress as you complete each step... showing entrepreneuers how close they are to their goal of starting a business."  </p>
+      <p class="alignTextRight bannerText">– Helen Rude, Founder The LEVIN Institute</p></div>
+  </div>
+</div>

@@ -1,0 +1,91 @@
+<%= render :partial => "admins/admin_profile_menu", :locals => { :active_admin_profile_tab => :mentor_tab } %>
+
+<div class="admnRitCol">
+
+  <h4>
+    USERS FROM MENTOR'S AREAS OF EXPERTISE
+  </h4>
+  <% form_tag update_user_association_mentor_path(@mentor) do %>
+    <table cellpadding="5px" style="text-align: left">
+      <tr>
+        <th><%= sort_link 'NAME', :first_name %></th>
+        <th><%= sort_link 'INDUSTRY', :industry %></th>
+        <th><%= sort_link 'BUSINESS IDEA', :business_idea %></th>
+        <th>ASSOCIATE?</th>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <hr />
+          USERS FROM MENTOR'S AREAS OF EXPERTISE
+          <hr />
+        </td>  
+      </tr>
+
+      <% unless @industry_based_users.blank? %>
+        <% @industry_based_users.each do |user| %>
+          <tr>
+            <td>
+              <%=h user.name %>
+            </td>
+            <td>
+              <%= user.industry.title %>
+            </td>
+            <td >
+              <%=h user.business_idea %>
+            </td>
+            <td>
+              <%= check_box_tag 'mentor[user_ids][]', user.id %>
+            </td>
+          </tr>
+        <% end %>
+      <%else%>
+        <tr>
+          <td>
+            No User From Mentor's Areas Of Expertise Exists
+          </td>
+        </tr>
+      <%end%>
+      <tr>
+        <td colspan="4">
+          <hr />
+          USERS WITHOUT INDUSTRY
+          <hr />
+        </td>
+      </tr>
+
+      <% unless @industry_less_users.blank? %>
+        <% @industry_less_users.each do |user| %>
+          <tr>
+            <td>
+              <%=h user.name %>
+            </td>
+            <td>
+              <%= 'N/A' %>
+            </td>
+            <td >
+              <%=h user.business_idea %>
+            </td>
+            <td>
+              <%= check_box_tag 'mentor[user_ids][]', user.id %>
+            </td>
+          </tr>
+        <% end %>
+      <%else%>
+        <tr>
+          <td>
+            No User Without Industry Exists
+          </td>
+        </tr>
+      <%end%>
+      <tr>
+        <td colspan="3">
+          <%= submit_tag "Update Associations" %>
+        </td>
+      </tr>
+    </table>
+  <%end%>
+  <br />
+  <p>
+    <%= link_to '<< Back', url_for(:back) %>
+  </p>
+</div>

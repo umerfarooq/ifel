@@ -1,0 +1,20 @@
+<ul>
+  <li>
+    <%= link_to "HOME", root_path, :class => ("current" if(@active_tab == :home) ) %>
+  </li>
+  <li>
+    <%= link_to "FEATURES", features_path, :class => ("current" if(@active_tab == :features) ) %>
+  </li>
+  <li>
+    <%= link_to "RESOURCES", resources_path, :class => ("current" if(@active_tab == :resource_center) ) %>
+  </li>
+  <li>
+    <%= link_to "COMMON QUESTIONS", common_questions_path, :class => ("current" if(@active_tab == :common_questions) ) %>
+  </li>
+  <li>
+    <%= link_to "SUCCESS STORIES", success_stories_path, :class => ("current" if(@active_tab == :success_stories) ) %>
+  </li>  
+  <li>
+    <%= link_to "ABOUT US", about_us_path, :class => ("current" if(@active_tab == :about_us) ) %>
+  </li>
+</ul>

@@ -1,0 +1,14 @@
+<h2>Action Item Status</h2>
+<h3>Select one of the status options below </h3>
+<div class="radioBtn">
+  <img src="/images/inprogress_small.png" />
+  <%= radio_button_tag :action_item_status, 'inprogress', !item.completed?, :onclick => "mark_item_inprogress('#{mark_complete_item_path(item)}');" %>In Progress
+</div>
+<div class="radioBtn">
+  <img src="/images/complete_small.png" />
+  <%= radio_button_tag :action_item_status, 'complete', item.completed?, :onclick => "mark_item_complete('#{mark_complete_item_path(item)}');" %>Completed
+</div>
+<div class="radioBtn">
+  <img src="/images/notapplicable_small.png" />
+  <%= radio_button_tag :action_item_status, 'not_applicable', item.is_not_applicable, :onclick => "mark_item_not_applicable('#{mark_not_applicable_item_path(item)}');" %>Not Applicable To My Business
+</div>

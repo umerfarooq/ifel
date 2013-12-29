@@ -1,0 +1,53 @@
+<h3>
+  <%=h "Checklist Item: #{@item_template.item_number} - #{@item_template.title}" %>
+<%#= link_to "#{@item_template.item_number} #{@item_template.title}", @item_template %>
+</h3>
+
+<br />
+
+<h4>WICKED START TEMPLATES</h4>
+<% form_tag item_template_templatifications_path(@item_template) do %>
+<%# form_for @item_template do |f|%>
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>
+        TITLE
+      </th>
+      <th>
+        STATE
+      </th>
+      <th>
+        ASSOCIATE?
+      </th>
+    </tr>
+    <%# @template_documents.each do |template_document| %>
+    <% for template_document in TemplateDocument.all do %>
+      <tr>
+        <td>
+          <%= link_to template_document.document.original_filename, template_document.document.url, :title => template_document.document.original_filename, :target => "_blank" %>
+        </td>
+        <td>
+    <%#= (template_document.is_active) ? "Active" : "Inactive" %>
+          <%= template_document.state.title.upcase %>
+        </td>
+        <td>
+          <%# if @item_template.templatifications.find_all_by_template_document_id(template_document.id).blank? %>
+            <%#= check_box_tag 'template_document_ids[]', template_document.id %>
+          <%# else %>
+
+            <%#= f.check_box :template_document_ids,{:name=>"item_template[template_document_ids][]"}, template_document.id,nil %>
+            <%#= check_box_tag "item_template[]", {:name=>"item_template[template_document_ids][]"}, template_document.id,nil %>
+            <%#= check_box_tag 'template_document_ids[]', template_document.id, @item_template.template_documents.include?(template_document) %>
+            <%= check_box_tag 'item_template[template_document_ids][]', template_document.id, @item_template.template_documents.include?(template_document) %>
+          <%# end %>
+    <%#= link_to "X" %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="3">
+        <%= submit_tag "Update Associations" %>
+      </td>
+    </tr>
+  </table>
+<% end %>

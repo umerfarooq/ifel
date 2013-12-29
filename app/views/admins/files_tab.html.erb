@@ -1,0 +1,129 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'jquery-1.4.2.min' %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var msg_title = '<%= @message_main.title %>';
+      var msg_content = '<%= @message_main.content %>';
+      $("a#message_edit_link").click(function (event){
+        if($("a#message_edit_link").text() == "EDIT") {
+          $("a#message_edit_link").text("CANCEL");
+          $("#marketing_text_message_title").val(msg_title);
+          $("#marketing_text_message_content").val(msg_content);
+          $("div#message_show").hide();
+          $("div#message_edit").show();
+        } else {
+          $("a#message_edit_link").text("EDIT");
+          $("div#message_show").show();
+          $("div#message_edit").hide();
+        }
+        event.preventDefault();
+      });
+    });
+  </script>
+<% end %>
+
+<%= render :partial => "admin_sub_menu", :locals => { :active_admin_sub_tab => :files_tab } %>
+
+<div class="admnRitCol">
+
+  <h4>
+    MY FILES PAGE GENERAL MESSAGE
+    |
+    <%= link_to "EDIT", edit_marketing_text_message_path(@message_main), :id => "message_edit_link" %>
+  </h4>
+  <br />
+
+  <div id="message_show">
+    <strong>
+      Title
+    </strong>
+    <h5>
+      <%= @message_main.title %>
+    </h5>
+    <br />
+    <strong>
+      Content
+    </strong>
+    <p>
+      <%= @message_main.content %>
+    </p>
+  </div>
+
+  <div id="message_edit" style="display: none">
+    <% form_for @message_main do |f| %>
+      <%= f.label :title %>
+      <br />
+      <%= f.text_field :title %>
+      <br />
+      <%= f.label :content %>
+      <br />
+      <%= f.text_area :content, :size => "100x5" %>
+      <br />
+      <%= f.submit 'Update and Publish' %>
+      <br />
+    <% end %>
+  </div>
+  <br />
+  <hr />
+  <br />
+
+  <h4>MY FILES CATEGORIES</h4>
+
+  <% form_for @document_category do |f| %>
+    <%= f.error_messages :header_message => nil, :message => nil %>
+    <%= f.text_field :title %>
+    <%= f.submit "Add New Category"  %>
+  <% end %>
+  <hr />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>TITLE</th>
+      <th>STATE</th>
+      <th>AVAILABLE ACTIONS</th>
+    </tr>
+    <% @document_categories.each do |document_category| %>
+      <tr>
+        <td style="width: 350px">
+          <span id="document_category_title_span_<%= document_category.id %>">
+            <%=h document_category.title %>
+          </span>
+          <span style="display: none" id="edit_document_category_title_span_<%= document_category.id %>">
+            <% form_for document_category do |f| %>
+              <%= f.text_field :title %>
+              <%= f.submit :update %>
+            <% end %>
+          </span>
+        </td>
+        <td>
+          <%= document_category.state.title.upcase %>
+        </td>
+        <td>
+          <%= link_to 'EDIT', edit_document_category_path(document_category), :id => "edit_document_category_link_#{document_category.id}" %>
+          |
+          <% if document_category.state.is_published? %>
+            <%= link_to 'INACTIVATE', inactivate_document_category_path(document_category) %>
+          <% elsif document_category.state.is_activated? %>
+            <%= link_to 'PUBLISH', publish_document_category_path(document_category) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_document_category_path(document_category) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_document_category_path(document_category) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <hr />
+  <br />
+</div>
+
+
+
+
+
+
+
+
+

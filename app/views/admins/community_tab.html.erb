@@ -1,0 +1,28 @@
+<%= render :partial => "admin_client_information_menu", :locals => { :active_admin_client_information_tab => :community_tab } %>
+
+<div class="admnRitCol">
+  <div class="admnQuizDv">
+    <div id="topic_list_div">
+      <%=render :partial=>"topic_list", :locals=>{:topics=> nil, :errors=>@errors}%>
+    </div>    
+  </div>
+  <br/>
+  <br/>
+  <h4>
+    POST QUESTION CONTENT
+    |
+    <%= link_to "EDIT", edit_post_question_content_message_path(@marketing_text_message), :id => "message_edit_link" %>
+  </h4>
+  <table border="0" cellspacing="0" class="admnQuiztbl">
+    <tr>
+      <td colspan="5">
+        <p style="color: black">
+          <%= @marketing_text_message.content %>
+        </p>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+

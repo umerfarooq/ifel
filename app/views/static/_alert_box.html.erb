@@ -1,0 +1,23 @@
+<div style="clear:both;"></div>
+<% unless $error_for_blog.blank? %>
+  <div class="ws-alert ws-alert-error ws-rounded" id="error-box">
+    <img alt="Alert icon" class="icon master-sprite" src="/images/pixel.gif" />
+    <div class="ws-alert-content">
+      <%=$error_for_blog%>
+    </div>
+    <button class="close master-sprite" onclick="$(this).parent().hide()">
+      close
+    </button>
+  </div>
+<% end %>
+<% unless $success_for_blog.blank? %>
+  <div class="ws-alert ws-alert-success ws-rounded" id="error-box">
+    <img alt="Alert icon" class="icon master-sprite" src="/images/pixel.gif" />
+    <div class="ws-alert-content">
+      <%= $success_for_blog %>
+    </div>
+    <button class="close master-sprite" onclick="$(this).parent().hide()">
+      close
+    </button>
+  </div>
+<% end %>

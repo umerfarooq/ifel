@@ -1,0 +1,91 @@
+<%= render :partial => "messages/left_column" %>
+
+<% content_for :head do %>
+  <%= javascript_include_tag "jquery-1.4.2.min" %>
+  <%= javascript_include_tag "nicEdit" %>
+<% end %>
+<% content_for :head do %>
+  <script type="text/javascript">
+    $(document).ready(function (){
+      comments_body_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('comment_body');
+    });
+  </script>
+<% end %>
+
+<div class="RitCol">
+  <div class="inbxDv">
+    <div class="inbxLft">
+      <strong>
+        <%= @comment.commentable.user.screen_name.capitalize %>
+      </strong>
+    </div>
+    <div class="sndrMsgDv">
+      <div class="sndrTtl">
+        <h3>
+          <%= @comment.commentable.title %>
+        </h3>
+      </div>
+      <div class="sndrMsg">
+        <%= @comment.commentable.body %>
+        <p>
+          <span class="dateText">
+            Posted:
+            <%= @comment.commentable.created_at.strftime("%m/%d/%Y") %>
+          </span>
+          <%#*<span class="pstdSpan">%>
+            <%#= link_to "Report as Inappropriate", inappropriate_message_path(@comment.message) %>
+          <%#*</span>%>
+        </p>
+      </div>
+    </div>
+    <%#*<div class="btnSpan" id="respond_buttons_span">%>
+      <%#*<input id="respond_button" type="button" value="Respond" class="inptBtn" />%>
+      <%#*<a id="reply_privately_link" href="#" class="cnclLnk">Reply Privately</a>%>
+    <%#*</div>%>
+  </div>
+  <div class="inbxRplyDv" id="respond_message_div">
+    <% form_for @comment, :url => message_comment_url(@comment.commentable, @comment) do |f| %>
+    <%# form_for @comment do |f| %>
+      <table border="0" cellpadding="0" cellspacing="0" class="cmpozTbl">
+        <tr>
+          <td class="lblTd">&nbsp;</td>
+          <td><h4>Edit Your Response</h4></td>
+        </tr>
+        <% unless f.error_messages.blank? %>
+          <tr>
+            <td class="lblTd">&nbsp;</td>
+            <td id="error_messages_td" style="color:#CC3333">
+              &nbsp;
+              <%= f.error_messages :header_message => nil, :message => nil %>
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <td class="lblTd">&nbsp;</td>
+          <td id="response_heading">
+            <%= f.radio_button :is_private, true, :checked => @comment.is_private %>
+            Display my answer only to
+            <%= @comment.commentable.user.screen_name.capitalize.gsub(/([:~!<>="])/,'\\\\\1') %>
+            <br />
+            <%= f.radio_button :is_private, false, :checked => (@comment.is_private == false) %>
+            Display my answer to all WickedStart users
+          </td>
+        </tr>
+        <tr>
+          <td class="lblTd">&nbsp;</td>
+          <td>
+            <%= f.text_area :body, :size => "45x5", :class => "cmpozTxt3" %>
+          </td>
+        </tr>
+        <tr>
+          <td class="lblTd">&nbsp;</td>
+          <td align="right">
+            <%#*<a id="cancel_reply_link" href="#" class="cnclLnk">Cancel</a>%>
+            <%= f.submit :submit, :value => "Post", :class => "inptBtn" %>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+</div>
+

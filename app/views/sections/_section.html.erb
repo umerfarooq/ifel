@@ -1,0 +1,69 @@
+<%#= local_assigns.to_xml %>
+<%#= section.to_xml %>
+<% div_for(section, :ss, :class => "ovrViewDv", :style => "display: none") do %>
+  <h6>
+    <%#= link_to 'SECTION OVERVIEW >>', section_path(section, :view => "render_page"), :onclick => "$(this).colorbox()"%>
+    <%= link_to 'SECTION OVERVIEW >>', overview_section_path(section), :onclick => "$(this).colorbox()"%>
+    <span class="rightLink">
+      <%#= link_to 'ACTION ITEM OVERVIEW >>', project_sections_path(section.project) , :onclick => "$(this).colorbox()"%>
+      <%= link_to 'ACTION ITEM OVERVIEW >>', overview_project_path(section.project) , :onclick => "$(this).colorbox()"%>
+    </span>
+  </h6>
+  <div class="ovrViewTxt">
+    <h3>
+      <%= "#{section.title}: #{section.title_comment}" %>
+    </h3>
+    <span class="dedline">
+      <% if section.due_date.blank? %>
+        <% deadline_date_text = "NO DATE" %>
+        <% deadline_due_date = Date.today %>
+      <% else %>
+        <% deadline_date_text = section.due_date.strftime("%B %e, %Y").upcase %>
+        <% deadline_due_date = section.due_date %>
+      <% end %>
+      DEADLINE:
+      <%#*<span id="span_updated_section_date">%>
+      <span class="ss_date_text">
+        <%= deadline_date_text %>
+      </span>
+      |
+      <%#= link_to "EDIT", "#", :style => "font-size:11px", :id => "edit_section_date_link" %>
+      <%= link_to "EDIT", "#", :style => "font-size:11px", :class => "ss_date_link" %>
+      <%#*<span id="span_section_due_date" style="display: none">%>
+      <span class="ss_date_form" style="display: none">
+        <%# form_for :section, section, :url => {:controller => "sections", :action => "update_due_date", :id => section.id} do |f| %>
+        <% form_tag({:controller => "sections", :action => "update_due_date", :id => section.id}, :method => "put") do %>
+          <%#= "<input type='date' name='section[due_date]' id='section_due_date' data-value='#{deadline_due_date}' value='#{deadline_due_date.strftime("%B %e, %Y").upcase}' style='float: left; margin-right: 3px; margin-top: 3px;' />" %>
+          <%= "<input type='date' name='section[due_date]' id='section_due_date_#{section.id}' data-value='#{deadline_due_date}' value='#{deadline_due_date.strftime("%B %e, %Y").upcase}' style='float: left; margin-right: 3px; margin-top: 3px;' />" %>
+          <%= submit_tag 'Update', :class => "globalBtn", :style => "margin-top: 0;float:none;" %>
+        <% end %>
+      </span>
+      <span id="errorExplanation">&nbsp;</span>
+    </span>
+    <h5>
+      <%= link_to "Section Introduction", introduction_section_path(section), :id => "introduction_link_#{section.id}", :onclick => "$(this).colorbox({ onCleanup:lpColorBoxCallback })" %>
+      <% if section.ended? %>
+        <%= image_tag "icons/good.jpg", :alt => "COMPLETE",:size => "20x20" %>
+      <% else %>
+        <%= image_tag "icons/cancel.jpg", :alt => "INCOMPLETE", :size => "20x20" %>
+      <% end %>
+    </h5>
+    <div class="qstnsArea">
+      <ul class="qstnLst">
+        <% section.items.each do |item| %>
+          <li>
+            <%#= link_to item.title, edit_item_path(item), :id => "item_link_#{item.id}", :onclick => "$(this).colorbox({onCleanup:lpColorBoxCallback, onComplete:function(){ $('.scrollingDiv').jScrollPane({showArrows:true}); $.fn.colorbox.resize();} })" %>
+            <%= link_to item.title, item, :id => "item_link_#{item.id}", :onclick => "$(this).colorbox({onCleanup:lpColorBoxCallback, onComplete:function(){ $('.scrollingDiv').jScrollPane({showArrows:true}); $.fn.colorbox.resize();} })" %>
+            <% if item.ended? %>
+              <%= image_tag "icons/good.jpg", :alt => "COMPLETE" %>
+            <% elsif item.edited? %>
+              <%= image_tag "icons/pending.jpg", :alt => "EDITED" %>
+            <% else %>
+              <%= image_tag "icons/cancel.jpg", :alt => "INCOMPLETE" %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>

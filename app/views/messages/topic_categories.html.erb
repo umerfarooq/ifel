@@ -1,0 +1,56 @@
+<%content_for :javascripts do%>
+  <script>
+    $(document).ready(function(){
+      $(".slidingDiv").hide();
+
+      $('.show_hide').click(function(){
+        $(".slidingDiv").slideDown(1000, function(){
+          $('#pstQuesBtn').hide();
+        });
+      });
+
+      $('.cnclLnk').click(function(){
+        $(".slidingDiv").slideUp(1000, function(){
+          $('#pstQuesBtn').show();
+        });
+      });
+
+    });
+  </script>
+<%end%>
+
+<div class="subPageWrapper">
+  <h1>COMMUNITY</h1>
+  <%= render :partial => 'shared/community_breadcrumbs', :locals=>{:selected => :topic_categories} %>
+  <div class="clear"></div>
+  <div class="communitySearch height60">
+    <%= render :partial => 'search_bar',:locals=>{:options=>{}} %>
+  </div>
+  <div class="sep"></div>
+  <div class="communityTopicCategory">
+    <% @sections.each do |s| %>
+      <ul>
+        <h3><%= s.section_template.name %></h3>
+        <% if s.has_topics? %>
+          <% s.items.each do |i| %>
+            <%  topics = i.item_template.topics.publish%>
+            <%unless topics.blank?%>
+              <h3 class="subTopics"><%= i.item_template.title %></h3>
+              <% topics.each do |t| %>
+                <li>
+                  <%= link_to t.name, :controller=>"messages", :action=>"topic_search", :topic=>"#{t.id}"%>
+                  <span class="feedImage"><%= t.messages.count  %></span>
+                </li>
+          <%#= is_topic_followed(t.id)%>
+              <% end %>
+            <%  end %>
+          <% end %>
+        <%else%>
+          Section has no topics
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>
+
+

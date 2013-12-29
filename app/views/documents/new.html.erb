@@ -1,0 +1,46 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    fileReady();
+  });
+</script>
+
+<div class="upldDocDv">
+  <h5>UPLOAD DOCUMENT TO MY FILES</h5>
+  <% form_for @document, :html => { :multipart => true } do |f| %>
+    <div id="errorExplanation" class="errorExplanation"><ul></ul></div>
+    <table width="450" border="0" cellpadding="0" cellspacing="0" class="uplodTbl">
+      <tr>
+        <td class="tdLbl" align="right">
+          <%= f.label :documentable_id, "Document Category :" %>
+        </td>
+        <td class="tdFld">
+          <%= f.collection_select :documentable_id, current_user.project.sections, :id, :title, {:prompt => true}, :class => "uplodLst" %>
+          <%#= f.hidden_field :documentable_type, :value => Section.to_s %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" class="tdLbl"  align="right">
+          <%= f.label :description, "Description :" %>
+        </td>
+        <td class="tdFld">
+          <%= f.text_area :description, :class => "uplodArea" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="tdLbl"  align="right">
+          <%= f.label :data, "Document :" %>
+        </td>
+        <td class="tdFld">
+          <label id="selected_file_label"></label>
+          <%= link_to "Select File", "#", :id => "upload_file_link" %>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>
+          <%= f.submit "Submit", :class => "globalBtn", :style => "margin-top: 0" %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+</div>

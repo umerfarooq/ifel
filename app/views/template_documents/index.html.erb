@@ -1,0 +1,62 @@
+<%= render :partial => "admins/admin_template_menu", :locals => { :active_admin_template_tab => :templates_tab } %>
+
+<div class="admnRitCol">
+
+  <h2>
+    Templates
+    <!--|
+    <%#= link_to "Resource", list_resource_categories_path, :style => "font-size: 20px" %>-->
+  </h2>
+  <hr />
+  <br />
+
+  <h4>
+    WICKED START TEMPLATES
+    |
+    <%= link_to "Add Template", new_template_document_path %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th><%= sort_link 'TITLE', :title %></th>
+      <th>DOCUMENT</th>
+      <th><%= sort_link 'UPDATED AT', :updated_at %></th>
+      <th>STATE</th>
+      <th>AVAILABLE ACTIONS</th>
+    </tr>
+    <% @template_documents.each do |template_document| %>
+      <tr>
+        <td>
+          <%=h template_document.title %>
+        </td>
+        <td>
+          <%= link_to template_document.document_file_name, template_document.document.url %>
+        </td>
+        <td>
+          <%=h ws_date_format_with_time(template_document.updated_at) %>
+        </td>
+        <td>
+          <%=h template_document.state.title.upcase %>
+        </td>
+        <td>
+          <%= link_to 'EDIT', edit_template_document_path(template_document) %>
+          |
+          <% if template_document.state.is_featurified? %>
+            <%= link_to 'INACTIVATE', inactivate_template_document_path(template_document) %>
+          <% elsif template_document.state.is_published? %>
+            <%= link_to 'FEATURIFY', featurify_template_document_path(template_document) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_template_document_path(template_document) %>
+          <% elsif template_document.state.is_activated? %>
+            <%= link_to 'PUBLISH', publish_template_document_path(template_document) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_template_document_path(template_document) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_template_document_path(template_document) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

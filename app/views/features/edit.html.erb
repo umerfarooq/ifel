@@ -1,0 +1,14 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :features_tab } %>
+
+<% title "Edit Feature, #{@feature.name}" %>
+
+<div class="admnRitCol">
+  <h1>
+    <%= "Edit, #{@feature.name}" %>
+  </h1>
+  <%= render :partial => "form", :locals => {:feature => @feature} %>
+
+  <% if @feature.parent.blank? %>
+  <%= render :partial => "sub_features", :locals => {:feature => @feature} %>
+  <% end %>
+</div>

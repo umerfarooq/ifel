@@ -1,0 +1,27 @@
+<%= render :partial => "admin_sub_menu", :locals => { :active_admin_sub_tab => :launch_pad_tab } %>
+
+<div class="admnRitCol">
+<div class="admnCntDv">
+<h4>Launch Pad Introduction </h4>
+<%= render :partial => 'marketing_message', :locals=>{:obj=>@marketing_message, :title=>'Launch Pad Intro Message'} %>
+
+</div>
+<div class="admnImgDv">
+<p class="imgP"><img src="../images/book.jpg" /></p>
+<p class="uplodBtn"><a href="#"><img src="../images/uplod-img-btn.jpg" width="110" height="26" /></a></p>
+</div>
+</div>
+  
+<div class="admnRitCol">
+<div class="admnCntDv">
+<h4>Launch Pad General Message</h4>
+<%= render :partial => 'marketing_message', :locals=>{:obj=>@marketing_message_general, :title=>'Launch Pad General Message'} %>
+</div>
+<div class="admnImgDv">
+<p class="imgP"><img src="../images/book.jpg" /></p>
+<p class="uplodBtn"><a href="#"><img src="../images/uplod-img-btn.jpg" width="110" height="26" /></a></p>
+</div>
+</div>
+<div class="admnRitCol">
+
+</div>

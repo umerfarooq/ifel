@@ -1,0 +1,37 @@
+
+  <h4>My Files</h4>
+  <div class="myFilesDv">
+    <% if @documents.blank? %>
+      <p>
+        You have not uploaded any document!
+        <br />
+        You can upload any document relevant
+        to your project below.
+      </p> 
+    <% else %>
+      <table  border="0" cellpadding="0" cellspacing="0" class="myFilesTbl">
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Category</th>
+          <th scope="col">Upload Date</th>
+          <th scope="col">&nbsp</th>
+        </tr>
+        <% @documents.each do |document| %>
+          <tr>
+            <td class="ttlTd">
+              <%= link_to (document.data_file_name.length < 50) ? document.data_file_name : document.data_file_name.slice(0..47)+("..."), download_document_path(document), :title => document.description, :target => '_blank' %>
+            </td>
+            <td class="ctgryTd">
+              <%= document.document_category.title %>
+            </td>
+            <td class="dateTd">
+              <%= document.uploaded_at.strftime("%m/%d/%Y") %>
+            </td>
+            <td class="icnTd">
+              <%= link_to image_tag("icons/deleet-icn.jpg", :size => "15x14", :border => 0), document_path(document), :method => :delete %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+  </div>

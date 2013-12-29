@@ -1,0 +1,20 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :multimedia_tab } %>
+
+<div class="admnRitCol">
+
+  <h4>
+    WICKED START MARKETING MULTIMEDIA MESSAGES
+    <%#*|%>
+    <%#= link_to "Add Multimedia", new_marketing_multimedia_message_path %>
+  </h4>
+  <br />
+  <% @marketing_multimedia_messages.each do |multimedia| %>
+    <div>
+      <%= link_to h("#{multimedia.page}[#{multimedia.location}]"), multimedia, :onclick => "$(this).colorbox()" %>
+      <%#= link_to "#{multimedia.page}[#{multimedia.location}]", multimedia %>
+      |
+      <%= link_to "EDIT", edit_marketing_multimedia_message_path(multimedia) %>
+    </div>
+  <% end %>
+
+</div>

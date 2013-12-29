@@ -1,0 +1,34 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "jquery-ui"%>
+<%end%>
+<%content_for :javascripts do%>
+  <script type="text/javascript">
+    function search_bar_text(){
+      $("#search_que").val("");
+    }
+    function submit_search_form() {
+      $("#search_msg_form").submit();
+    }
+    $(document).ready(function(){
+      $("#search_que").autocomplete({
+        source: "/messages/load_questions",
+        minLength: 2,
+        deferRequestBy: 0
+        //,
+        //search: function(event, ui) {
+        //  $('#message_loading_box').removeClass('dispNone').addClass('dispBlock');
+        //},
+        //open: function(e, u){
+        //  $('#message_loading_box').removeClass('dispBlock').addClass('dispNone');
+        //}
+      });
+    });
+  </script>
+<%end%>
+
+<% form_tag("/messages/search", :method => "get", :id=>"search_msg_form",:class=>options[:class]) do %>
+  <%= text_field_tag(:search_que,"Search for questions and answers to topics that interest you and your start-up's needs.", :class=>"communityTxtFld", :onclick => "search_bar_text()" ) %>
+  <span id="message_loading_box" class="loader dispNone"><%= image_tag 'ui-loading.gif' %></span>
+  <%#= link_to image_tag("theme/commuity-search-btn.jpg"),"#.", :onclick => "submit_search_form();"%>
+  <input type="image" src="/images/theme/commuity-search-btn.jpg" class="show_result" onclick="submit_search_form();" />
+<%  end %>

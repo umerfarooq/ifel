@@ -1,0 +1,42 @@
+package_assets: on
+embed_assets: on
+compress_assets: on
+gzip_assets: on
+
+#compressor_options:
+#  compilation_level: ADVANCED_OPTIMIZATIONS
+
+javascripts:
+  common:
+    - public/javascripts/jquery-1.4.2.min.js
+    - public/javascripts/jquery.colorbox.js
+    - public/javascripts/jquery-ui-1.8.7.min.js
+    - public/javascripts/jquery.blockUI.js
+  public: 
+    - public/javascripts/public_new_design.js
+  internal:
+    - public/javascripts/internal.pages.js
+  admin:
+    - public/javascripts/admin.js
+  ajaxupload:
+    - public/javascripts/ajaxupload.js
+  dockbar:
+    - public/javascripts/ws.roadmap-dockbar.js
+  tokeninput:
+    - public/javascripts/jquery.tokeninput.js
+#  ie:
+#    - public/javascripts/html5.js
+#    - public/javascripts/ie-css3.js
+    
+stylesheets:
+  common:
+    - public/stylesheets/colorbox.css   
+  new_design:
+    - public/stylesheets/new_designs/reset.css
+    - public/stylesheets/new_designs/style.css
+  old_design:
+    - public/stylesheets/style.css
+  tokeninput:
+    - public/stylesheets/token-input-facebook.css
+#  ie:
+#    - public/stylesheets/new_designs/ie.css

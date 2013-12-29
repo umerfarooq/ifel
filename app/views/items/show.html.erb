@@ -1,0 +1,177 @@
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    docDirty = false;
+    item_opened    = <%= @item.id %>;
+    section_opened = <%= @item.section_id %>;
+    $(document).ready(function () {
+      itemReady(item_opened, "<%= @preceding %>", "<%= @following %>");
+      //var mark_complete_item_path = "<%= mark_complete_item_path(@item) %>";              // "/items/:id/mark_complete"
+      //var mark_not_applicable_item_path = "<%= mark_not_applicable_item_path(@item) %>";  // "/items/:id/mark_not_applicable"
+    });
+
+    function show_summary(div_name, index, length)
+    {
+      for(var i = 0; i<length; i++)
+      {
+        if(index == i)
+        {
+          document.getElementById(div_name+"_summary_"+index).style.display = "block";
+        }
+        else
+        {
+          document.getElementById(div_name+"_summary_"+i).style.display = "none";
+        }
+      }
+    }
+
+    function saveAnswer(item_id) {
+      $.post(["", "items", item_id, "update_answer"].join("/"), {
+        item_user_answer: $("#item_user_answer").val(),
+        _method: "put",
+        authenticity_token: encodeURIComponent(AUTH_TOKEN)
+      }, function (response){
+        if(response['success']){
+          window.open('/items/'+item_id+'/print', '_blank'); 
+        }
+      });
+    }
+  </script>
+<%end%>
+
+<div id="liteBx-wrapper">
+  <div id="liteBx-Cntainer" >
+    <div class="liteBxBdy">
+      <div class="liteBxTtl">
+        <span class="business-name">
+          <%= @item.section.project.business_name %>
+        </span>
+        <span class="section-info">
+          <%= "Section #{@item.section.name}: #{@item.section.title}" %>
+        </span>
+        <div class="clear"></div>
+        <h1>
+          <%=h "#{@item.sequence_number}. #{@item.title}" %>
+        </h1>
+      </div>
+      <div class="liteBxCntnt2">
+        <div class="liteBxLft">
+          <div class="scrollingDiv">
+            <h5>DEFINITION</h5>
+            <p class="litBxTxt">
+              <%= @item.item_template.definition %>
+            </p>
+          </div>
+        </div>
+        <div class="liteBxRit">
+          <div class="scrollingDiv">
+            <% if @item.item_template.is_example_simple && !@item.item_template.example_description.blank? %>
+              <div class="litBxRtSpn1">
+                <h5>EXAMPLE</h5>
+                <span class="ltBxRitTxt">
+                  <%= @item.item_template.example_description %>
+                </span>
+              </div>
+            <% elsif !(@item.item_template.examples.published.blank?) %>
+              <div class="litBxRtSpn1">
+                <h5>EXAMPLE</h5>
+                <div class="ltBxRitTxt">
+                  <% @item.item_template.examples.published.each_with_index do |example,index| %>
+                    <div class="right_link_div">
+
+                      <%= link_to "#{example.title} >>", download_example_path(example), :class => "right_link", :target => "_blank" %>
+                      <%= link_to "show summary", {},:onclick => "show_summary('example', "+index.to_s+", "+@item.item_template.examples.published.length.to_s+");", :class => "right_sub_link" %>
+                    </div>
+                    <div id="example_summary_<%= index.to_s %>" style="display: none;">
+                      <%= example.description %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+            <% unless @item.item_template.templatifications.published.blank? %>
+              <div class="litBxRtSpn1">
+                <h5>TEMPLATES</h5>
+                <div class="ltBxRitTxt">
+                  <% @item.item_template.templatifications.published.each_with_index do |templatification, index| %>
+                    <div class="right_link_div">
+                      <%= link_to "#{templatification.template_document.title} >>", download_template_document_path(templatification.template_document), :class => "right_link", :target => "_blank" %>
+                      <%= link_to "show summary", {},:onclick => "show_summary('template', "+index.to_s+", "+@item.item_template.templatifications.published.length.to_s+");", :class => "right_sub_link" %>
+                    </div>
+                    <div id="template_summary_<%= index.to_s %>" style="display: none;">
+                      <%= templatification.template_document.description %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+            <% unless @item.item_template.resourcifications.published.blank? %>
+              <div class="litBxRtSpn1">
+                <h5>RESOURCES</h5>
+                <div class="ltBxRitTxt">
+                  <% @item.item_template.resourcifications.published.each_with_index do |resourcification, index| %>
+                    <div class="right_link_div">
+                      <%= link_to "#{resourcification.resource.title} >>", resourcification.resource.url_absolute, :class => "right_link", :target => "_blank" unless resourcification.resource.blank? %>
+                      <%= link_to "show summary", {}, :onclick => "show_summary('resource', "+index.to_s+", "+@item.item_template.resourcifications.published.length.to_s+");", :class => "right_sub_link" %>
+                    </div>
+                    <div id="resource_summary_<%= index.to_s %>" style="display: none;">
+                      <%= resourcification.resource.description %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="litBxCntBtm">
+        <% form_for @item, :html => { :multipart => true } do |f| %>
+          <% if @item.has_textbox || @item.has_upload %>
+            <h5>WRITE YOUR NOTES HERE OR REFERENCE THE TEMPLATE SECTION FOR GUIDANCE</h5>
+          <% end %>
+          <% if @item.has_textbox %>
+            <%= hidden_field_tag "item_user_answer_hidden", @item.user_answer %>
+            <%= f.text_area :user_answer, :class => "answrArea" %>
+          <% end %>
+          <p class="upload-files">
+            Want to upload relevant files to your Wicked Start account?
+            <a id="upload_file_link" href="javascript:none">Click Here</a><br />
+            <span id="fileNameSpan">
+              <%= link_to (@item.documents.latest.first.name.length < 51) ? @item.documents.latest.first.name : @item.documents.latest.first.name.slice(0..47)+("..."), download_document_path(@item.documents.latest.first), :title => @item.documents.latest.first.name, :target => '_blank' unless @item.documents.latest.blank? %>
+            </span>
+          </p>
+          <span class="chkBxSpan">
+            <span style="color:#f8941d;">
+              <%= f.check_box :is_complete %>
+              <%= f.label :is_complete, "THIS CHECKLIST ITEM IS COMPLETE" %>
+            </span>
+            <br />
+            <span style="color:#999;">
+              <%= f.check_box :is_not_applicable %>
+              <%= f.label :is_not_applicable, "THIS ITEM IS NOT APPLICABLE TO MY BUSINESS" %>
+            </span>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="litBxFtr">
+    <span class="ltBxFtrLnks">
+      <%= link_to "<< Previous", @preceding, :id => "previous_item_link" %>
+      | Item
+      <%= @item.sequence_number %>
+      out of
+      <%= @item.section.item_count %>
+      in Section
+      <%= @item.section.name %>
+      |
+      <%= link_to "Next >>", @following, :id => "next_item_link" %>
+    </span>
+
+    <span class="floatR">
+      <%= link_to image_tag('print-btn.jpg', :alt => 'PRINT'), "JavaScript:void(0);", :id => 'print_link', :onclick => "saveAnswer("+@item.id.to_s+");"%>
+
+<%#a href="mailto:info@wickedstart.com?subject=Feedback"<b>Send us your feedback</b></a> %>
+    </span>
+  </div>
+</div>

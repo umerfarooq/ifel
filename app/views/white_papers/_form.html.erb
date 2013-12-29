@@ -1,0 +1,25 @@
+<% form_for white_paper, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.label :title %>
+    <br />
+    <%= f.text_field :title, :size => "75" %>
+  </p>
+  <p>
+    <%= f.check_box :is_internal %>
+    <%= f.label :is_internal %>
+  </p>
+  <p>
+    <%= f.label :summary %>
+    <br />
+    <%= f.text_area :summary, :size => "100x15", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :paper %>
+    <br />
+    <%= f.file_field :paper %>
+  </p>
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>

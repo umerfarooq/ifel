@@ -1,0 +1,64 @@
+<%= render :partial => "messages/left_column" %>
+<% content_for :head do %>
+  <%= javascript_include_tag "jquery-1.4.2.min" %>
+  <%= javascript_include_tag "nicEdit" %>
+<% end %>
+<% content_for :head do %>
+  <script type="text/javascript">
+    $(document).ready(function (){
+      messages_body_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('message_body');
+    });
+  </script>
+<% end %>
+<div class="RitCol">
+  <h4>Edit Message</h4>
+  <div class="inbxDv">
+    <% form_for @message do |f| %>
+      <table width="200" border="0" cellpadding="0" cellspacing="0" class="cmpozTbl">
+        <tr>
+          <%#*<td class="lblTd">&nbsp;</td>%>
+          <td colspan="2">
+            <%= f.error_messages :header_message => nil, :message => nil %>
+          </td>
+        </tr>
+        <tr>
+          <td class="lblTd">
+            <%= f.label :title %>
+          </td>
+          <td>
+            <%= f.text_field :title, :class => "cmpozTxt" %>
+          </td>
+        </tr>
+        <tr>
+          <td  colspan="2">
+            <%= f.check_box :is_admin_only, :class => "chkBx" %>
+            <%= f.label :is_admin_only, "Only share this message with WickedStart (it will limit the responses you get from just our staff)", :class => "chkBx" %>
+          </td>
+        </tr>
+        <tr>
+          <td class="lblTd">
+            <%= f.label :message_category %>
+          </td>
+          <td>
+            <%= f.collection_select(:message_category_id, MessageCategory.published, :id, :title, {:prompt => true}) %>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" class="lblTd">
+            Detail (Optional)
+          </td>
+          <td>
+            <%= f.text_area :body, :size => "45x5", :class => "cmpozTxt2" %>
+          </td>
+        </tr>
+        <tr>
+          <td class="lblTd">&nbsp;</td>
+          <td>
+            <%#= link_to "Cancel", url_for(:back), :class => "cnclLnk" %>
+            <%= f.submit :submit, :value => "Update Message", :class => "inptBtn" %>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+</div>

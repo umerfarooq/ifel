@@ -1,0 +1,119 @@
+<%content_for :javascripts do%>
+<script type="text/javascript">
+  function toggleHideElement (elementId, elementToggleImgId)
+  {
+    //alert(elementId)
+    var element,elementImgToggle;
+    if (document.all){
+      element = document.all[elementId];
+      elementImgToggle = document.all[elementToggleImgId]
+    } else if (document.getElementById) {
+      element = document.getElementById(elementId);
+      elementImgToggle = document.getElementById(elementToggleImgId);
+    }
+    if (element && element.style)
+    {
+      if (element.style.display == 'none')
+      {
+        element.style.display = '';
+        elementImgToggle.src="/images/icons/minus-icn.jpg";
+      }
+      else
+      {
+        element.style.display = 'none';
+        elementImgToggle.src="/images/icons/plus-icn.jpg";
+      }
+    }
+  }
+ 
+  function save_project_comments(id){
+    $.post(["", "projects", id, "update_answer"].join("/"), {
+      user_answer: $("#user_answer").val(),
+      _method: "put",
+      authenticity_token: encodeURIComponent(AUTH_TOKEN)
+    }, function (response){
+    },'json');
+  }
+</script>
+<%end%>
+<div id="liteBx-Cntainer">
+
+  <div class="liteBxTop"></div>
+
+  <div class="liteBxBdy" style="height:563px;">
+    <div class="liteBxTtl">
+      <h1>
+        <strong>
+          <%= @project.business_name %>
+        </strong>
+        <br />
+        ACTION ITEM OVERVIEW
+      </h1>
+    </div>
+    <div class="liteBxCntnt">
+      <div class="ovrViewLstDv">
+        <div class="ovrColTtlDv">
+          <span class="col1ttl">Section</span>
+          <span class="col2ttl">Due Date</span>
+          <span class="col3ttl">Status</span>
+        </div>
+        <% @project.sections.each do |section| %>
+          <div class="ovrViewTtlDv">
+            <p class="ovCol1">
+  <%#= %Q|<img id="imgToggle#{section.id}" alt="" src="/images/icons/plus-icn.jpg" onclick="toggleHideElement('divSectionItems#{section.id}','imgToggle#{section.id}')"/>| %>
+              <img id="imgToggle<%= section.id %>" alt="" src="/images/icons/plus-icn.jpg" onclick="toggleHideElement('divSectionItems<%=section.id%>','imgToggle<%=section.id%>')"/>
+              <span>
+                <%= section.name+': '+ section.title %>
+              </span>
+            </p>
+            <p class="ovCol2">
+              <% if section.due_date.blank? %>
+                N/A
+              <% else %>
+                <%= section.due_date.strftime("%m/%d/%Y").upcase %>
+              <% end %>
+            </p>
+            <p class="ovCol3">
+              <% if section.ended? %>
+                <%= image_tag "icons/good.jpg", :alt => "COMPLETE", :size => "20x20" %>
+              <% else %>
+                <%= image_tag "icons/cancel.jpg", :alt => "INCOMPLETE", :size => "20x20" %>
+              <% end %>
+            </p>
+          </div>
+          <div class="ovDtl" id="divSectionItems<%= section.id %>" style="display:none">
+            <div class="ovrViewsbTtl" >
+              SECTION <%= section.name %> INTRODUCTION
+            </div>
+            <% section.items.each do |item| %>
+              <div class="ovDtlTxt">
+                <% if item.ended? %>
+                  <%= image_tag "icons/good.jpg", :alt => "COMPLETE", :size => "12x12" %>
+                <% elsif item.edited? %>
+                  <%= image_tag "icons/pending.jpg", :alt => "EDITED", :size => "12x12" %>
+                <% else %>
+                  <%= image_tag "icons/cancel.jpg", :alt => "INCOMPLETE", :size => "12x12" %>
+                <% end %>
+                <span class="ovTxtTtl">
+                  <%= item.title %>
+                </span>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="litBxCntBtm">
+<%# form_for @project do |f| %>
+        <%#= text_area_tag :user_answer,@project.user_answer, :size => "90x4" %>
+        <%#= submit_tag " Save Your Comments", :class => "submit", :onclick => "save_project_comments("+@project.id.to_s+");" %>
+
+<%# end %>
+      </div>
+
+      <div class="litBxFtr" style="padding-right:20px; padding-left:0px;">
+        <%= link_to image_tag('print-btn.jpg', :alt => 'PRINT'), print_project_path(@project), :id => 'print_link', :target => '_blank' %>
+      </div>
+    </div>
+  </div>
+</div>

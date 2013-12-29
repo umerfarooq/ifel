@@ -1,0 +1,25 @@
+<%= render :partial => "admins/admin_resource_menu", :locals => { :active_admin_resource_tab => :title_tab } %>
+
+<div class="admnRitCol">
+
+
+  <h1>Edit Resource Content Page</h1>
+
+  <% form_for @marketing_text_message, :url => update_content_message_resource_path(@marketing_text_message) do |f| %>
+    <%= f.error_messages %>
+  <%#= hidden_field_tag "back", @back %>
+    <p>
+      <%= f.label :title %>
+      <br />
+      <%= f.text_field :title %>
+    </p>
+    <p>
+      <%= f.label :content %>
+      <br />
+      <%= f.text_area :content, :class => "adminEditor" %>
+    </p>
+    <p>
+      <%= f.submit 'Update' %>
+    </p>
+  <% end %>
+</div>

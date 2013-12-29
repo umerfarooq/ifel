@@ -1,0 +1,44 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :radar_tab } %>
+
+<% title "#{@events_provider.title}" %>
+
+<div class="admnRitCol">
+
+  <h1>
+    <%= @events_provider.title %>
+  </h1>
+
+  <p>
+    STATE:
+    <strong>
+      <%= @events_provider.state.title.upcase %>
+    </strong>
+  </p>
+
+  <p>
+    TITLE:
+    <strong>
+      <%= @events_provider.title %>
+    </strong>
+  </p>
+
+  <p>
+    URL:
+    <strong>
+      <%= link_to @events_provider.url, @events_provider.url %>
+    </strong>
+  </p>
+
+  <p>
+    RSS LINK:
+    <strong>
+      <%= link_to @events_provider.rss_link, @events_provider.rss_link %>
+    </strong>
+  </p>
+
+  <p>
+    LOGO:
+    <%= image_tag @events_provider.logo.url %>
+  </p>
+
+</div>

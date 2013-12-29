@@ -1,0 +1,93 @@
+<% title "Upcoming Events for Entrepreneurs and Small Business Owners" %>
+<% meta "Information and links to entrepreneur events to help people get the resources and information they need to start a small business" %>
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" unless current_user %>
+  <h1>ABOUT US</h1>
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :events} %>
+  <div id="contentLarge">
+
+    <% unless @recent_events.blank? %>
+      <% @recent_events.each do |event| %>
+        <% content_tag :div, :class => cycle("eventLeft", "eventRight") do %>
+          <%= image_tag helper_get_event_image_path(event), :alt => event.title %>
+          <h3>
+            <%= link_to "#{event.title} <span class='offSiteLink'></span>", helper_get_event_link(event), :target=>helper_get_target_value(event) %>
+          </h3>
+          <span class="meta">
+            <% if helper_is_single_day_event?(event) %>
+              <%= ws_date_format_with_city_and_state(event.event_start_date, helper_get_event_city(event), helper_get_event_state(event)) %>
+            <%else%>
+              <%= ws_date_format(event.event_start_date) %> -
+              <%= ws_date_format_with_city_and_state(event.event_end_date, event.city, event.geo_state) unless event.event_end_date.blank?  %>
+            <% end %>
+          </span>
+          <p>
+            <%=sanitize(event.summary, :tags => %w(style)) %>
+          </p>
+          <%= render :partial => 'shared/share_widget' %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% @event_categories.each do |event_category| %>
+      <% public_events = event_category.public_events %>
+      <%if !public_events.blank? or event_category.is_of_events_category? %>
+        <div class="newsCategory">
+          <h3 class="header">
+            <%= event_category.title %>
+          </h3>
+          <%unless public_events.blank?%>
+            <% public_events.each do |event| %>
+              <% content_tag :div, :class => "news #{'noBorder noMargin' if(event == event_category.public_events.last)}" do %>
+                <%= link_to event.title, event %>
+                <span class="meta">
+                  <% if event.event_start_date == event.event_end_date %>
+                    <%= ws_date_format_with_city_and_state(event.event_start_date, event.city, event.geo_state) %>
+                  <%else%>
+                    <%= ws_date_format(event.event_start_date) %> -
+                    <%= ws_date_format_with_city_and_state(event.event_end_date, event.city, event.geo_state) unless event.event_end_date.blank? %>
+                  <% end %>
+                </span>
+                <p>
+                  <%= sanitize(truncate(event.summary.to_s, 350)) %>
+                </p>
+              <% end %>
+            <% end %>
+          <% end %>
+          <% if event_category.is_of_events_category? and !@feeds.blank? %>
+            <% @feeds.entries.each do |item| %>
+              <% content_tag :div, :class => "news #{'noBorder noMargin' if(item == @feeds.last)}" do %>
+                <%= link_to sanitize(item.title.to_s), item.link.to_s, :target=>'_blank'%>
+                <span class="meta">
+                  <%= ws_date_format_with_city_and_state(item.published_at,item.feeder.feed_city, item.feeder.feed_geo_state) %>
+                </span>
+                <p>
+                  <%=  sanitize(truncate(item.summary.to_s, 350), :tags => %w(style))%>
+                </p>
+              <% end %>
+            <% end %>
+          <%end%>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div id="sideBarRight2Col">
+    <h3 class="header">
+      Recent News
+    </h3>
+    <% unless @latest_news_article.blank? %>
+    <%@latest_news_article.each do |news_article|%>
+    <h3>
+        <%= helper_news_link news_article %>
+      </h3>
+      <span class="meta">
+        <%= ws_date_format(helper_news_date(news_article)) %>
+      </span>
+      <p>
+        <%#= news_article.summary %>
+        <%= (link_to "Read more", news_article) if helper_is_internal_news?(news_article) %>
+      </p>
+    <%end%>
+    <% end %>
+  </div>
+</div> <!-- End of Sub page Wrapper -->

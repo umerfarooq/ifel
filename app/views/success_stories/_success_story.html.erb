@@ -1,0 +1,16 @@
+<% content_tag :li, :class => "tall" do %>
+<%#*#{' special' if(success_story_counter%5 == 4)}%>
+  <%#*<li class="tall">%>
+  <%= link_to image_tag(success_story.photo.url(:list), :alt => success_story.photo_alt), success_story %>
+  <h3 class="headerLink">
+    <%= success_story.name -%>
+    <br />
+    <span>
+      <%= success_story.company_name -%>
+    </span>
+  </h3>
+  <p>
+    <%= success_story.summary -%>
+  </p>
+  <%#*</li>%>
+<% end %>

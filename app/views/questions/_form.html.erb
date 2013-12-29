@@ -1,0 +1,37 @@
+<%= f.error_messages :header_message => nil, :message => nil %>
+<p>
+  <%= f.label :statement %>
+  <br />
+  <%= f.text_field :statement, :size => "75" %>
+</p>
+<% if question.point_based? %>
+  <p>
+    <%= f.label :points_yes %>
+    <br />
+    <%= f.text_field :points_yes, :size => "25" %>
+  </p>
+  <p>
+    <%= f.label :points_sometimes %>
+    <br />
+    <%= f.text_field :points_sometimes, :size => "25" %>
+  </p>
+  <p>
+    <%= f.label :points_no %>
+    <br />
+    <%= f.text_field :points_no, :size => "25" %>
+  </p>
+<% else %>
+  <p>
+    <%= f.label :comment %>
+    <br />
+    <%= f.text_field :comment, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :response_no %>
+    <br />
+    <%= f.text_field :response_no, :size => "75" %>
+  </p>
+<% end %>
+<p>
+  <%= f.submit "Submit" %>
+</p>

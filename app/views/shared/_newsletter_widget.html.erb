@@ -1,0 +1,8 @@
+<div class="newsletterForm">
+  <h3>Sign up for our Monthly Success Tips</h3>
+  <% form_for ContactUs.new, :url => subscribe_for_news_letters_contact_us_path, :html => { :method => :get} do |f| %>
+    <%= f.text_field :email, :class => 'defaultText txtEmail', :title => "Enter your Email address" %>
+    <%= f.hidden_field :request_from, :value => (@page rescue "") %>
+    <%= submit_tag 'SIGN UP', :class => "submit", :name => nil %>
+  <% end %>
+</div>

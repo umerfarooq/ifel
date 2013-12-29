@@ -1,0 +1,85 @@
+<%# content_for :head do %>
+  <%#= javascript_include_tag "nicEdit" %>
+
+  <script type="text/javascript">
+    //$(document).ready(function (){
+    //  resource_description_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('resource_description');
+    //});
+  </script>
+<%# end %>
+
+<h2>Edit Service</h2>
+<br />
+
+<% form_for @resource, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <%#*<p>%>
+  <%#= f.label :name %>
+  <%#*<br />%>
+  <%#= f.text_field :name %>
+  <%#*</p>%>
+  <p>
+    <%= f.label :resource_type %>
+    <br />
+  <%#= f.select :resource_category, ['Service Provider'] %>
+    <%= f.collection_select(:resource_category_id, ResourceCategory.published.all, :id, :title, {:prompt => true}) %>
+  </p>
+
+  <p>
+    <%= f.label :Company_Name %>
+    <br />
+    <%= f.text_field :title, :size => "100" %>
+  </p>
+
+  <p>
+    <%= f.label :Company_Url %>
+    <br />
+    <%= f.text_field :url, :size => "100" %>
+  </p>
+
+    <p>
+    <%= f.label :Pricing %>
+    <br />
+    <%#= f.select :pricing, [['Free', 'FREE'], ['Low Cost', 'LOW COST'], ['Premium', 'PREMIUM']], {:prompt => true}, { :multiple => true } %>
+    <%= f.select(:pricing, options_from_collection_for_select(Pricing.all, :id, :title, @resource.resource_pricings.collect{ |rp| rp.pricing_id }), {:prompt => false}, { :multiple => true }) %>
+  </p>
+
+  <p>
+    <%= f.label :tags %>
+    <br />
+    <%= f.text_field :tag_list, :size => "100" %>
+  </p>
+  <p>
+    <%= f.label :description %>
+    <br />
+    <%= f.text_area :description, :size => "100x20", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :image %>
+    <br />
+    <%= label_tag 'Photo (W: 180px, H: 180px )' %>
+    <%= image_tag @resource.content.url %>
+    <br />
+    <%= f.file_field :content %>
+  </p>
+  <p>
+    <%= f.label :banner_url %>
+    <br />
+    <%= f.text_field :banner_url, :size => "100" %>
+  </p>
+  <p>
+    <%= f.label :banner %>
+    <br />
+    <%= label_tag 'Photo (W: 150px, H: 150px )' %>
+    <%= image_tag @resource.banner.url %>
+    <br />
+    <%= f.file_field :banner %>
+  </p>
+  
+  <p>
+    <%= f.submit :update %>
+  </p>
+  <%#*<p>%>
+  <%#= link_to '<< Back', url_for(:back) %>
+  <%#*</p>%>
+<% end %>

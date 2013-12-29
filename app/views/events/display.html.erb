@@ -1,0 +1,95 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :radar_tab } %>
+
+<% title "#{@event.title}" %>
+
+<div class="admnRitCol">
+
+  <h1>
+    <%= @event.title %>
+  </h1>
+
+  <p>
+    STATE:
+    <strong>
+      <%= @event.state.title.upcase %>
+    </strong>
+  </p>
+
+  <p>
+    INTERNAL:
+    <strong>
+      <%= @event.internal? %>
+    </strong>
+  </p>
+
+  <p>
+    TITLE:
+    <strong>
+      <%= @event.title %>
+    </strong>
+  </p>
+
+  <p>
+    DATE:
+    <strong>
+      <%= @event.event_start_date %>
+    </strong>
+  </p>
+
+  <p>
+    TIME:
+    <strong>
+      <%= @event.event_start_time %>
+    </strong>
+  </p>
+
+  <p>
+    CITY:
+    <strong>
+      <%= @event.city %>
+    </strong>
+  </p>
+
+  <p>
+    GEO STATE:
+    <strong>
+      <%= @event.geo_state %>
+    </strong>
+  </p>
+
+  <p>
+    URL:
+    <strong>
+      <%= link_to @event.url, @event.url %>
+    </strong>
+  </p>
+
+  <p>
+    RSVP:
+    <strong>
+      <%= @event.rsvp %>
+    </strong>
+  </p>
+
+  <p>
+    SUMMARY:
+    <strong>
+      <%= @event.summary %>
+    </strong>
+  </p>
+
+  <p>
+    DESCRIPTION:
+    <strong>
+      <%= @event.description %>
+    </strong>
+  </p>
+
+  <p>
+    PICTURE:
+    <strong>
+      <%= image_tag @event.picture.url, :alt => @event.title %>
+    </strong>
+  </p>
+
+</div>

@@ -1,0 +1,43 @@
+<% unless messages.blank? %>
+    <% messages.each_with_index do |msg, index| %>
+      <div class="feed <%= (index >= display_more_check)  ? 'dispNone' : '' %>">
+        <%if index < display_more_check %>
+      <!--<div class="feed">-->
+        <%= link_to strip_tags(truncate(msg.body, 225)), "JavaScript:void(0);",:class => "feedTitle", :onclick => "show_message_detail(#{msg.id})"%>
+        <div id=<%="follow_"+msg.id.to_s%> >
+          <%=render :partial=>"message_details", :locals=>{:msg=> msg, :topic=>topic}%>
+        </div>
+        <% total_messages = messages.length %>
+        <div class="feedContent <%=((total_messages-1) == index) ? 'borderLess' : ''%>">
+          <%  comments = msg.latest_comments(@current_user) %>
+          <% unless comments.blank? %>
+            <div class="feedImage"><%= comments.count.to_s %></div>
+            <div class="feedDesc">
+              <%latest_comment = helper_most_latest_comment(comments)%>
+              <div id="short_answer_<%= msg.id.to_s %>" class="dispBlock">
+                <%=strip_tags truncate(latest_comment,50) %>
+                <%=link_to '(more)','JavaScript:void(0);',:onclick=>"showMoreTextOfAnswer('#{msg.id.to_s}');" if helper_comment_length_exceeds? latest_comment %>
+              </div>
+              <div id="long_answer_<%= msg.id.to_s %>" class="dispNone">
+                <!--<p class="breakWord">-->
+                  <%=latest_comment %>
+                <!--</p>--><%=link_to '(less)','JavaScript:void(0);',:onclick=>"showLessTextOfAnswer('#{msg.id.to_s}');"%>
+              </div>
+          </div>
+        <%end%>
+      </div>
+      <%end%>
+      </div>
+    <% end %>
+    
+
+
+<%else%>
+  <div class="feedResponse">
+    <% if !topic.blank? %>
+      <h3>No Question available in the Community for topic "<%=Topic.find(topic).name%>"</h3>
+    <%else%>
+      <h3>No Question available in the Community</h3>
+    <%end%>
+  </div>
+<%end%>

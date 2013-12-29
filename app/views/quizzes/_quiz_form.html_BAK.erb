@@ -1,0 +1,70 @@
+<table border="0" cellpadding="0" cellspacing="0" class="quizTbl">
+  <tr><th colspan="4"><h3>Is your Idea Viable?</h3></th></tr>
+  <tr>
+    <th colspan="4" align="left">
+      <h5>
+        Answer the following (<%= @questions.count %>) questions and see if your idea has potential
+      </h5>
+    </th>
+  </tr>
+  <tr>
+    <th width="4%">&nbsp;</th>
+    <th width="82%">
+      <%#*<span id="quiz-error" style="float: left; font-size: 14px; font-weight: normal; color: #FF3636;"></span>%>
+      &nbsp;
+    </th>
+    <th width="8%">Yes</th>
+    <th width="6%">No</th>
+  </tr>
+
+  <% i=0 %>
+<%# for answer in @quiz.answers do %>
+  <% @quiz.answers.each do |answer| %>
+    <tr>
+      <td class="qstnTd" id="<%= "qz-qu-sq-#{i}" %>">
+        <%= answer.question.sequence %>.
+        <%= hidden_field_tag "quiz[answers_attributes][#{i}][question_id]", "#{answer.question_id}" %>
+      </td>
+      <td id="<%= "qz-qu-st-#{i}" %>">
+        <%= answer.question.statement %>
+      </td>
+      <td align="center">
+        <%= radio_button "quiz[answers_attributes][#{i}]", :statement, 'yes' %>
+      </td>
+      <td align="center">
+        <%= radio_button "quiz[answers_attributes][#{i}]", :statement, 'no' %>
+      </td>
+    </tr>
+    <% i+=1 %>
+  <% end %>
+
+  <tr>
+    <td height="15" colspan="4">&nbsp;</td>
+  </tr>
+  <tr>
+    <th colspan="4" align="left">
+      Please provide us your email and we'll send you a copy of your results
+    </th>
+  </tr>
+  <%# unless quiz_form.blank? %>
+    <tr>
+      <td colspan="4" align="left" style="padding-left:0">
+        <%= label_tag :email, "E-mail Address :" %>
+        <%= text_field_tag :email, "", :style => "border:1px solid #666666; width:200px;" %>
+        <%#= quiz_form.label :email, "E-mail Address :" %>
+        <%#= quiz_form.text_field :email, :style => "border:1px solid #666666; width:200px;" %>
+        <%#*<span id="email_error" class="quizErr" style="display:none;">%>
+          <%#*<strong>%>
+            <%#*Please enter a valid email address%>
+          <%#*</strong>%>
+        <%#*</span>%>
+      </td>
+    </tr>
+  <%# end %>
+<%#*<tr>%>
+<%#*<td class="quizFtr" style="border-left:2px solid #fa931d">&nbsp;</td>%>
+<%#*<td colspan="3" align="right" valign="bottom" class="quizFtr">%>
+<%#= image_submit_tag "submit-btn.jpg", :alt => "SUBMIT", :align => "absmiddle" %>
+<%#*<a href="#" class="cnclLnk">Cancel</a></td>%>
+<%#*</tr>%>
+</table>

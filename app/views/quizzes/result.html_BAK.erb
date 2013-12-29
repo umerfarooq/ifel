@@ -1,0 +1,150 @@
+<div id="liteBx-wrapper">
+  <div id="liteBx-Cntainer">
+    <div class="liteBxBdy">
+      <div class="quizBxTtl">
+        <span class="quizLogo">
+          <%= image_tag "quiz-logo.jpg", :alt => "WICKED START" %>
+          <h3>
+            Viability Quiz
+          </h3>
+        </span>
+<%#*<span class="closBtn">%>
+<%#= link_to image_tag("close-btn.jpg", :alt => "close"), "#" %>
+<%#*</span>%>
+      </div>
+
+      <div class="quizCntnt">
+<%#= render "result" %>
+
+        <%- case @quiz.yes_count -%>
+        <%- when 6, 5 -%>
+          <h4>
+            Congratulations!
+          </h4>
+  <%#*<span class="cngrtMsg" style="font-size: 14px; line-height: 17px;">%>
+          <span class="cngrtMsg">
+            <p>
+              Congratulations! You answered "Yes" to
+              <%= (@quiz.yes_count == 6) ? "all six" : "five" %>
+              questions on the quiz, so your idea is viable.
+              <%= (@quiz.yes_count == 6) ? "I believe" : "I think" %>
+              you've given consideration to
+              <%= "most of" if (@quiz.yes_count == 5) %>
+              the key elements necessary for starting a business.
+            </p>
+            <p>
+              Let Wicked Start help you manage the process of starting a business.
+              <%= link_to "Click here", home_path('how_it_works') %>
+              to see How It Works or Sign Up now.
+            </p>
+            <p>&nbsp;</p>
+            <p>
+              <%#= link_to image_tag("sign-up-btn.jpg", :alt => "Sign Up"), signup_path %>
+              <%= link_to image_tag("free-trial-orange.jpg", :alt => "Sign Up For Free Trial"), signup_path %>
+            </p>
+            <p>&nbsp;</p>
+          </span>
+  <%#*<span class="cngrtMsg">%>
+  <%#*</span>%>
+        <%- when 4, 3 -%>
+          <h4>
+            Your idea has potential. . .
+          </h4>
+  <%#*<span class="cngrtMsg" style="font-size: 14px; line-height: 17px;">%>
+          <span class="cngrtMsg">
+            <p>
+              You're idea has potential, so yes, I think you're idea is viable,
+              but you need to
+              <%= "#{@quiz.questions_with_no[0].response_no}#{(@quiz.yes_count == 4) ? " and" : ","}" %>
+              <%= "#{@quiz.questions_with_no[1].response_no}#{"." if (@quiz.yes_count == 4)}" %>
+              <%= "and #{@quiz.questions_with_no[2].response_no}." if @quiz.yes_count == 3 %>
+              You have some more homework to do in scoping out your idea but you're on the right track.
+              <% if @quiz.yes_count == 3 %>
+                Spending more time addressing these issues will help you think about how you
+                can ultimately get your idea off the ground successfully.
+              <% end %>
+            </p>
+            <p>
+              Let Wicked Start help you manage the process of starting a business.
+              <%= link_to "Click here", home_path('how_it_works') %>
+              to see How It Works or Sign Up now.
+            </p>
+            <p>&nbsp;</p>
+            <p>
+              <%#= link_to image_tag("sign-up-btn.jpg", :alt => "Sign Up"), signup_path %>
+              <%= link_to image_tag("free-trial-orange.jpg", :alt => "Sign Up For Free Trial"), signup_path %>
+            </p>
+          </span>
+        <%- when 2, 1 -%>
+          <h4>
+            Your idea may be viable. . .
+          </h4>
+  <%#*<span class="cngrtMsg" style="font-size: 14px; line-height: 17px;">%>
+          <span class="cngrtMsg">
+            <p>
+              You're idea may be viable, however you answered "No" to
+              <%= (@quiz.yes_count == 2) ? "four" : "five" %>
+              of the questions on the quiz. You need to
+              <%= "#{@quiz.questions_with_no[0].response_no}," %>
+              <%= @quiz.questions_with_no[1].response_no %>
+              and
+              <%= "#{@quiz.questions_with_no[2].response_no}." %>
+              You have
+              <%= "some" if @quiz.yes_count == 2 %>
+              homework to do in further developing your idea. Spending more time
+              addressing these issues will help you think about how you can
+              ultimately get your idea off the ground successfully. If you can make
+              progress and ultimately answer "Yes" to at least
+              <%= (@quiz.yes_count == 2) ? "one or two" : "two or three" %>
+              of these issues, your idea has potential.
+            </p>
+            <p>
+              <% if @quiz.yes_count == 2 %>
+                Let Wicked Start help you manage the process of starting a business.
+                <%= link_to "Click here", home_path('how_it_works') %>
+                to see How It Works or Sign Up now.
+              <% else %>
+                If you think you're ready to start your business planning process,
+                let Wicked Start help.
+                <%= link_to "Click here", home_path('how_it_works') %>
+                to see How It Works or Sign Up now.
+              <% end %>
+            </p>
+            <p>&nbsp;</p>
+            <p>
+              <%#= link_to image_tag("sign-up-btn.jpg", :alt => "Sign Up"), signup_path %>
+              <%= link_to image_tag("free-trial-orange.jpg", :alt => "Sign Up For Free Trial"), signup_path %>
+            </p>
+          </span>
+        <%- when 0 -%>
+          <h4>
+            Sorry, you're idea is not viable
+          </h4>
+  <%#*<span class="cngrtMsg" style="font-size: 14px; line-height: 17px;">%>
+          <span class="cngrtMsg">
+            <p>
+              Sorry, you're idea is not viable. You answered "No" to all six questions
+              on the quiz. If you're serious about starting a business, then you've got
+              homework to do. Spending more time addressing these issues will help you
+              think about how you can ultimately get your idea off the ground successfully.
+              Try doing more research and/or changing your assumptions so that you can
+              answer "Yes" to at least three of the quiz questions.
+            </p>
+            <p>
+              When you're ready to start planning a business, you can use
+              Wicked Start to help you get your business off the ground.
+            </p>
+            <p>&nbsp;</p>
+            <p>
+              <%= link_to image_tag("close-quiz-btn.gif", :alt => "Close"), root_path, :onclick => '$.fn.colorbox.close(); return false;' %>
+            </p>
+          </span>
+        <%- end -%>
+
+      </div>
+    </div>
+<%#*<div class="litebxBtm"></div>%>
+  </div>
+  <div class="clear"></div>
+  <p>&nbsp;</p>
+</div>

@@ -1,0 +1,23 @@
+<p>
+  <b>Code:</b>
+  <%=h @registration_code.code %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @registration_code.description %>
+</p>
+
+<p>
+  <b>Valid from:</b>
+  <%=h @registration_code.valid_from %>
+</p>
+
+<p>
+  <b>Valid to:</b>
+  <%=h @registration_code.valid_to %>
+</p>
+
+
+<%= link_to 'Edit', edit_registration_code_path(@registration_code) %> |
+<%= link_to 'Back', registration_codes_path %>

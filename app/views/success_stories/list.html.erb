@@ -1,0 +1,148 @@
+<% content_for :javascripts do %>
+  <%#= javascript_include_tag 'jquery-1.4.2.min' %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var msg_title = '<%= @message_main.title %>';
+      var msg_content = '<%= @message_main.content %>';
+      $("a#message_edit_link").click(function (event){
+        if($("a#message_edit_link").text() == "EDIT") {
+          $("a#message_edit_link").text("CANCEL");
+          $("#marketing_text_message_title").val(msg_title);
+          $("#marketing_text_message_content").val(msg_content);
+          $("div#message_show").hide();
+          $("div#message_edit").show();
+        } else {
+          $("a#message_edit_link").text("EDIT");
+          $("div#message_show").show();
+          $("div#message_edit").hide();
+        }
+        event.preventDefault();
+      });
+    });
+  </script>
+<% end %>
+
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :inspiration_tab } %>
+
+<div class="admnRitCol">
+
+<%#*<h2>%>
+<%#= link_to "Templates", list_template_categories_url, :style => "font-size: 20px" %>
+<%#*|%>
+<%#*Resources%>
+<%#*</h2>%>
+<%#*<br />%>
+<%#*<br />%>
+
+<h4>
+  SUCCESS STORIES GENERAL MESSAGE
+  |
+  <%= link_to "EDIT", edit_marketing_text_message_path(@message_main), :id => "message_edit_link" %>
+</h4>
+<br />
+<div id="message_show">
+  <strong>
+    Title
+  </strong>
+  <h5>
+    <%= @message_main.title %>
+  </h5>
+  <br />
+  <strong>
+    Content
+  </strong>
+  <p>
+    <%= @message_main.content %>
+  </p>
+</div>
+<div id="message_edit" style="display: none">
+  <% form_for @message_main do |f| %>
+    <%= f.label :title %>
+    <br />
+    <%= f.text_field :title %>
+    <br />
+    <%= f.label :content %>
+    <br />
+    <%= f.text_area :content, :size => "100x5" %>
+    <br />
+    <%= f.submit 'Update and Publish' %>
+    <br />
+  <% end %>
+</div>
+<hr />
+<h4>
+  WICKED START SUCCESS STORIES
+  |
+  <%= link_to "Add Success Story", new_success_story_path %>
+</h4>
+<br />
+
+<table cellpadding="5px" style="text-align: left">
+  <tr>
+    <th>
+      Seq
+    </th>
+    <th>
+      Name
+    </th>
+    <th>
+      Title
+    </th>
+    <th>
+      URL
+    </th>
+    <th>
+      STATE
+    </th>
+    <th>
+      AVAILABLE ACTIONS
+    </th>
+  </tr>
+  <% @success_stories.each do |success_story| %>
+    <tr>
+      <td>
+        <%= success_story.sequence_number %>
+      </td>
+      <td>
+        <%= link_to success_story.name, success_story %>
+      </td>
+      <td>
+        <%= success_story.title %>
+      </td>
+      <td>
+        <%= link_to success_story.url.slice(7, success_story.url.length-7), success_story.url, :target => "_blank" unless success_story.url.blank? %>
+      </td>
+      <td>
+        <%= success_story.state.title.upcase %>
+      </td>
+      <td>
+        <% if success_story.state.is_featurified? %>
+          <%= link_to 'EDIT', edit_success_story_path(success_story) %>
+          |
+          <%= link_to 'INACTIVATE', inactivate_success_story_path(success_story) %>
+        <% elsif success_story.state.is_published? %>
+          <%= link_to 'EDIT', edit_success_story_path(success_story) %>
+          |
+          <%= link_to 'FEATURIFY', featurify_success_story_path(success_story) %>
+          |
+          <%= link_to 'INACTIVATE', inactivate_success_story_path(success_story) %>
+        <% elsif success_story.state.is_activated? %>
+          <%= link_to 'EDIT', edit_success_story_path(success_story) %>
+          |
+          <%= link_to 'PUBLISH', publish_success_story_path(success_story) %>
+          |
+          <%= link_to 'INACTIVATE', inactivate_success_story_path(success_story) %>
+        <% else %>
+          <%= link_to 'EDIT', edit_success_story_path(success_story) %>
+          |
+          <%= link_to 'ACTIVATE', activate_success_story_path(success_story) %>
+        <% end %>
+        <%= "| #{link_to 'MOVE-UP', move_up_success_story_path(success_story)}" unless success_story.on_top? %>
+        <%= "| #{link_to 'MOVE-DOWN', move_down_success_story_path(success_story)}" unless success_story.on_bottom? %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+</div>

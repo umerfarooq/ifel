@@ -1,0 +1,54 @@
+<h3>
+  <%=h "Checklist Item: #{@item_template.item_number} - #{@item_template.title}" %>
+<%#= link_to "#{@item_template.item_number} #{@item_template.title}", @item_template %>
+</h3>
+
+<br />
+
+<h4>WICKED START RESOURCES</h4>
+<% form_tag item_template_resourcifications_path(@item_template) do %>
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>
+        TITLE
+      </th>
+      <th>
+        URL
+      </th>
+      <th>
+        STATE
+      </th>
+      <th>
+        ASSOCIATE?
+      </th>
+    </tr>
+    <% @resources.each do |resource| %>
+      <tr>
+        <td>
+          <%= resource.title %>
+        </td>
+        <td>
+          <%= link_to resource.url, resource.url, :target => "_blank" %>
+        </td>
+        <%#*<td>%>
+          <%#= (resource.is_active) ? "Active" : "Inactive" %>
+        <%#*</td>%>
+        <%#*<td>%>
+          <%#= check_box_tag 'resource_ids', resource.id %>
+    <%#= link_to "X" %>
+        <%#*</td>%>
+        <td>
+          <%= resource.state.title.upcase %>
+        </td>
+        <td>
+            <%= check_box_tag 'item_template[resource_ids][]', resource.id, @item_template.resources.include?(resource) %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="3">
+        <%= submit_tag "Update Associations" %>
+      </td>
+    </tr>
+  </table>
+<% end %>

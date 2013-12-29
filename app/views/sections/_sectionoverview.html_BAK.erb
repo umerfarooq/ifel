@@ -1,0 +1,60 @@
+<h6>
+  <%= link_to 'SECTION OVERVIEW >>', section_path(@section, :view => "render_page"), :onclick => "$(this).colorbox()"%>
+  <span class="rightLink">
+    <%= link_to 'ACTION ITEM OVERVIEW >>', project_sections_path(@section.project) , :onclick => "$(this).colorbox()"%>
+  </span>
+</h6>
+<div class="ovrViewTxt">
+  <h3>
+    <%= "#{@section.title}: #{@section.title_comment}" %>
+  </h3>
+  <span class="dedline">
+    <% if @section.due_date.blank? %>
+      <% deadline_date_text = "NOT SET" %>
+      <% deadline_link_text = "SET" %>
+      <% deadline_due_date = Date.today %>
+    <% else %>
+      <% deadline_date_text = ws_date_format(@section.due_date).upcase %>
+      <% deadline_link_text = "EDIT" %>
+      <% deadline_due_date = @section.due_date %>
+    <% end %>
+    DEADLINE:
+    <span id ="span_updated_section_date">
+      <%= deadline_date_text %>
+    </span>
+    |
+    <%= link_to "#{deadline_link_text}", "#", :style => "font-size:11px", :id => "edit_section_date_link" %>
+    <span id="res1234"></span>
+    <span id="span_section_due_date" style="display: none">
+      <% form_for @section, :url => {:action => "update"} do |f| %>
+        <input type="date" name="section[due_date]" id="section_due_date" data-value="<%= deadline_due_date %>" value="<%= ws_date_format(deadline_due_date).upcase %>" style="float: left; margin-right: 3px; margin-top: 3px;" />
+        <%= f.submit 'Update', :class => "globalBtn", :style => "margin-top: 0;float:none;" %>
+      <% end %>
+    </span>
+    <span id="errorExplanation">&nbsp;</span>
+  </span>
+  <h5>
+    <%= link_to "Section Introduction", introduction_section_path(@section), :id => "introduction_link_#{@section.id}", :onclick=>"$(this).colorbox({onCleanup:colorBoxCallback})" %>
+    <% if @section.ended? %>
+      <%= image_tag "icons/good.jpg", :alt => "COMPLETE",:size => "20x20" %>
+    <% else %>
+      <%= image_tag "icons/cancel.jpg", :alt => "INCOMPLETE", :size => "20x20" %>
+    <% end %>
+  </h5>
+  <div class="qstnsArea">
+    <ul class="qstnLst">
+      <% @section.items.each do |item| %>
+        <li>
+          <%= link_to item.title, edit_item_path(item), :id => "item_link_#{item.id}", :onclick => "$(this).colorbox({onCleanup:colorBoxCallback, onComplete:function(){ $('.scrollingDiv').jScrollPane({showArrows:true}); $.fn.colorbox.resize();} })" %>
+          <% if item.ended? %>
+            <%= image_tag "icons/good.jpg", :alt => "COMPLETE" %>
+          <% elsif item.edited? %>
+            <%= image_tag "icons/pending.jpg", :alt => "EDITED" %>
+          <% else %>
+            <%= image_tag "icons/cancel.jpg", :alt => "INCOMPLETE" %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

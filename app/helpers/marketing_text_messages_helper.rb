@@ -1,0 +1,2 @@
+module MarketingTextMessagesHelper
+end

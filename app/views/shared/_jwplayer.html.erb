@@ -1,0 +1,17 @@
+<%
+player_id = options[:player_id] if options[:player_id].present?
+video_file = options[:video_file] if options[:video_file].present?
+image = options[:image] if options[:image].present?
+%>
+<div id= "<%= player_id %>" ></div>
+<script type='text/javascript' src='/jw-player/jwplayer.js'></script>
+<script type='text/javascript'>
+  jwplayer("<%= player_id %>").setup({
+    'flashplayer': 	'/jw-player/player.swf',
+    'width':	'344',
+    'height':	'194',
+    'file': "<%= video_file %>",
+    'image':'<%= image  %>',
+    'icons':false
+  });
+</script>

@@ -1,0 +1,55 @@
+<% content_for :ads do %>
+  <span class="ad1">
+    <%= image_tag "AD - communitynew150px.jpg", :alt => "Community Image" %>
+  </span>
+<% end %>
+
+<div class="lftCol">
+  <div class="lftPnl">
+    <h5>My Messages</h5>
+    <div class="pnlBdy">
+      You have
+      <%#= link_to "#{pluralize(current_user.new_message_count, "new response")}", messages_path(:user => current_user.id) %>
+      <%#= link_to "#{pluralize(current_user.new_message_count, "new response")}", user_messages_path(current_user) if current_user %>
+      to your messages
+      <p class="cmprArea">
+        <%= link_to "Compose Message", new_message_path, :class => "cmpareBtn" if current_user%>
+      </p>
+      <p class="viewMsgLnk">
+        <%#= link_to "View all your messages", messages_path(:user => current_user.id) %>
+        <%= link_to "View all your messages", user_messages_path(current_user) if current_user %>
+      </p>
+    </div>
+  </div>
+  <div class="lftPnl">
+    <h5>Browse Messages</h5>
+    <div class="pnlBdy">
+      <% MessageCategory.published.each do |message_category| %>
+        <%#= link_to (message_category.title) ? message_category.title : 'No Name', messages_path(:category => message_category.id), :class => 'cmntyLnk' %>
+        <%= link_to message_category.title, message_category_messages_path(message_category), :class => 'cmntyLnk' %>
+      <% end %>
+    </div>
+  </div>
+  <div class="lftPnl">
+    <h5>Popular Topics</h5>
+    <div class="pnlBdy">
+      <%# Message.find_all_by_is_appropriate(true, :order => 'view_count DESC', :limit => 5).each do |msg| %>
+      <% Message.appropriate.not_for_admin.limit_popular.view_count_wise.each do |msg| %>
+        <%= link_to msg.title, message_comments_path(msg), :class => "cmntyLnk" %>
+      <% end %>
+      <%#= link_to "More >>", messages_path(:popular => "popular"), :class => "cmntMyoreLnk" %>
+      <%= link_to "More >>", popular_messages_path, :class => "cmntMyoreLnk" %>
+    </div>
+  </div>
+  <% if can? :for_staff, Message %>
+    <div class="lftPnl">
+      <h5>Private Messages</h5>
+      <div class="pnlBdy">
+        <% Message.for_admin.limit_popular.date_wise.each do |msg| %>
+          <%= link_to msg.title, message_comments_path(msg), :class => "cmntyLnk" %>
+        <% end %>
+        <%= link_to "More >>", for_staff_messages_path, :class => "cmntMyoreLnk" %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,22 @@
+<%#= local_assigns.to_xml %>
+<% section = link_duedate %>
+
+<%
+link_html =<<-LINK_HTML
+<span class='alphaSpan'>
+  #{section.sequence_number.to_s}
+</span>
+<span class='prcntgSpan'>
+  <span class='secTtl'>
+    #{section.title}
+  </span>
+  <span id='psdt_deadline_#{section.id}' class='prcntgTxt'>
+    Deadline:
+    #{((section.due_date.blank?)? 'No Date' : section.due_date.strftime("%m/%d/%Y")).to_s}
+  </span>
+</span>
+LINK_HTML
+%>
+
+<%#= link_to link_html, section_path(section, :view => "render_partial"), :class => "prcntgLnk", :id => "section_dt_link_#{section.id}" %>
+<%= link_to link_html, section, :class => "prcntgLnk", :id => "section_dt_link_#{section.id}" %>

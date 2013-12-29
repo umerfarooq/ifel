@@ -1,0 +1,22 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "jquery-ui.css" %>
+<%  end %>
+
+<% content_for :javascripts do %>
+  <%= javascript_include_tag "ws.roadmap" %>
+<%  end %>
+
+<div class="subPageWrapper">
+  <h1>START-UP WORKSPACE</h1>
+  <h2 class="headLine"><%= sanitize helper_get_business_idea @current_user %></h2>
+  <%= render :partial => 'shared/startup_workspace_breadcrumbs', :locals=>{:selected => :roadmap} %>
+  <div class="clear"></div>
+  <div id="roadmap_container">
+    <%if @is_item_detail %>
+      <%= render :partial => 'items/item_detail', :locals=>{:item=>@item_for_detail} %>
+    <%else%>
+      <%= render :partial => 'roadmap' %>
+    <%end%>
+  </div>
+<%#= render :partial => 'section_items' %>
+</div>

@@ -1,0 +1,34 @@
+<div class="error-div">
+  <div class="error404" id="main">
+    <h1>Page Not Found</h1>
+    <p>
+      The page you requested cannot be found, or you are not authorized to view this page.
+      Please double-check the URL (address) you used, or
+      <%= link_to "contact us", new_contact_us_path(:topic => 'page_not_found', :url => request.protocol+request.host+request.request_uri) %>
+      if you feel you have reached this page in error.
+    </p>
+    <p>
+      <strong>
+        Click the “Back” button on your browser or
+        <%= "#{link_to "go to the home page", root_path}." %>
+      </strong>
+    </p>
+      <h3>
+        Are you looking for any of these Wicked Start features?
+      </h3>
+    <% if current_user %>
+      <ul>
+        <%= "<li>#{link_to("STARTING BLOCK", projects_path)}</li>" %>
+        <%= "<li>#{link_to("MY FILES", documents_path)}</li>" %>
+        <%= "<li>#{link_to("COMMUNITY", messages_path)}</li>" %>
+        <%= "<li>#{link_to("RESOURCE CENTER", resource_categories_path)}</li>" %>
+      </ul>
+    <% else %>
+      <ul>
+        <%= "<li>#{link_to("Sign Up", signup_path)}</li>" %>
+        <%= "<li>#{link_to("Login", login_path)}</li>" %>
+        <%= "<li>#{link_to("How It Works", home_path('how_it_works'))}</li>" %>
+      </ul>
+    <% end %>
+  </div>
+</div>

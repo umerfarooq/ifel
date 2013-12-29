@@ -1,0 +1,17 @@
+<div id="level3nav">
+  <ul class="resourcesLinkListing" id="section_list">
+    <%if is_resource_library %>
+      <% section_templates.each do |section| %>
+        <li class="noRightBorder">
+          <%= link_to section.name.to_s, 'JavaScript:void(0);' , :id => "rl_section_#{section.id.to_s}", :onclick=>"loadResourceSectionContent('"+section.id.to_s+"')" %>
+        </li>
+      <%end%>
+    <%else%>
+      <% section_templates.each do |section| %>
+        <li class="noRightBorder">
+          <%= link_to section.name.to_s, 'JavaScript:void(0);' , :id => "sp_section_#{section.id.to_s}", :onclick=>"loadServiceSectionContent('"+section.id.to_s+"')" %>
+        </li>
+      <%end%>
+    <%end%>
+  </ul>
+</div>

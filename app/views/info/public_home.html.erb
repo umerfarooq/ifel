@@ -1,0 +1,75 @@
+<%# if params[:path] == 'exit' %>
+  <%#content_for :javascripts do%>
+    <%#*<script>%>
+      <%#*$(document).ready(function() {%>
+        <%#*$.fn.colorbox({%>
+          <%#*width:"500px",%>
+          <%#*height:"275px",%>
+          <%#*html:"<div id='error-box'><img alt='Alert icon' class='icon master-sprite' src='/images/pixel.gif' /> \n\%>
+                  <%#*<div style='padding:30px 10px 10px 10px;'>\n\%>
+                     <%#*<style>\n\%>
+                          <%#*.alignC{text-align:center;}\n\%>
+                          <%#*.serveyHeading{ margin-top:15px; font-size:16px;color:#333333; font-weight:bold;text-align:center;}\n\%>
+                          <%#*.serveyHeading a{  font-size:16px; text-decoration:none;} \n\%>
+                    <%#*</style>\n\%>
+                    <%#*<p class='alignC'><a href='/' onClick='$.fn.colorbox.close();'><img src='/images/logo.jpg'></a></p>\n\%>
+                      <%#*\n\%>
+                    <%#*<h2 class='serveyHeading'>Do you mind taking a quick survey about<br /> Wicked Start to help us better serve our customers?<br /><br /><a href='/questionnaire'  onClick='$.fn.colorbox.close();' target='_blank'>Click Here</a> to complete the survey.</h2>\n\%>
+                  <%#*</div>\n\%>
+                <%#*</div>"%>
+          <%#*, open:true,onClosed:true});%>
+      <%#*});%>
+    <%#*</script>%>
+  <%#end%>
+<%# end %>
+
+<% title "Learn How to Start a Small Business" %>
+<% meta "WickedStart is your free startup ‘incubator’ to help you start a business. Get a personalized startup checklist, guidance from a community of experts, and resources to plan, structure and fund your idea." %>
+<div id="promo">
+  <%= image_tag "ifel-laptop.png", :alt => "Start A Small Business Startup Software" %>
+  <div class="intro">
+    <h3 class="nyuMessage">
+      Get Going IFEL
+    </h3>
+    <div class="loginForm">
+      <% form_for UserSession.new, :url => user_session_url(:protocol =>'https') do |f| %>
+        <ul>
+          <li>
+            <label>Username</label>
+            <%= f.text_field :login, :title => "username", :class => "defaultText" %>
+          </li>
+          <li>
+            <label>Password</label>
+            <%= f.password_field :password, :title => "password", :class => "defaultText" %>
+          </li>
+          <li class="checkbox">
+            <%= "#{f.check_box(:remember_me, :class => 'checkBx')} #{f.label(:remember_me, "Remember me", :class => "rememberMe")}" %>
+            <%= f.submit "LOGIN", :class => "btn", :name => nil %>
+          </li>
+        </ul>
+      <%end%>
+
+      <div class="clear"></div>
+      <p>Don't have an account? <a href="<%= signup_path %>">Sign up</a> now!</p>
+      <p><a href="<%= forget_passwords_path %>">Forgot your password?</a></p>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+
+<ul class="featuresListing" style="margin-left: 35px;">
+  <% @features.each_with_index do |feature, iterator| %>
+    <% content_tag :li, :class => ((iterator % 5) == 4 )? 'special':'' do %>
+      <%=  image_tag(feature.photo.url(:small), :alt => feature.photo_alt) %>
+    <%#= link_to image_tag(feature.photo.url(:small), :alt => feature.photo_alt), detail_feature_path(feature) %>
+      <h3 class="headerLink">
+        <%= feature.name %>
+        <%#= link_to feature.name, detail_feature_path(feature) %>
+      </h3>
+      <p>
+        <%= truncate(strip_tags(feature.description), :length => FEATURE_SUMMARY_LENGTH) %>
+      </p>
+    <% end %>
+  <% end %>
+</ul>
+<div class="clear"></div>

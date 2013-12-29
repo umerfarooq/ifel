@@ -1,0 +1,19 @@
+<h1>Edit Post Message Content</h1>
+
+<% form_remote_for @marketing_text_message, :url=>{:action=>"update_post_message_content" } do |f| %>
+  <%= f.error_messages %>
+  <%= hidden_field_tag "back", @back %>
+  <p>
+    <%= f.label :title %>
+    <br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :content %>
+    <br />
+    <%= f.text_area :content%>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>

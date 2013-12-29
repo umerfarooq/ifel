@@ -1,0 +1,9 @@
+<div class="ratingContainer">
+  <div class="rating">
+  </div>
+  <%if resource.likes_count ==0%>
+    <div class="ratingOver" style="width:0%;"></div>
+  <%else%>
+    <div class="ratingOver" style="width:<%=resource.likes_percentage.to_s.concat("%")%>;"></div>
+  <%end%>
+</div>

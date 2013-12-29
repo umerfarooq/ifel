@@ -1,0 +1,8 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :radar_tab } %>
+
+<% title "Edit Promotion" %>
+
+<div class="admnRitCol">
+  <h1>Edit Promotion</h1>
+  <%= render :partial => 'form', :locals => {:promotion => @promotion} %>
+</div>

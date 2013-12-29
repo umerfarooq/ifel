@@ -1,0 +1,123 @@
+<%#*<script type="text/javascript">%>
+  <%#*function changeProgressBarColor()%>
+  <%#*{%>
+    <%#*alert("hello world");%>
+  <%#*}%>
+<%#*</script>%>
+
+<h6><%=  link_to "SHOW DUE DATES", "#" ,:id => "show_due_dates_link" %> >></h6>
+<div class="lftPrcntg">
+  <% @project.sections.each do |sect| %>
+  <% percent = ((sect.items_completed_count.to_f/sect.item_count.to_f)*100) %>
+    <%  if percent >= 100 %>
+      <% prcntgBarClass = "pComplete" %>
+      <% prcntgBarTextClass = "pcontTxt" %>
+    <% elsif(percent > 14) %>
+      <% prcntgBarClass = "pcont" %>
+      <% prcntgBarTextClass = "pcontTxt" %>
+    <% elsif(percent > 9) %>
+      <% prcntgBarClass = "pcont" %>
+      <% prcntgBarTextClass = "min2PcontTxt" %>
+    <%# elsif(percent > 0) %>
+    <% else %>
+      <% prcntgBarClass = "pcont" %>
+      <% prcntgBarTextClass = "min1PcontTxt" %>
+    <% end  %>
+    <%=  link_to "<span class='alphaSpan'>"+sect.name+"</span>
+  <span class='prcntgSpan'>
+  <span class='prcntgBar'>
+  <span class='" + prcntgBarClass + "' style='width:"+((sect.items_completed_count.to_f/sect.item_count.to_f)*100).to_s+"%;'>
+  <strong class='" + prcntgBarTextClass + "' >"+((sect.items_completed_count.to_f/sect.item_count.to_f)*100).round.to_s+"%</strong>
+  </span>
+  </span>
+  <span class='prcntgTxt'><strong>"+((sect.items_completed_count)?sect.items_completed_count : '').to_s+"</strong> out of <strong>"+((sect.item_count)?sect.item_count : '').to_s+"</strong> items completed</span>
+  </span>", section_path(sect, :view => "render_partial"), :class=>"prcntgLnk", :id=>"section_pb_link_"+sect.id.to_s %>
+  <%end%>
+</div>
+
+<%#*</span>", sect, :class=>"prcntgLnk", :id=>"section_link_#{sect.id}" %>
+
+
+<%#*<h6>%>
+<%#=  link_to "SHOW DUE DATES", "#" ,:id => "show_due_dates",:onclick=>"show_sections_dates();" %>
+  <%#*>></h6>%>
+<%#*<div class="lftPrcntg">%>
+  <%# @project.sections.each do |sect| %>
+    <%#=  link_to "<span class='alphaSpan'>"+sect.name+"</span>
+  <span class='prcntgSpan'>
+  <span class='prcntgBar'>
+  <span class='pcont' style='width:"+((sect.items_completed_count.to_f/sect.item_count.to_f)*100).to_s+"%;'>
+  <strong>"+((sect.items_completed_count.to_f/sect.item_count.to_f)*100).round.to_s+"%</strong>
+  </span>
+  </span>
+  <span class='prcntgTxt'><strong>"+((sect.items_completed_count)?sect.items_completed_count : '').to_s+"</strong> out of <strong>"+((sect.item_count)?sect.item_count : '').to_s+"</strong> items completed</span>
+  </span>", "#",  :class=>"prcntgLnk", :id=>sect.id.to_s,:onclick=>"show_section_overview(#{sect.id})"%>
+  <%#end%>
+<%#*</div>%>
+
+    <%#=  link_to "<span class='alphaSpan'>"+sect.name+"</span>
+  <span class='prcntgSpan'>
+  <span class='prcntgBar'>
+  <span class='pcont' style='width:"+((sect.items_completed_count.to_f/sect.item_count.to_f)*100).to_s+"%;'>
+  <strong>"+((sect.items_completed_count.to_f/sect.item_count.to_f)*100).to_s+"%</strong>
+  </span>
+  </span>
+  <span class='prcntgTxt'><strong>"+((sect.items_completed_count)?sect.items_completed_count : '').to_s+"</strong> out of <strong>"+((sect.item_count)?sect.item_count : '').to_s+"</strong> items completed</span>
+  </span>", "#",  :class=>"prcntgLnk", :id=>sect.id.to_s,:onclick=>"show_section_overview(#{sect.id})"%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <%#  if ((sect.items_completed_count.to_f/sect.item_count.to_f)*100) == 100 %>
+      <%#=  link_to "<span class='alphaSpan'>"+sect.name+"</span>
+      <span class='prcntgSpan'>
+      <span class='prcntgBar'>
+      <span class='pComplete' style='width:"+((sect.items_completed_count.to_f/sect.item_count.to_f)*100).to_s+"%;'>
+      <strong class='pcontTxt' >"+((sect.items_completed_count.to_f/sect.item_count.to_f)*100).round.to_s+"%</strong>
+      </span>
+      </span>
+      <span class='prcntgTxt'><strong>"+((sect.items_completed_count)?sect.items_completed_count : '').to_s+"</strong> out of <strong>"+((sect.item_count)?sect.item_count : '').to_s+"</strong> items completed</span>
+      </span>", section_path(sect, :view => "render_partial"), :class=>"prcntgLnk", :id=>"section_pb_link_"+sect.id.to_s %>
+    <%#elsif ((sect.items_completed_count.to_f/sect.item_count.to_f)*100) == 0%>
+      <%#=  link_to "<span class='alphaSpan'>"+sect.name+"</span>
+      <span class='prcntgSpan'>
+      <span class='prcntgBar'>
+      <span class='pcont' style='width:"+((sect.items_completed_count.to_f/sect.item_count.to_f)*100).to_s+"%;'>
+      <strong class='prePcontTxt' >"+((sect.items_completed_count.to_f/sect.item_count.to_f)*100).round.to_s+"%</strong>
+      </span>
+      </span>
+      <span class='prcntgTxt'><strong>"+((sect.items_completed_count)?sect.items_completed_count : '').to_s+"</strong> out of <strong>"+((sect.item_count)?sect.item_count : '').to_s+"</strong> items completed</span>
+      </span>", section_path(sect, :view => "render_partial"), :class=>"prcntgLnk", :id=>"section_pb_link_"+sect.id.to_s %>
+    <%#else %>
+      <%#=  link_to "<span class='alphaSpan'>"+sect.name+"</span>
+      <span class='prcntgSpan'>
+      <span class='prcntgBar'>
+      <span class='pcont' style='width:"+((sect.items_completed_count.to_f/sect.item_count.to_f)*100).to_s+"%;'>
+      <strong class='pcontTxt' >"+((sect.items_completed_count.to_f/sect.item_count.to_f)*100).round.to_s+"%</strong>
+      </span>
+      </span>
+      <span class='prcntgTxt'><strong>"+((sect.items_completed_count)?sect.items_completed_count : '').to_s+"</strong> out of <strong>"+((sect.item_count)?sect.item_count : '').to_s+"</strong> items completed</span>
+      </span>", section_path(sect, :view => "render_partial"), :class=>"prcntgLnk", :id=>"section_pb_link_"+sect.id.to_s %>
+    <%#end%>
+
+

@@ -1,0 +1,166 @@
+<%= stylesheet_link_tag 'share_box'  %>
+<script>
+  $(document).ready(function(){
+    $(".mentorEmail").click(function(){
+      $this = $(this);
+      if ($("#emailMentorPanel").is(':hidden'))
+        $("#emailMentorPanel").fadeIn('slow');
+      else{
+        $("#emailMentorPanel").fadeOut('slow');
+      }
+      return false;
+    });
+    $('#emailMentorPanel').click(function(e) {e.stopPropagation();});
+    $(document).click(function() {
+      resetAllFields();
+      $('#emailMentorPanel').fadeOut('slow');
+    });
+  });
+  
+  function sendEmailToMentor(path){
+    var to = $('#email_to').attr('value');
+    var subject = $('#email_subject').attr('value');
+    var body = $('#email_body').attr('value');
+    var token = $("input[name=authenticity_token]").attr("value");
+    if(jQuery.trim(to).length > 0 && jQuery.trim(subject).length > 0 && jQuery.trim(body).length > 0 ){
+      var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+      //if(emailReg.test(to)) {
+      $.ajax({
+        type: "POST",
+        url: path,
+        data: {
+          "to":to,
+          "subject":subject,
+          "body":body,
+          "authenticity_token":token
+        },
+        success: function(data){
+          if(data.success){
+            resetAllFields();
+            $("#emailMentorPanel").hide();
+          }else{
+            $('#notice').text("Email can't be send, due to system problem");
+          }
+        },
+        dataType:'json'
+      });
+
+      //}else {
+      //  $('#notice').text("Please enter a valid email address");
+      //}
+    } else {
+      $('#notice').text("Please complete all fields");
+    }
+    return false;
+  }
+  function resetAllFields(){
+    //$('#email_to').val('');
+    $('#email_subject').val('');
+    $('#email_body').val('');
+  }
+  function closeEmailBox(){
+    $("#emailMentorPanel").fadeOut('slow');
+  }
+</script>
+
+
+<div class="subPageWrapper">
+  <h1>MY MENTOR</h1>
+  <h2 class="headLine marginBtm"><%= sanitize current_user.business_idea %></h2>
+  <%= render :partial=>'shared/startup_workspace_breadcrumbs', :locals=>{:selected => :mentor} %>
+  <div class="clear"></div>
+  <%if @mentor%>
+    <h3 class="marginTop10" >
+      <div class="floatL">
+        Basic Information
+      </div>
+    </h3>
+    <div class="clear"></div>
+    <table class="floatR" style="margin-right: 100px;">
+      <tr>
+        <td>
+          <%= image_tag((@mentor.picture.exists?(:normal)) ? @mentor.picture.url(:normal) : 'no-image.png' ) %>
+        </td>
+      </tr>
+    </table>
+    <table style="margin-top: 20px; margin-bottom: 20px;" width="600px">
+      <tr>
+        <td>
+          <strong>Name</strong>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= @mentor.name %>
+        </td>   
+      </tr>
+      <tr>
+        <td>
+          <strong>Bio</strong>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= (@mentor.bio.blank?) ? 'N/A' : truncate(sanitize(@mentor.bio), 400) %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Areas of Expertise</strong>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <% industries =  @mentor.industries%>
+          <% industries.each do |industry| %>
+            <%= (industries.last == industry) ? industry.title : "#{industry.title}, "  %>
+          <%end%>
+        </td>
+      </tr>
+    </table>
+    <h3>
+      <div class="floatL">
+        Contact Information
+      </div>
+    </h3>
+    <div class="clear"></div>
+    <table style="margin-top: 20px; margin-bottom: 20px;">
+      <tr>
+        <td>
+          <strong>Email</strong>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= link_to @mentor.email, "JavaScript:void(0);", :class=>'mentorEmail' %>
+          <div id="emailMentorPanel">
+            <%= render :partial => 'email_popup' %>
+          </div>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Skype</strong>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= (@mentor.skype_name.blank?) ? 'N/A' : @mentor.skype_name %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Phone Number</strong>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= (@mentor.phone_number.blank?) ? 'N/A' : @mentor.phone_number %>
+        </td>
+      </tr>
+    </table> 
+  <%else%>
+    <h3 class="marginTop10">You have not been assigned a mentor yet</h3>
+  <%end%>
+</div>

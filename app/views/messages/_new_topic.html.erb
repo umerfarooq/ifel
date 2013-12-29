@@ -1,0 +1,21 @@
+<% form_tag  '/topics/create_orphan_topic', :id=>'new_topic', :method=>:post  do %>
+  <fieldset>
+    <legend>New Topic</legend>
+    <label style="font-weight: normal; margin-top: 5px;">New Topic shall be passed to Admin for Confirmation</label>
+    <table style="width:100%;">
+      <tr>
+        <td style="text-align: center;padding-top: 5px; font-weight: normal;">
+          <label id="notice" style="color: red;"></label>
+        </td>
+      </tr>
+      <tr>
+        <td><%= text_field_tag 'topic[name]','', :name => ' Name', :class => "defaultText", :size => '30', :maxlength => 25,:title => 'Topic Title' %></td>
+      </tr>
+      <tr>
+        <td>
+          <%= submit_tag 'Submit', :class => "submit" %>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+<% end %>

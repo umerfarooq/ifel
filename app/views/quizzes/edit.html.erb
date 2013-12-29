@@ -1,0 +1,86 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :quizzes_tab } %>
+
+<%# javascript("nicEdit") %>
+<%# content_for :javascripts do %>
+  <script type="text/javascript">
+    //$(document).ready(function (){
+    //  sub_text_edit_area = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('quiz_sub_text');
+    //  main_text_edit_area = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('quiz_main_text');
+    //});
+  </script>
+<%# end %>
+
+<% title "#{@quiz.main_title}?" %>
+
+<h1>
+  <%= @quiz.main_title %>
+</h1>
+
+<p>
+  NAME:
+  <strong>
+    <%= @quiz.name %>
+  </strong>
+</p>
+
+<p>
+  PATH:
+  <strong>
+    <%= @quiz.path %>
+  </strong>
+</p>
+
+<p>
+  URL:
+  <strong>
+    <%= quiz_reply_for_url(@quiz.path) %>
+  </strong>
+</p>
+
+<% form_for @quiz, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.label :main_title %>
+    <br />
+    <%= f.text_field :main_title, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :sub_title %>
+    <br />
+    <%= f.text_field :sub_title, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :main_text %>
+    <br />
+    <%= f.text_area :main_text, :size => "100x10", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :sub_text %>
+    <br />
+    <%= f.text_area :sub_text, :size => "100x10", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :field_label %>
+    <br />
+    <%= f.text_field :field_label, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :email_subject %>
+    <br />
+    <%= f.text_field :email_subject, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :email_quiz_name %>
+    <br />
+    <%= f.text_field :email_quiz_name, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :picture %>
+    <%= image_tag @quiz.picture.url, :alt => @quiz.main_title unless @quiz.picture.blank? %>
+    <br />
+    <%= f.file_field :picture %>
+  </p>
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>

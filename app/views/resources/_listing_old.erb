@@ -1,0 +1,62 @@
+<script>
+  function view_all_tags(){
+    $(".li_all_tags").removeClass('dispNone').addClass('dispBlock');
+    //
+    $("#view_more_tags").hide();
+  }
+</script>
+<% section_template_id = section_template.nil? ? nil : section_template.id%>
+<div class="tagSorterWrapper">
+  <%if is_resource_library %>
+    <div class="submit-resource">
+      <%= link_to image_tag("theme/sub-res-btn.png"), "JavaScript:void(0);", :title => "Submit Resource", :id => "btnSubmitResource", :class=>"floatL" %>
+      <div id="submitResourcePanel">
+        <%= render :partial => "submit_resource_popup" %>
+      </div>
+      <div id="sentConfirmPanel" class="submitResourceConfirm" style="display: none;">
+        THANK YOU, YOUR REQUEST HAS BEEN SENT!
+      </div>
+    </div>
+  <%end%>
+  <h2>Tag Sorter</h2>
+  <p>Select a tag below to sort our resource listings.</p>
+  <% render_resource = (is_resource_library==true) ? 'true' : 'false' %>
+  <% if is_section_selected %>
+    <label><%= radio_button_tag('radio', 'value', true) %>Sort current category</label>
+    <label><%= radio_button_tag('radio', 'value', false, options = {:onclick => "sortingPanel('#{render_resource}')"}) %>Sort all categories</label>
+  <%else%>
+    <label><%= radio_button_tag('radio', 'value', false, options = {:onclick => "sortingPanel('#{render_resource}')"}) %>Sort current category</label>
+    <label><%= radio_button_tag('radio', 'value', true) %>Sort all categories</label>
+  <%end%>
+  <div class="topTenTags" id="topTenTags">
+    <ul id="list">
+      <!--<%#unless top_ten_tags.blank? %>
+        <li><strong><%#="Top #{top_ten_tags.length} Tags"%></strong><span></span></li>
+<%# top_ten_tags.each do |tags| %>
+          <li><%#= link_to tags.name.to_s.split(' ').map {|w| (w.capitalize if (w!='a' && w!='an' && w!='is' && w!='and' && w!='am') ) }.join(' '), 'JavaScript:void(0);' , :id => "rl_tags_#{tags.id.to_s}", :onclick=>"loadTags('#{tags.id}', '#{section_template_id}', '#{render_resource}', true)" %><span><%#= tags.no_of_tags %></span></li>
+<%#end%>
+<%#end%>
+      <div class="clear"></div>
+<%#unless top_ten_categories.blank? %>
+        <li><strong><%#="Top #{top_ten_categories.length} Types"%></strong><span><%#=@total_count %></span></li>
+<%# top_ten_categories.each do |types| %>
+          <li><%#= link_to types.title.to_s.split(' ').map {|w| (w.capitalize if (w!='a' && w!='an' && w!='is' && w!='and' && w!='am') ) }.join(' '), 'JavaScript:void(0);' , :id => "rl_category_#{types.id.to_s}", :onclick=>"loadRightCategoryContent('#{types.id}', '#{section_template_id}')" %><span><%#= types.no_of_resources_in_a_month %></span></li>
+<%#end%>
+<%#end%>-->
+      <div class="clear"></div>
+
+      <%unless all_tags.blank? %>
+        <li><strong>All Tags</strong><span></span></li>
+        <% all_tags.each_with_index do |tags, index| %>
+          <li class="li_all_tags <%= (index <= 50)  ? 'dispBlock' : 'dispNone' %>"><%= link_to tags.name.split(' ').map {|w| (w.capitalize if (w!='a' && w!='an' && w!='is' && w!='and' && w!='am') ) }.join(' '), 'JavaScript:void(0);' , :id => "rl_tags_#{tags.id.to_s}", :onclick=>"loadTags('#{tags.id}', '#{section_template_id}', '#{render_resource}', false)" %><span><%= tags.no_of_tags %></span></li>
+
+        <%end%>
+        <%if all_tags.length > 50%>
+          <%=link_to "[view more]", "JavaScript:void(0);", :id=>"view_more_tags",:onclick=>"view_all_tags()"%>
+        <%end%>
+      <%end%>
+      <div class="clear"></div>
+    </ul>
+  </div>
+</div>
+

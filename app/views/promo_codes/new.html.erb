@@ -1,0 +1,37 @@
+<% form_for @promo_code do |promo_code| %>
+  <%= promo_code.error_messages :header_message => nil, :message => nil %> <br />
+  <%= promo_code.label :code, 'Enter Promotional Code' %>
+  <%= promo_code.text_field :code, :class=>"gtTxtFld"%> <br/>
+
+  <%= promo_code.label :organization %>
+  <%= promo_code.text_field :organization, :class=>"gtTxtFld"%> <br/>
+
+  <%= promo_code.label :registration_fee %>
+  <%= promo_code.text_field :registration_fee, :class=>"gtTxtFld"%> <br/>
+
+  <%= promo_code.label :recurring_fee %>
+  <%= promo_code.text_field :recurring_fee, :class=>"gtTxtFld"%> <br/>
+
+  <%= promo_code.label :day_begins %>
+  <%= promo_code.text_field :day_begins, :class=>"gtTxtFld"%> <br/>
+
+  <%= promo_code.label :month_begins %>
+  <%= promo_code.text_field :month_begins, :class=>"gtTxtFld"%> <br/>
+
+  <%= promo_code.label :register_limit %>
+  <%= promo_code.text_field :register_limit, :class=>"gtTxtFld"%> <br/>
+
+  <%= promo_code.label :expire_date %>
+  <%= promo_code.date_select :expire_date ,:class=>"gtTxtFld", :include_blank=> true ,:order => [:day, :month, :year]  %> <br/>
+
+  <%= promo_code.label :delayed_billing %>
+  <%= promo_code.check_box :delayed_billing %> <br/>
+
+  <%= promo_code.label :status, 'Active/InActive' %>
+  <%= promo_code.check_box :status , :value => true %> <br/>
+
+  <%#= promo_code.check_box :is_expired, :hidden => true %> <br/>
+
+  <br />
+  <%= submit_tag 'Create' %>
+<% end %>

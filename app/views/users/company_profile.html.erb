@@ -1,0 +1,169 @@
+<div class="subPageWrapper">
+  <h1>START-UP WORKSPACE</h1>
+  <h2 class="headLine"><%= sanitize (@user.company.name.blank?)?'Company 1':@user.company.name %></h2>
+  <%= render :partial => 'shared/startup_workspace_breadcrumbs', :locals=>{:selected => :company_profile} %>
+  <div class="clear"></div>
+  <h2 class="leadInText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet elit in erat congue fermentum. Curabitur dignissim sagittis erat, nec aliquet urna tempus eu. Aenean euismod, neque non sollicitudin commodo, quam enim pretium nibh, nec consectetur leo tellus ac ante. Nam id fermentum quam. Aliquam id posuere sem. Vivamus vel ante vulputate nunc congue tincidunt eget non dui.</h2>
+  <div class="sep"></div>
+  <div class="clear"></div>
+  <div class="identityDv">
+    <div class="colLeft">
+      <h3 class="header">IDENTITY <a href="#"><img alt="" src="images/info-icon.png"></a></h3>
+      <p> Logo <br></p>
+      <p><img alt="" src="images/double-take.jpg"></p>
+    </div>
+    <div class="colLeft">
+      <h3 class="header">&nbsp;</h3>
+      <p> Logo <br><a href="#"><img alt="" src="images/upload-btn.png"></a></p>
+      <p><img alt="" src="images/logo-mark-icon.jpg"></p>
+    </div>
+  </div>
+  <% form_for @user, :url =>"/company_profile", :method=>:POST do |f| %>
+    <div class="identityDv">
+      <div class="colLeft">
+        <h3 class="header">GENERAL INFORMATION <a href="#"><img alt="" src="images/info-icon.png"></a></h3>
+        <table width="100%" cellspacing="0" cellpadding="0" border="1" class="test">
+          <tbody><tr>
+              <td colspan="2">Comapny Name <span>*</span></td>
+            </tr>
+            <tr>
+              <td colspan="2"><input name="company_name" type="text" value="<%=@company.name%>" class="text1"><span style="position: absolute; padding: 0px; margin: 0px; font-family: Lucida Grande; font-size: 11px; font-weight: 400; color: rgb(191, 191, 191); width: 300px; cursor: text; background-color: rgb(255, 255, 255); top: 5px; left: 5px;" class="default"></span></td>
+            </tr>
+            <tr>
+              <td colspan="2">Industry <span>*</span></td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <%= collection_select(@user,:industry_id, Industry.published, :id, :title, {:prompt => true}) %>
+              </td>
+            </tr>
+            <tr>
+              <td width="36%">Start Date</td>
+              <td width="64%">Launch Date</td>
+            </tr>
+            <tr>
+              <td><input type="text" class="text2"> <a href="#"><img alt="" src="images/calender-icon.png"></a><span style="position: absolute; padding: 0px; margin: 0px; font-family: Lucida Grande; font-size: 11px; font-weight: 400; color: rgb(191, 191, 191); width: 119px; cursor: text; background-color: rgb(255, 255, 255); top: 8px; left: 5px;" class="default"></span></td>
+              <td><input type="text" class="text2"> <a href="#"><img alt="" src="images/calender-icon.png"></a><span style="position: absolute; padding: 0px; margin: 0px; font-family: Lucida Grande; font-size: 11px; font-weight: 400; color: rgb(191, 191, 191); width: 119px; cursor: text; background-color: rgb(255, 255, 255); top: 8px; left: 5px;" class="default"></span></td>
+            </tr>
+            <tr>
+              <td colspan="2">Website</td>
+            </tr>
+            <tr>
+              <td colspan="2"><input name="company_website" type="text" value="<%=@user.company.website%>"<span style="position: absolute; padding: 0px; margin: 0px; font-family: Lucida Grande; font-size: 11px; font-weight: 400; color: rgb(191, 191, 191); width: 300px; cursor: text; background-color: rgb(255, 255, 255); top: 5px; left: 5px;" class="default"></span></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="2"><span>*</span> = Required Fields</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="colLeft">
+        <h3 class="header">CONTACT INFORMATION <a href="#"><img alt="" src="images/info-icon.png"></a></h3>
+        <table width="100%" cellspacing="0" cellpadding="0" border="1">
+          <tbody><tr>
+              <td colspan="2">Address</td>
+            </tr>
+            <tr>
+              <td colspan="2"><input name="company_address" type="text" value="<%=@company.address%>"></input><span style="position: absolute; padding: 0px; margin: 0px; font-family: Lucida Grande; font-size: 11px; font-weight: 400; color: rgb(191, 191, 191); width: 300px; cursor: text; background-color: rgb(255, 255, 255); top: 5px; left: 5px;" class="default"></span></td>
+            </tr>
+            <tr>
+              <td colspan="2">Suite</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <input name="company_suite" type="text" value="<%=@company.suite%>"></input>
+                       <span style="position: absolute; padding: 0px; margin: 0px; font-family: Lucida Grande; font-size: 11px; font-weight: 400; color: rgb(191, 191, 191); width: 300px; cursor: text; background-color: rgb(255, 255, 255); top: 5px; left: 5px;" class="default"></span></td>
+            </tr>
+            <tr>
+              <td colspan="2">City</td>
+            </tr>
+            <tr>
+              <td colspan="2"><input name="company_city" type="text" value="<%=@company.city%>"></input><span style="position: absolute; padding: 0px; margin: 0px; font-family: Lucida Grande; font-size: 11px; font-weight: 400; color: rgb(191, 191, 191); width: 300px; cursor: text; background-color: rgb(255, 255, 255); top: 5px; left: 5px;" class="default"></span></td>
+            </tr>
+            <tr>
+              <td width="24%">State</td>
+              <td width="76%">ZIP</td>
+            </tr>
+            <tr>
+              <td><input name="company_state" type="text" value="<%=@company.state%>"></input><span style="position: absolute; padding: 0px; margin: 0px; font-family: Lucida Grande; font-size: 11px; font-weight: 400; color: rgb(191, 191, 191); width: 145px; cursor: text; background-color: rgb(255, 255, 255); top: 5px; left: 5px;" class="default"></span></td>
+              <td><input name="company_zip" type="text" value="<%=@company.zip%>"></input><span style="position: absolute; padding: 0px; margin: 0px; font-family: Lucida Grande; font-size: 11px; font-weight: 400; color: rgb(191, 191, 191); width: 145px; cursor: text; background-color: rgb(255, 255, 255); top: 5px; left: 5px;" class="default"></span></td>
+            </tr>
+            <tr>
+              <td colspan="2">Phone</td>
+            </tr>
+            <tr>
+              <td colspan="2"><input name="company_phone" type="text" value="<%=@company.phone%>"></input><span style="position: absolute; padding: 0px; margin: 0px; font-family: Lucida Grande; font-size: 11px; font-weight: 400; color: rgb(191, 191, 191); width: 300px; cursor: text; background-color: rgb(255, 255, 255); top: 5px; left: 5px; display: block;" class="default"></span></td>
+            </tr>
+            <tr>
+              <td colspan="2">Fax</td>
+            </tr>
+            <tr>
+              <td colspan="2"><input name="company_fax" type="text" value="<%=@company.fax%>"></input><span style="position: absolute; padding: 0px; margin: 0px; font-family: Lucida Grande; font-size: 11px; font-weight: 400; color: rgb(191, 191, 191); width: 300px; cursor: text; background-color: rgb(255, 255, 255); top: 5px; left: 5px; display: block;" class="default"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="identityDv noBorder">
+      <div class="colLeft width100">
+        <h3 class="header">SUMMARY <a href="#"><img alt="" src="images/info-icon.png"></a></h3>
+        <table width="100%" cellspacing="0" cellpadding="0" border="1" class="test">
+          <tbody><tr>
+              <td colspan="2">Company Overview (Short/400 characters or less) <span>*</span></td>
+            </tr>
+            <tr>
+              <td width="69%"><textarea></textarea></td>
+              <td width="31%" valign="top">
+                <ul class="summaryList">
+                  <li><a href="#">Overview (Short) Example (Retail)</a></li>
+                  <li><a href="#">Overview (Short) Example (Consumer)</a></li>
+                  <li><a href="#">Overview (Short) Example (Business)</a></li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">Company Overview (Long) <span>*</span></td>
+            </tr>
+            <tr>
+              <td><textarea></textarea></td>
+              <td>
+                <ul class="summaryList">
+                  <li><a href="#">Overview (Long) Example (Retail)</a></li>
+                  <li><a href="#">Overview (Long) Example (Consumer)</a></li>
+                  <li><a href="#">Overview (Long) Example (Business)</a></li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2"><span>*</span> = Required Fields</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="toolTip">
+          <div class="tipText">
+            <h2>General Information</h2>
+            <p>This information will be used in several areas in developing your personalized Start-Up Road Map from ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet elit in erat congue fermentum. Curabitur dignissim sagittis erat.</p>
+          </div>
+          <div class="tipBottom"></div>
+        </div>
+      </div>
+    </div>
+    <input type="submit" value="Save"></input>
+  <%end%>
+</div>

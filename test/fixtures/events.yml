@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  event_date: 2010-12-13
+  event_time: 2010-12-13 18:36:56
+  city: MyString
+  state: MyString
+  url: MyString
+  is_internal: false
+  description: MyText
+
+two:
+  title: MyString
+  event_date: 2010-12-13
+  event_time: 2010-12-13 18:36:56
+  city: MyString
+  state: MyString
+  url: MyString
+  is_internal: false
+  description: MyText

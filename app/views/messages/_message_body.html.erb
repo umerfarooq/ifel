@@ -1,0 +1,8 @@
+<%= image_tag (message.user.profile_picture.exists?(:profile)) ? message.user.profile_picture.url(:profile) : '/images/no-image-small.jpg' %>
+  <h2>
+  <%=  message.body %>
+
+  <% if appropriate_user_for_message?(message, @current_user) %>
+    <%= link_to " Edit", "JavaScript:void(0);",:onclick=>"edit_message()" %>
+  <%  end %>
+</h2>

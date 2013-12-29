@@ -1,0 +1,51 @@
+<% title "Demo WickedStart.com & Discover How Easy It Now Is To Start A Small Business" %>
+<% meta "See how easy it now is to start a small business with the help of WickedStart.com. Watch the Demo and see for yourself." %>
+<%content_for :javascripts do%>
+  <%= javascript_include_tag 'features' %>
+<%end%>
+<div class="subPageWrapper">
+  <%= render :partial=>'shared/register_badge' %>
+  <h1>Features</h1>
+  <%= render :partial => "shared/features_breadcrumbs", :locals => {:current => :detail_features} %>
+  <div class="clear"></div>
+  <h2 class="headLine">Start a Small Business: Prepare for Takeoff!</h2>
+  <h2 class="leadInText">Wicked Start helps you start a small business with confidence and ease. Launch & Succeed! <%= link_to image_tag('see-how-it-works.jpg'), flvplayer_features_path(:video_path => @how_it_works.url_for_video_player, :width => '590', :height => '479'), :onclick => "$(this).colorbox()" %></h2>
+
+  <div class="sep"></div>
+  <div id="sideBarLeftFeatures">
+
+    <ul class="tourLinkListing noMinHeight">
+      <% @features.each do |feature| %>
+        <li class="<%= (feature == @selected_feature) ? 'noRightBorder' : '' %>">
+          <%= link_to feature.name, detail_feature_path(feature), :class => ("current" if(feature == @selected_feature)) %>
+        </li>
+      <% end %>
+    </ul>
+    <!--<div class="wsGo">
+      <div class="wsGoImage"></div>
+      <div class="wsGoDetail">
+        <h2>Wicked Start on the Go</h2>
+        <p>Nulla tempus massa non velit dictum cons. Nullam est dui, mntum in bibendum mattis, vulputate in ipsum.</p>
+        <a href="#"><img src="/images/download-wickedstart-whitepaper-starting-a-small-business.jpg" alt="Download WickedStart Whitepaper" /></a>
+      </div>
+    </div>-->
+  </div>
+
+  <div id="divSubFeature">
+    <% unless @first_child.blank? %>
+      <%= render :partial => "feature", :locals => {:child => @first_child, :parent => @selected_feature} %>
+    <% end %>
+  </div>
+</div> <!-- End of Sub page Wrapper -->
+<div class="clear"></div>
+<div id="ContentBottom" class="marginTop">
+  <div class="equalCol ecFirst"><h3 class="header">What’s Coming Soon!</h3>
+    <p>We’re busy at Wicked Start, working to provide our users with all the features necessary to help starting a small business more manageable. Our next release gives our entire user community better access to all the resources required at each step the startup process! Don’t miss a step, <%=link_to 'Try It Now!',signup_path%></p>
+  </div>
+  <div class="equalCol"><h3 class="header">See Who’s Been Successful Using Wicked Start</h3>
+    <p>Seeing our user succeed is the greatest reward. Read just a few of the success stories from entrepreneurs that have walked in your shoes, including Julie Subotky, founder of <%=link_to 'Consider It Done.', success_story_path(5) %></p>
+  </div>
+  <div class="equalCol ecLast"><h3 class="header">Try It Now</h3>
+    <p>If you’re thinking about starting a small business this year, do it right. Let Wicked Start, as your startup copilot, help you manage the startup process- providing you with tools, resources and an expert community to help guide you, each step of the way. <%=link_to 'Sign up',signup_path%> <%unless $is_ws_free_as_default%>now for a 7 day free trial+!<%else%>for a free Wicked Start account now!<%end%></p>
+  </div>
+</div>

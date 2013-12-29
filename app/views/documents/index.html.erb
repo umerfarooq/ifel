@@ -1,0 +1,119 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag 'ws.files', 'jquery.livequery', 'ajaxupload' %>
+<%  end %>
+<%= stylesheet_link_tag 'share_box'  %>
+<script>
+  $(document).ready(function(){
+    var document_id=''
+    $(".docShareButton").click(function(){
+      $this = $(this);
+      document_id = $this.attr('document_id');
+      if ($("#share_doc_panel_"+document_id).is(':hidden'))
+        $("#share_doc_panel_"+document_id).fadeIn('slow');
+      else{
+        $("#share_doc_panel_"+document_id).fadeOut('slow');
+      }
+      return false;
+    });
+    $('.shareDocPanel').click(function(e) {e.stopPropagation();});
+    $(document).click(function() {
+      $('.txtFromAddr').val('');
+      $('.txtMessage').val('');
+      $('.shareDocPanel').fadeOut('slow');
+    });
+  });
+  
+  function sendShareEmail(element_id, document_id){
+    var to = $('#email_to_'+element_id).attr('value');
+    var subject = $('#email_subject_'+element_id).attr('value');
+    var body = $('#email_body_'+element_id).attr('value');
+    var token = $("input[name=authenticity_token]").attr("value");
+    if(jQuery.trim(to).length > 0 && jQuery.trim(subject).length > 0 && jQuery.trim(body).length > 0 ){
+      var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+      if(emailReg.test(to)) {
+        $.ajax({
+          type: "POST",
+          url: "/documents/share_document",
+          data: {
+            "to":to,
+            "subject":subject,
+            "body":body,
+            "document_id":document_id,
+            "authenticity_token":token
+          },
+          success: function(data){
+            if(data.success){
+              resetAllFields(element_id);
+              $("#share_doc_panel_"+element_id).hide();
+            }else{
+              $('#notice_'+element_id).text("Request can't be send, due to system problem");
+            }
+          },
+          dataType:'json'
+        });
+
+      }else {
+        $('#notice_'+element_id).text("Please enter a valid email address");
+      }
+    } else {
+      $('#notice_'+element_id).text("Please complete all fields");
+    }
+    return false;
+  }
+  function resetAllFields(document_id){
+    $('#email_to_'+document_id).val('');
+    $('#email_subject_'+document_id).val('');
+    $('#email_body_'+document_id).val('');
+  }
+  function closeBox(document_id){
+    $("#share_doc_panel_"+document_id).fadeOut('slow');
+  }
+</script>
+
+<div class="subPageWrapper">
+  <h1><%=  sanitize @files_content[:summary].title %></h1>
+  <h2 class="headLine marginBtm"><%= sanitize current_user.business_idea %></h2>
+  <%= render :partial=>'shared/startup_workspace_breadcrumbs', :locals=>{:selected => :company_files} %>
+  <div class="clear"></div>
+  <h2 class="leadInText ">
+    <%=  sanitize @files_content[:summary].content %>
+  </h2>
+  <div class="sep"></div>
+  <div class="clear"></div>
+
+  <div id="level3nav">
+    <% unless @sections.blank? %>
+      <ul class="resourcesLinkListing">
+        <li class="noRightBorder">
+          <%= link_to "View All Files","JavaScript:void(0);",:onclick=>"loadAllDocuments();", :id=>"section_link_view_all"%>
+        </li>
+        <% @sections.each_with_index do|section, index| %>
+          <li class="noRightBorder">
+            <% tip_container_id = "helptip_#{index.to_s}" %>
+            <%= link_to sanitize(section.section_template.name),
+              "JavaScript:void(0);",
+              :onclick=>"loadSectionContents('#{section.id.to_s}')",
+              :onmouseover=>"showHelptip('#{tip_container_id}');",
+              :onmouseout=>"hideHelptip('#{tip_container_id}');",
+              :id => "section_link_#{section.id.to_s}"%>
+
+            <% helptip_position = "helptippos_#{index.to_s}" %>
+            <div class="helptip <%= helptip_position %>" id="<%= tip_container_id %>" style="display: none;">
+              <p class="marginTop0">
+                <strong><%= sanitize section.title %></strong>
+                <%= sanitize section.section_template.title_comment %>
+              </p>
+              <div id="helptip_tick"></div>
+            </div>
+          </li>
+        <%  end %>
+        <li class="searchDoc">
+          <%= text_field_tag :search,'', :size=>15, :title => 'Enter Keyword(s)',:class => "defaultText fileSearch"  %>
+          <%= link_to image_tag('theme/icn-field-search.jpg'),'JavaScript:void(0);', :class=>'srchIcon', :onclick=>"searchDocuments();" %>
+        </li>
+      </ul>
+    <%  end %>
+  </div>
+  <div id="document_panel"><%= render :partial=>'all_sections_panel' %></div>
+</div>
+<div class="clear"></div>

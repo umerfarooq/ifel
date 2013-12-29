@@ -1,0 +1,37 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :quizzes_tab } %>
+
+<% title "Quizzes" %>
+
+<h1>
+  Quizzes
+</h1>
+
+<% @quizzes.each do |quiz| %>
+
+<br />
+<br />
+
+  <h2>
+    <%= "#{quiz.main_title}?" %>
+  </h2>
+  <p>
+    STATE:
+    <strong>
+      <%= quiz.state.title.upcase %>
+    </strong>
+    |
+    <%= link_to "SHOW", quiz %>
+    |
+    <%= link_to "EDIT", edit_quiz_path(quiz) %>
+    |
+    <% if quiz.published? %>
+      <%= link_to 'INACTIVATE', inactivate_quiz_path(quiz) %>
+    <% elsif quiz.activated? %>
+      <%= link_to 'PUBLISH', publish_quiz_path(quiz) %>
+      |
+      <%= link_to 'INACTIVATE', inactivate_quiz_path(quiz) %>
+    <% else %>
+      <%= link_to 'ACTIVATE', activate_quiz_path(quiz) %>
+    <% end %>
+  </p>
+<% end %>

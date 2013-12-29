@@ -1,0 +1,49 @@
+<% content_for :ads do %>
+  <span class="ad1">
+    <%= image_tag "AD - Inspiration - JapaneseTree 150px.jpg", :alt => "Inspiration Image" %>
+  </span>
+<% end %>
+
+<%#*<div style="margin-top: -14px;" class="launchTopBg"></div>%>
+<div class="ltstStoryDv">
+
+  <% if @message_main.blank? %>
+    <h3>Main Success Stories</h3>
+    <p style="width: 75%;">
+      Main marketing message for Success Stories.
+    </p>
+  <% else %>
+    <h3>
+      <%= @message_main.title %>
+    </h3>
+    <p style="width: 75%;">
+      <%= @message_main.content %>
+  <%#= (@success_stories_message[0]) ? @success_stories_message[0].content : '' %>
+    </p>
+  <%#= link_to image_tag("sign-up-btn.jpg", :alt => "Sign Up"), signup_path %>
+  <% end %>
+
+</div>
+<% if current_user.blank? %>
+  <div class="launchTopBg"></div>
+<% end %>
+
+<% if @success_stories.blank? %>
+  <% if @message_no_ss.blank? %>
+    <h3>Success Stories</h3>
+    <p>
+      No success story available to display.
+    </p>
+  <% else %>
+    <h3>
+      <%= @message_no_ss.title %>
+    </h3>
+    <p>
+      <%= @message_no_ss.content %>
+    </p>
+  <% end %>
+  <br />
+  <br />
+<% else %>
+  <%= render :partial => @success_stories %>
+<% end %>

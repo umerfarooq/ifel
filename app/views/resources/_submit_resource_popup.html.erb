@@ -1,0 +1,25 @@
+<% form_tag '/submit_resource', :id=>'submit_resource_form', :method=>:post  do %>
+  <fieldset>
+    <legend>SUBMIT RESOURCE</legend>
+    <label style="font-weight: normal; margin-top: 5px;">Thank you for your resource submission, we will contact you shortly</label>
+    <table style="width:100%;">
+      <tr>
+        <td style="text-align: center; font-weight: normal;">
+          <label id="notice" style="color: red;"></label>
+        </td>
+      </tr>
+      <tr>
+        <td><%= text_field_tag 'resource[company_name]','', :title => 'Company Name', :class => "defaultText", :size => '30' %></td>
+      </tr>
+      <tr>
+        <td><%= text_field_tag 'resource[contact_name]','', :title => 'Your Name', :class => "defaultText", :size => '30' %></td>
+      </tr>
+      <tr>
+        <td><%= text_field_tag 'resource[email]','', :title => 'Email', :class => "defaultText", :size => '30' %></td>
+      </tr>
+      <tr>
+        <td><%= submit_tag 'Submit', :class => "submit" %></td>
+      </tr>
+    </table>
+  </fieldset>
+<% end %>

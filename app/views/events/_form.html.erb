@@ -1,0 +1,120 @@
+<%# javascript("nicEdit") %>
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    //$(document).ready(function (){
+    //  quote_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('event_description');
+    //});
+    function has_same_date()
+    {
+      var checkBoxObject = document.getElementById('event_same_as_start_date');
+      
+      var dateSpan = document.getElementById('end_date_span');
+      if( checkBoxObject.checked ){
+        dateSpan.style.display = 'none';
+      }else{
+        dateSpan.style.display = 'block';
+      }
+    }
+  </script>
+<% end %>
+
+
+<% form_for event, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.label :event_category_id, "Event Category" %>
+    <br />
+    <%= f.collection_select(:event_category_id, EventCategory.public_categories, :id, :title, {:prompt => true}) %>
+  </p>
+  <p>
+    <%= f.label :title %>
+    <br />
+    <%= f.text_field :title, :size => "75" %>
+  </p>
+  <p class="edit_event">
+    <span class="eventDate">
+      <%= f.label :event_start_date %><br/>
+      <%= f.date_select :event_start_date %>
+    </span>
+    <span class="eventDate" id="end_date_span">
+      <%= f.label :event_end_date %><br/>
+  <%#= f.date_select :event_end_date,{}, {:onchange => "getValidation();"} %>
+      <%= f.date_select :event_end_date %>
+    </span>
+    <span class="eventClick">
+      <%= f.label :same_as_start_date %><br/>
+  <%#= check_box_tag :has_same_event_date,'Same as Start Date',false, {:onclick => "has_same_date();"} %>
+      <%= f.check_box :same_as_start_date,{:onclick => "has_same_date();"} %>
+    </span>
+  </p>
+  <% if @event.event_start_date and (@event.event_start_date == @event.event_end_date) %>
+    <% content_for :javascripts do %>
+      <script>
+        document.getElementById('event_same_as_start_date').checked = true;
+        has_same_date();
+      </script>
+    <%end%>
+  <%end%>
+  <p class="edit_event">
+    <span class="eventDate">
+      <%= f.label :event_start_time %><br/>
+      <% time = helper_parse_time(@event.event_start_time) unless @event.event_start_time.blank? %>
+      <%= f.select :event_start_time,  options_for_select(helper_build_hour_array, (time[:hour] unless time.blank?)) %>
+      <%= f.select :event_start_min,  options_for_select(helper_build_min_array, (time[:minute] unless time.blank?)) %>
+      <%= f.select :event_start_meridlem,  options_for_select(helper_build_meridlum_array, (time[:meridlum] unless time.blank?)) %>
+    </span>
+    <span class="eventDate">
+      <%= f.label :event_end_time %><br/>
+      <% time = helper_parse_time(@event.event_end_time) unless @event.event_end_time.blank? %>
+      <%= f.select :event_end_time,  options_for_select(helper_build_hour_array, (time[:hour] unless time.blank?)) , { :include_blank => true} %>
+      <%= f.select :event_end_min,  options_for_select(helper_build_min_array, (time[:minute] unless time.blank?)), { :include_blank => true} %>
+      <%= f.select :event_end_meridlem,  options_for_select(helper_build_meridlum_array, (time[:meridlum] unless time.blank?)), { :include_blank => true} %>
+    </span>
+  </p>
+
+  <p>
+    <%= f.label :city %>
+    <br />
+    <%= f.text_field :city, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :geo_state %>
+    <br />
+    <%= f.text_field :geo_state, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :url %>
+    <br />
+    <%= f.text_field :url, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :summary %>
+    <br />
+    <%= f.text_area :summary, :size => "100x5", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :description %>
+    <br />
+    <%= f.text_area :description, :size => "100x15", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :rsvp %>?
+    <br />
+  <%#= f.text_field :rsvp, :size => "75" %>
+    <%= f.select(:rsvp, Event.rsvp_options) %>
+  </p>
+  <p>
+    <%= f.label :picture %>
+    <%= image_tag event.picture.url, :alt => event.title unless event.picture.blank? %>
+    <br />
+    <%= f.file_field :picture %>
+  </p>
+  <p>
+    <%= f.label :image_display_size %>
+    <br />
+    <%= f.select(:image_display_size, Event.size_list, :include_blank => '') %>
+  </p>
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>

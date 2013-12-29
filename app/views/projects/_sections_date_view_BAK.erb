@@ -1,0 +1,37 @@
+<%# content_for :head do %>
+<%#*<script type="text/javascript">%>
+<%#*$(document).ready(function (){%>
+<%#*$("a#show_progress_link").click(function (event) {%>
+<%#*$("#div_section").html("%>
+<%#= escape_javascript(render(:partial => "sections_progressbar_view")) %>
+<%#*");%>
+<%#*event.preventDefault();%>
+<%#*});%>
+<%#*});%>
+<%#*</script>%>
+<%# end %>
+
+<h6><%=  link_to "SHOW PROGRESS", "#" ,:id => "show_progress_link" %> >></h6>
+<div class="lftPrcntg">
+  <% @project.sections.each do |sect| %>
+    <%=  link_to "<span class='alphaSpan'>"+sect.name+"</span>
+  <span class='prcntgSpan'>
+  <span class='secTtl'>"+sect.title+"</span>
+    <span class='prcntgTxt'>"+((sect.due_date.blank?)? '' : sect.due_date.strftime("%m/%d/%Y")).to_s+"</span>
+  </span>", section_path(sect, :view => "render_partial"), :class=>"prcntgLnk", :id=>"section_dt_link_"+sect.id.to_s%>
+  <%end%>
+</div>
+
+<%#*<h6>%>
+<%#=  link_to "SHOW PROGRESS", "#" ,:id => "show_progress_link", :onclick=>"show_sections_progress()"%>
+<%#*>></h6>%>
+<%#*<div class="lftPrcntg">%>
+<%# @project.sections.each do |sect| %>
+<%#=  link_to "<span class='alphaSpan'>"+sect.name+"</span>
+<span class='prcntgSpan'>
+
+<span class='prcntgTxt'><strong> Due Date : "+((sect.due_date)?sect.due_date : '').to_s+"</strong></span>
+</span>", "#",  :class=>"prcntgLnk", :id=>sect.id.to_s, :onclick=>"show_section_overview(#{sect.id})"%>
+<%#end%>
+<%#*</div>%>
+

@@ -1,0 +1,182 @@
+<!-- Javascripts file should be in the js folder in js files. -->
+
+  <script type="text/javascript">
+
+    var nau,my_res;
+    $(document).ready(function(){
+
+      //var doc_no_error = true;
+      nau = new AjaxUpload('upload_file_link', {
+        //new AjaxUpload('upload_file_link', {
+        //action: $("form.edit_item").attr("action"),
+        action: "<%= documents_path %>",
+        name: 'document[data]',
+        data: {
+          '_method'                     : "post",
+          //document: {
+          //  'documentable_id'           : "",
+          //  'description'               : "ABC"
+          //},
+          'document[documentable_id]'    : "",
+          'document[description]'        : "",
+          //'ajax_upload'               : "ajax_upload",
+          'authenticity_token'          : $("input[name=authenticity_token]").attr("value")
+        },
+        // Submit file after selection
+        autoSubmit: false,
+        // Useful when you are using JSON data as a response, set to "json" in that case.
+        responseType: "json",
+        // Fired after the file is selected
+        onload: function(file, extension) {
+          $.fn.colorbox.resize();
+        },
+        // Fired after the file is selected
+        onChange: function(file, extension) {
+          $("#selected_file_label").html(file+"&nbsp;&nbsp;&nbsp;");
+          $("#upload_file_link").html("(replace)");
+          $.fn.colorbox.resize();
+          //alert("onChange");
+          //this.disable();
+        },
+        // Fired before the file is uploaded
+        onSubmit: function(file, extension) {
+          //alert("onSubmit");
+          //alert(this._settings.data._method);\
+          //this._settings.data.document_documentable_id = $("#document_documentable_id").val();
+          //this._settings.data.document_description = $("#document_description").val();
+          this._settings.data["document[documentable_id]"] = $("#document_documentable_id").val();
+          this._settings.data["document[description]"] = $("#document_description").val();
+        },
+        // Fired when file upload is completed
+        // WARNING! DO NOT USE "FALSE" STRING AS A RESPONSE!
+        onComplete: function(file, response) {
+          //alert("onComplete");
+          //alert(response);
+          //my_res = response;
+          //var response_json = jQuery.parseJSON(response);
+          //alert(response_json.status);
+          //if(response_json.status == "not-saved"){
+          if(response.success){
+            //$.fn.colorbox.close();
+            if(window.location == response.redirect_url)
+              window.location.reload(true);
+            else
+              window.location(response.redirect_url);
+          } else {
+            $("#errorExplanation ul").empty();
+            $("#errorExplanation").show();
+            $("#selected_file_label").html("");
+            $("#upload_file_link").html("Select File");
+            //response_json.errors.forEach(function (value){
+            //for(var i=0 ; i<response_json.errors.length ; i++){
+            //  var value = response_json.errors[i];
+            for(var i=0 ; i<response.errors.length ; i++){
+              var value = response.errors[i];
+              if(value[0] == "documentable_id")
+                value[0] = "Document Category";
+              if(value[0] == "data_content_type") {
+                value[0] = "Document";
+                value[1] = "must be of office type";
+              }
+              $('<li></li>').appendTo('#errorExplanation ul').html(value[0]+" "+value[1]);
+            }//);
+            $.fn.colorbox.resize();
+          }
+          //$('<li></li>').appendTo('#errorExplanation ul').html(response_json.errors[0][0]+" "+response_json.errors[0][1]);
+          //$(".upldDocDv").parent().html(response);
+          this.enable();
+        }
+      });
+      $("#new_document").submit(function (event){
+        //nau.complete();
+        //alert("Submit_form");
+        //alert(nau._settings.data.authenticity_token);
+        //alert(nau.authenticity_token);
+        $("#errorExplanation ul").empty();
+        var do_submit = true;
+        if($("#document_documentable_id").val().length == 0){
+          $('<li id="cne"></li>').appendTo('#errorExplanation ul').html("Document Category must be selected");
+          do_submit = false;
+        }
+        if((nau._input == null) || (nau._input.value.length == 0)){
+          $('<li id="dne"></li>').appendTo('#errorExplanation ul').html("Document must be selected");
+          do_submit = false;
+        }
+        if(do_submit){
+          nau.submit();
+        } else {
+          $("#errorExplanation").show();
+          $.fn.colorbox.resize();
+        }
+        //if(nau._input && nau._input.value.length > 0) {
+        //  doc_no_error = true;
+        //  //$("#errorExplanation ul").empty();
+        //  nau.submit();
+        //} else if(doc_no_error) {
+        //  $("#selected_file_label").html("");
+        //  $("#upload_file_link").html("Select File");
+        //  $("#errorExplanation ul").empty();
+        //  $("#errorExplanation").show();
+        //  $('<li id="dne"></li>').appendTo('#errorExplanation ul').html("Document must be selected");
+        //  $.fn.colorbox.resize();
+        //  doc_no_error = false;
+        //}
+        event.preventDefault();
+        return false;
+      });
+      $("#errorExplanation").hide();
+
+    });
+
+  </script>
+
+
+<%# content_for :ads do %>
+<%#*<span class="ad1">%>
+<%#= image_tag "AD - MyFiles - Image150px.jpg", :alt => "MyFiles Image" %>
+<%#*</span>%>
+<%# end %>
+<div class="upldDocDv">
+  <h5>UPLOAD DOCUMENT TO MY FILES</h5>
+<%#*<form class="uplodFrm">%>
+  <% form_for @document, :html => { :multipart => true } do |document| %>
+    <div id="errorExplanation" class="errorExplanation"><ul></ul></div>
+    <table width="450" border="0" cellpadding="0" cellspacing="0" class="uplodTbl">
+      <tr>
+        <td class="tdLbl" align="right">
+          <%= document.label :documentable_id, "Document Category :" %>
+        </td>
+        <td class="tdFld">
+          <%= document.collection_select :documentable_id, current_user.project.sections, :id, :title, {:prompt => true}, :class => "uplodLst" %>
+          <%= document.hidden_field :documentable_type, :value => Section.to_s %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" class="tdLbl"  align="right">
+          <%= document.label :description, "Description :" %>
+        </td>
+        <td class="tdFld">
+          <%= document.text_area :description, :class => "uplodArea" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="tdLbl"  align="right">
+          <%= document.label :data, "Document :" %>
+        </td>
+        <td class="tdFld">
+          <label id="selected_file_label"></label>
+          <%= link_to "Select File", "#", :id => "upload_file_link" %>
+          <%#*<input id="upload_file_button" type="button" value="Choose File" class="globalBtn" style="margin-top: 0" />%>
+          <%#*<input id="upload_file_button" type="button" value="Choose File" class="globalBtn" style="margin-top: 0" />%>
+          <%#= document.file_field :data, :size => "30" %>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>
+          <%= document.submit "Submit", :class => "globalBtn", :style => "margin-top: 0" %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+</div>

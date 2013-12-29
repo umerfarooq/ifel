@@ -1,0 +1,53 @@
+<%# for i in 1..6 %>
+<%#= "<h#{i}>CONTACT_US</h#{i}>" %>
+<%# end %>
+
+<div class="cntctUs">
+<%#*<h2>%>
+<%#= @message_how.title %>
+<%#*</h2>%>
+<%#= @message_how.content %>
+  <h3>
+    Contact Us
+  </h3>
+  It’s here that you’ll find the “launch” list of concrete action items to complete to start your business. You’re time is valuable so this “launch” list has been organized in 8 manageable sections with 75 action items where we identify the meaning and relevance of each, including building a case for your idea, structuring your business, writing a business plan, funding, marketing and the nuts & bolts of launching.  Once you’ve completed each action item, you simply check it off as complete.
+  <br />
+  <% form_tag(:controller => 'home', :action => 'contact_us_mail') do %>
+    <table width="440" border="0" cellpadding="0" cellspacing="0" class="cntctUsTbl">
+      <tr>
+        <td width="111">Name :</td>
+        <td width="313">
+          <%= text_field_tag 'contact_us[name]', nil, :class => 'cntctTxt' %>
+        </td>
+      </tr>
+      <tr>
+        <td>Email :</td>
+        <td>
+          <%= text_field_tag 'contact_us[email]', nil, :class => 'cntctTxt' %>
+        </td>
+      </tr>
+      <tr>
+        <td>Subject :</td>
+        <td>
+          <%= text_field_tag 'contact_us[subject]', nil, :class => 'cntctTxt' %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">Description :</td>
+        <td>
+          <%= text_area_tag 'contact_us[description]', nil, :class => 'cntctTxt2', :size => "45x5" %>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td valign="middle">
+          <%= submit_tag 'Submit', :class => "cntctBtn" %>
+  <%#*<input type="submit" name="button" id="button" value="Submit" class="cntctBtn" />%>
+          <%= link_to 'Cancel', url_for(:back) %>
+        </td>
+      </tr>
+    </table>
+
+  <% end %>
+
+</div>

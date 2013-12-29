@@ -1,0 +1,69 @@
+<% javascript("nicEdit") %>
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    $(document).ready(function (){
+      description_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('promotion_description');
+    });
+  </script>
+<% end %>
+<% form_for @promotion.becomes(Promotion), :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <%unless @error_messages.blank?%>
+    <div id="errorExplanation" class="errorExplanation">
+      <ul>
+        <% @error_messages.each do|attr, message| %>
+          <li><%= attr %> <%= message %> </li>
+        <%end%>
+      </ul>
+    </div>
+  <%end%>
+  <p>
+    <%= f.label :type %>
+    <br />
+    <%= f.select(:kind, helper_get_kind_options) %>
+  </p>
+  <p>
+    <%= f.label :head_title %>
+    <br />
+    <%= f.text_field :head_title, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :sub_title %>
+    <br />
+    <%= f.text_field :sub_title, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :url %>
+    <br />
+    <%= f.text_field :url, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :url_text %>
+    <br />
+    <%= f.text_field :url_text, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :is_external %>?
+    <br />
+    <%= f.select(:is_external, {'Yes'=>1,'No'=>0}) %>
+  </p>
+  <p>
+    <%= f.label :description %>
+    <br />
+    <%= f.text_area :description, :size => "100x15", :class => "adminEditor" %>
+  </p>
+  <p>
+    <%= f.label :picture %>
+    <%= image_tag promotion.picture.url, :alt => promotion.head_title unless promotion.picture.blank? %>
+    <br />
+    <%= f.file_field :picture %>
+  </p>
+  <p>
+    <%= f.label :image_display_size %>
+    <br />
+    <%= f.select(:image_display_size, Promotion.size_list, :include_blank => '') %>
+  </p>
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>

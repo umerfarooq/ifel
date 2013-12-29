@@ -1,0 +1,45 @@
+<div class="admnlftCol">
+  <ul class="admnLnks">
+    
+    <li>
+      <% if active_admin_client_information_tab == :account_tab %>
+      <a href="<%= accounts_configurations_path %>" class="active">Account</a>
+      <% else %>
+        <a href="<%= accounts_configurations_path %>">Account</a>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_admin_client_information_tab == :design_tab %>
+        <a href="<%= designs_configurations_path %>" class="active">Design</a>
+      <% else %>
+        <a href="<%= designs_configurations_path %>">Design</a>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_admin_client_information_tab == :radar_tab %>
+        <a href="/admins/radar_tab" class="active">News</a>
+      <% else %>
+        <a href="/admins/radar_tab">News</a>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_admin_client_information_tab == :event_tab %>
+        <a href="/events/list" class="active">Events</a>
+      <% else %>
+        <a href="/events/list">Events</a>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_admin_client_information_tab == :community_tab %>
+        <a href="/admins/community_tab" class="active">Community</a>
+      <% else %>
+        <a href="/admins/community_tab">Community</a>
+      <% end %>
+    </li>
+    
+  </ul>
+</div>

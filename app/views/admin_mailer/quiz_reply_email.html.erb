@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Workshop In Business Opportunities</title>
+  </head>
+
+  <body>
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" align="left" style="font-family:Arial, Helvetica, sans-serif;">
+      <tbody>
+        <tr>
+          <td >
+            <a target="_blank" href="http://wibo.wickedstart.com/public_home">
+              <img border="0" alt="WIBO" src="http://wibo.wickedstart.com/images/wibo-logo.jpg?1328167465" />
+            </a>
+            <p style="font-family:Trebuchet MS, Arial, Helvetica, sans-serif; font-size:13px; color:#333333;">
+              <b>YOUR ONLINE GUIDE FOR STARTING A BUSINESS</b>
+            </p>
+            <hr noshade size="1" color="#226DC8" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;">
+              Thank you for taking the
+              <label style="color: rgb(248, 155, 75); text-decoration: none;"><%= @quiz_reply.quiz.email_quiz_name -%></label>.
+              Below is how you answered each question:
+            </p>
+
+            <table width="100%" cellspacing="0" cellpadding="0" border="0">
+              <tbody>
+                <% @quiz_reply.answers.sort_by{|a| a.question.sequence_number}.each do |answer| %>
+                  <tr>
+                    <td width="5%" valign="middle" align="center">
+                      <%= answer.question.sequence_number %>
+                    </td>
+                    <td width="90%" valign="top" style="font-family: Trebuchet MS, Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 2px 0; margin:0; color:#333333;">
+                      <b>
+                        <%= answer.question.statement %>
+                      </b>
+                    </td>
+                    <td width="5%" valign="top" align="center">
+                      <% if(answer.statement == "yes") %>
+                        <span style="font-weight: bold; font-size: 14px; color: rgb(153, 204, 102);">
+                          <%= answer.statement.capitalize %>
+                        </span>
+                      <% elsif(answer.statement == "no") %>
+                        <span style="font-weight: bold; font-size: 14px; color: rgb(67, 117, 185);">
+                          <%= answer.statement.capitalize %>
+                        </span>
+                      <% else %>
+                        <span style="font-weight: bold; font-size: 14px; color: rgb(51, 51, 51);">
+                          <%= answer.statement.capitalize %>
+                        </span>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+
+            <h2 style="color:#8BC53F;">
+              <%= result_heading_for(@quiz_reply) %>
+            </h2>
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              <%= result_first_paragraph_for(@quiz_reply) %>
+            </p>
+
+<%#*<p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">%>
+<%#- case @quiz.yes_count -%>
+<%#- when 6, 5 -%>
+<%#*Congratulations! You answered "Yes" to%>
+<%#= (@quiz.yes_count == 6) ? "all six" : "five" %>
+<%#*questions on the quiz, so your idea is viable.%>
+<%#= (@quiz.yes_count == 6) ? "I believe" : "I think" %>
+<%#*you've given consideration to%>
+<%#= "most of" if (@quiz.yes_count == 5) %>
+<%#*the key elements necessary for starting a business.%>
+<%#- when 4, 3 -%>
+<%#*You're idea has potential, so yes, I think you're idea is viable,%>
+<%#*but you need to%>
+<%#= "#{@quiz.questions_with_no[0].response_no}#{(@quiz.yes_count == 4) ? " and" : ","}" %>
+<%#= "#{@quiz.questions_with_no[1].response_no}#{"." if (@quiz.yes_count == 4)}" %>
+<%#= "and #{@quiz.questions_with_no[2].response_no}." if @quiz.yes_count == 3 %>
+<%#*You have some more homework to do in scoping out your idea but you're on the right track.%>
+<%# if @quiz.yes_count == 3 %>
+<%#*Spending more time addressing these issues will help you think about how you%>
+<%#*can ultimately get your idea off the ground successfully.%>
+<%# end %>
+<%#- when 2, 1 -%>
+<%#*You're idea may be viable, however you answered "No" to%>
+<%#= (@quiz.yes_count == 2) ? "four" : "five" %>
+<%#*of the questions on the quiz. You need to%>
+<%#= "#{@quiz.questions_with_no[0].response_no}," %>
+<%#= @quiz.questions_with_no[1].response_no %>
+<%#*and%>
+<%#= "#{@quiz.questions_with_no[2].response_no}." %>
+<%#*You have%>
+<%#= "some" if @quiz.yes_count == 2 %>
+<%#*homework to do in further developing your idea. Spending more time%>
+<%#*addressing these issues will help you think about how you can%>
+<%#*ultimately get your idea off the ground successfully. If you can make%>
+<%#*progress and ultimately answer "Yes" to at least%>
+<%#= (@quiz.yes_count == 2) ? "one or two" : "two or three" %>
+<%#*of these issues, your idea has potential.%>
+<%#- when 0 -%>
+<%#*Sorry, you're idea is not viable. You answered "No" to all six questions%>
+<%#*on the quiz. If you're serious about starting a business, then you've got%>
+<%#*homework to do. Spending more time addressing these issues will help you%>
+<%#*think about how you can ultimately get your idea off the ground successfully.%>
+<%#*Try doing more research and/or changing your assumptions so that you can%>
+<%#*answer "Yes" to at least three of the quiz questions.%>
+<%#- end -%>
+<%#*</p>%>
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              Let Wicked Start help you manage the process of starting a business.
+<%#= link_to "Click here", "http://www.wickedstart.com/how_it_works", :style => "color:#f89b4b; text-decoration:none;" %>
+              <%= link_to "Click here", (Feature.get_parents.published.first.blank?) ? "http://www.wickedstart.com/features": "http://www.wickedstart.com/features/"+Feature.get_parents.published.first.id.to_s+"/detail" , :style => "color:#f89b4b; text-decoration:none;" %>
+              to see How It Works or if you havent done so,
+<%#= link_to "Sign Up", "https://wibo.wickedstart.com/signup", :style => "color:#f89b4b; text-decoration:none;" %>
+              <%= link_to "Sign Up", "https://wibo.wickedstart.com/signup", :style => "color:#f89b4b; text-decoration:none;" %>
+              now.
+            </p>
+            <br />
+            <br />
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              Best regards,
+            </p>
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              Bryan Janeczko and the Wicked Start Team
+            </p>
+            <!--<p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;">
+              <span><a target="_blank" style="color: rgb(248, 155, 75); text-decoration: none;" href="http://www.wickedstart.com/privacy_policy">Privacy Policy</a></span>
+            </p>-->
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" height="30" bgcolor="#f89b4b" align="center">
+            <span><a target="_blank" style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; color: rgb(255, 255, 255); text-decoration: none; font-size: 16px; font-weight: bold;" href="http://wibo.wickedstart.com/public_home">www.wibo.wickedstart.com</a></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

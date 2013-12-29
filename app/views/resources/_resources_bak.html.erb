@@ -1,0 +1,86 @@
+<div id="resource_section_content_panel">
+  <% section_template_id=0;category_id=0 %>
+  <% resources.each do |resource| %>
+    <% resource=resource.becomes(Resource) %>
+    <div class="floatL resourcesTopDescription">
+      <% unless section_template_id == resource.section_id.to_i %>
+        <% section_template_id = resource.section_id.to_i;category_id=0  %>
+        <h2 class="headLine2"><%= resource.section_title.to_s %></h2>
+        <div class="resourcesTopDescription">
+          <%= sanitize helper_section_template_resource_description(resource.section_id) %>
+        </div>
+      <%  end %>
+      <div id="all_content_panel_<%= resource.section_id.to_s %>">
+        <div class="resourcesContentWrapper">
+          <div>
+            <div class="resourceType">
+              <div class="resourcesPost">             
+                <% if category_id != resource.category_id.to_i %>
+                  <% category_id = resource.category_id.to_i %>
+                  <h3 class="postItem-title"><%=  resource.category_title %></h3>    
+                <%end%>
+                <div class="postItem">
+                  <div class="imgbox">
+                    <% if resource.content.exists?(:resource_library) %>
+                      <div class="combine_images">
+                        <%= image_tag resource.content.url(:resource_library), :class=>'bannerSize' ,:onclick => 'save_click_track("'+resource.id.to_s+'","'+((current_user.blank?)?'0':current_user.id.to_s)+'")' %>
+                      </div>
+                    <%else%>
+                      <div>
+                        <%=  (resource.html_image.html_safe) unless resource.html_image.blank? %>
+                      </div>
+                    <%end%>
+                    <% if resource.banner.exists? :service_provider %>
+                      <div class="combine_images">
+                        <%= link_to image_tag(resource.banner.url(:service_provider), :class=>'bannerSize'), resource.banner_url, :target =>"_blank" %>
+                      </div>
+                    <%else%>
+                      <div class="combine_images">
+                        <%=  (resource.html_banner.html_safe) unless resource.html_banner.blank? %>
+                      </div>
+                    <%end%>
+                  </div>
+
+
+                  <div class="postItemDesc">
+                    <h3><%= resource.title %></h3>
+
+                    <%= resource.description %> <br />
+                    <%= (resource.html_url.blank?) ? "#{link_to(resource.url, resource.url , :target => '_blank',:onclick => 'save_click_track("'+resource.id.to_s+'","'+((current_user.blank?)?'0':current_user.id.to_s)+'")')}" : (resource.html_url.html_safe)  %>
+                    <div class="clear"></div>
+                    <%  unless current_user.blank?%>
+                      <div class="actionLinksWrapper">
+                        <%= render :partial => 'ratings', :locals => {:resource =>resource} %>
+                      </div>
+                    <%end%>
+
+                    <div class="clear"></div>
+                    <div class="tags">
+                      <%unless resource.tag_list.blank?%>
+                        <dd>Tags:</dd>
+                        <dt><%=resource.tag_list%></dt>
+                      <%end%>
+                      <div class="clear"></div>
+                      <%unless resource.pricings.blank?%>
+                        <dd>Price:</dd>
+                        <%= resource.pricings.map(&:title).join(', ').each { |p| "<dt>#{p}</dt>" } %>
+                      <%end%>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+  <%#if categories_count > 2 and top_categories.count == 2 %>
+  <%#section_template_id = section_template.nil? ? nil : section_template.id%>
+            <h3>
+  <%#=link_to "[Continuation of remaining category listings]",'JavaScript:void(0);' , :id => "all_category_#{section_template_id.to_s}", :onclick=>"loadAllContent('#{section_template_id}')" %>
+            </h3>
+  <%#end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%end%>
+</div>

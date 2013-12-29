@@ -1,0 +1,24 @@
+<div class="StoryDv2">
+  <span class="storyPic">
+    <%= image_tag success_story.logo.url(:small) %>
+   </span>
+  <%if current_user.blank?%>
+    <span class="storyTxtPublic">
+  <%else%>
+    <span class="storyTxt">
+  <%end%>
+    <strong>
+      <%#= success_story.company_name %>
+      <%#= success_story.name %>
+      <%#= success_story.title %>
+      <%= "#{success_story.name}, #{success_story.title}" %>
+    </strong>
+    <br />
+    <br />
+    <%= success_story.summary %>
+    ...
+    <%#= link_to "Read more...", success_story %>
+    <%= link_to "Read more >>", success_story %>
+    <%#= link_to "Read more >> ", success_story.url, :target => "_blank" %>
+  </span>
+</div>

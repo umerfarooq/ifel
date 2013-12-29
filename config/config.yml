@@ -1,0 +1,12 @@
+development:
+  perform_authentication: false
+  username: projectd
+  password: projectd
+
+test:
+  perform_authentication: false
+
+production:
+  perform_authentication: true
+  username: wibo
+  password: wibo

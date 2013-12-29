@@ -1,0 +1,233 @@
+<% content_for :javascripts do %>
+  <%#= javascript_include_tag 'jquery-1.4.2.min' %>
+  <script defer async type="text/javascript">
+    function edit_content(content_type) {
+      var msg_title = $("#"+content_type+"_title").val();
+      var msg_content = $("#"+content_type+"_content").val();
+      if($("a#"+content_type+"_edit_link").text() == "EDIT") {
+        $("a#"+content_type+"_edit_link").text("CANCEL");
+        $("#"+content_type+"_title").val(msg_title);
+        $("#"+content_type+"_content").val(msg_content);
+        $("#"+content_type+"_show").hide();
+        $("#"+content_type+"_edit").show();
+      } else {
+        $("a#"+content_type+"_edit_link").text("EDIT");
+        $("#"+content_type+"_show").show();
+        $("#"+content_type+"_edit").hide();
+      }
+    }
+    function edit_tooltips(type){
+      if($("a#"+type+"_edit_link").text()=="EDIT"){
+        $("a#"+type+"_edit_link").text("CANCEL");
+        $("#"+type+"_title_label").hide();
+        $("#"+type+"_content_label").hide();
+        $("#"+type+"_title_field").show();
+        $("#"+type+"_content_field").show();
+        $("#"+type+"_update_btn").show();
+      }else{
+        $("a#"+type+"_edit_link").text("EDIT")
+        $("#"+type+"_title_label").show();
+        $("#"+type+"_content_label").show();
+        $("#"+type+"_title_field").hide();
+        $("#"+type+"_content_field").hide();
+        $("#"+type+"_update_btn").hide();
+      }
+
+    }
+
+    function searchUsers(){
+      var searchable = $('#search_user').val();
+
+      $.get('/users/search', { 'q' : searchable }, function(data){
+        $('#usrsListing').html(data);
+      }, 'html');
+    }
+  </script>
+<% end %>
+<%= render :partial => "admins/admin_profile_menu", :locals => { :active_admin_profile_tab => :user_tab } %>
+<div class="admnRitCol">
+  <div>
+    <h4>
+      PROFILE SUMMARY
+      |
+      <%= link_to "EDIT", '#.', :id => "summary_edit_link", :onclick=>"edit_content('summary')" %>
+    </h4>
+    <br />
+    <%unless @profile_contents[:summary].blank?%>
+      <div id="summary_show">
+        <table style="text-align: left;">
+          <tr>
+            <th width="20%">Title</th>
+            <th width="80%">Summary</th>
+          </tr>
+          <tr>
+            <td><%= @profile_contents[:summary].title.to_s %></td>
+            <td><%= @profile_contents[:summary].content.to_s %></td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="summary_edit" style="display: none">
+        <% form_for @profile_contents[:summary], :url => update_profile_summary_user_path(@profile_contents[:summary]), :method=>:put do |f| %>
+
+          <table>
+            <tr>
+              <th><%= f.label :title %></th>
+              <th><%= f.label :content, 'Summary' %></th>
+            </tr>
+            <tr>
+              <td>
+                <%= f.text_field :title, :size => "20", :id=>'summary_title' %>
+              </td>
+              <td>
+                <%= f.text_area :content, :size => "80x5", :id=>'summary_content', :class => "adminEditor" %>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><%= f.submit 'Update and Publish' %></td>
+            </tr>
+          </table>
+
+        <% end %>
+      </div>
+    <%end%>
+    <br />
+  </div>
+
+  <div>
+    <h4>
+      TOOLTIPS  <span id="chars-left" style="color:red"></span>
+    </h4>
+    <br />
+    <table width="100%">
+      <tr style="text-align:left;">
+        <th width="15%">
+          Tip About
+        </th>
+        <th width="15%">
+          Title
+        </th>
+        <th width="50%">
+          Content
+        </th>
+        <th width="20%">
+          Action
+        </th>
+      </tr>
+
+      <%unless @profile_contents[:basic_info_tooltip].blank?%>
+        <tr id="basic_info_show">
+          <% form_for @profile_contents[:basic_info_tooltip], :url => update_tooltip_user_path(@profile_contents[:basic_info_tooltip]) do |f| %>
+            <td width="15%">Basic Information</td>
+            <td width="15%">
+              <%= f.label :title, @profile_contents[:basic_info_tooltip].title, :id=>'basic_info_title_label' %>
+              <%= f.text_field :title, :size => '15', :id=>'basic_info_title_field', :class => 'dispNone' %>
+            </td>
+            <td width="50%">
+              <%= f.label :content, @profile_contents[:basic_info_tooltip].content, :id=>'basic_info_content_label' %>
+              <%= f.text_area :content, :size => "45x3", :id=>'basic_info_content_field', :class => 'dispNone', :onkeyup=>"countLimit('basic_info_content_field');" %><span id="info-chars"></span>
+            </td>
+            <td width="20%">
+              <%= link_to "EDIT", '#.', :id => "basic_info_edit_link", :onclick=>"edit_tooltips('basic_info')" %>
+              <%= f.submit 'Update', :class => 'dispNone', :id=>'basic_info_update_btn' %>
+              |          
+              <%= link_to "DELETE", marketing_text_message_path(@profile_contents[:basic_info_tooltip]), :method => :delete, :confirm => "Are you sure?" %>
+            </td>
+          <% end %>
+        </tr>
+      <%end%>
+
+      <%unless @profile_contents[:photo_tooltip].blank?%>
+        <tr id="photo_show">
+          <% form_for @profile_contents[:photo_tooltip], :url => update_tooltip_user_path(@profile_contents[:photo_tooltip]) do |f| %>
+            <td>Photo</td>
+            <td>
+              <%= f.label :title,@profile_contents[:photo_tooltip].title, :id=>'photo_title_label' %>
+              <%= f.text_field :title, :size => '15', :id=>'photo_title_field', :class => 'dispNone' %>
+            </td>
+            <td>
+              <%= f.label :content,@profile_contents[:photo_tooltip].content, :id=>'photo_content_label' %>
+              <%= f.text_area :content, :size => "45x3", :id=>'photo_content_field', :class => 'dispNone', :onkeyup=>"countLimit('photo_content_field');" %>
+            </td>
+            <td>
+              <%= link_to "EDIT", '#.', :id => "photo_edit_link", :onclick=>"edit_tooltips('photo')" %>
+              <%= f.submit 'Update', :class => 'dispNone', :id=>'photo_update_btn' %>
+              |          
+              <%= link_to "DELETE", marketing_text_message_path(@profile_contents[:photo_tooltip]), :method => :delete, :confirm => "Are you sure?" %>
+            </td>
+          <% end %>
+        </tr>
+      <%end%>
+
+      <%unless @profile_contents[:screen_name_tooltip].blank?%>
+        <tr id="screen_show">
+          <% form_for @profile_contents[:screen_name_tooltip], :url => update_tooltip_user_path(@profile_contents[:screen_name_tooltip]) do |f| %>
+            <td>Screen Name</td>
+            <td><%= f.label :title,@profile_contents[:screen_name_tooltip].title, :id=>'screen_title_label' %><%= f.text_field :title, :size => '15', :id=>'screen_title_field', :class => 'dispNone' %></td>
+            <td><%= f.label :content,@profile_contents[:screen_name_tooltip].content, :id=>'screen_content_label' %>
+              <%= f.text_area :content, :size => "45x3", :id=>'screen_content_field', :class => 'dispNone', :onkeyup=>"countLimit('screen_content_field');" %></td>
+            <td>
+              <%= link_to "EDIT", '#.', :id => "screen_edit_link", :onclick=>"edit_tooltips('screen')" %>
+              <%= f.submit 'Update', :class => 'dispNone', :id=>'screen_update_btn' %>
+              |          
+              <%= link_to "DELETE", marketing_text_message_path(@profile_contents[:screen_name_tooltip]), :method => :delete, :confirm => "Are you sure?" %>
+            </td>
+          <% end %>
+        </tr>
+      <%end%>
+
+      <%unless @profile_contents[:community_profile_tooltip].blank?%>
+        <tr id="community_show">
+          <% form_for @profile_contents[:community_profile_tooltip], :url => update_tooltip_user_path(@profile_contents[:community_profile_tooltip]) do |f| %>
+            <td>Community Profile</td>
+            <td><%= f.label :title,@profile_contents[:community_profile_tooltip].title, :id=>'community_title_label' %><%= f.text_field :title, :size => '15', :id=>'community_title_field', :class => 'dispNone' %></td>
+            <td><%= f.label :content,@profile_contents[:community_profile_tooltip].content, :id=>'community_content_label' %>
+              <%= f.text_area :content, :size => "45x3", :id=>'community_content_field', :class => 'dispNone', :onkeyup=>"countLimit('community_content_field');" %></td>
+            <td>
+              <%= link_to "EDIT", '#.', :id => "community_edit_link", :onclick=>"edit_tooltips('community')" %>
+              <%= f.submit 'Update', :class => 'dispNone', :id=>'community_update_btn' %>
+              |          
+              <%= link_to "DELETE", marketing_text_message_path(@profile_contents[:community_profile_tooltip]), :method => :delete, :confirm => "Are you sure?" %>
+            </td>
+          <% end %>
+        </tr>
+      <%end%>
+
+      <%unless @profile_contents[:password_tooltip].blank?%>
+        <tr id="password_show">
+          <% form_for @profile_contents[:password_tooltip], :url => update_tooltip_user_path(@profile_contents[:password_tooltip]) do |f| %>
+            <td>Password</td>
+            <td><%= f.label :title,@profile_contents[:password_tooltip].title, :id=>'password_title_label' %><%= f.text_field :title, :size => '15', :id=>'password_title_field', :class => 'dispNone' %></td>
+            <td><%= f.label :content,@profile_contents[:password_tooltip].content, :id=>'password_content_label' %>
+              <%= f.text_area :content, :size => "45x3", :id=>'password_content_field', :class => 'dispNone', :onkeyup=>"countLimit('password_content_field');" %></td>
+            <td>
+              <%= link_to "EDIT", '#.', :id => "password_edit_link", :onclick=>"edit_tooltips('password')" %>
+              <%= f.submit 'Update', :class => 'dispNone', :id=>'password_update_btn' %>
+              |          
+              <%= link_to "DELETE", marketing_text_message_path(@profile_contents[:password_tooltip]), :method => :delete, :confirm => "Are you sure?" %>
+            </td>
+          <% end %>
+        </tr>
+      <%end%>
+
+    </table>
+    <br />
+  </div>
+  <!--<div style="height: 500px; overflow: scroll;">
+    <div class="enterRoledv">
+      <h4> ROLES </h4>
+      <%#= text_field_tag :search_user,'', :size=>'80', :class=>'summeryText' %><%#= link_to image_tag('btn-search.png'),'#.', :onclick=>'searchUsers();', :class=>'summerySearch'%>
+    </div>
+    <div id="usrsListing" class="roleUserList"><%#= render :partial => 'roles_panel', :locals=>{:users => @users, :sections => @section_templates} %></div>
+  </div>-->
+  <script>
+    //bkLib.onDomLoaded(function(){
+    function countLimit(element){
+      $('#'+element).keyup(function(){
+        limitCharsForSimpleTextArea(element, 300, 'chars-left');
+      });
+    }
+    //});
+  </script>
+

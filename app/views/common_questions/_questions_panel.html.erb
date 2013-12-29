@@ -1,0 +1,85 @@
+<div id="panel_<%= index %>" class="panel">
+  <div id="sideBarLeftQuestions">
+    <ul class="tourLinkListing">
+      <%
+      unless @selected_question.blank?
+        if (@selected_section != section)
+          @question = sub_questions.first
+        else
+          @question = @selected_question
+        end
+      end
+    %>
+      <% sub_questions.each do|question| %>
+        <li class="<%= (question == @question) ? 'noRightBorder' : '' %>">
+  <%#=  link_to question.statement.camelize, detail_common_question_path(question)+"#slider_"+index.to_s, :class => ("current" if(question == @question)) %>
+          <%=  link_to question.statement.camelize, 'JavaScript:void(0);' , :onclick => "getQuestions('"+index.to_s+"','"+question.id.to_s+"');", :class => ("current" if(question == @question)) %>
+        </li>
+      <%end%>
+    </ul>
+    <!--<span class="lastNavItem"></span>-->
+  </div>
+
+  <div class="shareContent"><%#= render :partial => 'shared/share_widget' %></div>
+<%#= render :partial => 'answer', :object => @question %>
+
+  <div class="slidrDv">
+    <div class="slidrImg">
+      <% unless @question.children.blank? %>
+        <% number_of_answers  = @question.children.length %>
+        <div class="imgsDv">
+          <% @question.children.sequence_wise.each_with_index do|answer, index| %>
+            <div id="ans_slider_<%= @question.id %>_<%= index %>" class="<%= (index == 0) ? "dispBlock" : "dispNone" %>">
+              <ul>
+                <li class="slidr-Lst">
+                  <div class="slideLeftCol">
+                    <h2><%= answer.statement.camelize %></h2>
+                    <p><%= truncate(answer.description,600) %></p>
+
+                    <% if number_of_answers > 1 %>
+                      <p>
+                        <% if index != 0 %>
+                          <a href="JavaScript:void(0);" class="prevBtn" onclick="slideAnswers(<%= (@question.id) %>, <%= (index-1) %>, <%= number_of_answers %>);">Previous></a>
+                        <%end%>
+                        <% if index != (number_of_answers - 1) %>
+                          <a href="JavaScript:void(0);" class="nextBtn" onclick="slideAnswers(<%= (@question.id) %>, <%= (index+1) %>, <%= number_of_answers %>);">Next></a>
+                        <%end%>
+                      </p>
+                    <%end%>
+                  </div>
+                  <div class="slideRightCol">
+                    <% if answer.has_video %>
+      <%#= link_to image_tag(answer.photo.url(:normal), :alt => answer.photo_alt), flvplayer_common_questions_path(:video_path => answer.url_for_video_player), :onclick => "$(this).colorbox()" %>
+                      <div class="questionVideo" style="background:url(<%= answer.photo.url(:normal) %>) left top no-repeat;">
+                        <div class="questVideoButton">
+                          <%= link_to image_tag("/images/btn_play.png"), flvplayer_common_questions_path(:video_path => answer.url_for_video_player), :onclick => "$(this).colorbox()" %>
+                        </div>
+                      </div>
+
+                    <% else %>
+                      <%= image_tag(answer.photo.url(:normal), :alt => answer.photo_alt) %>
+                    <% end %>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          <%end%>
+        </div>
+        <% if number_of_answers > 1 %>
+          <ul class="slidr-Nmbrs">
+            <% (0..(number_of_answers-1)).each do|number| %>
+              <li><a id="nmbr_slide_<%= @question.id %>_<%= number %>" class="<%= (number == 0) ? 'selected' : 'off' %>" href="JavaScript:void(0);" onclick="slideAnswers(<%= (@question.id) %>, <%= number %>, <%= number_of_answers %>);"></a></li>
+            <%end%>
+          </ul>
+        <%end%>
+
+      <%else%>
+        <div class="imgsDv"> No answer exists for this Question! </div>
+      <%end%>
+    </div>
+  </div>
+
+  <p class="questBtn borderTop">
+    <%= link_to "<span>"+statement_object.button_text+"</span>", statement_object.button_url , :class => "customButton"%>
+  </p>
+</div>

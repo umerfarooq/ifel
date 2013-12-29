@@ -1,0 +1,13 @@
+<% form_for event_category do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+
+  <p>
+    <%= f.label :title %>
+    <br />
+    <%= f.text_field :title, :size => "75" %>
+  </p>
+  
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>

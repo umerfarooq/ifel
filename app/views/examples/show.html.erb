@@ -1,0 +1,33 @@
+<h2>Example</h2>
+
+<p>
+  <strong>
+    <%= link_to "Item Template", @example.item_template %>
+  </strong>
+</p>
+<p>
+  Name:
+  <strong>
+    <%= @example.name %>
+  </strong>
+</p>
+<p>
+  Document:
+  <strong>
+    <%= link_to @example.document.original_filename, @example.document.url, :title => @example.document.original_filename, :target => "_blank" %>
+  </strong>
+</p>
+<p>
+  <strong>
+    Description:
+  </strong>
+  <%= @example.description %>
+</p>
+<p>
+  <strong>
+    Search Terms:
+  </strong>
+  <%= @example.search_terms %>
+</p>
+<br />
+<br />

@@ -1,0 +1,95 @@
+<div class="launchWrks">
+  <span class="launchTopBg" style="margin-top:-14px;"></span>
+  <span class="lunchWorkTxt">
+    <h2>
+      <%= @message_how.title %>
+    </h2>
+    <%= @message_how.content %>
+    <br />
+  </span>
+  <span class="launchWrkBnr"><img src="images/launch-pad-works.jpg" /></span>
+</div>
+<div class="lunchMidl">
+  <h2>WHAT YOU GET!</h2>
+  <%#= link_to image_tag("join-btn.gif", :alt => "Join Now"), signup_path %>
+  <%= link_to image_tag("sign-up-btn.jpg", :alt => "Sign Up"), signup_path %>
+</div>
+<div class="launchLstng">
+  <div class="launhLst">
+    <span class="icnSpan"><img src="images/icons/go-icn.gif" width="115" height="60" /></span>
+    <span class="lunchSpantxt">
+      <h4>Wicked Start</h4>
+      It’s here that you’ll find the “Wicked Start” list of concrete action items to complete to start your business. You’re time is valuable so this “Wicked Start” list has been organized in 8 manageable sections with 75 action items where we identify the meaning and relevance of each, including building a case for your idea, structuring your business, writing a business plan, funding, marketing and the nuts & bolts of launching.  Once you’ve completed each action item, you simply check it off as complete.
+    </span>
+  </div>
+  <div class="launhLst">
+    <span class="launchLstTtl">The following tools will support you as you complete these action items on your “launch list”: </span>
+    <span class="icnSpan"><img src="images/icons/info-icn.gif" width="57" height="59" /></span>
+    <span class="lunchSpantxt">
+      <h4>Reminders</h4>
+      This feature is an email notification to let you know when action items are coming due. This gentle reminder can provide a ‘nudge’ to help you complete your action items within the timeframe that you specify. If you’re schedule or timeframe changes, you always have the option of changing when items are due. You’re in control.
+    </span>
+  </div>
+  <div class="launhLst"><span class="icnSpan"><img src="images/icons/graph-icn.gif" width="95" height="57" /></span><span class="lunchSpantxt">
+      <h4>Progress Tracking</h4>
+      This feature is a visual graph that tracks your progress as you complete each action item. After each item is marked ‘complete’, your progress bar moves closer to 100%. This simple yet telling graph can give you the satisfaction of seeing how much you’ve completed and how much closer you are to your goal of starting your own business.
+    </span>
+  </div>
+  <div class="launhLst">
+    <span class="icnSpan"><img src="images/icons/edit-icn.gif" width="58" height="60" /></span>
+    <span class="lunchSpantxt">
+      <h4>Access to planning templates</h4>
+      This feature provides you with key business planning templates that you can use along the way. These templates include a business plan, an investor pitch, financial spreadsheets, and a Non-Disclosure Agreement (NDA). There will also be sample documents included as well that help illustrate how to best use them.
+    </span>
+  </div>
+  <div class="launhLst">
+    <span class="launchLstTtl">In addition to your “launch” list of action items, your Launch Pad provides additional support to start a business, including the following: </span>
+    <span class="icnSpan"><img src="images/icons/comment-icn.gif" width="77" height="71" /></span>
+    <span class="lunchSpantxt">
+      <h4>User Community</h4>
+      The “Community” feature allows you to connect and communicate with Wicked Start and other early stage business owners and entrepreneurs in a private online forum. You can post questions and answers and search for information relevant to your own journey for starting a business.
+    </span>
+  </div>
+  <div class="launhLst">
+    <span class="icnSpan"><img src="images/icons/files-icn.gif" width="77" height="77" /></span>
+    <span class="lunchSpantxt">
+      <h4>Resource Center</h4>
+      This invaluable feature provides you with useful links to resources to help you start your business, including many businesses that we have partnered with to make Launch Pad your hub for managing this process. Whether it’s finding the right legal forms, creating a logo, locating investors, printing business cards, or identifying an email marketing partner, there will be organized, low-cost, and easy to follow links for your startup needs.
+    </span>
+  </div>
+  <div class="launhLst">
+    <span class="icnSpan"><img src="images/icons/folder-icn.gif" width="77" height="55" /></span>
+    <span class="lunchSpantxt">
+      <h4>My Files</h4>
+      This feature allows you to manage all of your files in connection with turning your idea into a business. You can organize, upload, and download files you’ve posted, whether they’re documents, spreadsheets of presentations.  It really helps to keep everything in one place for easy reference and access.
+    </span>
+  </div>
+</div>
+<div class="lauchCost">
+  <h4>
+    <%= @message_cost.title %>
+  </h4>
+  <%= @message_cost.content %>
+  <br />
+  <br />
+  <%#= link_to image_tag("join-btn.gif", :alt => "Join Now"), signup_path %>
+  <%= link_to image_tag("sign-up-btn.jpg", :alt => "Sign Up"), signup_path %>
+</div>
+
+<%#*<div class="lunchPrtnr" style='display:none'>%>
+<%#*<h2>OUR PARTNERS</h2>%>
+<%#*<div class="prntrMsg">%>
+<%#*We’ve partnered with some amazing resources to help with your startup needs. Below are just a couple of them.%>
+<%#*</div>%>
+<%# @partners.each do |partner| %>
+<%#*<div class="prntrDv">%>
+<%#*<table width="100%">%>
+<%#*<tr>%>
+<%#*<td align="center" valign="middle" style="height:150px">%>
+<%#= link_to image_tag( partner.logo.url(:small), :alt => partner.company_name ), partner.url, :target => "_blank" %>
+<%#*</td>%>
+<%#*</tr>%>
+<%#*</table>%>
+<%#*</div>%>
+<%# end %>
+<%#*</div>%>

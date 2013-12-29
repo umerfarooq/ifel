@@ -1,0 +1,12 @@
+<%
+  w = (width.blank?) ? '635' : width
+  h = (height.blank?) ? '480' : height
+  p = (padding.blank?) ? '30' : padding
+%>
+<div style="z-index:0;  padding:<%= p %>;" class ="flvIe8">
+  <object width=<%= w %> height=<%= h %> id='flvPlayer'>
+  <param name='allowFullScreen' value='true' />
+  <param name='movie' value='/flvplayer/player.swf?movie=<%= video_path %>&bgcolor=0x1dbdbdb&fgcolor=0x1b75bb&volume=50&autoload=off&autoplay=on&autorewind=on&clickurl=&clicktarget=' />
+  <embed src='/flvplayer/player.swf?movie=<%= video_path %>&bgcolor=0x1dbdbdb&fgcolor=0x1b75bb&volume=5&autoload=off&autorewind=on&autoplay=on&clickurl=&clicktarget=' width=<%= w %> height=<%= h %> allowFullScreen='true' type='application/x-shockwave-flash' wmode="opaque" >
+ </object>
+</div>

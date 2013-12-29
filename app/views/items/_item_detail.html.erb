@@ -1,0 +1,228 @@
+<%#content_for :javascripts do%>
+<%#= javascript_include_tag 'ajaxupload'  %>
+<%#= javascript_include_tag 'ws.roadmap-dockbar'  %>
+<%= include_javascripts :ajaxupload, :dockbar %>
+<%#end%>
+
+<% section = item.section %>
+<div class="roadMapTitle marginTop" style="border-top: 1px solid #bebebf;">
+  <div class="stepTitle2" style="width:455px;">
+    <a id="btn_slide_0" class="btn-slide" onclick="toggleSectionPanel('<%= section.sequence_number.to_s %>');" href="JavaScript:void(0);">
+      <img src="/images/theme/down-arrow.png" id="slide_arrow_<%= section.id.to_s %>" /> <%= helper_section_name_suffixed_by_sequence section %> </a>
+    <span>| <%= sanitize section.title.to_s %></span>
+  </div>
+  <% section_percentage = "#{section.percent_completed.to_s}%" %>
+  <div class="percentageTitle"><span class="prcntgValueSmall"><%= section_percentage %> Completed</span>
+    <div class="percentBarSmall">
+      <%
+      if section.percent_completed.to_i == 100
+        smallPrcntBarClass = "smallPrcntBarGreen"
+      else
+        smallPrcntBarClass = "smallPrcntBar"
+      end
+    %>
+      <div class=<%=smallPrcntBarClass%> style="width:<%= section_percentage %>;">
+        <span class="smallBarLines"></span></div>
+    </div>
+  </div>
+  <div class="deadlineDate3">
+    <label class="deadlineTxt">Deadline:</label>
+    <div id="deadline_container_<%= section.id.to_s %>" class="secDeadline" >
+      <%= render :partial => "/projects/section_deadline", :locals => {:section => section} %>
+    </div>
+  </div>
+  <div class="roadmapPrint">
+    <%= link_to image_tag('chart-icon.png', :size => '21x19'), download_section_template_path(section.section_template) if section.section_template.chart.exists? %>
+    <%= link_to image_tag('print-icn.png'), print_notes_section_path(section), :target=>'_blank', :title => 'Print Notes' %>
+  </div>
+
+</div>
+
+<div class="sliderWrapper" id="action_items_panel_<%= section.sequence_number.to_s %>">
+  <div class="roadMapListItems">
+    <ol>
+      <%section.items.sequence_wise.each do|it|%>
+        <li><%= link_to sanitize(it.title), 'JavaScript:void(0);', :onclick=> "open_section_item('#{item_path(it)}');" %><span><img src="images/<%= helper_get_state_icon_name_roadmap it %>.png" /></span></li>
+      <%end%>
+    </ol>
+  </div>
+
+  <div class="videoStepWrapper">
+    <% if section.section_template.is_multimedia_video %>
+                          <!--<span id="step_image_<%#= section.sequence_number.to_s %>"><%#= image_tag "step-#{section.sequence_number.to_s}.gif", :onclick=>"showSectionVideo('#{section.sequence_number.to_s}');" %></span>
+                          <span id="step_video_<%#= section.sequence_number.to_s %>" class="dispNone"><%#= render :partial => 'shared/flvplayer', :locals => {:video_path => section.section_template.url_for_video_player, :width => '360', :height => '250', :padding => '0' } %></span>-->
+      <%= render :partial => '/shared/jwplayer', :locals => {:options => {:player_id=>"jw_player_#{section.sequence_number.to_s}", :video_file=>section.section_template.url_for_video_player, :image=>"/images/step-#{section.sequence_number.to_s}.gif"}} %>
+    <%else%>
+      <%= image_tag section.section_template.multimedia.url %>
+    <%end%>
+    <p><%= sanitize section.introduction %></p>
+  </div>
+
+  <div class="clear"></div>
+</div>
+
+<div class="rotator">
+  <ul>
+    <% unless helper_is_first_item?(item) %>
+      <li class="previousItem">
+        <% predecessor = helper_get_predecessor item %>
+        <a href="JavaScript:void(0);" onclick="open_section_item('<%= item_path(predecessor) %>', '<%= item.id.to_s %>');">Previous Action Item<br /><%=  helper_item_title_suffix_with_section_sequence predecessor %></a>
+      </li>
+    <% end %>
+    <% unless helper_is_last_item?(item) %>
+      <li class="nextItem">
+        <% successor = helper_get_successor item %>
+        <a href="JavaScript:void(0);" onclick="open_section_item('<%= item_path(successor) %>', '<%= item.id.to_s %>');">Next Action Item<br /><%= helper_item_title_suffix_with_section_sequence successor %></a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="roadMapInnerContent">
+  <h3>
+    <span>
+      <img id="item_status_icon" src="images/<%= helper_get_state_icon_name item %>.png" />
+    </span><%= helper_item_title_suffix_with_section_sequence(item) %>
+  </h3>
+  <div class="clear"></div>
+  <h4>Definition</h4>
+  <div class="boldContent">
+    <%= sanitize item.item_template.definition %>
+  </div>
+  <div class="sepLeft"></div>
+  <p>
+    <%= sanitize item.item_template.description  %>
+  </p>
+  <p>
+    <strong><%=  "WRITE '#{item.title.upcase}' HERE" %></strong>
+    <span id="add_text_notice" class="dispBlock" style="font-weight:bold;"></span>
+    <%= text_area_tag :user_answer, item.user_answer, :rows=>12, :cols=>80, :class=>"width600" %>
+    <%= link_to image_tag('theme/save-btn-new.png', :class=>'dispInline'),'JavaScript:void(0);', :onclick=>"addUserAnswer('#{update_answer_item_path(item)}');" %>
+    <%#= link_to image_tag('print-icn.png', :class=>'dispInline')+'PRINT', print_item_path(item), :target=>'_blank', :class => 'floatR' %>
+  </p>
+  <p>
+    <strong><%=  "Upload relevant '#{item.title}' files to your WickedStart account" %></strong>
+    <span id="upload_file_error" class="dispBlock" style="font-weight:bold;"></span>
+    <%= image_tag 'theme/upload-file-btn-small.png', :id => 'upload_file_btn', :class=>'marginTop5' %>
+  </p>
+</div>
+
+<div id="action_item_status_panel" class="actionItemStatus">
+  <%= render :partial => '/items/item_status_panel', :locals => {:item => item} %>
+</div>
+<!--<div class="roadmapPrint"><%#= link_to image_tag('print-icn.png')+'PRINT', print_item_path(item), :target=>'_blank' %></div>-->
+
+<!--<div class="toDoList">
+  <h3>YOUR TO-DO LIST</h3>
+  <p>Refer to the list below to complete this task.</p>
+  <ul>
+    <input type="checkbox" /><li>Read all of the material</li>
+    <input type="checkbox" /><li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+    <input type="checkbox" /><li>Donec rhoncus pharetra orci nec convallis. Maecenas lacinia aliquam neque nec sodales.</li>
+  </ul>
+  <p class="addCustom">Add Custom To-Do List Item</p>
+</div>-->
+
+<div class="actionItemStatus">
+  <span style="font-weight: bold; font-size: 15px;">Key Resources for this Action Step</span>
+  <%= link_to image_tag(helper_resource_snapshot(item), :class=>'resSnapShot'), 'JavaScript:void(0);', :onclick => "showResourceDockPanel();" %>
+</div>
+
+<%unless @community_activities.blank?%>
+  <div class="communityActivity">
+    <h3>Community Activity <span>[?]</span></h3>
+    <% @community_activities.each do |activity| %>
+      <div class="activityList">
+        <p class="title breakWord">
+          <%= link_to truncate(sanitize(activity.body),90), feedwall_path(:is_msg_partial=>true, :message_for_detail=>activity.id.to_s) %>
+        </p>
+        <p>
+          <% comments_count = activity.comments.count %>
+    <%# if comments_count > 0 %>
+          <%= link_to "#{(comments_count.to_s)} Response(s)", feedwall_path(:is_msg_partial=>true, :message_for_detail=>activity.id.to_s) %> |
+    <%#  end %>
+          Posted by <span class="linkishColor"><%= activity.user.screen_name %></span>
+        </p>
+        <p><%= sanitize("about #{activity.topic_name.to_s}") rescue '' %></p>
+        <p>on <%= ws_slash_separated_date_format activity.created_at.to_date %> at <%= ws_time_format activity.created_at.to_time %></p>
+      </div>
+    <%end%>
+    <div class="sepRight"></div>
+  </div>
+<%end%>
+
+
+<!--
+<div class="guidlines">
+  <h1><span>Guidelines:</span> Identity Your Competition</h1>
+  <div class="printDv"><a href="#"><img src="images/print-icn.png" />PRINT GUIDELINES</a><a href="#"><img src="images/share-icn.png" />SHARE</a></div>
+  <p class="qstnCompetator">1. Who are your top 3 competitors?</p>
+  <p class="fromField">
+    <label>Competitor 1</label>
+    <input type="text" class="txtFld" />
+  </p>
+  <p class="fromField">
+    <label>Competitor 1 website</label>
+    <input type="text" class="txtFld" />
+  </p>
+  <p class="fromField">
+    <label>Competitor 2</label>
+    <input type="text" class="txtFld" />
+  </p>
+  <p class="fromField">
+    <label>Competitor 2 website</label>
+    <input type="text" class="txtFld" />
+  </p>
+  <p class="fromField">
+    <label>Competitor 3</label>
+    <input type="text" class="txtFld" />
+  </p>
+  <p class="fromField">
+    <label>Competitor 2 website</label>
+    <input type="text" class="txtFld" />
+  </p>
+</div>
+<div class="guidlines">
+  <p class="qstnCompetator2">2. Additional questions/requirements along with answer options would follow.</p>
+  <p>Question 3 Answer Option (Upload File)</p>
+  <p><input type="text" class="txtFld" /></p>
+</div>
+<div class="guidlines">
+  <p class="qstnCompetator2">3. Additional questions/requirements along with answer input options would follow.</p>
+  <p>Question 3 Answer Option (Upload File)</p>
+  <p><a href="#"><img src="images/upload-file-btn.png" /></a></p>
+</div>
+<div class="saveLinks"><a href="#"><img src="images/save-icn.png" />Save</a> | <a href="#">Cancel</a></div>
+-->
+
+
+
+<div class="rotator borderTopDotted">
+  <ul>
+    <% unless helper_is_first_item?(item) %>
+      <li class="previousItem">
+        <% predecessor = helper_get_predecessor item %>
+        <a href="JavaScript:void(0);" onclick="open_section_item('<%= item_path(predecessor) %>', '<%= item.id.to_s %>');">Previous Action Item<br /><%=  helper_item_title_suffix_with_section_sequence predecessor %></a>
+      </li>
+    <% end %>
+    <% unless helper_is_last_item?(item) %>
+      <li class="nextItem">
+        <% successor = helper_get_successor item %>
+        <a href="JavaScript:void(0);" onclick="open_section_item('<%= item_path(successor) %>', '<%= item.id.to_s %>');">Next Action Item<br /><%= helper_item_title_suffix_with_section_sequence successor %></a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="sep"></div>
+
+<!--<div class="history">
+  <h4>History</h4>
+  <div class="historyRow">
+    <img src="images/answer-qstn-bnr.png" />
+    <p class="statusP">By <a href="#">Darlene Newman</a> <br /> Answered Questions 1, 3, and 5</p>
+    <p class="datedP">Jan. 04, 2011 @ 07:15 PM, EST</p>
+  </div>
+</div>-->
+<%= hidden_field_tag :item_id, item.id.to_s %>
+<%= render :partial => '/items/bottom_dock_bar', :locals => {:item => item} %>

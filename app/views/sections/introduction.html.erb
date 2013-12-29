@@ -1,0 +1,71 @@
+<%content_for :javascripts do%>
+  <script type="text/javascript">
+    section_opened = <%= @section.id %>;
+    $(document).ready(function(){
+      sectionReady(section_opened, "<%= @preceding %>", "<%= @following %>");
+    });
+  </script>
+<%end%>
+<div id="liteBx-wrapper">
+  <div id="liteBx-Cntainer">
+    <div class="liteBxBdy" >
+      <div class="liteBxTtl">
+        <h1>
+          <strong>
+            <%=h @section.project.business_name %>
+          </strong>
+          <br />
+<%#*<span class="business-name">%>
+<%#= @section.project.business_name %>
+<%#*</span>%>
+<%#*<span class="section-info">%>
+<%#= "Section #{@section.name}: #{@section.title}" %>
+<%#*</span>%>
+          <div class="clear"></div>
+          <%=h "#{@section.name}: #{@section.title} - #{@section.title_comment}" %>
+        </h1>
+      </div>
+      <div class="liteBxCntnt2">
+        <div class="liteBxLft">
+          <h1>Section Introduction</h1>
+          <h5>WHAT THIS SECTION COVERS</h5>
+          <p class="litBxTxt">
+            <%= @section.introduction %>
+          </p>
+        </div>
+        <div class="liteBxRit">
+          <% if @section.section_template.is_multimedia_video %>
+            <div style="z-index:0;  ">
+              <object width='400' height='270' id='flvPlayer'>
+                <param name='allowFullScreen' value='true' />
+  <%#= "<param name='movie' value='/flvplayer/player.swf?movie=#{@section.section_template.multimedia.url(:original, false)}&bgcolor=0xff7800&fgcolor=0x7ef54f&volume=50&autoload=on&autorewind=on&clickurl=&clicktarget=' />" %>
+  <%#= "<embed src='/flvplayer/player.swf?movie=#{@section.section_template.multimedia.url(:original, false)}&bgcolor=0xff7800&fgcolor=0x7ef54f&volume=50&autoload=on&autorewind=on&clickurl=&clicktarget=' width='400' height='240' allowFullScreen='true' type='application/x-shockwave-flash' >" %>
+                <%= "<param name='movie' value='/flvplayer/player.swf?movie=#{@section.section_template.url_for_video_player}&bgcolor=0xff7800&fgcolor=0x7ef54f&volume=50&autoload=on&autorewind=on&clickurl=&clicktarget=' />" %>
+                <%= "<embed src='/flvplayer/player.swf?movie=#{@section.section_template.url_for_video_player}&bgcolor=0xff7800&fgcolor=0x7ef54f&volume=50&autoload=on&autorewind=on&clickurl=&clicktarget=' width='400' height='240' allowFullScreen='true' type='application/x-shockwave-flash' >" %>
+              </object>
+            </div>
+          <% else %>
+            <%= image_tag @section.section_template.multimedia.url %>
+          <% end %>
+        </div>
+        <div class="litBxStats">
+          NUMBER OF CHECKLIST ITEMS: <%= @section.item_count%><br />
+          PERCENT OF TOTAL: <%= @section.items.sum(:percent) %>%
+        </div>
+        <% form_for @section do |f| %>
+          <div class="litBxCntBtm">
+            <%= f.check_box :do_not_show_intro %>
+            <%= f.label :do_not_show_intro, "DO NOT SHOW THIS WINDOW AGAIN" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="litBxFtr">
+    <span class="ltBxFtrLnks">
+      <%= link_to "<< Previous", @preceding, :id => "previous_item_link" %>
+      | Section Introduction |
+      <%= link_to "Next >>", @following, :id => "next_item_link" %>
+    </span>
+  </div>
+</div>

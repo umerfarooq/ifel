@@ -1,0 +1,38 @@
+<%= javascript_include_tag 'jscolor/jscolor'  %>
+<%= render :partial => "admins/admin_client_information_menu", :locals => { :active_admin_client_information_tab => :design_tab } %>
+<h4>DESIGN</h4>
+<br />
+<table>
+  <%unless @configurations.blank?%>
+    <% form_for @configurations, :html => {:multipart => true} do |f| %>
+      <tr>
+        <td><%= f.label :logo %>:</td>
+        <td>
+          <%= image_tag @configurations.logo.url(:header) unless @configurations.logo.blank? %>
+          <br />
+          <%= f.file_field :logo %>
+        </td>
+      </tr>
+      <!--<tr>
+        <td><%#= f.label :color_scheme %>:</td>
+        <td><%#= f.text_field :color_scheme, :class => 'color {hash:true,caps:false}' %></td>
+      </tr>-->
+      <tr>
+        <td><%= f.label :bg_color, 'Background Color:' %></td>
+        <td><%= f.text_field :bg_color, :class => 'color {hash:true,caps:false}' %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :headline_font, 'Headline Font' %>:</td>
+        <td><%= f.select :headline_font, options_for_select(font_options, @configurations.headline_font.to_s),{:include_blank => true}, :class=>'width222px' %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :text_font, 'Text Font' %>:</td>
+        <td><%= f.select :text_font, options_for_select(font_options, @configurations.text_font.to_s),{:include_blank => true}, :class=>'width222px' %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= f.submit %></td>
+      </tr>
+      
+    <%end%>
+  <%end%>
+</table>

@@ -1,0 +1,60 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "jquery-1.4.2.min" %>
+  <%#= javascript_include_tag "nicEdit" %>
+  <script type="text/javascript">
+    //$(document).ready(function (){
+    //  item_template_definition_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('item_template_definition');
+    //});
+  </script>
+<% end %>
+
+<%if params[:type] == 'wibo' %>
+  <%= render :partial => "admins/admin_roadmap_menu", :locals => { :active_admin_roadmap_tab => :wibo_roadmap_tab } %>
+<%else%>
+  <%= render :partial => "admins/admin_roadmap_menu", :locals => { :active_admin_roadmap_tab => :ifel_roadmap_tab } %>
+<%end%>
+
+<div class="admnRitCol">
+  <h3>Add New Item Template</h3>
+  <br />
+
+  <% form_for @item_template do |f| %>
+    <%= f.error_messages :header_message => nil, :message => nil %>
+    <p>
+      <%= f.label :section_template_id, "Section Template" %> <br />     
+      <%= f.collection_select(:section_template_id, @section_templates, :id, :name, {:prompt => true}) %>
+    </p>
+    <p>
+      <%= f.label :title %> <br />
+      <%= f.text_field :title %>
+    </p>
+    <p>
+      <%= f.label :definition %> <br />
+      <%= f.text_area :definition, :size => "100x10", :class => "adminEditor" %>
+    </p>
+    <p>
+      <%= f.label :description %> <br />
+      <%= f.text_area :description, :size => "100x10", :class => "adminEditor" %>
+    </p>
+    <p>
+      <%= f.label :percent %> <br />
+      <%= f.text_field :percent %>
+    </p>
+    <p>
+      <%= f.check_box :has_textbox %>
+      <%= f.label :has_textbox %>
+    </p>
+    <p>
+      <%= f.check_box :has_upload %>
+      <%= f.label :has_upload %>
+    </p>
+    <p>
+  <%#= f.hidden_field :section_template_id, :value => @item_template.section_template_id %>
+      <%#= f.hidden_field :section_template_id %>
+      <%= f.submit :add %>
+    </p>
+    <p>
+      <%= link_to '<< Back', url_for(:back) %>
+    </p>
+  <% end %>
+</div>

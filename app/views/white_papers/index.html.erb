@@ -1,0 +1,31 @@
+<% title "White Papers About Starting a New Business" %>
+<% meta "White papers with guides, information and tips for starting a new business." %>
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" unless current_user %>
+
+  <h1>ABOUT US</h1>
+
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :white_papers} %>
+
+  <div id="contentLarge">
+    <div class="newsCategory1">
+      <% @white_papers.each do |white_paper| %>
+        <% content_tag :div, :class => "news #{'noBorder noMargin' if(white_paper == @white_papers.last)}" do %>
+          <strong>
+            <%= white_paper.title %>
+          </strong>
+          <p>
+            <%= white_paper.summary %>
+            <br />
+            <%= link_to("Download", white_paper.paper.url, :target => '_blank') if white_paper.paper.file? %>
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <%= render :partial => "shared/aboutus_sidebar_events", :locals => { :upcomming_events => @upcomming_events } %>
+
+</div> <!-- End of Sub page Wrapper -->
+

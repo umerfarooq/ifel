@@ -1,0 +1,40 @@
+<% content_for :ads do %>
+  <span class="ad1">
+    <%= image_tag "AD - Inspiration - JapaneseTree 150px.jpg", :alt => "Inspiration Image" %>
+  </span>
+<% end %>
+
+<div class="cmpltStoryDv" style="padding-top:0px;">
+  <%#*<p>%>
+    <%#= link_to '<< Back', url_for(:back) %>
+  <%#*</p>%>
+  <%#*<span class="storyPic2" style="padding: 5px; font-size: 10px; text-align: center; border: none;">%>
+  <span class="storyPic2">
+    <%#= image_tag @success_story.logo.url(:medium), :style => "border: 1px solid #CCCCCC; margin-bottom: 10px; " %>
+    <%= image_tag @success_story.logo.url(:medium) %>
+    <%#= @success_story.company_name %>
+    <%#= @success_story.name %>
+    <%#= @success_story.title %>
+    <%= "#{@success_story.name}, #{@success_story.title}" %>
+  </span>
+  <h3>
+    <%#= @success_story.company_name.upcase %>
+    <%#= @success_story.name.upcase %>
+    <%#= @success_story.title.upcase %>
+    <%= "#{@success_story.name}, #{@success_story.title}".upcase %>
+  </h3>
+<%#= auto_link @success_story.description %>
+<%#= auto_link @success_story.description, :href_options => { :target => "_blank" } %>
+  <%= auto_link @success_story.description, :urls, :target => "_blank" %>
+  <br />
+  <br />
+  <% unless @success_story.url.blank? %>
+  <%#= auto_link @success_story.url %>
+    <%= link_to @success_story.url, @success_story.url, :target => "_blank" %>
+    <br />
+    <br />
+  <% end %>
+  <%#= link_to image_tag("join-btn.gif", :alt => "Join Now"), signup_path, :class => "btn" %>
+  <%= link_to image_tag("free-trial-orange.jpg", :alt => "Sign Up"), signup_path, :class => "btn" if current_user.blank? %>
+  <br />
+</div>

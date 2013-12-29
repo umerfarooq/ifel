@@ -1,0 +1,52 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "nicEdit" %>
+
+  <script type="text/javascript">
+    $(document).ready(function (){
+      example_description_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('example_description');
+    });
+  </script>
+<% end %>
+
+<h2>Edit Example</h2>
+<br />
+
+<% form_for @example, :url => item_template_example_path(@example.item_template, @example), :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.label :name %>
+    <br />
+    <%= f.text_field :name, :size => "100" %>
+  </p>
+  <%#*<p>%>
+  <%#= f.label :example_category %>
+  <%#*<br />%>
+  <%#= f.collection_select(:example_category_id, ExampleCategory.find_all_by_state_id(State.find_by_name('publish').id), :id, :title, {:prompt => true}) %>
+  <%#*</p>%>
+  <p>
+    <%= f.label :description %>
+    <br />
+    <%= f.text_area :description, :size => "100x20" %>
+  </p>
+  <p>
+    Original Document
+    <br />
+    <%= link_to @example.document.original_filename, @example.document.url, :target => "_blank" %>
+    <br />
+    <%= f.label :document, "Replace document" %>
+    <br />
+    <%= f.file_field :document %>
+  </p>
+  <p>
+    <%= f.label :search_terms %>
+    (Seperated by spaces)<br />
+    <%= f.text_field :search_terms, :size => "100" %>
+  </p>
+  <p>
+    <%= f.submit :update %>
+  </p>
+  <%#*<p>%>
+  <%#= link_to '<< Back', url_for(:back) %>
+  <%#*</p>%>
+<% end %>
+

@@ -1,0 +1,37 @@
+<%= render :partial => "admins/admin_profile_menu", :locals => { :active_admin_profile_tab => :registration_codes } %>
+<div class="admnRitCol">
+  <h4>Registration Codes
+    |
+    <%= link_to "Add Registration Code", new_registration_code_path %>
+  </h4>
+
+  <table style="width: 100%;">
+    <tr style="text-align: left;">
+      <th style="width: 25%;">CODE</th>
+      <th style="width: 25%;">DESCRIPTION</th>
+      <th style="width: 10%;">VALID FROM</th>
+      <th style="width: 10%;">VALID TO</th>
+      <th style="width: 30%;">AVAILABLE ACTIONS</th>
+    </tr>
+
+    <% @registration_codes.each do |registration_code| %>
+      <tr>
+        <td style="width: 25%;"><%=h registration_code.code %></td>
+        <td style="width: 25%;"><%=h registration_code.description %></td>
+        <td style="width: 10%;"><%=h registration_code.valid_from %></td>
+        <td style="width: 10%;"><%=h registration_code.valid_to %></td>
+        <td style="width: 30%;">
+          <%= link_to 'Edit', edit_registration_code_path(registration_code) %>
+          |
+          <% if registration_code.state.is_activated? %>
+            <%= link_to 'INACTIVATE', inactivate_registration_code_path(registration_code) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_registration_code_path(registration_code) %>
+          <% end %>
+          |
+          <%= link_to 'Destroy', registration_code, :confirm => 'Are you sure?', :method => :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

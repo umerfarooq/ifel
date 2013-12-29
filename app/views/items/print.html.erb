@@ -1,0 +1,72 @@
+<style>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  #Playout {
+    width: 900px;
+    margin: auto;
+    font-family: inherit;
+  }
+  #Pheader {
+    height: 170px;
+    margin-bottom: 15px;
+  } 
+  .Plogo{
+    float: left;
+    width: 340px;
+    padding: 10px;
+
+  }
+  .Pmid{
+    float: left;
+    width:400px;
+    padding: 10px;
+  }
+  .Pdate{
+    float: left;
+    width: 100px;
+    padding: 10px;
+  }
+  #Pcontent {
+    padding: 10px;
+  }
+  
+  #Pcontent p {
+    margin-bottom: 10px;
+  }
+  
+  .PsectionHeading { font-weight: bold; font-size: 18px;}
+  .PitemHeading { font-weight: bold; font-size: 16px;}
+
+</style>
+
+<body onload="javascript:window.print();">
+  <div id="Playout">
+
+    <div id="Pheader">
+      <div class="Plogo"><%= (image_tag @current_user.company.logo.url(:profile_view) if @current_user.company.logo.exists?(:profile_view) ) if @current_user.company.present? %></div>
+      <div class="Pmid"><%= image_tag @current_user.business_idea %></div>
+      <div class="Pdate"><%= ws_date_format(Date.today).to_s %></div>  
+    </div>  
+
+    <div id="Pcontent">
+      <p class="PsectionHeading"><%= @section.title.to_s %></p>
+      <% @section.items.each do |item| %>
+        <% if item.user_answer.present? %>
+          <p class="PitemHeading"><%= item.title.to_s %></p>
+          <p><%= item.user_answer %></p>
+        <%end%>
+      <%end%>
+    </div>
+
+  </div>
+</body>
+
+<script type="text/javascript">
+  function printDoc() {
+    document.getElementById("divPrintBtn").style.display = 'none';
+    window.print();
+    window.close();
+  }
+</script>

@@ -1,0 +1,19 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "jquery-1.4.2.min" %>
+  <%= javascript_include_tag "nicEdit" %>
+<% end %>
+
+<% content_for :head do %>
+  <script type="text/javascript">
+    $(document).ready(function (){
+      faq_answer_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('faq_answer');
+    });
+  </script>
+<% end %>
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :faqs_tab } %>
+<div class="admnRitCol">
+  <h2>Add New Faq</h2>
+  <%= render :partial => 'form' %>
+</div>
+
+

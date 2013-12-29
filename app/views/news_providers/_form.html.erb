@@ -1,0 +1,90 @@
+<% form_for(news_provider, :html => { :multipart => true }) do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.check_box :is_rss_provider %>
+    <%= f.label :is_rss_provider %>
+  </p>
+  <p>
+    <%= f.label :title %>
+    <br />
+    <%= f.text_field :title, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :url %>
+    <br />
+    <%= f.text_field :url, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :rss_link %>
+    <br />
+    <%= f.text_field :rss_link %>
+  </p>
+  <p>
+    <%= f.label :feed_count, "On The Radar Feeds Count" %>
+    <br />
+    <%= f.text_field :feed_count %>
+  </p>
+  <p>
+    <%= f.label :front_module_count, "Front Module Feeds Count" %>
+    <br />
+    <%= f.text_field :front_module_count %>
+  </p>
+  <p>
+    <%= f.label :logo %>
+    <br />
+    <%= f.file_field :logo %>
+  </p>
+  <p>
+    <%= f.label :image_display_size %>
+    <br />
+    <%#= f.text_field :image_display_size %>
+    <%= f.select(:image_display_size, NewsProvider.size_list, :include_blank => '') %>
+  </p>
+
+  <h1>News Provider's Feed Attributes</h1>
+  <span>Please open up the Feeder URL, and paste here the respective required attribute names.<br /> (*) are mandatorily required.</span>
+  <p>
+    *<%= f.label :feed_title %>
+    <br />
+    <%= f.text_field :feed_title, :size => "75" %>
+  </p>
+  <p>
+    *<%= f.label :feed_summary %>
+    <br />
+    <%= f.text_field :feed_summary, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :feed_description %>
+    <br />
+    <%= f.text_field :feed_description, :size => "75" %>
+  </p>
+  <p>
+    *<%= f.label :feed_link %>
+    <br />
+    <%= f.text_field :feed_link, :size => "75" %>
+  </p>
+  <p>
+    *<%= f.label :feed_published_at, 'Feed Date' %>
+    <br />
+    <%= f.text_field :feed_published_at, :size => "75" %>
+  </p>
+  <p>
+    *<%= f.label :feed_guid, "Feed guid (It appears as 'id' or 'guid' in the Feeds)" %>
+    <br />
+    <%= f.text_field :feed_guid, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :feed_city %>
+    <br />
+    <%= f.text_field :feed_city, :size => "75" %>
+  </p>
+  <p>
+    <%= f.label :feed_geo_state %>
+    <br />
+    <%= f.text_field :feed_geo_state, :size => "75" %>
+  </p>
+
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>

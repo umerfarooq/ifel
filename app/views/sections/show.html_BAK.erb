@@ -1,0 +1,86 @@
+<div id="liteBx-Cntainer">
+
+  <div class="liteBxTop"></div>
+
+  <div class="liteBxBdy" style="height:550px;">
+    <div class="liteBxTtl">
+      <h1>
+        <strong>
+          <%= @section.project.business_name %>
+        </strong>
+        <br />
+        SECTION OVERVIEW
+      </h1>
+<%#*<span class="closBtn"><a href="#"><img src="/images/close-btn.jpg" alt="" /></a></span>%>
+    </div>
+    <div class="liteBxCntnt">
+      <table border="0" cellpadding="0" cellspacing="0" class="ovrViewTbl">
+        <tr>
+          <th width="78%">SECTION</th>
+          <th width="14%">DUE DATE</th>
+          <th width="8%">STATUS</th>
+        </tr>
+        <tr>
+          <td colspan="3">
+<%# @section.each do |section| %>
+            <table width="200" border="0" cellpadding="0" cellspacing="0" class="ovrViewDtl">
+              <tr>
+                <td colspan="2" style="border:none;">
+                  <h4>
+                    <%= @section.title%>
+                  </h4>
+                </td>
+                <td width="14%" style="border:none;">
+                  <% if @section.due_date.blank? %>
+                    N/A
+                  <% else %>
+                    <%= @section.due_date.strftime("%m/%d/%Y").upcase %>
+                  <% end %>
+                </td>
+                <td width="8%" style="border:none; text-align:center;">
+                  <% if @section.items_completed_count.to_f/@section.item_count.to_f == 1 %>
+                    <%= image_tag "icons/good.jpg", :alt => "COMPLETE", :width =>"20", :height => "20" %>
+                  <% else %>
+                    <%= image_tag "icons/cancel.jpg", :alt => "INCOMPLETE", :width =>"20", :height => "20" %>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td width="3%" valign="top">
+<%#*<img src="/images/icons/good2.jpg" alt="" width="12" height="12" />%>
+                </td>
+                <td width="75%">
+                  SECTION
+                  <%= @section.name %>
+                  INTRODUCTION
+                </td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <% @section.items.each do |item| %>
+                <tr>
+                  <td valign="top">
+                    <% if item.is_complete || item.is_not_applicable %>
+                      <%= image_tag "icons/good.jpg", :alt => "COMPLETE", :width =>"12", :height => "12" %>
+                    <% else %>
+                      <%= image_tag "icons/cancel.jpg", :alt => "INCOMPLETE", :width =>"12", :height => "12" %>
+                    <% end %>
+                  </td>
+                  <td colspan="3" valign="top">
+                    <h6>
+                      <%= item.title %>
+                    </h6>
+                  </td>
+                </tr>
+              <%end%>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="litBxFtr" style="padding-right:20px; padding-left:0px; height:50px;">
+      <a href="#"><img src="/images/print-btn.jpg" alt="" /></a>
+    </div>
+  </div>
+  <div class="litebxBtm"></div>
+</div>

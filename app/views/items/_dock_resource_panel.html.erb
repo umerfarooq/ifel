@@ -1,0 +1,40 @@
+<div class="filesColLeft">
+  <h2>Resources</h2>
+  <% unless resources.blank? %>
+    <div class="filesList">
+      <ul>
+        <% resources.each do |resource| %>
+          <li>
+            <a href="JavaScript:void(0);" id="resource_opener_<%= resource.id.to_s %>" onclick="showPanel('<%= resource.id.to_s %>', 'resource');">
+              <%=  image_tag helper_get_file_extension(resource.content_file_name) %>
+              <p><%= truncate(sanitize(resource.title), 80) %></p>
+              <!--<p><span class="name">W. Chan Kim</span></p>-->
+            </a>
+          </li>
+        <%end%>
+      </ul>
+    </div>
+  <%else%>
+    <div class="marginTop10">
+      No Matching Selection Available for this Action Item
+    </div>
+  <%end%>
+</div>
+<% unless resources.blank? %>
+  <% resources.each_with_index do |resource,index| %>
+    <div class="filesColRight <%= (index!=0) ? 'dispNone' : '' %>" id="resource_panel_<%= resource.id.to_s %>">
+      <div class="iconCol">
+        <%= image_tag (resource.content.exists?(:resource_library)) ? resource.content.url(:resource_library) :  helper_get_file_extension_big_icon(resource.content_file_name)%>
+        <%= helper_get_appropriate_resource_panel_action(resource, section) %>
+        <!--<a href="#"><img src="images/add-library-btn.png" /></a>
+        <a href="#"><img src="images/share-btn.png" /></a>-->
+      </div>
+      <div class="filesDetailCom">
+        <h3><%= sanitize(resource.title) %></h3>
+        <div class="<%= helper_resource_description_exceeding_allowed_height?(resource.description) ?'overflow':''  %>">
+          <%= sanitize(resource.description) %><%#= truncate(sanitize(resource.description), :length => 500, :omission => "#{link_to ' (more)...', ((resource.is_service_provider_type?) ? "/resources/service_provider" : "/resources/resource_library"), :target=>'_blank'}") %>
+        </div>
+      </div>
+    </div>
+  <%end%>
+<%end%>

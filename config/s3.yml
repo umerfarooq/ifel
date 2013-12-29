@@ -1,0 +1,18 @@
+#common: &common
+#  access_key_id: AKIAJRNDJOIKUCP7LTUA
+#  secret_access_key: 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
+
+development:
+  access_key_id: AKIAJRNDJOIKUCP7LTUA
+  secret_access_key: 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
+  bucket: dev-wickedstart
+#  bucket: app-name-development
+
+#test:
+#  <<: *common
+#  bucket: app-name-test
+#
+#production:
+#  <<: *common
+#  bucket: app-name-production
+#

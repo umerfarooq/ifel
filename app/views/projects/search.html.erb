@@ -1,0 +1,48 @@
+<%# content_for :head do %>
+<%#= javascript_include_tag "jquery-1.4.2.min" %>
+<%#= javascript_include_tag 'jquery.colorbox-min' %>
+<%#= javascript_include_tag 'jquery.colorbox' %>
+<%#= javascript_include_tag 'ajaxupload' %>
+<%#= javascript_include_tag 'si.files' %>
+<%#= javascript_include_tag 'application' %>
+<%#= stylesheet_link_tag 'colorbox' %>
+<%#*<script type="text/javascript">%>
+<%#*$(document).ready(function (){%>
+<%#*$("a#search_result_item").click(function (event) {%>
+<%#*//$("#sections_date_view_span").show();%>
+<%#*event.preventDefault();%>
+<%#*});%>
+<%#*});%>
+<%#*</script>%>
+<%# end %>
+
+<div class="cmntyTtlDv">
+  <h3>Search Results</h3>
+</div>
+<div class="radarDv">
+  <% if @search_results.blank? %>
+    Your search -
+    <b>
+      <%#= params[:keyword] %>
+      <%= @query %>
+    </b>
+    - did not match any results.
+  <% else %>
+    <% @search_results.each do |result| %>
+      <div class="radarTxt">
+        <h5>
+          <%= "#{result.class.name} : #{(result.class == Comment) ? result.message.title : result.title}" %>
+          <%#*<span class="srchType">Technology News</span>%>
+        </h5>
+        <p class="radarDte">
+          <%= result.updated_at %>
+        </p>
+        <p class="radarBdy">
+          <%= truncate( helper_get_summary(result), :length => SEARCH_RESULT_LENGTH) %>
+          <%= link_to ">>", helper_get_link(result) , :class => 'search_result_item', :target => helper_get_target(result) %>
+        </p>
+      </div>
+    <% end %>
+    <%= will_paginate @search_results %>
+  <% end %>
+</div>

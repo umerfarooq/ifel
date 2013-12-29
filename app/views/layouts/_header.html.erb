@@ -1,0 +1,15 @@
+<div class="header">
+  <span class="logo">
+    <%= link_to image_tag((configurations.logo.exists?(:header)) ? configurations.logo.url(:header) : 'wibo-logo.jpg'), root_url %>
+  </span>
+  <span class="fstName">
+    <%= 'Welcome ' + current_user.screen_name if current_user %>
+  </span>
+  <span class="signLnks">
+    <%= link_to "My Profile |", edit_user_path(current_user) if current_user %>
+
+    <%= link_to "Get Help", GET_SATISFACTION_PATH, :target => '_blank' %>
+
+    <%= link_to "| Sign Out", logout_path, :method => 'delete' if current_user%>
+  </span>
+</div> 

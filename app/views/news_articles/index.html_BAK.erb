@@ -1,0 +1,131 @@
+<% content_for :ads do %>
+  <span class="ad1">
+    <%= image_tag "ontheradarnew150px.jpg", :alt => "On The Radar Image" %>
+  </span>
+<% end %>
+
+<div class="whitpprDv">
+  <h3>WHITE PAPER / CASE STUDIES</h3>
+  <br />
+  <% if @white_papers.blank? %>
+    <% if @message_no_wp.blank? %>
+      No white paper available to display.
+    <% else %>
+      <%= @message_no_wp.content %>
+    <% end %>
+  <% else %>
+
+  <%#= render :partial => 'news_items/white_paper', :collection => @white_papers %>
+    <% for white_paper in @white_papers %>
+      <div class="whitPprLst">
+        <strong>
+          <%= white_paper.title %>
+        </strong>
+        <p>
+          <%= white_paper.summary %>
+          <% if white_paper.paper.file? %>
+            <%= link_to "Download", white_paper.paper.url, :target => '_blank' %>
+          <% end %>
+        </p>
+      </div>
+    <% end %>
+
+  <% end %>
+<%#= link_to_if (@query != 'white_papers')&&(ON_THE_RADAR_WHITE_PAPER_COUNT < @white_paper_max_count), "see  all", news_items_path(:query => 'white_papers'), :class => 'seeAll' %>
+  <%= link_to "see all", white_papers_path, :class => 'seeAll' if @white_paper_max_count > ON_THE_RADAR_WHITE_PAPER_COUNT %>
+</div>
+
+<% if current_user %>
+  <div class="wckdNews">
+    <% if @rss_providers.blank? %>
+
+      <% if @message_no_rf.blank? %>
+        No rss feeds available to display.
+      <% else %>
+        <%= @message_no_rf.content %>
+      <% end %>
+
+    <% else %>
+
+        <% @feeds.each do |feed| %>
+        <%#*<h3>%>
+          <%#= feed[:rss_provider].name %>
+        <%#*</h3>%>
+          <div class="newsDv">
+            <span class="newsImg">
+              <%= image_tag feed[:rss_provider].logo.url(:small) %>
+            </span>
+            <span class="newz" style="width: 675px;">
+              <strong>
+                <%= "#{feed[:title]}:" %>
+              </strong>
+              <%= feed[:pubDate].strftime("%B %d, %Y") %><br />
+              <%#= feed[:description] %>
+              <%#= truncate(sanitize(feed[:description], :tags => %w(a em b i strong p br)), :length => ON_THE_RADAR_FEED_LENGTH) %>
+              <%= truncate(strip_tags(feed[:description]), :length => ON_THE_RADAR_FEED_LENGTH) %>
+              <%= link_to "Read more >>", feed[:link], :target => "_blank" %>
+            </span>
+          </div>
+        <% end %>
+    <% end %>
+<%= will_collection_paginate%>
+  </div>
+
+<% else %>
+
+  <div class="wckdNews">
+
+    <h3>WICKED START IN THE NEWS</h3>
+
+    <% if @news_articles.blank? %>
+
+      <% if @message_no_na.blank? %>
+        No news article available to display.
+      <% else %>
+        <%= @message_no_na.content %>
+      <% end %>
+
+    <% else %>
+
+    <%#= render :partial => 'news_items/news_article', :collection => @news_articles %>
+      <% for news_article in @news_articles %>
+      <%# @news_articles.each do |news_article| %>
+        <div class="newsDv">
+          <span class="newsImg">
+            <%= image_tag news_article.news_provider.logo.url(:small) %>
+          </span>
+          <span class="newz">
+            <strong>
+              <%= "#{news_article.headline}:" %>
+            </strong>
+            <%= news_article.news_date.strftime("%B %d, %Y") %>
+            <br />
+            <%= news_article.summary %>
+            <%= link_to "Read more >>", news_article.url, :target => "_blank" %>
+            <br />
+          </span>
+        </div>
+      <% end %>
+
+    <% end %>
+  </div>
+
+<% end %>
+
+<div class="whitPprLst" style="padding-top: 50px;">
+  <strong>
+    FOR MEDIA / PRESS INQUIRIES:
+  </strong>
+  <p style="margin-top: 0;">
+    <strong>
+      JS2 Communications
+    </strong>
+    <br />
+    Elizabeth Cahill
+    <br />
+    (212) 905-6287
+  </p>
+  <a HREF="mailto:ecahill@js2comm.com">ecahill@js2comm.com</a>
+</div>
+
+

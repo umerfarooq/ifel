@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>WickedStart</title>
+  </head>
+
+  <body>
+    <a href="http://www.wickedstart.com">
+      <img src="http://www.wickedstart.com/images/logo.jpg" border="0" alt="WICKEDSTART" />
+    </a>
+    <p style="font-family:Trebuchet MS, Arial, Helvetica, sans-serif; font-size:13px; color:#333333;">
+      <b>YOUR ONLINE GUIDE FOR STARTING A BUSINESS</b>
+    </p>
+    <hr noshade size="1" color="#226DC8" />
+
+    <p><font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#363636">Dear <%= @user.first_name %> <%= @user.last_name %>,</font></p>
+
+    <p><font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#FA9B31"><strong>Thank you for using Wicked Start!</strong></font> <font face="'Trebuchet MS',Arial,Helvetica,sans-serif" size="-1" color="#363636">We're happy to be a part of your journey to start a business.</font></p>
+
+
+
+    <p><font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#363636">
+        This is an invoice confirming your subscription for your <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#FA9B31"><strong>Wicked Start</strong></font> account. Your credit card
+        (-<%= @user.credential.card_last_four_digits %>) has been charged $<%= @user.promo_code.recurring_fee %><br />
+        This charge provides access to your account for 30 days until <%= (Date.today + 1.month).strftime("%B %e, %Y").upcase %>. On this date, your credit card
+        will automatically be charged $<%= @user.promo_code.recurring_fee %> for the next 30 days.<br />
+        ============================================================<br />
+        <strong>INVOICE</strong><br />
+        <%= Date.today %> Transaction ID: <%= @user.credential.transaction_id %><br />
+        ............................................................<br />
+        <strong>IMPORTANT NOTE:</strong><br />
+        The charge will appear on your credit card statement as <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#FA9B31"><strong>"Wicked Start”</strong></font><br />
+        Bill to:<br />
+        <%= @user.first_name %> <%= @user.last_name %><br />
+        Quantity Description Price<br />
+        ---------------------------------------------------------------------------------------------<br />
+        30-Day Wicked Start Account Continuation Fee $<%= @user.promo_code.recurring_fee %><br />
+        From <%= (Date.today).strftime("%B %e, %Y").upcase %> to <%= (Date.today + 1.month).strftime("%B %e, %Y").upcase %> <br />
+        =====================<br />
+        Amount PAID: $<%= @user.promo_code.recurring_fee %><br />
+        Credit card billed: XXXX-XXXX-XXXX-<%= @user.credential.card_last_four_digits %><br />
+        ============================================================<br />
+        <strong>WANT TO CHANGE YOUR CREDIT CARD OR ANY OTHER BILLING RELATED INFORMATION?</strong><br />
+        You can change your billing information by logging on to your account at <a href="http://www.wickedstart.com"><font face="'Trebuchet MS',Arial,Helvetica,sans-serif" size="-1" color="#FA9B31"><strong>www.wickedstart.com</strong></font></a><br />
+        <strong>QUESTIONS OR CONCERNS?</strong><br />
+        If you have any billing related questions, please email us at <font face="'Trebuchet MS',Arial,Helvetica,sans-serif" size="-1" color="#FA9B31">
+          <strong>
+            <%= link_to "billing@WIBO.WickedStart.com", "mailto:billing@WIBO.WickedStart.com", :style => "color:#FA9B31; text-decoration:none;" %>
+          </strong>
+        </font><br />
+
+
+<%#*We're excited that you're about helping you launch your business. You'll discover that it's the most comprehensive approach to walking you through the steps of starting a business, giving you necessary resources and templates to assist you along the way.%>
+    </p><br /><br />
+
+    <p>
+      <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#000000">Sincerely,<br /><br />
+        The Wicked Start Team</font> <br /><br />
+      <!--<a href="http://www.wickedstart.com/privacy_policy"><font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#FA9B31"><strong>Privacy Policy</strong></font></a>-->
+    </p><br />
+
+    <p>
+      <table cellpadding="10" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td bgcolor="#fa9b31" align="center">
+            <a style="color:#ffffff;">
+              www.wickedstart.com
+            </a>
+          </td>
+        </tr>
+      </table>
+    </p>
+
+
+
+  </body>
+</html>

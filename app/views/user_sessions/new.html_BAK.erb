@@ -1,0 +1,173 @@
+<% content_for :head do %>
+  <%#= javascript_include_tag "jquery-1.4.2.min" %>
+     <script type="text/javascript">
+        function dLoginFocus() {
+          document.getElementById('dlogin').style.display = 'none';
+          document.getElementById('dlogin').blur();
+          document.getElementById('login').value = "";
+          document.getElementById('login').style.display = 'block';
+          document.getElementById('login').focus();
+        }
+        function dPasswordFocus() {
+          document.getElementById('dpassword').style.display = 'none';
+          document.getElementById('dpassword').blur();
+          document.getElementById('password').value = "";
+          document.getElementById('password').style.display = 'block';
+          document.getElementById('password').focus();
+        }
+        function LoginBlur() {
+          //(document.getElementById('user_session_login').getAttribute('value').length == 0)
+          //(document.login_form.user_session_login.value == null || document.login_form.user_session_login.value == "")
+          if (document.getElementById('login').value == null ||
+            document.getElementById('login').value == "") {
+            document.getElementById('login').style.display = 'none';
+            //document.getElementById('user_session_login').blur();
+            document.getElementById('dlogin').style.display = 'block';
+          }
+        }
+        function PasswordBlur() {
+          if (document.getElementById('password').value == null ||
+            document.getElementById('password').value == "") {
+            document.getElementById('password').style.display = 'none';
+            //document.getElementById('user_session_password').blur();
+            document.getElementById('dpassword').style.display = 'block';
+          }
+        }
+      </script>
+
+<% end %>
+
+<div class="frgtPwd-Dv">
+  <div class="frgtPwd-Lft">
+    <% form_for @user_session, :url => {:action => :create} do |f| %>
+      <table width="200" border="0" cellpadding="0" cellspacing="0" class="lftTbl">
+
+        <%#*<tr>%>
+          <%#*<td>%>
+            <%#= f.error_messages :header_message => nil, :message => nil %>
+          <%#*</td>%>
+        <%#*</tr>%>
+        <tr>
+          <td>
+            <h1>
+              <% if @new_login %>
+                Login
+              <% else %>
+                Incorrect Login
+              <% end %>
+            </h1>
+          </td>
+        </tr>
+        <tr>
+          <td class="frgtMsg">
+            <% if @new_login %>
+              Please provide your WickedStart's username and password to sign-in.
+            <% else %>
+              The login information provided does not match what you have on record. Please check to make sure the information is correct and try again.
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%if @user_session.login.blank?%>
+                <input value="username" style="color: #999999; font-style: italic" type="text" class="txtFld" id="dlogin" name="dlogin" onfocus="dLoginFocus()"/>
+                <input style="display:none" type="text" class="txtFld" id="login" name="login" onBlur="LoginBlur()" />
+            <%else%>
+                <input value="username" style="color: #999999; font-style: italic;display:none;" type="text" class="txtFld" id="dlogin" name="dlogin" onfocus="dLoginFocus()"/>
+                <input value="<%=@user_session.login%>" type="text" class="txtFld" id="login" name="login" onBlur="LoginBlur()" />
+            <%end%>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%if @user_session.password.blank?%>
+                <input value="password" style="color: #999999; font-style: italic" type="text" class="txtFld" id="dpassword" name="dpassword" onfocus="dPasswordFocus()"/>
+                <input style="display:none" type="password" class="txtFld" id="password" name="password" onBlur="PasswordBlur()" />
+            <%else%>
+                <input value="password" style="color: #999999; font-style: italic;display:none;" type="text" class="txtFld" id="dpassword" name="dpassword" onfocus="dPasswordFocus()"/>
+                <input value="<%=@user_session.password%>" type="password" class="txtFld" id="password" name="password" onBlur="PasswordBlur()" />
+            <%end%>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="lnksTd">
+<input type="image" src="/images/login-btn.jpg?1279638699" class="lgnBtn v-align-middle" alt="LOGIN"> or <b><%= link_to "SIGN UP!", signup_path, :class => "joinLnk" %></b>
+            <%#= f.submit 'Submit', :class => "globalBtn no-top-margin" %>
+          </td>
+
+        </tr>
+        <tr>
+          <td class="lnksTd">
+                <%= link_to "Forgot Password?", forget_passwords_path %>
+          </td>
+        </tr>
+        <tr>
+          <td> &nbsp;</td>
+        </tr>
+        <tr>
+          <td class="frgtMsg2">Don't have an account?<br />
+            get going with Wicked Start Today!</td>
+        </tr>
+        <tr>
+          <td>
+            <%= link_to image_tag("sign-up-btn.jpg", :alt => "Sign Up"), signup_path %>
+          </td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+
+      </table>
+
+    <% end %>
+  </div>
+
+  <div class="frgtPwd-Rit">
+    <table width="200" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="right" valign="bottom" class="blockCrnr"><img src="/images/rgstr-right-top.jpg" width="427" height="9" /></td>
+      </tr>
+      <tr>
+        <td height="200" align="right" valign="top" class="frgtBlock">
+          <table width="200" border="0" cellpadding="0" cellspacing="0" class="frgtBlockTbl">
+            <tr>
+              <td align="left" class="frgtTtl">FEATURES AND BENEFITS INCLUDED WITH YOUR WICKEDSTART ACCOUNT:</td>
+            </tr>
+            <tr>
+              <td align="left" class="blockBdy"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="frgtIcnTd"><img src="/images/icons/grph-icn-s.jpg" width="56" height="36" /></td>
+                    <td class="rgstrTxt">Personalized roadmap of action items to help you manage the startup process, each step of the way.</td>
+                  </tr>
+                  <tr>
+                    <td class="frgtIcnTd"><img src="/images/icons/edit-icn-s.jpg" width="56" height="36" /></td>
+                    <td class="rgstrTxt">Get access to templates, examples and links to expert resources to help streamline the process.</td>
+                  </tr>
+                  <tr>
+                    <td class="frgtIcnTd"><img src="/images/icons/comment-icn-s.jpg" width="56" height="43" /></td>
+                    <td class="rgstrTxt">Connect to the Wicked Start Community to ask and answer questions and share experiences with peers.</td>
+                  </tr>
+                  <tr>
+                    <td class="frgtIcnTd"><img src="/images/icons/info-icn-s.jpg" width="56" height="36" /></td>
+                    <td class="rgstrTxt">Email alert and notification systems to let you know when a deadline is approaching.</td>
+                  </tr>
+                  <tr>
+                    <td class="frgtIcnTd"><img src="/images/icons/folder-icn-s.jpg" width="56" height="36" /></td>
+                    <td class="rgstrTxt">Maintain a centralized "hub" to manage your files and important startup documents.</td>
+                  </tr>
+                </table></td>
+            </tr>
+          </table></td>
+      </tr>
+      <tr>
+        <td align="right" valign="top" class="blockCrnr"><img src="images/rgstr-right-bot.jpg" width="427" height="9" /></td>
+      </tr>
+    </table>
+  </div>
+
+</div>

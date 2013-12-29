@@ -1,0 +1,81 @@
+<%#content_for :javascripts do%>
+  <script>
+    $(document).ready(function(){
+      $("#topic_update_div").hide();
+      $("#message_update_div").hide();
+    });
+  
+    function edit_message() {
+      //alert("inside function edit");
+      $("#message_div").hide();
+      $("#message_update_div").show();
+    }
+
+    function update_message(message_id) {
+      //alert("inside function update");
+      if($("#body").val() == "")
+      {
+        $('#message_update_error').text("Question body can't be left blank");
+      }
+      else {
+        $.get('/messages/update_message_body', {
+          'message':message_id,'body':$("#body").val()
+        }, function(data){
+          $("#message_div").html(data);
+        },'html')
+        $("#message_update_div").hide();
+        $("#message_div").show();
+        $('#message_update_error').text("");
+      }
+    }
+
+    function edit_topics() {
+      $("#topic_div").hide();
+      $("#topic_update_div").show();
+      var topic_data = <%= get_all_topics().to_json %>;
+      var prefilled_topics = <%= message.topics.map(&:token_inputs).to_json %>;
+      $("#topics").tokenInput(topic_data,{theme: "facebook",preventDuplicates: true, prePopulate: prefilled_topics , crossDomain: false});
+    }
+
+    function update_topics(message_id) {
+      $.get('/messages/update_message_topics', {
+        'msg':message_id,'topics':$("#topics").val()
+      },function(data){
+        $('#ajax_topic_div').html(data);
+      },'html')
+      $("#topic_update_div").hide();
+      $("#topics").prev().detach();
+      $("#topics").val("");
+      $("#topic_div").show();
+    }
+  </script>
+<%#end%>
+
+
+<div id="topic_div">
+  <%topics = message.topics%>
+  <% unless topics.blank? %>
+    <ul class="topicList">
+      <% message.topics.each do |t| %>
+        <li><%#= link_to t.name, "#." %><%= t.name%></li>
+      <% end %>
+      <% if appropriate_user_for_message?(message,@current_user) %>
+        <%=  link_to"Edit", "JavaScript:void(0);", :class=>"editLink", :onclick=>"edit_topics()"%>
+      <%end%>
+    </ul>
+  <%end%>
+</div>
+
+<div id="topic_update_div">
+  <%= text_field_tag :topics, "" %> <%=  link_to"Update", "JavaScript:void(0);",:onclick=>"update_topics(#{message.id})"%>
+</div>
+
+
+<div id="message_div" class="qstnFeed">
+  <%= render :partial=> "message_body", :locals=>{:message => message} %>
+</div>
+<div id="message_update_div">
+  <br />
+  <p><label id="message_update_error" style="color: red;"></label></p>
+  <p><%= text_field_tag :body,message.body, :size => 55 %> <%=  link_to "Update", "JavaScript:void(0);",:onclick=>"update_message(#{message.id})"%></p>
+</div>

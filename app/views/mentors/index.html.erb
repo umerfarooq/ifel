@@ -1,0 +1,46 @@
+<%= render :partial => "admins/admin_profile_menu", :locals => { :active_admin_profile_tab => :mentor_tab } %>
+
+<div class="admnRitCol">
+
+  <h4>
+    MENTOR
+    |
+    <%= link_to "Add Mentor", new_mentor_path %>
+  </h4>
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th><%= sort_link 'NAME', :first_name %></th>
+      <th>STATE</th>
+      <th style="width: 320px">AVAILABLE ACTIONS</th>
+    </tr>
+    <% @mentors.each do |mentor| %>
+      <tr>
+        <td style="width: 350px">
+          <%=h mentor.name %>
+        </td>
+        <td>
+          <%= mentor.state.title.upcase %>
+        </td>
+        <td>
+          <%= link_to 'EDIT', edit_mentor_path(mentor) %>
+          |
+
+          <% if mentor.state.is_published? %>
+            <%= link_to 'INACTIVATE', inactivate_mentor_path(mentor) %>
+          <% elsif mentor.state.is_activated? %>
+            <%= link_to 'PUBLISH', publish_mentor_path(mentor) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_mentor_path(mentor) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_mentor_path(mentor) %>
+          <% end %>
+          |
+          <%= link_to 'DELETE', mentor_path(mentor), :method => :delete, :confirm => "Are you sure?" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <hr />
+  <br />
+</div>

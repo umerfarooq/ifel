@@ -1,0 +1,50 @@
+<a onclick="closeEmailBox();" style="float: none !important;"><div id="closeX" class="closeX"></div></a>
+<div id="borderContainer">
+  <div id="outercontainer">
+    <div class="clear"></div>
+    <div id="main">
+      <span id="popular" class="popular">Email to your Mentor</span>
+      <div class="pageContainer" id="emailPage">	
+        <div id="email_main">
+          <div id="emailcontainer">
+            <div class="heading" id="heading_div">
+              <h1 id="emailheading">Discuss with your Mentor</h1>
+            </div>
+            <div id="notice" class="notice"></div>
+            <div class="field" id="to_div">
+              <div class="input_holder">
+                <div class="label" id="toString">To:</div>
+                <input type="text" autocomplete="off" class="txtFromAddr" id="email_to" value="<%= @mentor.email %>" disabled="true" />
+              </div>
+            </div>
+
+            <div class="field" id="from_div">
+              <div class="input_holder">
+                <div class="label" id="fromString">Subject:</div>
+                <input type="text" autocomplete="off" class="txtFromAddr" id="email_subject" />
+              </div>
+            </div>
+            <div class="field" id="message_div">
+              <div class="input_holder">
+                <div class="label" id="messageString">Message:</div>
+                <textarea class="txtMessage" cols="10" rows="3" id="email_body"></textarea>
+              </div>
+            </div>
+            
+            <div class="field" id="buttons_div">
+              <a onclick="sendEmailToMentor('<%= email_mentor_user_path(@current_user) %>');" style="color: white; float: right;"><div class="button_holder" id="btnShareSend" >Send</div></a>
+              <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="shareFooter">
+    <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+</div>
+

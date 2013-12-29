@@ -1,0 +1,201 @@
+<% content_for :javascripts do %>
+  <script>
+    $(document).ready(function(){
+
+      $('#display_more_experts').click(function(){
+        $(".experList").show('blind', 1000, function(){
+          $("#display_more_experts").hide();
+        });
+      });
+    
+    });
+
+    function display_more_questions(){
+      showProgressBar();
+   
+      $.get('/messages/display_more_questions', {
+        'offset':$(".communityFeed > div.feed").size()-1
+      },function(data)
+      {
+        hideProgressBar();
+
+        var n = $(data).filter('div.feed');
+        if(n.length < 11)
+        {
+          $('.displayBtnDv').hide();
+        }
+
+        $('.communityFeed').children().filter('div.dispNone').remove();
+
+        $('.communityFeed').append(data);
+      },'html');
+    }
+   
+    function unfollow_message(message_id){
+      var id = '#follow_'+message_id;
+      $.get('/messages/unfollow_question', {
+        'id':message_id
+      },function(data){
+        $(id).html(data);
+      },'html')
+    }
+
+    function follow_message(message_id) {      
+      var id = '#follow_'+message_id;
+      $.get('/messages/follow_question', {
+        'id':message_id
+      },function(data){
+        $(id).html(data);
+      },'html');
+    }
+
+    function show_message_detail(msg_id) 
+    {
+      showProgressBar();
+      $.get('/messages/show_message_detail_page', {
+        'msg':msg_id
+      },function(data){
+        hideProgressBar();
+        $('.communityTopics').html(data);
+      },'html');
+    }
+
+    function vote_a_message(message_id){
+      var id = '#follow_'+message_id;
+      $.get('/messages/vote_message', {
+        'msg':message_id
+      },function(data){
+        $(id).html(data);
+      },'html');
+    }
+
+    function showMoreTextOfAnswer(msg_id){
+  
+      $('#short_answer_'+msg_id).hide();
+      $('#long_answer_'+msg_id).show('blind',1000);
+    }
+    function showLessTextOfAnswer(msg_id){
+      $('#short_answer_'+msg_id).show('blind',1000);
+      $('#long_answer_'+msg_id).hide();
+    }
+
+    function load_expert_answers(path){
+      showProgressBar();
+      $.get(path, {}, function(data){
+        hideProgressBar();
+        $(".communityFeed").html(data);
+      },'html');
+    }
+    
+    function display_long_expert_profile(index){
+      $('#expert_profile_short_'+index).hide('fast', function(){
+        $('#expert_profile_long_'+index).slideDown('slow');
+      });      
+    }
+    
+    function display_short_expert_profile(index){
+      $('#expert_profile_long_'+index).slideUp('fast', function(){
+        $('#expert_profile_short_'+index).slideDown('slow');
+      });
+    }
+    
+  </script>
+<%end%>
+
+<div class="communityFeed">
+  <%if @is_user_question_list%>
+    <%= render :partial=> "community_expert_answers.html", :locals=>{:comments=>@user_unread_comments, :show_comments=>false} %>
+  <%else%>
+    <%= render :partial => "community_questions", :locals => {:messages => messages, :topic => topic, :display_more_check => 10}%>
+  <%end%>
+</div>
+
+<div class="communityRightCol">
+  <h3 class="communityExpertTitle"><span>Community Experts</span> <%= @community_experts.length.to_s %></h3>
+  <% @community_experts.each_with_index do |expert,index| %>
+
+    <div class="experList <%= (index >= 5) ? 'dispNone' : '' %>">
+      <div class="expertImage"><%= image_tag (expert.profile_picture.exists?(:profile)) ? expert.profile_picture.url(:profile) : 'no-image-small.jpg' %></div>
+      <div class="expertDetail">
+        <h3 class="breakWord"><%= expert.screen_name %></h3>
+
+        <div class="breakWord">
+          <%= link_to "#{expert.comments.for_message.count} Answers", "JavaScript:void(0);", :onclick=>"load_expert_answers('#{community_answers_user_path(expert)}');" %>
+  <%#= sanitize(' | '+ truncate( expert.community_profile,:length => 100, :omission => "...#{link_to '(read more)', '#.'}"), :tags => "%w(a)") if expert.community_profile %>
+          <div id="expert_profile_short_<%= index.to_s %>">
+  <%#= strip_tags(' | '+ ( truncate(expert.community_profile, :length=>100))) if expert.community_profile %>
+            <%= strip_tags(( truncate(expert.community_profile, :length=>100))) if expert.community_profile %>
+            <%= link_to "(more)", 'javascript:void(0);', :onclick=>"display_long_expert_profile('#{index.to_s}');" if expert.community_profile and expert.community_profile.length > 100 %>
+          </div>
+          <% if expert.community_profile and expert.community_profile.length > 100 %>
+            <div id="expert_profile_long_<%= index.to_s %>" style="display: none;">
+              <%= strip_tags(( expert.community_profile) ) if expert.community_profile %>
+              <%= link_to "(less)", 'javascript:void(0);', :onclick=> "display_short_expert_profile('#{index.to_s}');" if expert.community_profile %>
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  <%end%>
+  <% if @community_experts.length >= 5 %>
+    <%=link_to "(more)", "JavaScript:void(0);", :id=>"display_more_experts"%>
+  <%end%>
+
+  <!--<div class="communityShare">
+    <h3><span>Share Topic.</span>Invite Users</h3>
+    <p><a href="#" class="wsInbox">Inbox</a> <a href="#" class="email">Email</a></p>
+  </div>
+  <div class="communityProfile">
+    <h3>Your Profile Detail</h3>
+    <img src="images/expert.jpg" /><p><strong>23</strong><br />Following</p><p><strong>10</strong><br />Followers</p><p class="noBorder"><strong>155</strong><br />@Mentions</p>
+  </div>-->
+  <%= render :partial => 'profile_content' %>
+  <div class="communityQuestion">
+    <!--<div class="communityInvite">
+      <h3>Invite Other Entrepreneurs</h3>
+      <p>Invite people you know to join the Wicked Start  Community today. Learn more.</p>
+    </div>-->
+    <% msg = get_recent_message_of_user(@current_user).first %>
+    <%if ! msg.blank?%>
+      <h3 class="questionLabel">Your Question</h3>
+      <h4 class="questionTxt">
+        <p class="breakWord"><%= link_to strip_tags(msg.body), "JavaScript:void(0);",:class => "feedTitle", :onclick => "show_message_detail(#{msg.id})"%></p>
+      </h4>
+      <p><span><!--Question added at--><%= message_detail(msg)  %></span></p>
+
+      <!--<h4 class="questionTxt">How do you build a community of users that give high quality comments on a website?-->
+      <!--<p>Answer added in topic <a href="#">Startup</a>, <span>9:19pm on saturday - 0 Answer - Follow</span></p>-->
+      <div class="questionFeed">
+        <div class="questionDesc">
+          <%  comments = msg.latest_comments(@current_user) %>
+          <% unless comments.blank? %>
+            <h6><%= get_user(comments.first.user_id).name %></h6>
+            <div class="feedContent">
+              <div class="feedImage"><%= comments.count.to_s %></div>
+            </div>
+            <div class="feedDesc">
+              <%latest_comment = helper_most_latest_comment(comments)%>
+              <div id="short_answer_<%= msg.id.to_s+latest_comment.id.to_s %>" class="dispBlock"><p class="breakWord"><%= strip_tags truncate(latest_comment,50) %></p><%=link_to '(more)','JavaScript:void(0);',:onclick=>"showMoreTextOfAnswer('#{msg.id.to_s+latest_comment.id.to_s}');" if helper_comment_length_exceeds? latest_comment %></div>
+              <div id="long_answer_<%= msg.id.to_s+latest_comment.id.to_s %>" class="dispNone"><p class="breakWord"><%=  latest_comment %></p><%=link_to '(less)','JavaScript:void(0);',:onclick=>"showLessTextOfAnswer('#{msg.id.to_s+latest_comment.id.to_s}');"%></div>
+            </div>
+          <%end%>
+        </div>
+      </div>
+  <%#else%>
+      <!--<h4 class="questionTxt">You have no question in community</h4>-->
+      <!--<h4 class="questionTxt">How do you build a community of users that give high quality comments on a website?-->
+    <%end%>
+  </div>
+
+  <!-- div to show topic following-->
+  <!--<div class="communityFollow">
+<%#= render :partial => "messages/community_follow"%>
+  </div>-->
+</div>
+<%if !@is_user_question_list%>
+  <% if !messages.blank? and messages.length >= 11 %>
+    <div class="displayBtnDv">
+      <%= link_to image_tag("display-question-btn.png"), "JavaScript:void(0);", :id=>"dispMoreQuests", :onclick=>"display_more_questions()" %>
+    </div>
+  <%end%>
+<%end%>

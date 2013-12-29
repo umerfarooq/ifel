@@ -1,0 +1,74 @@
+<script type="text/javascript">
+submit_form() {
+   document.getElementById('new_message').submit;
+}
+</script>
+
+
+<%#*<div class="subPageWrapper">%>
+  <%#*<h1>COMMUNITY</h1>%>
+  <%#*<ul id="breadcrumb">%>
+    <%#*<li><a href="#" class="current">Feed wall</a></li>%>
+    <%#*<li><a href="community-profile.html">Community Profile</a></li>%>
+    <%#*<li><a href="community-categories.html">TOPIC Categories</a></li>%>
+  <%#*</ul>%>
+  <%#*<div class="clear"></div>%>
+  <%#*<div class="communitySearch">%>
+    <%#= text_field_tag(:search_que, "Search for questions and answers to topics that interest you and your start-up's needs.", :class => "communityTxtFld" ) %>
+    <%#*<!--<input type="text" value="Search for questions and answers to topics that interest you and your start-up's needs." class="communityTxtFld" />-->%>
+    <%#= image_submit_tag("theme/commuity-search-btn.jpg") %>
+    <%#*<!--<input type="image" src="images/theme/commuity-search-btn.jpg" />-->%>
+    <%#*<p><%=image_tag("post-question-btn.png")%><%#= image_tag("theme/view-topics-btn.png") %>
+    <%#*<!--<p><a href="#"><img src="images/post-question-btn.png" /></a><a href="#"><img src="images/theme/view-topics-btn.png" /></a></p>-->%>
+
+  <%#*</div>%>
+  <div class="sep"></div>
+  <div class="communityPostQstn">
+    <div class="postQstnTxt">
+      <h2>Post 2 Questions</h2>
+      <p> lalalalalalalal</p>
+    </div>
+    <div class="postQstnForm">
+     
+        <% form_for @message do |f| %>
+        <table width="100%" cellspacing="0" cellpadding="0" border="1">
+           <% unless f.error_messages.blank? %>
+          <tr>
+            <td colspan="2">
+           <%= f.error_messages :header_message => nil, :message => nil %>
+            </td>
+          </tr>
+          <% end %>
+          <tr>
+            <td>Select a Category for Your Question</td>
+          </tr>
+          <tr>
+           <td> <%= f.collection_select(:message_category_id, MessageCategory.published, :id, :title, {:prompt => true}) %></td>
+          </tr>
+          <tr><td height="10"></td></tr>
+          <tr>
+            <td>Write Your Question</td>
+          </tr>
+          <tr>
+            <td><%= f.text_area :body, :size => "45x5" %></td>
+          </tr>
+          <tr><td height="10"></td></tr>
+          <tr>
+            <td>Define topic to associate with your question</td>
+          </tr>
+          <tr>
+            <td><%= f.text_field :title, :class =>"text1"%><span style="position: absolute; padding: 0px; margin: 0px; font-family: MS Shell Dlg; font-size: 13.3333px; font-weight: 400; color: rgb(191, 191, 191); width: 300px; cursor: text; background-color: rgb(255, 255, 255); top: 5px; left: 5px;" class="default"></span></td>
+          </tr>
+          <tr><td height="15"></td></tr>
+          <tr>
+            <td>
+                <%= link_to image_tag("post-question-btn.png"),"",:onclick => "submit_form();return false;" %>
+                <%= link_to image_tag("theme/cancel-btn.png"), url_for(:back), :class => "cnclLnk" %></td>
+          </tr>
+        </table>
+        <% end %>
+      
+    </div>
+  </div>
+<%#*</div>%>
+

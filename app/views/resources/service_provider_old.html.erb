@@ -1,0 +1,26 @@
+<% title "Small Business Resources and Services" %>
+<% meta "Need services for your small business?  Search our vetted list of recommended low and no cost business products and services, read reviews and save money." %>
+<% content_for :head do %>
+  <%= javascript_include_tag 'ws.resources'  %>
+<%end%>
+<div class="subPageWrapper">
+  <% if current_user.blank? %>
+    <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+  <%end%>
+  <h1><%= sanitize @resource_content[:main_content].title %></h1>
+  <%= render :partial => "shared/resources_breadcrumbs", :locals => {:current => :service_provider} %>
+
+  <div class="clear"></div>
+  <h2 class="leadInText ">
+    <%= sanitize @resource_content[:service_provider_image].description %>
+  </h2>
+  <div class="sep"></div>
+  <div class="clear"></div>
+
+  <%= render :partial=>'/resources/section', :locals=>{:section_templates => @section_templates, :is_resource_library => false} %>
+  <div class="resource_right_pannel_content">
+    <div id="resource_section_panel">
+      <%= render :partial => '/resources/middle', :locals => {:top_categories => @top_categories, :top_ten_categories => @top_ten_categories, :top_ten_tags => @top_ten_tags, :all_tags => @all_tags, :is_section_selected => false, :section_template => @section_templates, :is_resource_library => false, :is_default_page => true} %>
+    </div>
+  </div>
+</div>

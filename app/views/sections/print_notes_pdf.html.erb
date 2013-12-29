@@ -1,0 +1,83 @@
+<style>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  #Playout {
+    width: 900px;
+    margin: auto;
+    font-family: inherit;
+  }
+  #Pheader {
+    height: 170px;
+    margin-bottom: 15px;
+  } 
+  .Plogo{
+    float: left;
+    width: 340px;
+    padding: 10px;
+
+  }
+  .Pmid{
+    float: left;
+    width:400px;
+    padding: 10px;
+  }
+  .Pdate{
+    float: left;
+    width: 100px;
+    padding: 10px;
+  }
+  #Pcontent {
+    padding: 10px;
+  }
+
+  #Pcontent p {
+    margin-bottom: 10px;
+  }
+
+  .PsectionHeading { font-weight: bold; font-size: 18px;}
+  .PitemHeading { font-weight: bold; font-size: 16px;}
+  #Pfooter{text-align: center; padding-top: 60px;}
+
+
+  #Pfooter{
+    bottom:0;
+    left:0;
+    width:100%;
+    height:30px;
+  }
+  @media screen{
+    body>div#footer{
+      position: fixed;
+    }
+  }
+  * html body{
+    overflow:hidden;
+  } 
+
+
+</style>
+<head><meta http-equiv="Content-type" content="text/html; charset=utf-8" /></head>
+
+<body onload="javascript:window.print();">
+  <div id="Playout">
+
+    <div id="Pheader">
+      <% image_url =  (Rails.root.join('public','client','companies','logos',@current_user.company.id.to_s,'profile_view',@current_user.company.logo_file_name) if @current_user.company.logo.exists?(:profile_view) ) if @current_user.company.present? %>
+      <div class="Plogo"><img src="<%= image_url %>" /></div>
+      <div class="Pmid PsectionHeading"><%= @current_user.business_idea %></div>
+      <div class="Pdate"><%= Date.today.strftime("%m/%d/%y").to_s %></div>  
+    </div>  
+
+    <div id="Pcontent">
+      <p class="PsectionHeading"><%= @section.title.to_s %></p>
+      <% @section.items.each do |item| %>
+        <% if item.user_answer.present? %>
+          <p class="PitemHeading"><%= item.title.to_s %></p>
+          <p><%= item.user_answer %></p>
+        <%end%>
+      <%end%>
+    </div>
+  </div>
+</body>

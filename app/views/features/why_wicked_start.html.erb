@@ -1,0 +1,69 @@
+<% title "How Can WIBO.WickedStart.com Help You Start A Small Business" %>
+<% meta "Learn more how WickedStart can help you start a small business using an online platform tools to help start up your small business." %>
+<% if @open_video %>
+  <%content_for :javascripts do%>
+    <script>
+      $(document).ready(function() {
+        $.fn.colorbox({
+
+          html:"<div style='z-index:0;  padding:30;' class ='flvIe8'>\n\
+                  <object width='635' height='480' id='flvPlayer'>\n\
+                    <param name='allowFullScreen' value='true' />\n\
+                    <param name='movie' value='/flvplayer/player.swf?movie=<%= @how_it_works.url_for_video_player %>&bgcolor=0x1dbdbdb&fgcolor=0x1b75bb&volume=50&autoload=off&autoplay=on&autorewind=on&clickurl=&clicktarget=' />\n\
+                    <embed src='/flvplayer/player.swf?movie=<%= @how_it_works.url_for_video_player %>&bgcolor=0x1dbdbdb&fgcolor=0x1b75bb&volume=5&autoload=off&autorewind=on&autoplay=on&clickurl=&clicktarget=' width='635' height='480' allowFullScreen='true' type='application/x-shockwave-flash' wmode='opaque' >\n\
+                  </object>\n\
+                </div>"
+          , open:true,onClosed:true});
+      });
+    </script>
+  <%end%>
+<% end %>
+<div class="subPageWrapper">
+  <%= render :partial=>'shared/register_badge' %>
+  <h1>Features</h1>
+  <%= render :partial => "shared/features_breadcrumbs", :locals => {:current => :why_wicked_start} %>
+  <div class="clear"></div>
+  <h2 class="headLine"><%= sanitize @why_wicked_start_page.title %></h2>
+  <div class="tourContent1">
+    <div class="tourDescription">
+      <h2 class="leadInText"><%= sanitize @why_wicked_start_page.content %></h2>
+      <p>
+        <%= link_to "TAKE TOUR", (detail_feature_path(Feature.get_parents.published.first) rescue features_path) %>
+        |
+        <%= link_to "READ SUCCESS STORIES", success_stories_path %>
+        |
+        <%= link_to "SEE HOW IT WORKS", flvplayer_features_path(:video_path => @how_it_works.url_for_video_player, :width => '590', :height => '479'), :onclick => "$(this).colorbox()" %>
+        <% unless $is_ws_free_as_default %> <%= link_to "PRICING", pricing_features_path %> <%end%>
+
+<%# unless @why_wicked_start_page.marketing_text_links.blank? %>
+<%# @why_wicked_start_page.marketing_text_links.published.each do|link| %>
+<%#= (link_to link.link_text, link.link_url) %>
+<%#= ('|') unless @why_wicked_start_page.marketing_text_links.published.last == link %>
+<%#end%>
+<%#end%>
+      </p>
+    </div>
+    <div class="tourVideoMain">
+      <% unless @multimedia.blank? %>
+        <%= link_to image_tag("/images/tour-video-main.jpg"), flvplayer_features_path(:video_path => @multimedia.url_for_video_player, :width => '590', :height => '479'), :onclick => "$(this).colorbox()" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="clear"></div>
+
+</div> <!-- End of Sub page Wrapper -->
+<div class="clear"></div>
+
+<div id="ContentBottom">
+  <% @promotions.each do|promotion| %>
+    <div class="areYouEntreprenuer">
+      <h2><%= sanitize(promotion.head_title) %></h2>
+      <!--<img src="/images/bulb-icon.jpg" alt="Are Your An Entreprenuer?" />-->
+      <%= image_tag promotion.becomes(promotion.kind.constantize).picture.url(:quiz), :alt => promotion.head_title, :height => '75px', :width => '92px' %>
+      <p>
+        <%= sanitize promotion.description %>
+        <%= link_to promotion.url_text, promotion.url %>
+      </p>
+    </div>
+  <%end%>
+</div>

@@ -1,0 +1,47 @@
+<div class="resourcesPost">
+  <h3><%=tag.name%></h3>
+  <% resources.each do |resource| %>
+    <div class="postItem">
+  <%#= (image_tag resource.content.url(:resource_library)) if resource.content.exists? :resource_library %>
+      <% if resource.content.exists?(:resource_library) %>
+        <p><%= image_tag resource.content.url(:resource_library), :class=>'bannerSize' %></p>
+      <%else%>
+        <%=  (resource.html_image.html_safe) if resource.html_image.present? %>
+      <%end%>
+      <div class="postItemDesc">
+        <h3><%= resource.title %></h3>
+        <p><%= resource.description %> <br />
+          <%= link_to truncate(resource.url), resource.url , :target => '_blank'%></p>
+        <div class="clear"></div>
+        <%  unless current_user.blank?%>
+          <div class="actionLinksWrapper">
+    <%#if resource.resource_category.title != "Service Provider"%>
+            <%= render :partial => 'ratings', :locals => {:resource =>resource} %>
+    <%#end%>
+          </div>
+        <%end%>
+        <div class="clear"></div>
+        <div class="tags">
+          <%unless resource.tag_list.blank?%>
+            <dd>Tags:</dd>
+            <dt><%=resource.tag_list%></dt>
+          <%end%>
+          <div class="clear"></div>
+          <%unless resource.pricings.blank?%>
+            <dd>Price:</dd>
+            <%= resource.pricings.map(&:title).join(', ').each { |p| "<dt>#{p}</dt>" } %>
+          <%end%>
+        </div>
+      </div>
+    </div>
+
+    <div class="postItem">
+      <% if resource.banner.exists? :service_provider %>
+        <p><%= link_to image_tag(resource.banner.url(:service_provider), :class=>'bannerSize'), resource.banner_url, :target =>"_blank" %></p>
+      <%else%>
+        <%=  (resource.html_banner.html_safe) if resource.html_banner.present? %>
+      <%end%>
+    </div>
+
+  <%end%>
+</div>

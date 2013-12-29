@@ -1,0 +1,38 @@
+<h2>Add new multimedia</h2>
+<br />
+
+<% form_for @marketing_multimedia_message, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <p>
+    <%= f.label :page %>
+    <br />
+    <%= f.text_field :page %>
+  </p>
+  <p>
+    <%= f.label :location %>
+    <br />
+    <%= f.text_field :location %>
+  </p>
+  <p>
+    <%= f.check_box :is_video %>
+    <%= f.label :is_video %>
+  </p>
+  <p>
+    <%= f.label :content, "File" %>
+    <br />
+    <%= f.file_field :content %>
+  </p>
+  <%#*<p>%>
+    <%#= f.label :multimedia %>
+    <%#*<br />%>
+    <%#= f.file_field :multimedia %>
+  <%#*</p>%>
+  <p>
+    <%= f.label :description %>
+    <br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.submit :add %>
+  </p>
+<% end %>

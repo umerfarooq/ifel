@@ -1,0 +1,85 @@
+<%= render :partial => "admins/admin_profile_menu", :locals => { :active_admin_profile_tab => :role_tab } %>
+<% title "#{@user.name}" %>
+<div class="admnRitCol">
+
+  <h1>
+    <%= @user.name %> 
+  </h1>
+  <p style="float: right; margin-right: 200px;">
+    <%= image_tag ((@user.profile_picture.exists?(:normal)) ? @user.profile_picture.url(:normal) : 'no-image.jpg') %>
+  </p>
+
+  <p>
+    SCREEN NAME:
+    <strong>
+      <%= @user.screen_name %>
+    </strong>
+  </p>
+  
+  <p>
+    EMAIL:
+    <strong>
+      <%= @user.email %>
+    </strong>
+  </p>
+  
+  <p>
+    CONTACT NUMBER:
+    <strong>
+      <%= (@user.contact_number.blank?) ? 'N/A' : @user.contact_number %>
+    </strong>
+  </p>
+
+  <p>
+    FIRST TIME:
+    <strong>
+      <%= (@user.is_first_time) ? 'Yes' : 'No' %>
+    </strong>
+  </p>
+
+  <!--<p>
+    REGISTRATION DATE:
+    <strong>
+      <%#= @user.registration_date %>
+    </strong>
+  </p>-->
+
+  <p>
+    BLOCKED:
+    <strong>
+      <%= (@user.is_blocked) ? 'Yes' : 'No' %>
+    </strong>
+  </p>
+
+  <p>
+    INDUSTRY:
+    <strong>
+      <%= (@user.industry.present?) ? @user.industry.title : 'N/A' %>
+    </strong>
+  </p>
+
+  <p>
+    BUSINESS IDEA:
+    <strong>
+      <%= @user.business_idea %>
+    </strong>
+  </p>
+
+  <p>
+    IS COMMUNITY EXPERT:
+    <strong>
+      <%= (@user.is_community_expert) ? 'Yes' : 'No' %>
+    </strong>
+  </p>
+  
+  <p>
+    MENTOR:
+    <strong>
+        <%= @user.mentor.name rescue 'N/A' %>
+    </strong>
+  </p>
+
+  <p>
+    <%= link_to '<< Back', url_for(:back) %>
+  </p>
+</div>

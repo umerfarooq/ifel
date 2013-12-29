@@ -1,0 +1,58 @@
+<div class="nav">
+  <ul class="navMnu">   
+    <li>
+      <% if active_tab == :account_tab %>
+        <%= link_to "<span class='navLft'></span>Client Information", accounts_configurations_path, :class => "active" %>
+      <% else %>
+        <%= link_to "<span class='navLft'></span>Client Information", accounts_configurations_path %>
+      <% end %>
+    </li>
+    <!--<li>
+      <%# if active_tab == :design_tab %>
+        <%#= link_to "Design", designs_configurations_path, :class => "active" %>
+      <%# else %>
+        <%#= link_to "Design", designs_configurations_path %>
+      <%# end %>
+    </li>-->
+    
+    <li>
+      <% if active_tab == :checklist %>
+        <%= link_to "Roadmap", '/section_templates?type=wibo', :class => "active" %>
+      <% else %>
+        <%= link_to "Roadmap", '/section_templates?type=wibo' %>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_tab == :resource_tab %>
+        <%= link_to "Resources", title_resources_path, :class => "active" %>
+      <% else %>
+        <%= link_to "Resources", title_resources_path %>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_tab == :template_tab %>
+        <%= link_to "Templates", template_documents_path, :class => "active" %>
+      <% else %>
+        <%= link_to "Templates", template_documents_path %>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_tab == :content_tab %>
+        <%= link_to "Profiles", "/admins/industry_tab", :class => "active" %>
+      <% else %>
+        <%= link_to "Profiles", "/admins/industry_tab" %>
+      <% end %>
+    </li>
+
+    <li>
+      <% if active_tab == :reporting_tab %>
+        <%= link_to "Reporting", reporting_tab_admins_path, :class => "active" %>
+      <% else %>
+        <%= link_to "Reporting", reporting_tab_admins_path %>
+      <% end %>
+    </li>
+  </ul>
+</div>

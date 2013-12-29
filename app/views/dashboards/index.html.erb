@@ -1,0 +1,336 @@
+<% if @current_user.is_logged_in_for_the_first_time? and !session['first_time_box_cacelled'] %>
+  <%content_for :javascripts do%>
+    <%= javascript_include_tag 'jquery.blockUI'  %>
+    <script>
+      $(document).ready(function() {
+        $.blockUI({ message: $('#splashBox'), css:{cursor: null, bottom: '170px'}});
+        //overlayCss:{opacity: 1}
+        $('.closeBox').click(function(){
+          $.post('/dashboards/cancel_notification_box', {'_method':'put'}, function(){
+            document.getElementById("tracNotice").className = 'tracNotificationWithZindex';
+            $.unblockUI();
+          }, 'json');
+        });
+      });
+    </script>
+  <%end%>
+<%  end %>
+
+<%content_for :javascripts do%>
+  <script>
+    $(document).ready(function() {
+      $('#category_div').hide();
+      // $('#display_all_steps').click(function(){
+      // $(".dbInProgressRow").show('blind', 1000, function(){
+      //   $("#display_all_steps").hide();
+      // });
+      //});
+    });
+
+
+    function resource_category_filter(section_id)
+    {
+      showProgressBar();
+      $.get('/dashboards/resource_category_filter', {
+        'section_id':section_id
+      },function(data){
+        hideProgressBar();
+        $('#resourcesContent').html(data);
+      },'html')
+    }
+  
+    function banner_slideUp(banner_name) {
+      //alert("inside alert");
+      if(banner_name == "notification")
+      {
+        $.post('/dashboards/cancel_notification_banner', {'_method':'put'}, function(){
+        }, 'json');
+      }
+      else
+      {
+        $.post('/dashboards/cancel_progress_banner', {'_method':'put'}, function(){
+        }, 'json');
+      }
+      $("#notification_banner").slideUp(1000, function(){
+        //clearQuestionFields();
+      });
+    }
+
+    function showInfoPanel(panel_id){
+      $("#"+panel_id).show();
+    }
+
+    function hideInfoPanel(panel_id){
+      $("#"+panel_id).hide();
+    }
+  </script>
+<%end%>
+
+<div class="subPageWrapper">
+  <h1>START-UP WORKSPACE</h1>
+  <h2 class="headLine"><%= sanitize helper_get_business_idea @current_user %></h2>
+  <%= render :partial => 'shared/startup_workspace_breadcrumbs', :locals => {:selected => :dashboard} %>
+  <div class="clear"></div>
+
+  <% project_section = @project.sections.sequence_wise.first%>
+  <div id ="notification_banner" >
+    <% if @current_user.is_logged_in_for_the_first_time? and !session['notification_banner_closed'] %>
+      <%= render :partial=>"congratulations_banner" %>
+    <% elsif show_banner_notification?(project_section)%>
+      <%if !project_section.ended? and !session['progress_banner_closed']%>
+        <%if project_section.completed_items_count > 0%>
+          <%= render :partial=>"progress_banner", :locals=>{:section=> project_section} %>
+        <%elsif @project.sections.sequence_wise.first.completed_items_count == 0%>
+          <%= render :partial=>"no_progress_banner", :locals=>{:section=> project_section} %>
+        <%end%>
+      <%end%>
+    <%end%>
+  </div>
+
+
+  <div class="tracBg">
+
+    <h1>Road Map Progress Tracker</h1>
+    <div class="tracDv">
+      <% project_percentage = "#{@project.percent.to_s}%" %>
+
+      <%
+      if @project.percent.to_i == 100
+        tracPrcntgClass = "tracPrcntgGreen"
+      else
+        tracPrcntgClass = "tracPrcntg"
+      end
+    %>
+<%#*tracPrcntgGreen%>
+      <div class=<%=tracPrcntgClass%> style="width:<%= project_percentage %>;" >
+        <span class="tracValue <%= (@project.percent.to_i < 5) ? 'floatL' : 'floatR' %>"><%= project_percentage %></span>
+      </div>
+      <span class="tracLines"></span>
+      <%className = 'tracNotification'%>
+      <% if @current_user.is_logged_in_for_the_first_time?%>
+        <% if session['first_time_box_cacelled'] %>
+          <%className = 'tracNotificationWithZindex'%>
+        <%end%>
+      <%else%>
+        <%className = 'tracNotificationWithZindex'%>
+      <%end%>
+      <% if helper_is_no_progress_at_all? @project %>
+
+        <div id="tracNotice" class=<%=className%> >Visit your customized <%= link_to "Road Map", :controller=>"projects", :action=>"show" %> to begin completing tasks and tracking your overall progress results.</div>
+      <%end%>
+    </div>
+
+    <% unless @project.end_date.blank? %>
+      <% project_datewise_percentage = "#{helper_datewise_percentage(@project).to_s}%" %>
+      <div class="tracBottomBar" style="width:<%= project_datewise_percentage %>;"></div>
+      <div class="projectDates">
+        <span class="startingDate"><%= (ws_date_format_with_abreviated_month @project.start_date).upcase %></span>
+        <span class="endingDate"><%= (ws_date_format_with_abreviated_month @project.end_date).upcase %></span>
+      </div>
+    <%end%>
+  </div>
+
+<%#  unless Section.sections_as_per_completed(@project.id).blank?%>
+  <div class="dbinProgress">
+    <h3 class="dboardTitle">
+      In Progress <img src="images/info-icon.png"  onmouseover="showInfoPanel('item_in_prog_info');" onmouseout="hideInfoPanel('item_in_prog_info');" />
+      <div id="item_in_prog_info" class="floatR dispNone itemInProgInfodashboard">
+        <%= render :partial => 'shared/info_tooltip', :locals => { :tip => @tool_tip_contents }  %>
+      </div>
+    </h3>
+    <% items = @project.get_lastly_worked_on_items %>
+    <% unless items.blank? %>
+
+      <div class="subTitle">
+        <h6 class="borderRightGray">ROADMAP STEP</h6>
+        <h6>ACTION ITEMS</h6>
+      </div>
+
+      <% @project.get_lastly_worked_on_items.each do |item| %>
+        <%section = item.section%>
+        <% section_percentage = "#{section.percent_completed.to_s}%" %>
+        <div class="dbInProgressRow">
+          <div class="progressLeftCol">
+            <h4><%= image_tag("red-blt.png") %><%= "#{section.sequence_number}: "%><%= link_to section.title, "#{roadmap_path}?is_section_detail=true&section=#{section.id}#section_head_#{section.sequence_number.to_s}" %></h4>
+            <div class="percentageTitle"><span class="prcntgValueSmall"><%= "#{section_percentage} Completed" %></span>
+              <div class="percentBarSmall">
+                <%
+                if section.percent_completed.to_i == 100
+                  smallPrcntBarClass = "smallPrcntBarGreen"
+                else
+                  smallPrcntBarClass = "smallPrcntBar"
+                end
+              %>
+                <div class=<%=smallPrcntBarClass%> style="width:<%= section_percentage %>;">
+                <!--<div class="smallPrcntBar" style="width:<%#=section_percentage%>;">-->
+                  <span class="smallBarLines"></span></div>
+              </div>
+            </div>
+            <% unless section.due_date.blank? %>
+              <%section_deadline = section.due_date%>
+              <span class="marginL12">Deadline:</span> <span class="<%= helper_choose_date_color(section_deadline, section_percentage.to_i) %>"><%= ws_date_format_with_abreviated_month(section_deadline) %><%=  helper_choose_date_icon_small(section_deadline, section_percentage.to_i) %></span>
+                <!--<div class=<%#= set_class(section) %> ><span>Deadline:</span><%#=ws_date_format(section.due_date) %><img src="images/notify-icn-small.png" /></div>-->
+            <%end%>
+          </div>
+          <!--section recently updated that is applicable -->
+          <%section_item = section.recently_updated_item.first%>
+          <%unless section_item.blank?%>
+            <div class="progressRightCol">
+              <h4><%="#{section_item.sequence_number}."%><%=  link_to section_item.title, :controller=>"projects", :action=>"show", :is_item_detail=>true, :item=>section_item.id%></h4>
+              <%unless section_item.updated_at.blank?%>
+                <p>Last modified by <%=link_to "You",edit_user_path(@current_user), :target => '_blank'%><%=" at  #{ws_time_format(section_item.updated_at)} , #{ws_date_format_with_abreviated_month(section_item.updated_at)}"%></p>
+              <%end%>
+            </div>
+          <%else%>
+            <h4>No item Applicable in this section</h4>
+          <%end%>
+        </div>
+      <%end%>
+      <div class="stepsBtnDv"><%=link_to image_tag("view-10steps-btn.png"), :controller=>"projects", :action=>"show"%></div>
+    <%else%>
+      <div class="dbInProgressRow borderLess">
+        <div>
+          <%= link_to image_tag("img-ready-set-go.jpg"), roadmap_path %>
+          <h3 class="imageText">WANT TO GET STARTED?</h3>
+          <p class="imageMsg borderLess">Click here to begin the startup process by completing the action items in step 1, The Starting Block.</p>
+        </div>
+      </div>   
+    <%end%>
+  </div>
+<%#end%>
+  <div class="dbtoDoList">
+    <h3 class="dboardTitle">
+      To Do List <img src="/images/info-icon.png" onmouseover="showInfoPanel('upcoming_todo_info');" onmouseout="hideInfoPanel('upcoming_todo_info');" /><!--<a id="add_todo" href="#." style="float: right">Add</a>-->
+      <div id="upcoming_todo_info" class="floatR dispNone upcomingTodoInfodashbord">
+        <%= render :partial => 'shared/info_tooltip', :locals => { :tip => @roadmap_contents[:upcoming_todos] }  %>
+      </div>
+    </h3>
+    <%= image_tag("img-to-do-list.jpg") %>
+    <h3 class="imageText">KEEP TRACK OF YOUR TO-DO LIST?</h3>
+    <p class="imageMsg borderLess">Coming Soon.</p>
+
+  </div>
+  <div class="sep"></div>
+  <div class="dasboardContent">
+
+    <div class="dashboardResources">
+      <h3 class="dbResourceTitle"><%= link_to "Resources", :controller=>"resources", :action=>'index', :target => '_blank' %></h3>
+
+      <ul class="titleLinks">
+        <li style="position:relative"><a href="#" class="drop">By Category<%= image_tag("up-arrow2.png") %></a>
+          <ul>
+            <p class="listArrowTop"><%= image_tag("up-arrow2.png") %></p>
+            <%SectionTemplate.published.each do |section|%>
+              <li><%= link_to section.title, "JavaScript:void(0);", :onclick=>"resource_category_filter(#{section.id})"%></li>
+            <%end%>
+          </ul>
+        </li>
+      </ul>
+
+
+      <div id="resourcesContent" class="resourcesContent">
+        <%= render :partial=>"resources", :locals=>{:resources=> @resources} %>
+      </div>
+    </div>
+
+    <div class="dbResourcesActivity">
+      <h3><%= link_to "Top Trending Community Topics", :controller=>"messages", :action=>"index" %></h3>
+      <% unless @topics.blank? %>
+        <%(@topics[0..3] || []).each do |topic|%>
+          <% topic_object = Topic.find(topic.topic_id)%>
+          <div class="activityList">
+            <p class="title"><%= link_to topic_object.name, :controller=>"messages", :action=>"topic_categories"%></p>
+            <p><%= link_to "#{topic_object.messages.count} Response", :controller=>"messages", :action=>"topic_search", :topic=>"#{topic_object.id}"%> | Posted by <%=topic_object.user.name%> </p>
+            <% unless topic_object.item_templates.blank? %>
+              about <p>
+                <%topic_object.item_templates.each do |t|%>
+                  <%="#{t.title}, "%>
+                <%end%>
+              </p>
+            <%end%>
+    <!--<p><%#=topic_object.item_template.inspect%></p>-->
+            <p>on <%= "#{ws_date_format(topic_object.created_at)} at #{ws_time_format(topic_object.created_at)}" %></p>
+          </div>
+        <%end%>
+      <%else%>
+        <p class="title">No Topics in Community</p>
+      <%end%>
+    </div>
+
+  </div>
+  <div class="dasboardContent">
+    <div class="dashboardResources">
+      <!--<h3 class="dbResourceTitle">News Feed</h3>-->
+      <h3 class="dbResourceTitle"><%= link_to "News Feed", :controller=>"news_articles", :action=>"index" %></h3>
+      <div class="resourcesContent">
+        <% unless @news_feeds.blank? %>
+  <%# (@news_feeds[0..4] || []).each do |news_feed| %>
+          <% @news_feeds.each do |news_feed| %>
+            <div class="resourcesList">
+    <%#= link_to (news_article.title)+'<span class="offSiteLink"></span>', news_article.url, :target => '_blank' %>
+              <h4><%= link_to news_feed.title, news_feed.link, :target => '_blank' %></h4>
+              <p class="dateP"><%=  "#{news_feed.feeder.title} | #{ws_date_format(news_feed.published_at)}" %></p>
+              <p><%=truncate(strip_tags(news_feed.summary),200) %></p>
+            </div>
+          <%end%>
+        <%else%>
+          <p>No News feeds available</p>
+        <%end%>
+      </div>
+
+    </div>
+    <div class="dbResourcesActivity">
+      <!--<h4>Upcoming Events</h4>-->
+      <h4>
+        <%if @events.blank?%>
+          <span>0</span>
+        <%else%>
+          <span><%= @events.length %></span>
+        <%end%>
+        <%= link_to "Upcoming Events", :controller=>"events", :action=>'index' %></h4>
+      <%unless @events.blank?%>
+        <% (@events[0..3] || []).each do |event|%>
+          <%if event.class != Feed  %>
+            <div class="activityList">
+              <!--<p class="title"><%#=link_to event.title, event_path(event)%></p>-->
+              <p class="title"><%=link_to event.title, event.url, :target => '_blank'%></p>
+              <p><%="#{ws_date_format(event.event_start_date)}, #{event.city}, #{event.geo_state}" %></p>
+            </div>
+          <%else%>
+            <div class="activityList">
+              <!--<p class="title"><%#=link_to event.title, event_path(event)%></p>-->
+              <p class="title"><%=link_to event.title, event.link, :target => '_blank'%></p>
+              <p><%="#{ws_date_format(event.published_at)}, #{event.feeder.feed_city}, #{event.feeder.feed_geo_state}" %></p>
+            </div>
+          <%end%>
+        <%end%>
+
+      <%else%>
+        <p>No upcoming events available</p>
+      <%end%>
+    </div>
+  </div>
+</div> <!-- End of Sub page Wrapper -->
+
+
+<script>
+  function roadmap_redirect()
+  {
+    $.post('/dashboards/cancel_notification_box', {'_method':'put'}, function(){
+      //$.unblockUI();
+      window.location = '/roadmap';
+    }, 'json');
+    
+  }
+</script>
+<div id="splashBox" class="dbWelcomeMsg dispNone">
+  <h1><%= @first_time_login[:title_with_text].title %></h1>
+  <h3><%= @first_time_login[:h3_content].content%></h3>
+  <p><%= @first_time_login[:title_with_text].content %></p>
+  <h2><%= @first_time_login[:h2_content].content %></h2>
+  <p>
+    <%= link_to image_tag('not-now-btn.png'), 'JavaScript:void(0);' , :class=>'closeBox'%>
+    <%= link_to image_tag('lets-go-btn.png'), 'JavaScript:void(0);', :onclick=>"roadmap_redirect();"%>
+  </p>
+  <%= link_to image_tag('cancel-icn.png', :class=>'cancelBtnSplash'), 'JavaScript:void(0);' , :class=>'closeBox'  %>
+</div>

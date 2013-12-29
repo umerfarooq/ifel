@@ -1,0 +1,41 @@
+<% unless promotions.blank? %>
+  <% promotions.each_with_index do |promotion, index| %>
+    <% promotion = promotion.becomes(promotion.kind.constantize) %>
+    
+      <div id="<%= promotion.kind.downcase+'_'+index.to_s %>" >
+        <h2>
+          <% if promotion.is_partner_promotion?  %>
+            <%= link_to truncate(promotion.head_title,80), promotion.url, :target => '_blank' %>
+          <%else%>
+            <%=  truncate(promotion.head_title,80) %>
+          <%end%>
+        </h2>
+        <% unless promotion.blank? %>
+          <p>
+            <% description=promotion.description %>
+            <% stripped_description=strip_tags(promotion.description) %>
+
+            <%
+            style_class = 'promotionImg'
+            if stripped_description.blank?
+              style_class.concat(' promotionImgScaled')
+            end
+          %>
+            <%= (image_tag promotion.picture.url((promotion.image_display_size.blank?) ? 'original' : promotion.image_display_size) , :class => 'floatL' ) if promotion.is_partner_promotion?  %>
+            <%= (link_to (image_tag promotion.picture.url((promotion.image_display_size.blank?) ? 'original' : promotion.image_display_size), :alt => promotion.head_title, :class => style_class), promotion.url  , :target => '_blank') unless promotion.is_partner_promotion? %>
+            <%= ((link_to promotion.sub_title, promotion.url, :target=>'_blank') unless promotion.description.blank?) unless promotion.is_partner_promotion?  %>
+            <br />
+            <span class="meta">
+              <%= ((ws_date_format(promotion.created_at)) unless stripped_description.blank?) unless promotion.is_partner_promotion?%>
+            </span>
+          </p>
+          <p>
+            <%= description %>
+            <%= (hidden_field_tag :current_promo_id, promotion.id.to_s) if promotion.is_regular_promotion?%>
+          </p>
+        </div>
+    <%end%>
+  <%end%>
+<%else%>
+  <h2><%= 'Promotions' %></h2>
+<%end%>

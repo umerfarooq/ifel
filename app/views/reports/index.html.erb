@@ -1,0 +1,57 @@
+<% if @report_category.blank? %>
+  <h1>
+    WICKED START REPORTING
+  </h1>
+  <hr />
+  <br />
+  <% @report_titles.each do |key, value| %>
+    <strong>
+      <%= link_to "#{value} Report", reports_path(:report_category => key) %>
+    </strong>
+    <br />
+    <br />
+  <% end %>
+<% else %>
+  <h1>
+    <%= "WICKED START #{@title.upcase} REPORT" %>
+  </h1>
+  <hr />
+  <br />
+
+  <h3>
+    ADHOC Report
+  </h3>
+  <% form_tag(:controller => 'reports', :action => 'adhoc', :report_category => @report_category) do %>
+    Start Date:
+    <br />
+    <%= date_select("report", "start_date") %>
+    <br />
+    End Date:
+    <br />
+    <%= date_select("report", "end_date")%>
+    <br />
+    <%= submit_tag 'Generate Report' %>
+  <% end %>
+  <!--<br />
+  <hr />
+  <br />
+
+  <h3>
+    Standard Monthly & Annual Reports
+  </h3>
+  <br />
+  <%# temp_date = @start_date %>
+  <%# while temp_date < @end_date %>
+    <strong>
+      <%# if(File.file?(@dir.join(temp_date.year.to_s, "#{Date::MONTHNAMES[temp_date.month]}.xlsx"))) %>
+        <%#= link_to "WICKED START #{@title} Report for month of #{Date::MONTHNAMES[temp_date.month]} #{temp_date.year.to_s}",
+          report_path(:report_category => @report_category, :id => "#{temp_date.year}-#{temp_date.month}") %>
+      <%# else %>
+        <%#= "WICKED START #{@title} Report for month of #{Date::MONTHNAMES[temp_date.month]} #{temp_date.year.to_s} not on server" %>
+      <%# end %>
+    </strong>
+    <br />
+    <%# temp_date = temp_date + 1.month %>
+  <%# end %>-->
+<% end %>
+

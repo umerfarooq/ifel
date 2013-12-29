@@ -1,0 +1,266 @@
+<%#* <div style="margin-top: -14px;" class="launchTopBg"></div>%>
+<div class="rgstrFrmDv">
+  <% form_for :credential, credential, :url => { :action => 'create' } do |f| %>
+    <%= hidden_field_tag :step, step %>
+    <table border="0" cellpadding="0" cellspacing="0" class="rgstrTbl">
+      <tr>
+        <td colspan="2" class="rgstFrmTtl"><h1><i>Get Going Now!</i></h1>
+          <span class="rgstrMsg">Register for a Wicked Start Account in 3 Easy Steps</span>
+          <div style="clear:both;"></div>
+          <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+        <td colspan="2" align="left" class="stepsTd">
+          <img src="/images/icons/1a.jpg" width="65" height="65" />
+          <img src="/images/icons/2b.jpg" width="65" height="65" />
+          <img src="/images/icons/3a.jpg" width="65" height="65" />
+        </td>
+            </tr>
+          </table>
+        </td>
+        <td class="chatTd"><!-- BEGIN LivePerson Button Code -->
+<div id="lpButDivID-1278944190290"></div>
+<script type="text/javascript" charset="UTF-8" src="https://server.iad.liveperson.net/hc/21508013/?cmd=mTagRepstate&site=21508013&buttonID=1&divID=lpButDivID-1278944190290&bt=1&c=1"></script>
+<!-- END LivePerson Button code --></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="left" class="stepsTd">
+
+        </td>
+        <td rowspan="20" align="right" valign="top" class="rgstrRitCol">
+          <table width="200" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td align="right" valign="bottom" class="blockCrnr"><img src="/images/rgstr-right-top.jpg" width="427" height="9" /></td>
+            </tr>
+            <tr>
+              <td height="200" align="right" valign="top" class="ritBlock">
+                <table width="200" border="0" cellpadding="0" cellspacing="0" class="blockTbl">
+                  <tr>
+                    <td align="left" class="blockTtl"><i>Your Wicked Start account includes the following features and benefits:</i></td>
+                  </tr>
+                  <tr>
+                    <td align="left" class="blockBdy">
+                      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td class="rgstrIcnTd"><img src="/images/icons/grph-icn-s.jpg" width="56" height="36" /></td>
+                          <td class="rgstrTxt">Personalized roadmap of action items to help you manage the startup process, each step of the way.</td>
+                        </tr>
+                        <tr>
+                          <td><img src="/images/icons/edit-icn-s.jpg" width="56" height="36" /></td>
+                          <td class="rgstrTxt">Get access to templates, examples and links to expert resources to help streamline the process.</td>
+                        </tr>
+                        <tr>
+                          <td><img src="/images/icons/comment-icn-s.jpg" width="56" height="43" /></td>
+                          <td class="rgstrTxt">Connect to the Wicked Start Community to ask and answer questions and share experiences with peers.</td>
+                        </tr>
+                        <tr>
+                          <td><img src="/images/icons/info-icn-s.jpg" width="56" height="36" /></td>
+                          <td class="rgstrTxt">Email alert and notification systems to let you know when a deadline is approaching.</td>
+                        </tr>
+                        <tr>
+                          <td><img src="/images/icons/folder-icn-s.jpg" width="56" height="36" /></td>
+                          <td class="rgstrTxt">Maintain a centralized "hub" to manage your files and important startup documents.</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left" class="blockTxt"><i><strong>WE'RE HERE TO HELP YOU GET GOING!</strong></i></td>
+                  </tr>
+                  <tr>
+                    <td align="left" class="blockTtl2"><i>Sign up for your free, seven-day trial now! After the trial, you'll pay only $9.99 a month with a one-time registration fee of $40.00*</i></td>
+                  </tr>
+                  <tr>
+                    <td align="left" class="blockTxt"><i>*At the end of the seven-day trial, we will bill your account for the first month's subscription fee of $9.99 plus the initial registration fee of $40. You can cancel your account online at anytime during the seven-day trial and pay nothing. If you continue with the Wicked Start service, you will automatically be billed $9.99 every 30 days.</i>
+                      <br />
+                      <br />
+                      To read more about our billing policies contained in the Terms and Conditions, along with refund and cancellation  policies,
+                      <%= link_to "Click here", home_path('terms_and_conditions') %>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td align="right" valign="top" class="blockCrnr"><img src="/images/rgstr-right-bot.jpg" width="427" height="9" /></td>
+            </tr>
+          </table>
+           </td>
+      </tr>
+      <tr>
+        <th colspan="2" align="left" scope="col"><i>Billing Information</i></th>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <p style ="color:red">
+          <%= f.error_messages :header_message => nil, :message => nil %>
+          <% if @error == :insufficient_balance %>
+            Insufficient Balance
+          <%elsif @error == :invalid_card%>
+            Invalid Card Details
+          <% elsif @error == :subscription_cancelled %>
+            Subscription cancelled due to invalid card credentials
+          <% elsif @error == :invalid_promo_code%>
+            Invalid promotional code
+          <% elsif @error == :subscription_failed %>
+          <% @err_msg.each do |message| %>
+            <%= "Error Code=" + message.code + "\n"%>
+            <%= "Error Message = " + message.text + "\n"%>
+            <% end %>
+          <% end %>
+          &nbsp;
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :first_name, "First Name :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :first_name, :class => "txtFld" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :last_name, "Last Name :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :last_name, :class => "txtFld" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :address_one, "Address 1 :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :address_one, :class => "txtFld" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <%#*<span>*</span>%>
+          <%= f.label :address_two, "Address 2 :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :address_two, :class => "txtFld" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :city, "City :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :city, :class => "txtFld" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :state, "State :" %>
+        </td>
+        <td class="rgstrfld">
+          <%#= f.text_field :state, :class => "txtFld" %>
+          <%= f.select :state, Carmen::state_names('US').collect {|c|[c]}, { :include_blank => true }, :class=>"txtFld"%>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :zip_code, "ZIP Code:" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :zip_code, :class => "txtFld" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :country, "Country :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.select :country_id, Country.all.collect {|c| [ c.name, c.id ] }, :selected => [Country.find_by_name('United States').id],:class=>"LstFld"%>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          Promotion Code :
+        </td>
+        <td class="rgstrfld">
+          <% if session[:promo_code] %>
+            <%= text_field "promotion", "code", :value => session[:promo_code] %>
+          <% else %>
+            <%= text_field "promotion", "code" %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2" align="left">&nbsp;</th>
+      </tr>
+      <tr>
+        <th colspan="2" align="left" class="crdTd"><i>Credit Card Information</i></th>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :card_type, "Type :" %>
+        </td>
+        <td class="rgstrfld">
+        <%= f.select :card_type, [["Visa", "visa"], ["MasterCard", "master"], ["Discover", "discover"], ["American Express", "american_express"]], :class => "LstFld2" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :card_number, "Card Number :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.text_field :card_number, :class => "txtFld", :autocomplete => 'off' %>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :card_expires_on, "Expiration Date :" %>
+        </td>
+        <td class="rgstrfld">
+          <%= f.date_select :card_expires_on, :discard_day => true, :start_year => Date.today.year, :end_year => (Date.today.year+10), :order => [:month, :year, :day], :class => "LstFld2" %>
+          <%#= f.select_month(Date.today, :class => "LstFld2")%>
+          <%#= f.select_year(Date.today, :class => "LstFld2")%>
+        </td>
+      </tr>
+      <tr>
+        <td class="rgstrLbl">
+          <span>*</span>
+          <%= f.label :card_verification, "Card Verification Value (CVV) :" %><br />
+        </td>
+        <td class="rgstrfld">
+          <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+            <tr>
+              <td align="left" style="width:85px;"><%= f.text_field :card_verification, :class => "txtFld2" %></td>
+              <td align="left;"><a href="#">What is This</a></td>
+              <td align="right" style="padding-right:85px;"><img src="/images/go-dady-tag.jpg" width="99" height="40"/></td>
+            </tr>
+          </table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="right">
+          &nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td align="left">
+          <%= image_submit_tag 'continue-btn.jpg', :alt => "CONTINUE", :style => "cursor: default" %>
+        </td>
+        <td class="btnTd" style="text-align:left; padding-right:25px;">
+          <%= link_to 'Cancel', url_for(:back) %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+</div>

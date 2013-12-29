@@ -1,0 +1,45 @@
+<%#*<div class="launchTopBg" style="margin-top:-14px;"></div>%>
+<%# if @message_main.blank? %>
+<%#*<h3>Main On The Radar</h3>%>
+<%#*<p>%>
+<%#*Main marketing message for On The Radar.%>
+<%#*</p>%>
+<%# else %>
+<%#*<h3>%>
+<%#= @message_main.title %>
+<%#*</h3>%>
+<%#*<p>%>
+<%#= @message_main.content %>
+<%#*</p>%>
+<%# end %>
+<%#*<br />%>
+
+<div class="whitpprDv">
+  <h3>WHITE PAPER / CASE STUDIES</h3>
+  <br />
+  <% if @white_papers.blank? %>
+    <% if @message_no_wp.blank? %>
+      No white paper available to display.
+    <% else %>
+      <%= @message_no_wp.content %>
+    <% end %>
+  <% else %>
+
+  <%#= render :partial => 'news_items/white_paper', :collection => @white_papers %>
+    <% for white_paper in @white_papers %>
+      <div class="whitPprLst">
+        <strong>
+          <%= white_paper.title %>
+        </strong>
+        <p>
+          <%= white_paper.summary %>
+          <% if white_paper.paper.file? %>
+            <%= link_to "Download", white_paper.paper.url, :target => '_blank' %>
+          <% end %>
+        </p>
+      </div>
+    <% end %>
+
+  <% end %>
+</div>
+

@@ -1,0 +1,132 @@
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    function sortingPanel(is_resource_sorting){
+      showProgressBar();
+      $('#list li').removeClass('text_color');
+      $('#section_list li').find('a.current').removeClass('current');
+      $('#sorting_content_panel').load('/resources/sorting/'+is_resource_sorting, function(){
+        hideProgressBar();
+      });
+    }
+    function loadResourceSectionContent(sectionId){
+      showProgressBar();
+      $("#rl_section_"+sectionId).parent().parent().find('a.current').removeClass('current');
+      $("#rl_section_"+sectionId).addClass("current");
+      $('#resource_section_panel').load('/resources/'+sectionId+'/load_resource_section_content/', function(){
+        hideProgressBar();
+      });
+    }
+    function loadServiceSectionContent(sectionId){
+      showProgressBar();
+      $("#sp_section_"+sectionId).parent().parent().find('a.current').removeClass('current');
+      $("#sp_section_"+sectionId).addClass("current");
+      $('#resource_section_panel').load('/resources/'+sectionId+'/load_service_section_content/', function(){
+        hideProgressBar();
+      });
+    }
+    function loadTags(tagId, sectionId, is_resource_library, is_top_tag){
+      showProgressBar();
+      $('#list li').click(function(){
+        $(this).parent().find('li.text_color').removeClass('text_color');
+        $(this).addClass('text_color');
+      });
+      //$("#list li").click(function(){
+      //$(this).css('background-color', '#ccc');
+      //})
+      if (is_resource_library == 'true')
+        $('#resource_section_content_panel').load('/resources/load_tag_content/'+tagId+'/'+is_resource_library+'/'+is_top_tag+'/'+sectionId,function(){
+          hideProgressBar();
+        });
+      else
+        $('#all_content_panel').load('/resources/load_tag_content/'+tagId+'/'+is_resource_library+'/'+is_top_tag+'/'+sectionId,function(){
+          hideProgressBar();
+        });
+    }
+    function loadRightCategoryContent(categoryId, sectionId){
+      showProgressBar();
+      $('#list li').click(function(){
+        $(this).parent().find('li.text_color').removeClass('text_color');
+        $(this).addClass('text_color');
+      });
+      
+      $('#resource_section_content_panel').load('/resources/load_right_category_content/'+categoryId+'/'+sectionId, function(){
+        hideProgressBar();
+      });
+      
+    }
+
+    function loadSectionCategoryContent(categoryId, sectionId){
+      showProgressBar();
+      $('#category_'+sectionId+'_panel_'+categoryId).load('/resources/load_section_category_content/'+categoryId+"/"+sectionId, function(){
+        hideProgressBar();
+      });
+    }
+    function loadAllContent(sectionId){
+      showProgressBar();
+      $('#all_content_panel_'+sectionId).load('/resources/'+sectionId+'/load_all_content/',function(){
+        hideProgressBar();
+      });
+    }
+    function save_click_track(resourceId,userId){
+      $.ajax({
+        type: 'GET',
+        url: '/resources/click/'+resourceId+'/'+userId,
+        success: function(data){
+          //alert('added');
+        },
+        failure: function(data) {
+          //alert('failed');
+        }
+      });
+      return false;
+      //$('#comment_panel_'+resourceId).load('/resources/'+resourceId+'/add_comments/');
+    }
+        
+  </script>
+<% end %>
+
+<div id="sorting_content_panel">
+  <% if is_resource_library %>
+    <div id="resource_section_content_panel">
+      <% section_template.each do |section_template| %>
+        <% section_types = ResourceCategory.published.all_categories_for_section_in_resource_library({:section_template_id => section_template.id}) %>
+        <div id="<%#= section_template.title.downcase.gsub(' ','_') %>" class="floatL resourcesTopDescription">
+          <h2 class="headLine2"><%= section_template.title.to_s %></h2>
+          <div class="resourcesTopDescription <%=(section_types.blank?)? "noBorder" : "" %>">
+    <%#= sanitize section_template.introduction.to_s %>
+            <%= sanitize section_template.resource_text_message.description %>
+          </div>
+          <% categories_count = section_types.count %>
+          <div id="all_content_panel_<%= section_template.id.to_s %>">
+            <%= render :partial => '/resources/resource', :locals => {:top_categories => section_types[0..1], :section_template => section_template, :is_section_selected => is_section_selected, :categories_count => categories_count} %>
+          </div>
+        </div>
+      <%end%>
+    </div>
+    <% if is_default_page %>
+      <%= render :partial => '/resources/listing', :locals => {:is_section_selected => is_section_selected, :section_template => nil, :top_ten_categories => top_ten_categories, :top_ten_tags => top_ten_tags, :all_tags => all_tags, :is_resource_library => is_resource_library} %>
+    <%else%>
+      <%= render :partial => '/resources/listing', :locals => {:is_section_selected => is_section_selected, :section_template => section_template, :top_ten_categories => top_ten_categories, :top_ten_tags => top_ten_tags, :all_tags => all_tags, :is_resource_library => is_resource_library} %>
+    <%end%>
+
+  <%else%>
+    <% section_template = section_template[0] %>
+    <div id="service_section_content_panel">
+      <div class="floatL resourcesTopDescription">
+        <h2 class="headLine2"><%= section_template.title.to_s %></h2>
+        <div class="resourcesTopDescription noBorder">
+  <%#= sanitize section_template.introduction.to_s %>
+          <%= sanitize section_template.resource_text_message.description %>
+        </div>
+        <div>
+          <%= render :partial => '/resources/service', :locals => {:top_categories => top_categories, :section_template => section_template, :is_section_selected => is_section_selected} %>
+        </div>
+      </div>
+    </div>
+    <% if is_default_page %>
+      <%= render :partial => '/resources/listing', :locals => {:is_section_selected => is_section_selected, :section_template => nil, :top_ten_categories => nil, :top_ten_tags => top_ten_tags, :all_tags => all_tags, :is_resource_library => false} %>
+    <%else%>
+      <%= render :partial => '/resources/listing', :locals => {:is_section_selected => is_section_selected, :section_template => section_template, :top_ten_categories => nil, :top_ten_tags => top_ten_tags, :all_tags => all_tags, :is_resource_library => false} %>
+    <%end%>
+  <%end%>
+</div>

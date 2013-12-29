@@ -1,0 +1,16 @@
+<div class="lftCol">
+  <div class="lftPnl">
+    <h5>Templates</h5>
+    <div class="pnlBdy">
+      <% @templates.each do |template| %>
+        <%= link_to template.title, download_template_document_path(template), :target => "_blank", :class => "cmntyLnk" %>
+      <% end %>
+    </div>
+    <div class="pnlBdy see-all-temp" >
+      <%#= link_to "See All Templates>>", documents_path(:all_templates=>"1") %>
+      <%#*<br />%>
+      <%= link_to "See All Templates>>", templates_path %>
+    </div>
+  </div>
+  <%= link_to image_tag("/images/upload-btn.jpg", :border => 0), new_project_document_path(current_user.project), :onclick => '$(this).colorbox()' %>
+</div>

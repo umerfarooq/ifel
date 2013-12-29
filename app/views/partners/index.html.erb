@@ -1,0 +1,47 @@
+<%content_for :javascripts do%>
+    <%= javascript_include_tag 'ws.partners'  %>
+<%end%>
+<% title "Our Partners are Dedicated to the Success of Your Small Business" %>
+<% meta "Our partners are dedicated to helping you start a small business by providing low or no cost resources to get your new business launched." %>
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" unless current_user %>
+  <h1>ABOUT US</h1>
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :partners} %>
+  <div class="clear"></div>
+  <h2 class="headLine"><%= sanitize @main_title.title %></h2>
+  <h2 class="leadInText"><%= sanitize @main_title.content %></h2>
+
+  <div class="partnerMessage">
+    Interested in partnering with us to better service our customers and reach potential new customers?
+    <%= link_to image_tag("/images/become-partner-button.jpg"), "#.", :title => "Become a Partner Today!", :id => "btnBecomePartner" %>
+    <div id="becomePartPanel">
+      <%= render :partial => "become_partner_popup" %>
+    </div>
+    <div id="sentConfirmPanel" style="display: none;">
+      THANK YOU, YOUR REQUEST HAS BEEN SENT!
+    </div>
+  </div>
+
+  <div class="sep marginTop"></div>
+  <div class="partnersList">
+
+    <% unless @partners.blank? %>
+      <% @partners.each do|partner| %>
+        <div class="partnerItem">
+          <div class="partnersImage">
+            <%= link_to image_tag(partner.logo.url(:small), :alt=> partner.company_name), partner_path(partner) %>
+          </div>
+          <div class="partnerDesc">
+            <h3>
+              <%= link_to partner.company_name.camelize, partner_path(partner) %>
+              <span> – <%= sanitize partner.list_title %></span>
+            </h3>
+            <p><%= sanitize partner.summary %></p>
+            <p><%= link_to(sanitize(partner.url_text)+' >', partner.url) %></p>
+          </div><!-- End of newsDesc -->
+        </div>
+      <%end%>
+    <%end%>
+
+  </div><!-- End of Partners List -->
+</div> <!-- End of Sub page Wrapper -->

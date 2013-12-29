@@ -1,0 +1,143 @@
+<% content_for :head do %>
+  <%#= javascript_include_tag "nicEdit" %>
+
+  <script type="text/javascript">
+    //$(document).ready(function (){
+    //  resource_description_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('resource_description');
+    //  getSelectedServices();
+    //});
+
+    function getSelectedServices()
+    {
+      var serviceSelector = document.getElementById('resource_resource_category_id');
+      var selectedValue = serviceSelector.options[serviceSelector.selectedIndex].text;
+      if(selectedValue == 'Service Provider')
+      {
+        //document.getElementById('resources').style.display = "none";
+        document.getElementById('resource_title').style.display = "none";
+        document.getElementById('resource_url').style.display = "none";
+        document.getElementById('resource_image').style.display = "none";
+        document.getElementById('service_title').style.display = "block";
+        document.getElementById('service_url').style.display = "block";
+        document.getElementById('banner').style.display = "block";
+        document.getElementById('service_image').style.display = "block";
+      }else
+      {
+        document.getElementById('service_title').style.display = "none";
+        document.getElementById('service_url').style.display = "none";
+        document.getElementById('resources').style.display = "block";
+        document.getElementById('resource_title').style.display = "block";
+        document.getElementById('resource_image').style.display = "block";
+        document.getElementById('resource_url').style.display = "block";
+        document.getElementById('banner').style.display = "none";
+        document.getElementById('service_image').style.display = "none";
+      }
+    }
+  </script>
+<% end %>
+<%= render :partial => "admins/admin_resource_menu", :locals => { :active_admin_resource_tab => :resources_tab } %>
+
+<div class="admnRitCol">
+
+  <h2>Add a new Resource</h2>
+  <br />
+
+  <% form_for @resource, :html => { :multipart => true } do |f| %>
+    <%= f.error_messages :header_message => nil, :message => nil %>
+  <%#*<p>%>
+  <%#= f.label :name %>
+  <%#*<br />%>
+  <%#= f.text_field :name %>
+  <%#*</p>%>
+    <p>
+      <%= f.label :resource_type %>
+      <br />
+      <%= f.collection_select(:resource_category_id, ResourceCategory.published.all, :id, :title, {:prompt => true}, {:onchange => "getSelectedServices();"}) %>
+    </p>
+    <span class="resourceLibrary" id="resources">
+      <p>
+        <%= f.label :Pricing %>
+        <br />
+  <%#= f.select :pricing, [['Free', 'FREE'], ['Low Cost', 'LOW COST'], ['Premium', 'PREMIUM']], {:prompt => true}, { :multiple => true } %>
+        <%= f.collection_select(:pricing, Pricing.all, :id, :title, {:prompt => false}, { :multiple => true }) %>
+      </p>
+    </span>
+
+    <p>
+      <span id="resource_title"><%= f.label :title %></span>
+      <span id="service_title" style="display: none"><%= f.label :Company_Name %></span>
+      <br />
+      <%= f.text_field :title, :size => "100" %>
+    </p>
+    <p>
+      <span id="resource_url"><%= f.label :url %></span>
+      <span id="service_url" style="display: none"><%= f.label :Company_Url %></span>
+      <br />
+      <%= f.text_field :url, :size => "100" %>
+    </p>
+
+    <p>
+      <%= f.label :url_mask %>
+      <br />
+      <%= f.text_field :url_mask, :size => "100" %>
+    </p>
+
+    <p>
+      <%= f.label :tags %>
+      <br />
+      <%= f.text_field :tag_list, :size => "100" %>
+    </p>
+    <p>
+      <%= f.label :description %>
+      <br />
+      <%= f.text_area :description, :size => "100x20", :class => "adminEditor" %>
+    </p>
+    <p>
+      <%= f.label :image %>
+      <br />
+      <span id="resource_image"> <%= label_tag 'Photo (W: 75px, H: 115px )' %></span>
+      <span id="service_image" style="display: none"> <%= label_tag 'Photo (W: 180px, H: 180px )' %></span>
+      <%= image_tag @resource.content.url %>
+      <br />
+      <%= f.file_field :content %>
+    </p>
+
+    <p>
+      <%= f.label :html_image %>
+      <br />
+      <%= f.text_area :html_image, :size => "60x10", :class => "adminEditor" %>
+    </p>
+
+
+    <span id ="banner" style="display: none">
+      <p>
+        <%= f.label :banner_url %>
+        <br />
+        <%= f.text_field :banner_url, :size => "100" %>
+      </p>
+
+      <p>
+        <%= f.label :banner %>
+        <br />
+        <%= label_tag 'Photo (W: 150px, H: 150px )' %>
+        <%= image_tag @resource.banner.url %>
+        <br />
+        <%= f.file_field :banner %>
+      </p>
+
+      <p>
+        <%= f.label :html_banner %>
+        <br />
+        <%= f.text_area :html_banner, :size => "60x10", :class => "adminEditor" %>
+      </p>
+    </span>
+
+    <p>
+      <%= f.submit :add %>
+    </p>
+    <p>
+      <%= link_to '<< Back', list_resource_categories_url %>
+    </p>
+
+  <% end %>
+</div>

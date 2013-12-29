@@ -1,0 +1,90 @@
+<% content_for :ads do %>
+  <span class="ad1">
+    <%= image_tag "AD - FAQS 150px.jpg", :alt => "FAQS Image" %>
+  </span>
+<% end %>
+
+<div id="faqTtl" class="faqBnr">
+  <% unless @faq_categories.blank? %>
+    <div class="faqBnrDv" style="margin-bottom: 30px;">
+      <h3>FREQUENTLY ASKED QUESTIONS</h3>
+  <%#*<p>%>
+  <%#= (@faq_message[0]) ? @faq_message[0].content : '' %>
+  <%#*</p>%>
+  <%#*<ul>%>
+      <% i=0 %>
+      <% @faq_categories.each do |faq_category| %>
+        <% if current_user %>
+      <%# allowed_faqs = faq_category.faqs.find_all_by_is_active_and_state_id(true, (State.find_by_name('published')).id) %>
+          <% allowed_faqs = faq_category.faqs.published %>
+        <% else %>
+      <%# allowed_faqs = faq_category.faqs.find_all_by_is_active_and_state_id_and_is_public(true, (State.find_by_name('published')).id, true) %>
+          <% allowed_faqs = faq_category.faqs.published.public %>
+        <% end %>
+        <% next if allowed_faqs.blank? %>
+    <%#= "<li>#{link_to faq_category.title, '#faqCt#{i}'}</li>" %>
+        <h4 style="float: left; margin: 10px 10px 0; width: 95%; ">
+          <%=sanitize(faq_category.title, :tags=>%w(span a),:attributes=>%w(style href)) %>
+        </h4>
+        <ul>
+          <% j=0 %>
+          <% allowed_faqs.each do |faq| %>
+            <li>
+              <%= link_to sanitize(faq.question, :tags=>%w(span a),:attributes=>%w(style href)), "#faqQu-#{i}-#{j}", :style => "font-size: 12px;" %>
+            </li>
+            <% j+=1 %>
+          <% end %>
+        </ul>
+        <% i+=1 %>
+      <% end %>
+  <%#*</ul>%>
+    </div>
+  <% end %>
+</div>
+
+<% if @faq_categories.blank? %>
+  <% if @message_no_faq.blank? %>
+    <h3>FREQUENTLY ASKED QUESTIONS</h3>
+    <p>
+      No frequently asked question available to display.
+    </p>
+  <% else %>
+    <h3>
+      <%=h @message_no_faq.title %>
+    </h3>
+    <p>
+      <%=h @message_no_faq.content %>
+    </p>
+  <% end %>
+  <br />
+  <br />
+<% else %>
+  <% i=0 %>
+  <% @faq_categories.each do |faq_category| %>
+    <% if current_user %>
+      <%# allowed_faqs = faq_category.faqs.find_all_by_is_active_and_state_id(true, (State.find_by_name('published')).id) %>
+      <% allowed_faqs = faq_category.faqs.published %>
+    <% else %>
+      <%# allowed_faqs = faq_category.faqs.find_all_by_is_active_and_state_id_and_is_public(true, (State.find_by_name('published')).id, true) %>
+      <% allowed_faqs = faq_category.faqs.published.public %>
+    <% end %>
+    <% next if allowed_faqs.blank? %>
+    <h3 id="faqCt<%= i %>" style="margin-bottom: 5px;">
+      <%=sanitize faq_category.title %>
+    </h3>
+    <% j=0 %>
+    <% allowed_faqs.each do |faq| %>
+      <div id="<%= "faqQu-#{i}-#{j}" %>" class="faqDv">
+        <h3>
+          <%=  sanitize(faq.question) %>
+        </h3>
+        <a href="#faqTtl">Top</a>
+        <br />
+        <br />
+        <%=sanitize(faq.answer, :tags => '%w(span a ul li)', :attributes => '%w(style href)') %>
+      </div>
+      <% j+=1 %>
+    <% end %>
+    <% i+=1 %>
+  <% end %>
+<% end %>

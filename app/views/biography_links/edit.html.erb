@@ -1,0 +1,15 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :about_us_tab } %>
+
+<% title "EDIT Biography Link, #{@biography.name}" %>
+
+<h1>
+  <%= "EDIT Biography Link | #{@biography.name}" %>
+</h1>
+
+<p>
+  <%= link_to @biography.name.upcase, @biography %>
+</p>
+
+<% form_for @biography_link, :url => biography_biography_link_path do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+<% end %>

@@ -1,0 +1,70 @@
+<% content_for :ads do %>
+  <span class="ad1">
+    <%= image_tag "resourcesnew150pxv2.jpg", :alt => "resources Image" %>
+  </span>
+<% end %>
+
+<%content_for :javascripts do%>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(".res_cat_link").click(function (){
+        jQuery.get($(this).attr("href"), function(response){
+          $("#div_resources").html(response);
+        });
+        //jQuery.get($(this).attr("href"));
+        return false;
+      });
+    });
+  </script>
+<% end %>
+
+<%#*<div class="main-Cntnt">%>
+<%#*<div class="lft-Cntnt2">%>
+<div class="cmntyTtlDv">
+<%#*<h3>Resources </h3>%>
+  <p><%= (@resources_message[0]) ? @resources_message[0].content : 'Find a resource. If we do not have the answer, we have partnered with the best organizations that do. Search through our list of resources to find what you are looking for.' %></p>
+</div>
+<div class="lftCol">
+  <div class="lftPnl">
+    <h5>Categories</h5>
+    <div class="pnlBdy">
+      <% @categories.each do |cat| %>
+        <%=  link_to cat.title, cat,  :class=>"cmntyLnk res_cat_link", :id=>cat.id.to_s %>
+  <%#=  link_to cat.title, "#",  :class=>"cmntyLnk", :id=>cat.id.to_s, :onclick=>"show_resources(#{cat.id})"%>
+      <%end%>
+    </div>
+  </div>
+</div>
+<div class="RitCol" id="div_resources">
+  <% unless @categories.blank? %>
+    <% @categories.each do |category| %>
+      <h4>
+        <%= (category.resources.blank?)? '' : category.title %>
+      </h4>
+      <% unless category.resources.blank? %>
+        <div class="inbxDv">
+          <% category.resources.published.each do |resource| %>
+            <h5>
+              <%= resource.title %>
+            </h5>
+            <p class="inbxBdy">
+              <%= resource.description %>
+            </p>
+            <p class="inbxLnks">
+        <%#*# TODO [11/1/10 8:00 PM] => CHECK_IT%>
+              <% if resource.url == 'http://www.wickedstart.com/quizzes/new' %>
+                <%= link_to "#{(resource.url.length<22) ? resource.url : resource.url.slice(0..22)+('...')}", "JavaScript:newPopup('"+resource.url+"');", :target => "_blank" %>
+              <% else %>
+                <%= link_to "#{(resource.url.length<22) ? resource.url : resource.url.slice(0..22)+('...')}", resource.url, :target => "_blank" %>
+              <% end %>
+            </p><br />
+          <% end %>
+
+        </div>
+      <% else %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+<%#*</div>%>
+<%#*</div>%>

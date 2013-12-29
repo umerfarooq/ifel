@@ -1,0 +1,43 @@
+<%#= local_assigns.to_xml %>
+<% section = link_progress %>
+
+<% percent = ((section.items_completed_count.to_f/section.item_count.to_f)*100).round %>
+<% if percent < 10 %>
+  <% prcntgBarClass, prcntgBarTextClass = "pcont", "min1PcontTxt" %>
+<% elsif(percent < 14) %>
+  <% prcntgBarClass, prcntgBarTextClass = "pcont", "min2PcontTxt" %>
+<% elsif(percent < 100) %>
+  <% prcntgBarClass, prcntgBarTextClass = "pcont", "pcontTxt" %>
+<% else # elsif(percent >= 100) %>
+  <% prcntgBarClass, prcntgBarTextClass = "pComplete", "pcontTxt" %>
+<% end %>
+
+<%
+link_html =<<-LINK_HTML
+<span class='alphaSpan'>
+  #{section.name}
+</span>
+<span class='prcntgSpan'>
+<span class='prcntgBar'>
+  <span id='psb_bar_#{section.id}' class='#{prcntgBarClass}' style='width:#{percent}%;'>
+    <strong id='psbt_percent_#{section.id}' class='#{prcntgBarTextClass}'>
+      #{percent}%
+    </strong>
+  </span>
+</span>
+  <span id='psbt_counts_#{section.id}' class='prcntgTxt'>
+    <strong>
+      #{section.items_completed_count}
+    </strong>
+    out of
+    <strong>
+      #{section.item_count}
+    </strong>
+    items completed
+  </span>
+</span>
+LINK_HTML
+%>
+
+<%#= link_to link_html, section_path(section, :view => "render_partial"), :class => "prcntgLnk", :id => "section_pb_link_#{section.id}" %>
+<%= link_to link_html, section, :class => "prcntgLnk", :id => "section_pb_link_#{section.id}" %>

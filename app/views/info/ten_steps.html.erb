@@ -1,0 +1,297 @@
+<div class="subPageWrapper">
+  <h1>10 Steps to Start up</h1>
+  <h2 class="headLine">Find out what it takes to start your business in just ten steps</h2>
+
+  <div class="tenStepHdr">
+    <p class="intro">
+      You’re ready to start the business that you’ve always dreamed of&mdash;or,
+      you’re at least thinking about it! This is an exciting opportunity
+      but deciding where to begin, what to do first, can be challenging.
+      There are many steps to take to start a business successfully.
+      While there are multiple ways to get going, we’ve identified the
+      following 10 steps to help you manage the business startup process.
+      Are you ready to get going?
+      <br>
+      <br>
+      <strong>
+
+        Bryan Janeczko,
+        <br>
+        Founder, Wicked Start.
+
+      </strong>
+    </p>
+  </div>
+</div>
+<div id="ContentBottom">
+  <div class="stepMnDv">
+    <h2 class="greenHeading">OUR 10 STEPS FOR STARTING A BUSINESS</h2>
+    <%#*<a href="#" class="btnTakeTour">Take a Tour</a>%>
+    <%= link_to "Take A Tour", (detail_feature_path(Feature.get_parents.published.first) rescue features_path), :class=>"btnTakeTour" %>
+    <div class="stepDv">
+      <span class="stepImg">
+        <% if @marketing_multimedia_messages["step_one"].blank? %>
+          <img src="images/icons/ten-steps-1.jpg" alt="Step One of Ten" />
+        <% else %>
+          <%= link_to image_tag("icons/ten-steps-1.jpg", :alt => "Step One of Ten"), @marketing_multimedia_messages["step_one"], :onclick => "$(this).colorbox()" %>
+        <% end %>
+      </span>
+      <span class="steptxt">
+        <span class="stepTtl">
+          The Starting Block &ndash; Building a Case for Your Idea
+        </span>
+        You have a great idea. Now you need to build a business case to
+        show others that your idea is viable. Describe your idea and why
+        it needs to exist. I suggest reading Simon Sinek’s Start With Why.
+        It’s a great resource, and I had the pleasure of meeting Simon who
+        helped me understand my “why” &ndash; which is, in short, to help people
+        get going and move forward, reaching higher ground. With Wicked Start,
+        you'll get the help you need to successfully start a business.
+        In this step, you'll also determine your business model &ndash; how you'll
+        make money. Think about whether you’ll be charging customers
+        a fee for a service or selling a product. At a high level,
+        think about whether you can make a profit.
+        (If you need more help, take our free Quiz “Is Your Idea Viable?”)
+      </span>
+    </div>
+    <div class="stepDv">
+      <span class="stepImg">
+        <span class="stepImg">
+          <% if @marketing_multimedia_messages["step_two"].blank? %>
+            <img src="images/icons/ten-steps-2.jpg" alt="Step Two of Ten" />
+          <% else %>
+            <%= link_to image_tag("icons/ten-steps-2.jpg", :alt => "Step Two of Ten"), @marketing_multimedia_messages["step_two"], :onclick => "$(this).colorbox()" %>
+          <% end %>
+        </span>
+      </span>
+      <span class="steptxt">
+        <span class="stepTtl">
+          Industry &ndash; Know before you go
+        </span>
+        Before you actually launch your business, it's important to learn
+        as much as you can about the industry that you'll be competing in.
+        Whether you have experience or are just starting out, you now
+        need to network, find a mentor, and become more deeply engaged
+        in your product area. If you do not have experience, now's the time
+        to acquire industry knowledge so that you know what you're getting into.
+        If you’re not sure where to go, start with SCORE.org or
+        Entrepreneur’s Organization (EO). I’ve met with SCORE and joined EO.
+        Either one could be a first step for providing networking and
+        mentorship guidance if you don’t have your own networks to leverage.
+        Keith Ferrazi wrote a very useful book, Never Eat Alone, to help you
+        master the art of networking.
+      </span>
+    </div>
+    <div class="stepDv">
+      <span class="stepImg">
+        <% if @marketing_multimedia_messages["step_three"].blank? %>
+          <img src="images/icons/ten-steps-3.jpg" alt="Step Three of Ten" />
+        <% else %>
+          <%= link_to image_tag("icons/ten-steps-3.jpg", :alt => "Step Three of Ten"), @marketing_multimedia_messages["step_three"], :onclick => "$(this).colorbox()" %>
+        <% end %>
+      </span>
+      <span class="steptxt">
+        <span class="stepTtl">
+          Prototype - Create a Sample of your product
+        </span>
+        Creating a sample of your product or service is an important part of
+        the business-planning process. It's here that you'll create a prototype,
+        get feedback from your prospective customers, and get folks excited
+        before you go full throttle (and spend all of your money). Does this
+        change any of your initial assumptions in terms of revenues or costs?
+        What is the impact on your business model? Can you still make a profit?
+      </span>
+    </div>
+    <div class="stepDv">
+      <span class="stepImg">
+        <% if @marketing_multimedia_messages["step_four"].blank? %>
+          <img src="images/icons/ten-steps-4.jpg" alt="Step Four of Ten" />
+        <% else %>
+          <%= link_to image_tag("icons/ten-steps-4.jpg", :alt => "Step Four of Ten"), @marketing_multimedia_messages["step_four"], :onclick => "$(this).colorbox()" %>
+        <% end %>
+      </span>
+      <span class="steptxt">
+        <span class="stepTtl">
+          Bureaucracy - Structuring your business
+        </span>
+        Now's the time to pay attention to details that will be important as
+        you launch your business. You’ll need to structure your business
+        (e.g., LLC, corporation, sole proprietorship) and give it an
+        official name. You'll have to set up your business structure
+        legally in your state of residence. I’ve used CSC or Incorporate.com,
+        which can incorporate your business immediately, assuming that the
+        business name is available. At this point, it may be worthwhile to
+        meet with the pros: a CPA, a business attorney, and possibly an
+        IP attorney who can help with with trademarks, patents, or other
+        intellectual property issues. If you’re really bootstrapping and
+        short on cash, you could consider online legal services, such as
+        nolo.com, but I personally would recommend talking to pros for
+        individualized legal guidance.
+      </span>
+    </div>
+    <div class="stepDv">
+      <span class="stepImg">
+        <% if @marketing_multimedia_messages["step_five"].blank? %>
+          <img src="images/icons/ten-steps-5.jpg" alt="Step Five of Ten" />
+        <% else %>
+          <%= link_to image_tag("icons/ten-steps-5.jpg", :alt => "Step Five of Ten"), @marketing_multimedia_messages["step_five"], :onclick => "$(this).colorbox()" %>
+        <% end %>
+      </span>
+      <span class="steptxt">
+        <span class="stepTtl">
+          Business Plan &ndash; Charting your course
+        </span>
+        Crystallize your new knowledge in a business plan that
+        highlights your business proposition or strategy. You'll determine
+        your start-up costs and project your profits. Do this exercise even
+        if you're funding this business venture yourself. From a strategic
+        perspective, this is your road map to profitability, though you may
+        make changes later. There are a few places to go to find free or
+        low-cost business plans. I like bplans.com. I’ve used them in the
+        past and like the fact that they offer several free plans for download.
+      </span>
+    </div>
+    <div class="stepDv">
+      <span class="stepImg">
+        <% if @marketing_multimedia_messages["step_six"].blank? %>
+          <img src="images/icons/ten-steps-6.jpg" alt="Step Six of Ten" />
+        <% else %>
+          <%= link_to image_tag("icons/ten-steps-6.jpg", :alt => "Step Six of Ten"), @marketing_multimedia_messages["step_six"], :onclick => "$(this).colorbox()" %>
+        <% end %>
+      </span>
+      <span class="steptxt">
+        <span class="stepTtl">
+          Funding! Fueling Your Business
+        </span>
+        You're ready to think about finding money for your venture. Determine
+        whether you’ll be funding the business entirely with your own financial
+        resources or if you'll be searching elsewhere &ndash; i.e., investors.
+        If you’re not going to be self-funding, you can consider a loan from
+        the Small Business Administration (SBA.gov); or if you'll be seeking
+        investors, you'll create a killer investor pitch to get the money
+        that you'll need in order to launch. I recommend reading
+        Guy Kawasaki’s The Art of the Start, where there’s amazing guidance
+        for crafting an investor presentation.
+      </span>
+    </div>
+    <div class="stepDv">
+      <span class="stepImg">
+        <% if @marketing_multimedia_messages["step_seven"].blank? %>
+          <img src="images/icons/ten-steps-7.jpg" alt="Step Seven of Ten" />
+        <% else %>
+          <%= link_to image_tag("icons/ten-steps-7.jpg", :alt => "Step Seven of Ten"), @marketing_multimedia_messages["step_seven"], :onclick => "$(this).colorbox()" %>
+        <% end %>
+      </span>
+      <span class="steptxt">
+        <span class="stepTtl">
+          Preparing for Launch &ndash; The Nuts &amp; Bolts
+        </span>
+        It's time to think through the logistics and pragmatic components of
+        your business framework and operation. Now you'll get all of your
+        legal licenses and permits, set up the office, and set up financial
+        controls. These are all important elements to get into place before
+        you open the doors for business. Check with you state to see about
+        any special licenses that you may need &ndash; for example, a liquor license
+        if you’re starting a wine bar. In an earlier step, I recommended that
+        you meet with a CPA. If you’ve done that, have him or her help get you
+        set up financial controls so you can manage the money coming into
+        and out of your business.
+      </span>
+    </div>
+    <div class="stepDv">
+      <span class="stepImg">
+        <% if @marketing_multimedia_messages["step_eight"].blank? %>
+          <img src="images/icons/ten-steps-8.jpg" alt="Step Eight of Ten" />
+        <% else %>
+          <%= link_to image_tag("icons/ten-steps-8.jpg", :alt => "Step Eight of Ten"), @marketing_multimedia_messages["step_eight"], :onclick => "$(this).colorbox()" %>
+        <% end %>
+      </span>
+      <span class="steptxt">
+        <span class="stepTtl">
+          Hiring - Building the Team
+        </span>
+        Define the roles that will be needed in your business. Besides you,
+        who else will you need to bring on board to launch and work with you?
+        If you have business partners, define each of your respective roles
+        and areas of responsibility. If possible, think about hiring
+        independent contractors or other types of “leased” professionals
+        initially, rather than payroll employees. This gives you flexibility
+        as you grow the business. Once you’re established, hiring full-time
+        employees may be the way to go. Personally, I've found that the big
+        plus of having employees is that they can be a part of the culture
+        and part of the fabric of the organization &ndash; folks who can believe
+        in your “why” and be true evangelists for your product.
+      </span>
+    </div>
+    <div class="stepDv">
+      <span class="stepImg">
+        <% if @marketing_multimedia_messages["step_nine"].blank? %>
+          <img src="images/icons/ten-steps-9.jpg" alt="Step Nine of Ten" />
+        <% else %>
+          <%= link_to image_tag("icons/ten-steps-9.jpg", :alt => "Step Nine of Ten"), @marketing_multimedia_messages["step_nine"], :onclick => "$(this).colorbox()" %>
+        <% end %>
+      </span>
+      <span class="steptxt">
+        <span class="stepTtl">
+          Operations - Your Capacity to Produce
+        </span>
+        This is the nitty-gritty of how you’ll produce your product or service.
+        If you’re outsourcing production to third parties, solidify those
+        relationships and make sure there are quality control measures in place.
+        For example, if you design T-shirts and outsource production, make sure
+        that you have specific agreements about the quality of the shirts.
+        Alternatively, if you’re going to manage production in house,
+        make sure that you have the experience yourself to manage your
+        business operations &ndash; hire someone who does. If you’re starting a
+        French bistro because it’s always been a dream, but you were working
+        in corporate finance at a bank, I would strongly encourage you to
+        hire someone with experience to manage the restaurant. You’ll stand
+        a much better chance of success.
+      </span>
+    </div>
+    <div style="border-bottom: medium none;" class="stepDv">
+      <span class="stepImg">
+        <% if @marketing_multimedia_messages["step_ten"].blank? %>
+          <img src="images/icons/ten-steps-10.jpg" alt="Step Ten of Ten" />
+        <% else %>
+          <%= link_to image_tag("icons/ten-steps-10.jpg", :alt => "Step Ten of Ten"), @marketing_multimedia_messages["step_ten"], :onclick => "$(this).colorbox()" %>
+        <% end %>
+      </span>
+      <span class="steptxt">
+        <span class="stepTtl">
+          Marketing - Creating a Buzz
+        </span>
+        Your marketing strategy is a critical component that you must have
+        in place before launching. This step entails creating the branding &ndash;
+        the look and feel, or design, of your business &ndash; which extends
+        from your product and packaging to business cards and stationery.
+        This branding will serve as the foundation for the way the website
+        is designed to support your business. You'll also need to develop a
+        sales strategy to attract and retain customers, leveraging both
+        online (Internet) and offline (coupons, magazine ads) opportunities.
+        As a startup, you will stick to low-cost or free marketing techniques,
+        especially if cash is an issue. Try fostering word-of-mouth referrals,
+        engaging in public relations (PR), and leveraging Facebook, blogs,
+        and other social media.
+      </span>
+    </div>
+
+    <div class="stepBtm">
+      <p>
+        Congratulations! You’re ready to get going and start the business of your
+        dreams. Let Wicked Start be your guide in managing this start-up process.
+        Sign up and become a member to get your own customized road map of action
+        items based on your business idea. Seek guidance and get answers from
+        experts and peers in our Community message board. Manage all of your
+        planning documents and resources in My Files, a centralized,
+        easy-to-access location right here on the site.
+        For more information about how Wicked Start works,
+<%#*<a href="/how_it_works">click here</a>%>
+        <%= "#{link_to "click here", (detail_feature_path(Feature.get_parents.published.first) rescue features_path)}," %>
+        or simply sign up now.
+      </p>
+      <%= link_to 'FREE 70-DAY TRIAL', signup_path, :class => 'btnFreeTrial' %>
+
+    </div>
+  </div>
+</div>

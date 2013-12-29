@@ -1,0 +1,60 @@
+<h4>
+    Features LINKS
+    |
+    <%#= link_to "Add feature", new_feature_path(:parent => feature.parent_id) %>
+    <%= link_to "Add Page", new_feature_path(:parent_id => feature.id) %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>
+        Seq
+      </th>
+      <th>
+        Name
+      </th>
+      <%#*<th>%>
+        <%#*Title%>
+      <%#*</th>%>
+      <th>
+        STATE
+      </th>
+      <th>
+        AVAILABLE ACTIONS
+      </th>
+    </tr>
+    <% feature.children.sort_by { |obj| obj.sequence_number  }.each do |child| %>
+      <tr>
+        <td>
+          <%= child.sequence_number %>
+        </td>
+        <td>
+          <%= child.name %>
+        </td>
+        <%#*<td>%>
+          <%#= child.title %>
+        <%#*</td>%>
+        <td>
+          <%= child.state.title.upcase %>
+        </td>
+        <td>
+          <%#= link_to 'SHOW', feature %>
+          <%#*|%>
+          <%= link_to 'EDIT', edit_feature_path(child, :parent_id => feature.id) %>
+          |
+          <% if child.published? %>
+            <%= link_to 'INACTIVATE', inactivate_feature_path(child) %>
+          <% elsif child.activated? %>
+            <%= link_to 'PUBLISH', publish_feature_path(child) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_feature_path(child) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_feature_path(child) %>
+          <% end %>
+          <%= "| #{link_to 'MOVE-UP', move_up_feature_path(child)}" unless child.on_top? %>
+          <%= "| #{link_to 'MOVE-DOWN', move_down_feature_path(child)}" unless child.on_bottom? %>
+        </td>
+      </tr>
+    <% end %>
+  </table>

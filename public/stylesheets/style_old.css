@@ -1,0 +1,264 @@
+/*----------------------*/
+body	{ font-size:14px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-weight:normal; color:#707070; }
+h1		{ font-size:22px; margin:0; padding:0; }
+h2		{ font-size:20px; margin:0; padding:0; }
+h3		{ font-size:18px; margin:0; padding:0; }
+h4		{ font-size:16px; margin:0; padding:0; }
+h5		{ font-size:14px; margin:0; padding:0; }
+img		{ border:none; }
+p		{ margin:0; padding:0; }
+a		{ font-size:12px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; color:#226dc8; text-decoration:none; }
+a:hover	{ color:#000; text-decoration:underline; }
+form	{ margin:0; padding:0; }
+
+
+/*================== Start Page Container ==================*/
+
+#cntainer				{ width:977px; height:1450px; margin:0 auto; }
+.header					{ float:left; width:100%; height:106px; }
+.header .logo			{ float:left; margin-top:20px; }
+.header .signLnks		{ float:right; width:267px; margin-bottom:15px; vertical-align:middle; }
+.header .lgnDv			{ float:right; width:410px; }
+.lgnDv .lgntxt			{ float:left; width:140px; border:1px solid #666; margin-right:5px; }
+.header a				{ text-transform:uppercase; color:#363636; font-size:12px; font-weight:bold; }
+
+
+/*================== Navigation Area ==================*/
+.nav					{ float:left; width:100%; }
+.nav ul.navMnu			{ float:left; list-style-type:none; margin:0; padding:0; }
+ul.navMnu li			{ float: left; margin-right:2px; }
+ul.navMnu li a			{ float:left; width:183px; line-height:37px; padding-top:22px; padding-left:10px; background:url(../images/nav-bg.jpg) top left repeat-x; display: block; color:#fff; font-size:14px; font-weight:bold; }
+ul.navMnu li a .navLft	{ float:left; width:13px; height:59px; background:url(../images/nav-bg-left.jpg) top left no-repeat; margin-top:-22px; margin-left:-10px; }
+ul.navMnu li a .navRite	{ float:right; width:13px; height:59px; background:url(../images/theme/nav-bg-right.jpg) top right no-repeat; margin-top:-22px; }
+ul.navMnu li a:hover	{ float:left; width:183px; padding-left:10px; background:url(../images/theme/nav-over.jpg) top left repeat-x; display:block; color:#fff; text-decoration:none; }
+ul.navMnu li a:hover .navLft	{ float:left; width:13px; height:59px; background:url(../images/theme/nav-lft-over.jpg) top left no-repeat; }
+ul.navMnu li a:hover .navRite	{ float:right; width:13px; background:url(../images/theme/nav-rite-over.jpg) top right no-repeat; }
+ul.navMnu li a.active			{ float:left; width:183px; padding-left:10px; background:url(../images/theme/nav-over.jpg) top left repeat-x; display:block; color:#fff; text-decoration:none; }
+ul.navMnu li a.active .navLft	{ float:left; width:13px; background:url(../images/theme/nav-lft-over.jpg) top left no-repeat; }
+ul.navMnu li a.active .navRite	{ float:right; width:13px; background:url(../images/theme/nav-rite-over.jpg) top right no-repeat;  }
+.ntfyDv				{ float:left; width:99.6%; background:#dde7f1; height:28px; padding-top:8px; border-top:1px solid #fff; }
+.ntfySpan			{ float:left; width:400px; padding-left:5px; }
+.ntfySpan img		{ margin-right:5px; }
+.srchSpan			{ float:right; width:225px; height:20px; }
+.srchSpan .srchFld	{ width:160px; border:1px solid #71a4d6; }
+.srchSpan .srchBtn	{ width:50px; font-size:12px; font-weight:bold; background:#dde7f1; border:none; cursor:pointer; margin-left:-3px; }
+
+
+
+/*================== Main Content ==================*/
+.main-Cntnt				{ float:left; width:100%; margin-top:15px; }
+.main-Cntnt .lft-Cntnt	{ float:left; width:800px; padding-right:12px; padding-bottom:15px; border-right:1px solid #e2e2e2; }
+.wlcmDv					{ float:left; width:100%; background:url(../images/wlcm-bg.jpg) bottom left repeat-x; padding-bottom:10px; }
+.wlcmTxt				{ float:left; width:600px; padding:5px 0; }
+.wlcmTxt img			{ float:left; margin:-1px -1px -1px 0; margin-right:5px; }
+.wlcmTxt a				{ float:left; clear:left; font-size:13px; font-weight:bold; color:#f68e56; margin-top:20px; }
+.wlcmTxt a:hover		{ color:#000; }
+.wlcmDv .movie-player	{ float:right; border:1px solid #d1d1d1; }
+
+
+
+/*================== Checklist Dv ==================*/
+.chkLstDv				{ float:left; width:96%; background:#fdf2e5; margin-top:10px; padding:15px; border-top:1px solid #fbc482; }
+.chkLstHdng				{ float:left; width:100%; }
+.chkLstTtl				{ float:left; width:450px; font-size:12px; color:#333; }
+.chkLstTtl h2			{ color:#000; text-transform:uppercase; margin:0; }
+.chkLstLnk				{ float:right; margin-top:14px; }
+.trckPrgrs				{ float:left; width:100%; margin-top:10px; border:1px solid #999; }
+.trckPrgrs	.tracLft	{ float:left; width:8px; height:93px; background:url(../images/trac-prgrs-lft.gif) top left no-repeat; }
+.trckPrgrs	.tracRit	{ float:Right; width:8px; height:93px; background:url(../images/trac-prgrs-rit.gif) top right no-repeat; }
+.trckPrgrs	.tracBg		{ float:left; width:97.9%; height:78px; background:url(../images/trac-prgrs-bg.gif) top left repeat-x; padding:8px 0;}
+.tracBg h5				{ margin:0; padding:0; color:#000; margin-left:5px; }
+.tracSpan				{ float:left; width:99.5%; margin-left:2px; margin-top:5px; }
+
+.showAreaDv				{ float:left; width:100%; margin-top:10px; }
+.showAreaDv .showTop	{ float:left; width:100%; height:6px; background:url(../images/show-area-top.gif) top left no-repeat; }
+.showAreaDv .showBg		{ float:left; width:98.5%; background:url(../images/show-area-bg.gif) top left repeat-y; padding:0 5px; }
+.showAreaDv .showBot	{ float:left; width:100%; height:6px; background:url(../images/show-area-bot.gif) top left no-repeat; }
+
+/*================== Left Percentage area ==================*/
+.dateDv					{ float:left; width:270px; padding:5px; padding-right:8px; border-right:1px solid #e1e1e1; }
+.dateDv h6				{ float:left; width:95%; padding:5px 7px; margin:0; font-size:11px; font-weight:bold; background:#ececec; color:#226dc8; margin-bottom:5px; }
+.dateDv .lftPrcntg		{ float:left; width:100%; background:url(../images/show-area-bg.jpg) top left repeat-x; padding-top:5px; }
+.lftPrcntg .prcntgLnk	{ float:left; width:100%; display:block; cursor:pointer; background:url(../images/prgrs-lnk-bdr.jpg) top right no-repeat; border-bottom:1px solid #d7d7d7; }
+.prcntgLnk .alphaSpan	{ float:left; width:45px; height:36px; text-align:center; font-size:18px; font-weight:bold; color:#fff; background:url(../images/albhabet-bg.jpg) top left repeat-x; padding-top:9px;  }
+.prcntgSpan				{ float:left; width:212px; margin:3px 5px 3px 5px; height:37px; }
+.prcntgBar				{ float:left; width:212px; background:url(../images/prcntg-bar-bg.jpg) top left repeat-x; height:17px; }
+.prcntgBar .pcont		{ float:left; width:100%; height:17px; background:url(../images/prcntg-bar-over.jpg) top left repeat-x; font-weight:bold; color:#333; text-align:right; }
+.pcont strong			{ margin-right:5px; margin-left:5px; }
+.prcntgBar .pComplete	{ float:left; width:100%; height:17px; background:url(../images/prctng-bar-complete.jpg) top left repeat-x; font-weight:bold; color:#333; text-align:right; }
+.pComplete strong		{ margin-right:5px; }
+.prcntgTxt				{ float:left; width:100%; color:#666; margin-top:3px; }
+.prcntgTxt strong		{ color:#f7941d; }
+.prcntgLnk:hover		{ text-decoration:none; background:url(../images/prgrs-lnk-bdr-over.jpg) top right no-repeat; }
+.prcntgLnk:hover .alphaSpan	{ color:#fff; background:url(../images/alphabet-bg-over.jpg) top left repeat-x; padding-top:9px;  }
+
+.prcntgCurrent			{ float:left; width:100%; display:block; cursor:pointer; background:url(../images/prgrs-lnk-bdr-over.jpg) top right no-repeat; border-bottom:1px solid #d7d7d7; }
+.prcntgCurrent:hover	{ text-decoration:none; background:url(../images/prgrs-lnk-bdr-over.jpg) top right no-repeat; }
+.prcntgCurrent .alphaSpan{ float:left; width:45px; height:36px; text-align:center; font-size:18px; font-weight:bold; color:#fff; background:url(../images/alphabet-bg-over.jpg) top left repeat-x; padding-top:9px;  }
+
+/*================== Right Overview Div ==================*/
+.ovrViewDv				{ float:right; width:460px; padding:5px 5px 5px 0px; }
+.ovrViewDv h6			{ float:left; width:97%; padding:5px 7px; margin:0; font-size:11px; font-weight:bold; background:#ececec; color:#226dc8; margin-bottom:5px; }
+.ovrViewDv .ovrViewTxt	{ float:left; width:100%; background:url(../images/show-area-bg.jpg) top left repeat-x; padding-top:5px; }
+.ovrViewTxt h3			{ float:left; width:99%; margin:0; padding:0; color:#f7941d; }
+.dedline				{ float:left; width:100%; font-size:11px; font-weight:bold; margin-bottom:5px; }
+.ovrViewTxt h5			{ float:left; width:97%; padding:8px 0; padding-left:10px; color:#959595; border-top:1px solid #e3e3e3; border-bottom:1px solid #e3e3e3; }
+.ovrViewTxt h5 a		{ float:right; }
+.qstnsArea				{ float:left; width:100%; }
+.qstnsArea .qstnLst		{ float:left; width:93%; list-style-type:decimal; font-weight:bold; color:#333; margin-left:5px; padding-left:25px; line-height:47px; margin-top:0px; margin-bottom:0px; }
+.qstnLst li a			{ float:right; margin-top:13px; }
+
+
+/*================== Three Col Area ==================*/
+.threeColDv				{ float:left; width:100%; background:url(../images/3col-bg.jpg) top left repeat-x; margin-top:15px; padding-top:20px; }
+.threeColDv .col1		{ float:left; width:30%; padding:8px; background:#dde7f1; border-top:1px solid #226dc8; }
+.threeColDv .col2		{ float:left; width:30%; padding:8px; background:#dde7f1; margin:0 16px; border-top:1px solid #226dc8; }
+.threeColDv .col3		{ float:right; width:30%; padding:8px; background:#dde7f1; border-top:1px solid #226dc8; }
+.threeColDv h4			{ float:left; margin:0px; padding:0px; color:#000; }
+.colSpan				{ float:left; width:93.5%; margin-top:3px; padding:5px 8px; height:230px; background:#fff; }
+.colSpan h5				{ float:left; width:100%; margin:0; padding:0; color:#333; }
+.colSpan .pstd-Dte		{ float:left; width:100%; font-size:11px; font-weight:bold; color:#999; }
+.colSpan span			{ float:left; width:100%; font-size:12px; margin-top:5px; margin-bottom:10px; line-height:15px;  }
+.colSpan .abuseBtns		{ float:left; width:100%; }
+
+
+
+/*================== Left Percentage area ==================*/
+.getStrtDv				{ float:left; width:240px; padding:5px; padding-right:0px; }
+.getStrtDv h3			{ float:left; width:99%; margin:0; padding:0; font-weight:normal; color:#fa931d; padding-bottom:3px; margin-bottom:7px; border-bottom:1px solid #e3e3e3; }
+.gtStrtTxt				{ float:left; width:99%; margin-left:1px; }
+.gtSpan					{ float:left; clear:left; width:92%; padding:8px 10px 10px 10px; font-size:11px; background:#eee; color:#000; border-bottom:1px solid #fff; }
+.gtSpan h6				{ float:left; width:100%; font-size:11px; margin:0; padding:0; margin-bottom:3px; }
+.gtStrtTxt form			{ float:left; width:100%; }
+.gtSpan .gtTxtFld		{ width:205px; border:1px solid #ccc; padding:2px 5px; font-size:11px; color:#666; }
+.gtSpan .ddTxt			{ width:20px; border:1px solid #ccc; padding:2px 5px; font-size:11px; color:#666; }
+.gtSpan .yyTxt			{ width:25px; border:1px solid #ccc; padding:2px 5px; font-size:11px; color:#666; }
+
+.getWrkDv				{ float:right; width:490px; padding:5px 5px 5px 8px; border-left:1px solid #e3e3e3; }
+.getWrkDv h3			{ float:left; width:99.3%; margin:0; padding:0; font-weight:normal; color:#fa931d; padding-bottom:3px; margin-bottom:7px; border-bottom:1px solid #e3e3e3; }
+.gtWrkTxt				{ float:left; width:145px; }
+.gtWrkSpan				{ float:left; width:100%; font-size:11px; padding:5px 0; line-height:15px; margin-bottom:10px; }
+.gtWrkSpan h5			{ float:left; width:100%; font-size:14px; color:#f8941c; margin:0; padding:0; }
+.wrkImgDv				{ float:right; width:343px; }
+.noteSpan				{ float:left; width:100%; font-size:11px; padding:5px 0; line-height:15px; margin-bottom:10px; }
+.noteSpan h5			{ float:left; width:100%; font-size:14px; color:#f8941c; margin:0; padding:0; }
+
+
+
+
+
+
+
+
+
+/*================== Ad Area ==================*/
+.main-Cntnt .adDv		{ float:right; width:152px; margin-right:4px; }
+.adDv .ad1				{ float:right; margin-bottom:10px; border:1px solid #ccc; }
+.adDv .adLnk			{ float:left; width:100%; }
+.adLnk a				{ color:#999; font-weight:bold; text-decoration:underline; }
+.adLnk a:hover			{ text-decoration:none; color:#666; }
+
+
+
+/*================== Footer ==================*/
+#cntainer .footer		{ float:left; width:100%; margin-top:10px; margin-bottom:50px; }
+.footer .ftrLft			{ float:left; width:12px; height:22px; background:url(../images/ftr-lft-crnr.jpg) top left no-repeat; }
+.footer .ftrbg			{ float:left; width:953px; height:22px; background:url(../images/ftr-bg.jpg) top left repeat-x; }
+.footer .ftrRite		{ float:right; width:12px; height:22px; background:url(../images/ftr-rite-crnr.jpg) top left no-repeat; }
+.footer .ftrLnks		{ float:left; width:100%; margin-top:15px; }
+.ftrLnks a				{ color:#000; }
+.ftrLnks a:hover		{ color:#226dc8; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*================== Light Box Container ==================*/
+#liteBx-Cntainer			{ width:750px; margin:0 auto; height:535px; }
+#liteBx-Cntainer .liteBxTop	{ float:left; width:100%; height:3px; background:url(../images/litebx-top-bg.jpg) top left no-repeat; }
+#liteBx-Cntainer .liteBxBdy	{ float:left; width:97%; padding:10px 10px 0 0; background:url(../images/litebx-bg.jpg) top left repeat-y; }
+#liteBx-Cntainer .litebxBtm	{ float:left; width:100%; height:24px; background:url(../images/litebx-bot-bg.jpg) top left no-repeat; }
+.liteBxPrnt					{ width:750px; margin:0 auto; padding-top:10px; }
+
+
+.liteBxTtl				{ float:left; width:96%; margin-left:10px; padding-bottom:8px; margin-bottom:10px; border-bottom:1px solid #e3e3e3; }
+.liteBxTtl h1			{ float:left; width:550px; color:#f8941d; }
+.liteBxTtl h1 strong	{ font-size:14px; color:#666; }
+.liteBxTtl .closBtn		{ float:right; margin-top:8px; font-weight:bold; font-size:11px; color:#999; }
+.liteBxCntnt			{ float:left; width:97%; height:437px; margin-left:10px; overflow:scroll; }
+.ovrViewTbl				{ float:left; width:100%; margin-bottom:30px; }
+.ovrViewTbl th			{ text-align:left; font-size:12px; }
+.ovrViewTbl td			{ border-top:2px solid #959595; padding:5px 0; }
+.ovrViewTbl h4			{ color:#333; }
+.ovrViewTbl h4 img		{ margin-right:5px; }
+.ovrViewDtl				{ float:left; width:100%; }
+.ovrViewDtl td			{ font-size:12px; font-weight:bold; border-top:1px solid #e3e3e3; color:#999; }
+.ovrViewDtl td img		{ margin-right:0; margin-top:3px; }
+.ovrViewDtl td h6		{ float:left; margin:0; padding:0; width:100%; font-size:12px; color:#555; }
+.ovrViewDtl td h6 a		{ float:right; }
+.ovrViewDtl td p		{ float:left; width:100%; font-weight:normal; line-height:15px; }
+.litBxFtr				{ float:left; width:95.2%; background:#fdefde; filter:alpha(opacity=50); opacity: 0.7; -moz-opacity:0.7; text-align:right; padding:10px; z-index:1000; margin-top:-40px; border-top:2px solid #f8941d; margin-left:3px; }
+.ltBxFtrSpan			{ float:left; width:330px; text-align:left; font-weight:bold; color:#000; }
+.ltBxFtrLnks			{ float:right; width:350px; font-size:13px; color:#000; }
+.ltBxFtrLnks a			{ font-weight:bold; color:#000; font-size:13px; }
+.ltBxFtrSpan2			{ float:right; width:330px; text-align:left; font-weight:bold; color:#000; }
+.litBxPrntFtr			{ float:left; width:100%; padding:5px 0; border-top:2px solid #f8941d; font-size:11px; margin-top:20px; }
+.PrntSpan				{ float:left; width:330px; text-align:left; }
+.PrntSpan2				{ float:right; width:400px; text-align:right; }
+
+.liteBxCntnt2			{ float:left; width:96%; height:500px; margin:0 10px 5px; }
+.liteBxLft				{ float:left; width:345px; }
+.liteBxLft h1			{ margin-bottom:7px; color:#000; }
+.liteBxLft .litBxTxt	{ float:left; font-size:11px; margin-top:5px; }
+.litBxCntBtm			{ float:left; width:100%; margin-top:20px; padding-top:8px; border-top:1px solid #e3e3e3; font-weight:bold; }
+.litBxCntBtm h5			{ color:#000; margin-bottom:5px; }
+.litBxCntBtm .answrArea { float:left; width:97.5%; height:130px; font-size:11px; font-family:Arial, Helvetica, sans-serif; color:#777; padding:5px; border:1px solid #ccc; }
+.litBxCntBtm .uplodBtn	{ float:left; width:225px; padding:10px 10px; clear:both; margin-top:10px; font-size:12px; color:#fff; font-weight:bold; border:none; cursor:pointer; background:url(../images/prgrs-lnk-bdr.jpg) top left repeat-x; }
+.litBxCntBtm .chkBxSpan { float:left; width:100%; margin-top:10px; }
+
+.liteBxRit				{ float:right; width:340px; }
+.liteBxRit .litBxRtSpn1 { float:left; width:93%; background:#ececec; padding:10px; border-bottom:2px solid #fff; }
+.ltBxRitTxt				{ float:left; width:100%; margin-top:7px; font-size:11px; }
+.ltBxRitTxt .pdfIcn		{ float:left; width:70px; padding:5px; margin:0 11px; text-align:center; text-decoration:none; }
+.ltBxRitTxt .exmplLnk	{ float:left; width:150px; margin-top:7px; }
+
+.ltBxRitTxt .icnTbl		{ float:left; width:100%; border:1px solid #ff0000; }
+.icnTbl td				{ border:1px solid #00ff00; }
+
+
+
+
+
+
+/*================== SMILEY_HERE ==================*/
+
+.fieldWithErrors input {
+  border: 1px solid #F33;
+} 
+
+.errorExplanation { font-size: 12px; color:#A55; }
+.errorExplanation h2 { font-size: 15px; color:#A55; }
+
+/*
+.fieldWithErrors {
+  border: 1px solid red;
+}
+
+.fieldWithErrors  {
+  display: inline;
+}
+*/
+

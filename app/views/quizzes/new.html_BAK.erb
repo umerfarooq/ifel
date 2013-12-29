@@ -1,0 +1,102 @@
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    //alert("quizCboxHeight");
+    $("#new_quiz").submit(function (event) {
+      quizFormSubmit();
+      event.preventDefault();
+      return false;
+    });
+  });
+</script>
+
+<div id="liteBx-wrapper">
+  <% form_for @quiz do |qf| %>
+    <div id="liteBx-Cntainer">
+      <div class="liteBxBdy">
+        <div class="quizBxTtl">
+          <span class="quizLogo">
+            <%= image_tag "quiz-logo.jpg", :alt => "WICKED START" %>
+            <h3>
+              Viability Quiz
+            </h3>
+          </span>
+  <%#*<span class="closBtn">%>
+  <%#= link_to image_tag("close-btn.jpg", :alt => "close"), "#" %>
+  <%#*</span>%>
+        </div>
+
+        <div class="ws-alert ws-alert-error ws-rounded" id="quiz_error_box" style="margin: 0 10px; display: none;">
+          <img alt="Alert icon" class="icon master-sprite" src="/images/pixel.gif" />
+          <div class="ws-alert-content" id="error_text">
+            &nbsp;
+          </div>
+          <button class="close master-sprite" onclick="return closeAlertBoxQuiz();">
+            close
+          </button>
+        </div>
+
+        <div id="popupQuizContent" class="quizCntnt">
+
+          <table border="0" cellpadding="0" cellspacing="0" class="quizTbl">
+            <tr><th colspan="4"><h3>Is your Idea Viable?</h3></th></tr>
+            <tr>
+              <th colspan="4" align="left">
+                <h5>
+                  Answer the following (<%= @questions.count %>) questions and see if your idea has potential
+                </h5>
+              </th>
+            </tr>
+            <tr>
+              <th width="4%">&nbsp;</th>
+              <th width="82%">&nbsp;</th>
+              <th width="8%">Yes</th>
+              <th width="6%">No</th>
+            </tr>
+
+            <% i = 0 %>
+            <% @quiz.answers.each do |answer| %>
+              <tr>
+                <td class="qstnTd" id="<%= "qz-qu-sq-#{i}" %>">
+                  <%= answer.question.sequence %>.
+                  <%= hidden_field_tag "quiz[answers_attributes][#{i}][question_id]", "#{answer.question_id}" %>
+                </td>
+                <td id="<%= "qz-qu-st-#{i}" %>">
+                  <%= answer.question.statement %>
+                </td>
+                <td align="center">
+                  <%= radio_button "quiz[answers_attributes][#{i}]", :statement, 'yes' %>
+                </td>
+                <td align="center">
+                  <%= radio_button "quiz[answers_attributes][#{i}]", :statement, 'no' %>
+                </td>
+              </tr>
+              <% i = i + 1 %>
+            <% end %>
+
+            <tr>
+              <td height="15" colspan="4">&nbsp;</td>
+            </tr>
+            <tr>
+              <th colspan="4" align="left">
+                Please provide us your email and we'll send you a copy of your results
+              </th>
+            </tr>
+            <tr>
+              <td colspan="4" align="left" style="padding-left:0">
+                <%= qf.label :email, "E-mail Address :" %>
+                <%= qf.text_field :email, :style => "border:1px solid #666666; width:200px;" %>
+              </td>
+            </tr>
+          </table>
+
+        </div>
+      </div>
+    </div>
+    <div class="quizFtr" style="height: 27px">
+      <%= image_submit_tag "submit-btn.jpg", :alt => "SUBMIT", :align => "absmiddle" %>
+      &nbsp;&nbsp;&nbsp;
+    </div>
+  <% end %>
+</div>
+

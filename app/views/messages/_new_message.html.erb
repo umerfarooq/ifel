@@ -1,0 +1,200 @@
+<%content_for :javascripts do%>
+  <%= javascript_include_tag "jquery.tokeninput" %>
+  <script>
+    $(document).ready(function(){
+      $("#message_error_text").hide();
+      $("#topic_success_text").hide();
+      $("#new_topic_div").hide();
+
+      $('.cnclLnk').click(function(){
+        slideQuestionPanelUp();
+        resetAllFields()
+      });
+
+      $('#new_topic_div_visible').click(function(){
+        if( $('#new_topic_div').is(':hidden') ) {
+          $("#new_topic_div").fadeIn('slow', function(){
+          
+            //activateDefaultText();
+          });
+          //$('#new_topic_div_visible').hide();
+        }
+        else{
+          $("#new_topic_div").fadeOut('slow');
+        }
+        return false;
+      });
+
+      $('#new_topic_div').click(function(e) {
+        e.stopPropagation();
+      });
+
+      $(document).click(function() {
+        $("#new_topic_div").fadeOut('slow');
+      });
+
+      $("form#new_topic").submit(function() {
+        var name = $('#topic_name').val();      
+        if(name == ""){
+          $('#notice').text("Please enter a valid name for topic");
+        }
+        else {
+          $.ajax({
+            type: "POST",
+            url: "/topics/create_orphan_topic",
+            data: {
+              'name':name
+            },
+            failure: function (data)
+            {
+              $('#notice').text("Request can't be send, due to system problem");
+            },
+
+            success: function(data)
+            {
+              if(data.success)
+              {
+                resetAllFields();
+                $('#new_topic_div').hide();
+                $("#topic_success_text").show();
+                $('#success').css('backgroundColor','#EFEF00')
+
+                $('#topic_success_text').text("Your Topic has been posted to the WickedStart team, and will be available after approval ");
+                //$('#postQstnForm').show();
+                //jQuery("#postQstnForm").html( data );
+              }
+              else{
+                $('#notice').text(data.error);
+                //$('#notice').text("Request can't be send, due to system problem");
+              }    
+            },
+            dataType:'json'
+          });
+        }
+        return false;
+      });
+    });
+
+    function resetAllFields(){
+      $('#topic_name').val("");
+      $("#message_topics").val("");
+      $("#message_topics").prev().detach();
+      //$('#message_topics').tokenInput('clear');
+    }
+
+    function slideQuestionPanelUp(){
+      $(".slidingDiv").slideUp(1000, function(){
+        $('#pstQuesBtn').show();
+        clearQuestionFields();
+      });
+    }
+    function clearQuestionFields(){
+      $('#message_body').val('');
+      $('#message_message_category_id').val('');
+      $('#message_topics').val('');
+      $("#post_msg_error").text("");
+    }
+
+    function submit_form() {
+      showProgressBar();
+      var params = $("#new_message").serialize();
+      var msg_body = $("#message_body").val();
+      var msg_category = $("#message_section_template_id").val();
+      if(msg_body == "" && msg_category == "")
+      {
+        hideProgressBar();
+        $("#post_msg_error").text("Please Enter valid data for question");
+      }
+      else if(msg_body == "" ){
+        hideProgressBar();
+        $("#post_msg_error").text("Please Enter valid data for question body");
+      }
+      else if(msg_category == "")
+      {
+        hideProgressBar();
+        $("#post_msg_error").text("Select any category for message");
+      }
+      else {
+        $.ajax({
+          type: "POST",
+          url: "/messages",
+          data: params,
+          success: function(data){
+            hideProgressBar();
+            slideQuestionPanelUp();
+            $('#communityFeed').html(data);
+            resetAllFields();
+          }
+        });
+      }
+      //$("#new_message").submit();
+    }
+    
+  </script>
+<%end%>
+<%content_for :head do%>
+  <%= stylesheet_link_tag "token-input-facebook"  %>
+<%end%>
+
+
+
+
+<div class="communityPostQstn">
+  <div class="postQstnTxt">
+    <h2>Post a Question</h2>
+    <p class="breakWord"><%=  get_marketing_message_text().content%></p>
+  </div>
+  <div class="postQstnForm">
+    <label id="post_msg_error" style="color: red;"></label>
+    <% form_for (Message.new), :url => { :action => "create" } do |f| %>
+      <table width="100%" cellspacing="0" cellpadding="0" border="0">
+        <% unless f.error_messages.blank? %>
+          <tr>
+            <td colspan="2">
+              <%= f.error_messages :header_message => nil, :message => nil %>
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <td>Select a Category for Your Question</td>
+        </tr>
+        <tr>
+          <td> <%= f.collection_select(:section_template_id, SectionTemplate.published, :id, :title, {:prompt => true}) %></td>
+        </tr>
+        <tr><td height="10"></td></tr>
+        <tr>
+          <td>Write Your Question</td>
+        </tr>
+        <tr>
+          <td><%= f.text_area :body, :size => "45x5" %></td>
+        </tr>
+        <tr><td height="10"></td></tr>
+        <tr>
+          <td>Define topic to associate with your question</td>
+        </tr>
+        <tr>
+          <td id="success"><label id="topic_success_text" style="color:#1B75BB ;"></label></td>
+        </tr>
+        <tr>
+          <td>
+            <%= f.text_field :topics, :class =>"text1"%><%= link_to "#{image_tag('theme/add-icn-blue.png')} Add new Topic","JavaScript:void(0);", :id=>"new_topic_div_visible", :class => 'addTopicLink'  %>
+            <span style="position: absolute; padding: 0px; margin: 0px; font-family: MS Shell Dlg; font-size: 13.3333px; font-weight: 400; color: rgb(191, 191, 191);  cursor: text; background-color: rgb(255, 255, 255);  left: 5px;" class="default"></span>
+          </td>
+        </tr>
+        <tr><td height="15"></td></tr>
+        <tr>
+          <td>
+            <%= link_to image_tag("post-question-btn.png", :class => "dispInline"),"JavaScript:void(0);", :onclick => "submit_form()"%>
+            <%= link_to image_tag("theme/cancel-btn.png"), "JavaScript:void(0);", :class => "cnclLnk" %>
+          </td>
+        </tr>
+      </table>
+
+    <% end %>
+  </div>
+  <div id="new_topic_div">
+    <%=render :partial=> "new_topic"%>
+  </div>
+</div>
+
+

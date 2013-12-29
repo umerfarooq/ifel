@@ -1,0 +1,80 @@
+<% section_6 = @project.sections.find_by_sequence_number(6) %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Workshop In Business Opportunities</title>
+  </head>
+
+  <body>
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" align="left" style="font-family:Arial, Helvetica, sans-serif;">
+      <tbody>
+        <tr>
+          <td >
+            <a target="_blank" href="http://wibo.wickedstart.com">
+              <img border="0" alt="Workshop In Business Opportunities" src="http://wibo.wickedstart.com/images/wibo-logo.jpg?1328660340">
+            </a>
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding:10px 0;">
+              <b>THE FIRST STOP FOR GETTING YOUR BUSINESS IDEA OFF THE GROUND</b>
+            </p>
+            <hr noshade size="1" color="#226DC8">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;">
+              <%= "Dear #{@project.user.first_name}," %>
+            </p>
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              <strong>
+                "The general who wins the battle makes many
+                calculations in his temple before the battle is fought.
+                The general who loses makes but few calculations
+                beforehand."—Sun Tzu
+              </strong>
+            </p>
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              Now that you've completed your business plan—your road map
+              to profitability—you've considered how you'll actually execute
+              your business and what it will take to get it off the ground.
+              You deserve credit for your persistance and efforts.
+            </p>
+
+            <% unless section_6.blank? %>
+              <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+                With the information and your accomplishments from 
+                Steps 1 through 5, you're ready to determine how much
+                money you need to start your business and think about
+                where you're going to get it. If you haven't done so already,
+                <%= "#{link_to "click here", display_section_url(section_6, :host => SITE_HOST_NAME), :style => "color:#f89b4b; text-decoration:none;"}" %>
+                to access details about what it takes to fund
+                your business and start the process.
+              </p>
+            <% end %>
+
+            <br />
+            <br />
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              Sincerely,
+            </p>
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              Workshop In Business Opportunities
+            </p>
+            <br />
+            <!--<p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;">
+              <span><a target="_blank" style="color: rgb(248, 155, 75); text-decoration: none;" href="http://wibo.wickedstart.com/privacy_policy">Privacy Policy</a></span>
+            </p>-->
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" height="30" bgcolor="#f89b4b" align="center">
+            <span><a target="_blank" style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; color: rgb(255, 255, 255); text-decoration: none; font-size: 16px; font-weight: bold;" href="http://wibo.wickedstart.com">wibo.wickedstart.com</a></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

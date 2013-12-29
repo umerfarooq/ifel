@@ -1,0 +1,34 @@
+<%= render :partial => "messages/left_column" %>
+<div class="RitCol">
+  <h4>Confirmation</h4>
+  <div class="inbxDv">
+    <p class="inbxMsg">
+      <%- case @confirm -%>
+      <%- when "default" -%>
+        Thank you! your message has been posted to WickedStart Launch Pad where
+        our community will be able to provide you with insight to helping you
+        get your business off the ground.
+      <%- when "inappropriate-new" -%>
+        Thank you! your request to mark the message as inappropriate has been
+        reported to WickedStart Management and you will be informed shortly
+        about their decision.
+      <%- when "inappropriate-old" -%>
+        Thank you! but your request to mark this message as inappropriate is
+        already with the WickedStart Management and you will be informed
+        shortly about their decision.
+      <%- when "rating-new" -%>
+        Thank you! Your rating for this message has been updated.
+      <%- when "rating-old" -%>
+        Thank you! But you have already rated this message.
+      <%- when "rating-not-saved" -%>
+        Thank you! But your message rating could not be saved, please try later.
+      <%- end -%>
+      <br />
+      <br />
+      Regards
+      <br />
+      <br />
+      <strong>Wicked Start Team</strong>
+    </p>
+  </div>
+</div>

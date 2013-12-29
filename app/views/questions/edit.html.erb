@@ -1,0 +1,16 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :quizzes_tab } %>
+
+<% title "EDIT Question #{@question.sequence_number}, #{@quiz.main_title}" %>
+
+<h1>
+  <%= "EDIT Question #{@question.sequence_number} | #{@quiz.main_title}" %>
+</h1>
+
+<p>
+  <%= link_to @quiz.main_title.upcase, @quiz %>
+</p>
+
+<% form_for @question, :url => quiz_question_path do |f| %>
+  <%= render :partial => "form", :locals => {:f => f, :question => @question} %>
+<% end %>
+<%#= render :partial => "form", :locals => {:question => @question} %>

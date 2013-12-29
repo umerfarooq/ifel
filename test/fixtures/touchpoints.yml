@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  condition: MyString
+  launched: false
+  closed: false
+
+two:
+  condition: MyString
+  launched: false
+  closed: false

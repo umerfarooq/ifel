@@ -1,0 +1,19 @@
+<div class="newsDv">
+  <span class="newsImg">
+    <%= image_tag news_article.news_provider.logo.url(:small) %>
+<%#*<img src="images/new-src-logo.jpg" />%>
+  </span>
+  <span class="newz">
+    <strong>
+      <%= "#{news_article.headline}:" %>
+    </strong>
+    <%= ws_date_format(news_article.news_date) %>
+    <br />
+    <%= news_article.summary %>
+<%#= news_article.news_summary %>
+    <br />
+<%#= link_to "Read more...", news_article %>
+    <%= link_to "Read more >>", news_article.url, :target => "_blank" %>
+  </span>
+</div>
+

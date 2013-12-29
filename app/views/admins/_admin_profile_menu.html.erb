@@ -1,0 +1,117 @@
+
+<div class="admnlftCol">
+  <ul class="admnLnks">
+    <!--<li>
+      <%# if active_admin_profile_tab == :home_page_tab %>
+        <a href="/admins/home_page_tab" class="active">Home</a>
+      <%# else %>
+        <a href="/admins/home_page_tab">Home</a>
+      <%# end %>
+    </li>
+
+    <li>
+      <%# if active_admin_profile_tab == :radar_tab %>
+        <a href="/admins/radar_tab" class="active">News</a>
+      <%# else %>
+        <a href="/admins/radar_tab">News</a>
+      <%# end %>
+    </li>-->
+
+    <!--<li>
+      <%# if active_admin_profile_tab == :faqs_tab %>
+        <a href="/admins/faqs_tab" class="active">FAQ</a>
+      <%# else %>
+        <a href="/admins/faqs_tab">FAQ</a>
+      <%# end %>
+    </li>-->
+    
+    <li>
+      <% if active_admin_profile_tab == :industry_tab %>
+        <a href="/admins/industry_tab" class="active">Categories</a>
+      <% else %>
+        <a href="/admins/industry_tab">Categories</a>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_admin_profile_tab == :role_tab %>
+      <a href="<%= roles_users_path %>" class="active">Roles</a>
+      <% else %>
+        <a href="<%= roles_users_path %>">Roles</a>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_admin_profile_tab == :mentor_tab %>
+        <a href="/mentors" class="active">Mentors</a>
+      <% else %>
+        <a href="/mentors">Mentors</a>
+      <% end %>
+    </li>
+    
+    <!--<li>
+      <%# if active_admin_profile_tab == :community_tab %>
+        <a href="/admins/community_tab" class="active">Community</a>
+      <%# else %>
+        <a href="/admins/community_tab">Community</a>
+      <%# end %>
+    </li>-->
+    
+    <li>
+      <% if active_admin_profile_tab == :user_tab %>
+        <a href="/users" class="active">User Profile Tooltips</a>
+      <% else %>
+        <a href="/users">User Profile Tooltips</a>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_admin_profile_tab == :company_tooltips %>
+        <a href="/admins/company_tab" class="active">Company Profile Tooltips</a>
+      <% else %>
+        <a href="/admins/company_tab">Company Profile Tooltips</a>
+      <% end %>
+    </li>
+    
+    <li>
+      <% if active_admin_profile_tab == :registration_codes %>
+        <%= link_to 'Registration Codes', registration_codes_path, :class => 'active' %>
+      <% else %>
+        <%= link_to 'Registration Codes', registration_codes_path %>
+      <% end %>
+    </li>
+    
+    <!--<li>
+      <%# if active_admin_profile_tab == :user_tooltips %>
+        <a href="/admins/my_files_tab" class="active">Roadmap Tooltips</a>
+      <%# else %>
+        <a href="/admins/my_files_tab">Roadmap Tooltips</a>
+      <%# end %>
+    </li>
+      
+    <li>
+      <%# if active_admin_profile_tab == :templates_tab %>
+        <a href="/template_documents" class="active">Templates</a>
+      <%# else %>
+        <a href="/template_documents">Templates</a>
+      <%# end %>
+    </li>
+    
+    <li>
+      <%# if active_admin_profile_tab == :resources_tab %>
+        <a href="/resource_categories/list" class="active">Resources</a>
+      <%# else %>
+        <a href="/resource_categories/list">Resources</a>
+      <%# end %>
+    </li>-->
+
+    <!--<li>
+      <%# if active_admin_profile_tab == :about_us_tab %>
+        <a href="/admins/about_us_tab" class="active">About Us</a>
+      <%# else %>
+        <a href="/admins/about_us_tab">About Us</a>
+      <%# end %>
+    </li>-->
+
+  </ul>
+</div>

@@ -1,0 +1,229 @@
+
+<%=javascript_include_tag "http://w.sharethis.com/button/buttons.js", "ws.share.widget", :cache=>true %>
+<%#content_for :javascripts do%>
+  <script>
+    $(document).ready(function(){
+      
+      tinyMCE.execCommand('mceAddControl', false, 'comment_body');
+      var private_flag = false
+      $(".slidingDiv").slideUp(1000, function(){
+        $('#pstQuesBtn').show();
+        clearQuestionFields();
+      });
+      //comment_body_area = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('comment_body');
+      $('.adAnswerBtn').click(function(){
+        showProgressBar();
+        //var data =tinyMCE.get('comment_body').getContent();
+        var data = tinyMCE.activeEditor.getContent();
+      
+        //var nicEdit_content = comment_body_area.instanceById('comment_body').getContent();
+        //var nicEdit_content = nicEditors.findEditor('comment_body').getContent();
+        //alert(nicEdit_content);
+
+
+        if (data == "")
+        {
+          hideProgressBar();
+          $('#comment_error').text("Answer body can't be left blank");
+        }
+      
+        else 
+        {
+        
+          $.get('/messages/create_comment', {
+            'body':data,'message':<%=  message.id%>, 'private':private_flag
+          }, function(data){
+            tinyMCE.execCommand('mceRemoveControl',false,'comment_body');
+            hideProgressBar();
+            $('.communityTopics').html(data);
+            //tinyMCE.execCommand('mceAddControl', false, 'comment_body');
+          
+          },'html')
+        
+
+        }
+        
+      });
+
+
+      $('.flag_private').click(function(){
+
+        if(private_flag){
+          $("#comment_error").text("");
+          //tinyMCE.get('comment_body').css('border', '');
+          private_flag = false;
+        }
+        else {
+          var user_name = $('.flag_private').attr('username');
+          $("#comment_error").text("Answer will be viewable to "+user_name);
+          //tinyMCE.get('comment_body').css('border', 'solid red 1px');
+          private_flag = true;
+        }
+      });
+      
+    });
+
+
+
+  
+
+    function clearQuestionFields(){
+      $('#message_body').val('');
+      $('#message_message_category_id').val('');
+      $('#message_topics').val('');
+      $("#post_msg_error").text("");
+    }
+    function question_helpful(comment_id) {
+    
+      $.get('/messages/question_helpful', {
+        'id':comment_id
+      },function(data){
+        $('#comment_detail_'+comment_id).html(data);
+      },'html');
+    }
+
+    function question_nothelpful(comment_id){
+    
+      $.get('/messages/question_nothelpful', {
+        'id':comment_id
+      },function(data){
+        $('#comment_detail_'+comment_id).html(data);
+      },'html')
+    }
+
+    function flag_as_appropriate(comment_id, content){
+      var id = '#comment_detail_'+comment_id;
+      if(content == "message")
+      {
+        id = "#flag_question_div"
+      }
+      $.get('/messages/comment_appropriate', {
+        'id':comment_id, 'content':content 
+      },function(data){
+        $(id).html(data);
+      
+      },'html')
+    }
+
+    function flag_as_inappropriate(comment_id, content){
+      var id = '#comment_detail_'+comment_id;
+      if(content == "message")
+      {      
+        id = "#flag_question_div"
+      }
+      $.get('/messages/comment_inappropriate', {
+        'id':comment_id, 'content': content
+      },function(data){
+        $(id).html(data);
+        return true;
+      },'html')
+   
+    }
+
+
+    function unfollow_message_detail_page(message_id){
+      $.get('/messages/unfollow_question', {
+        'id':message_id, 'content':"detail_page"
+      },function(data){
+        $(".communityTopics").html(data);
+      },'html')
+    }
+
+    function follow_message_detail_page(message_id) {    
+      $.get('/messages/follow_question', {
+        'id':message_id, 'content':"detail_page"
+      },function(data){
+        $('.communityTopics').html(data);
+      },'html')
+    }
+
+  </script>
+<%#end%>
+
+<!--<div class="communityTopics" style="padding-top:10px;">-->
+<div id="communityFeed">
+  <div class="communityFeed">
+    <div class="QuestionDv">
+      <div id="ajax_topic_div">
+        <%=render :partial=>"message_topics", :locals=>{:message=> message}%>
+      </div>
+
+      <p class="questionSender">Question Added by <span class="colorNormal"><%= message.user.screen_name %></span><%#=  link_to message.user.screen_name, edit_user_path(message.user), :target => '_blank' %> <%= "#{ws_date_format_with_time_and_meridiem_first_with_day(message.created_at)} - #{helper_get_appropriate_followship(message,'question_detail')}"  %></p>
+      <div id="flag_question_div">
+        <%=render :partial=>"question_inappropriate_partial", :locals=>{:message=>message} %>
+      </div>
+      <div class="sepLeft"></div>
+      <%  comments = message.latest_comments(@current_user) %>
+      <p class="answers <%= (comments.blank?) ? 'borderLess' : '' %>"><%= message_answers_count(message)%> Answers</p>
+      <% unless comments.blank? %>
+        <%message.comments.for_user(@current_user).datewise.each do|comment|%>
+          <% comment.viewed!%>
+          <div class="responseAnswer">
+            <div class="responseDetail">
+              <h6>
+                <%
+                comment_user = comment.user
+              %>
+                <%if comment_user == @current_user%>
+                  <%= link_to comment_user.screen_name, edit_user_path(comment_user), :target=> '_blank' %> <%= strip_tags truncate(comment_user.community_profile, 40) %> <br /><!--<span>491 Votes</span>-->
+                <%else%>
+                  <span class="userName"><%=comment_user.screen_name%></span> <%="  "+"#{strip_tags truncate(comment_user.community_profile, 40)}" %>
+                <%end%>
+              </h6>
+              <div class="breakWord commentBody"><%= comment.body %></div>
+              <div id="comment_detail_<%= comment.id.to_s %>">
+                <%=render :partial=>"comment_detail", :locals=>{:comment=>comment}%>
+              </div>
+            </div>
+            <div class="responseImage">
+              <%= image_tag (comment_user.profile_picture.exists?(:profile)) ? comment_user.profile_picture.url(:profile) : '/images/no-image-small.jpg' %>
+            </div>
+
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="responseForm">
+      <div class="responsUser">
+        <h5>Add Answer</h5>
+        <p><%= link_to @current_user.screen_name, edit_user_path(@current_user), :target=>'_blank' %> <%= strip_tags truncate(@current_user.community_profile, 40) %>  | <%= link_to "Edit Bio", edit_user_path(@current_user), :class=>"editLinks", :target=>'_blank' %> | <%=link_to "Flag as Private", "JavaScript:void(0);", :class=>"flag_private", :username => message.user.name.to_s %><!-- | <a href="#" class="editLinks">Make Anonymous</a>--> </p>
+      </div>
+      <div class="responseImage">
+        <%= image_tag (@current_user.profile_picture.exists?(:profile)) ? @current_user.profile_picture.url(:profile) : '/images/no-image-small.jpg' %>
+      </div>
+      <div class="responseFields">
+        <p><label id="comment_error" style="color: red;"></label></p>
+        <!--<div class=" nicEdit-panel" style="margin: 0px 2px 2px; overflow: hidden;" unselectable="on"></div>-->
+        <%=  text_area_tag :comment_body,"", :size => "45x5",  :class => "userEditor" %>
+        <%= link_to image_tag("theme/add-answer-btn.png"),"JavaScript:void(0);", :class=>"adAnswerBtn"%>
+      </div>
+    </div>
+  </div>
+  <div class="communityRightCol">
+    <div class="fbCustom">
+      <p><%#= is_message_followed_for_image(message.id) %>
+        <%=helper_get_appropriate_followship_button message%>
+      </p>
+      <p class="shreQuestText">Share Question</p>
+      <p><span class="st_facebook_button" displayText="Facebook"></span><span class="st_twitter_button" displayText="Tweet"/></p>
+      <% followers = message.followers %>
+      <%unless followers.blank? %>
+        <p><%= "<strong>#{message.followers_count.to_s}</strong> people are following this question" %></p>
+        <p class="fbList">
+          <% followers.take(20).each do |follower| %>
+            <%= image_tag (follower.profile_picture.exists?) ? ((follower.profile_picture.exists?(:grid_view)) ? follower.profile_picture.url(:grid_view) : follower.profile_picture.url) : 'no-image.jpg' %>
+          <%end%>
+        </p>
+      <%end%>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+<!--</div>-->
+

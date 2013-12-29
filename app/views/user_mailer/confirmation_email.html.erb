@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title>Workshop In Business Opportunities</title>
+  </head>
+
+  <body>
+    <a href="http://wibo.wickedstart.com/public_home">
+      <img src="http://wibo.wickedstart.com/images/wibo-logo.jpg?1328167465" border="0" alt="WIBO" />
+    </a>
+    <p style="font-family:Trebuchet MS, Arial, Helvetica, sans-serif; font-size:13px; color:#333333;">
+      <b>YOUR ONLINE GUIDE FOR STARTING A BUSINESS</b>
+    </p>
+    <hr noshade size="1" color="#226DC8" />
+
+    <p>
+      <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#363636">
+        <%= "Dear #{@user.first_name} #{@user.last_name}," %>
+      </font>
+    </p>
+
+    <p>
+      <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#FA9B31">
+        <strong>
+          Welcome to Workshop In Business Opportunities.
+        </strong>
+      </font>
+      <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#363636">
+        WIBO, in partnership with <%= link_to 'Wicked Start','http://www.wickedstart.com', :target => '_blank' %>, will provide you with startup resources, checklists, action items, and forums- all organized for you in your personalized step-by-step roadmap.
+      </font>
+      <!--<font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#363636">
+        <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#FA9B31">
+          <strong>
+            <%#= link_to "WIBO.WickedStart.com", "http://wibo.wickedstart.com/public_home", :style => "color:#FA9B31; text-decoration:none;" %>
+          </strong>
+        </font>
+        is the tool you need to start your new business and make it the success you've always dreamed of!
+      </font>-->
+    </p>
+    <br />
+
+    <p>
+      <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#363636">
+        Below is your WIBO access information.
+      </font>
+    </p>
+
+    <p>
+      <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#363636">
+        Username: <%= @user.login %>
+      </font>
+    </p>
+
+    <p>
+      <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#363636">
+        Please watch our <%=  link_to "How It Works", "http://www.youtube.com/watch?v=W_EF23skOkg", :target => '_blank' %> video so you can get an overview of all the
+        features of Workshop In Business Opportunities powered by Wicked Start. If you have any questions or concerns, please email us at
+      </font>
+      <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#FA9B31">
+        <strong>
+          <%= link_to "info@WIBO.WickedStart.com", "mailto:info@WIBO.WickedStart.com", :style => "color:#FA9B31; text-decoration:none;" %>
+        </strong>
+      </font>
+      <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#363636">
+        or use our Community feature available online in your WIBO account.
+        <br /><br />
+        Remember, we're here to help you get going!
+      </font>
+    </p>
+    <br />
+    <br />
+
+    <p>
+      <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#000000">
+        Sincerely,
+        <br />
+        <br />
+        Workshop In Business Opportunities Team
+      </font>
+      <br />
+      <br />
+      <!--<a href="http://www.wickedstart.com/privacy_policy">
+        <font face="Trebuchet MS,Arial,Helvetica,sans-serif" size="-1" color="#FA9B31">
+          <strong>Privacy Policy</strong>
+        </font>
+      </a>-->
+    </p>
+    <br />
+
+    <p>
+      <table cellpadding="10" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td bgcolor="#fa9b31" align="center">
+            <a style="color:#ffffff; font-weight:bold; font">
+              www.wibo.wickedstart.com
+            </a>
+          </td>
+        </tr>
+      </table>
+    </p>
+
+  </body>
+</html>

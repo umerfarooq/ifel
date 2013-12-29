@@ -1,0 +1,60 @@
+### YAML Template.
+#---
+## All the constants that are common for each environment are in default
+#default: &defaults
+#  views:
+#    launchpad:
+#      community:
+#        count: 2
+#        length: 200
+#      radar:
+#        count: 2
+#        length: 200
+#      blog:
+#        count: 2
+#        length: 200
+#  search:
+#    path: "/projects/search"
+#    field: q
+#    paginate_at: 20
+#    text_length: 200
+#  reporting:
+#    start_date: "2010-01-01"
+#    categories:
+#      - name: registration
+#        title: Registered Users
+#      - name: subscription
+#        title: Subscription
+#      - name: search_term
+#        title: Search Term
+#      - name: repository_usage
+#        title: Repository Usage
+#      - name: checklist_usage
+#        title: Checklist Usage
+#  my_files:
+#    name_length: 50
+#    template_count: 5
+#  community:
+#    popular_count: 5
+#    paginate_at: 100
+#
+## Constants for development enviornment only
+#development:
+#  <<: *defaults
+#  site:
+#    host: "localhost"
+#    auth:
+#      enabled: false
+#    blog:
+#      url: "http://www.wickedstart.com/blog/feed/"
+#      auth:
+#        enabled: false
+#
+## Constants for staging enviornment only
+#staging:
+#  <<: *defaults
+#
+## Constants for production enviornment only
+#production:
+#  <<: *defaults
+#

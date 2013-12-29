@@ -1,0 +1,78 @@
+<% item_2_06 = @project.sections.find_by_sequence_number(2).items.find_by_sequence_number(6) %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Workshop In Business Opportunities</title>
+  </head>
+
+  <body>
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" align="left" style="font-family:Arial, Helvetica, sans-serif;">
+      <tbody>
+        <tr>
+          <td >
+            <a target="_blank" href="http://http://onlinemanagementclasses.org/testingscriptWIBO.WickedStart.com">
+              <img border="0" alt="Workshop In Business Opportunities" src="http://wibo.wickedstart.com/images/wibo-logo.jpg?1328660340">
+            </a>
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding:10px 0;">
+              <b>THE FIRST STOP FOR GETTING YOUR BUSINESS IDEA OFF THE GROUND</b>
+            </p>
+            <hr noshade size="1" color="#226DC8">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;">
+              <%= "Dear #{@project.user.first_name}," %>
+            </p>
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              <strong>
+                "When you confront a problem you begin to
+                solve it."—Rudy Giuliani
+              </strong>
+            </p>
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              You're just completed most of the Action Items under 
+              Step 2, "Industry: Know Before You Go." All the Items
+              you've completed so far have helped you learn more about
+              the industry in which your business will sit. But there's
+              no substitute for direct, hands-on experience.
+            </p>
+
+            <% unless item_2_06.blank? %>
+              <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+                It's time to find a creative way to learn about your
+                industry from an insider perspective. If you have
+                not yet moved on to Action Item 6 under Step 2,
+                <%= "#{link_to "Get Experience", display_item_url(item_2_06, :host => SITE_HOST_NAME), :style => "color:#f89b4b; text-decoration:none;"}," %>
+                click to see the details of this Action Item, and then
+                go learn how a similar business works.
+              </p>
+            <% end %>
+
+            <br />
+            <br />
+
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              Sincerely,
+            </p>
+            <p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;  margin:0; color:#333333;">
+              Workshop In Business Opportunities
+            </p>
+            <br />
+            <!--<p style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; font-size: 13px; color: rgb(51, 51, 51); padding: 5px 0pt;">
+              <span><a target="_blank" style="color: rgb(248, 155, 75); text-decoration: none;" href="http://http://onlinemanagementclasses.org/testingscriptWIBO.WickedStart.com/privacy_policy">Privacy Policy</a></span>
+            </p>-->
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" height="30" bgcolor="#f89b4b" align="center">
+            <span><a target="_blank" style="font-family: Trebuchet MS,Arial,Helvetica,sans-serif; color: rgb(255, 255, 255); text-decoration: none; font-size: 16px; font-weight: bold;" href="http://http://onlinemanagementclasses.org/testingscriptWIBO.WickedStart.com">http://onlinemanagementclasses.org/testingscriptWIBO.WickedStart.com</a></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

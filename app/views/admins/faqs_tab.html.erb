@@ -1,0 +1,45 @@
+<%= render :partial => "admin_sub_menu", :locals => { :active_admin_sub_tab => :faqs_tab } %>
+
+<div class="admnRitCol">
+<div class="admnCntDv">
+  FAQS Categories
+  <%#*<h4>FAQS MESSAGE <a href="#">Edit</a></h4>%>
+  <%#= render :partial => "marketing_message", :locals=>{:obj=>@marketing_message, :title=>'FAQS'} %>
+</div>
+</div>
+<div class="admnRitCol">
+<div class="admnQuizDv">
+<table width="200" border="0" cellspacing="0" class="admnQuiztbl">
+  <tr>
+    <td colspan="5"><h4>FAQS    <%= link_to "Add New Faq", new_faq_path %></h4></td>
+    </tr>
+  <%@faqs.each do |faq|%>
+  <%#*<tr>%>
+    <%#*<td colspan="5" valign="middle"><a href="#"><img src="../images/theme/add-qstn-btn.jpg" width="130" height="26" /></a> <a href="#"><img src="../images/update-answr-btn.jpg" width="130" height="26" /></a></td>%>
+  <%#*</tr>%>
+  <tr>
+    <td><%= faq.name%></td>
+    <td><%= (faq.state)? faq.state.title : ''%></td>
+    <td class="quzIcnTd">
+      <%#*<a href="#"><img src="../images/icons/edit-icn.jpg" alt="Edit" width="18" height="16" /></a>%>
+      <%= link_to "Edit", edit_faq_path(faq) %>
+    </td>
+    <td class="quzIcnTd">
+      <%#*<a href="#"><img src="../images/icons/pblisch-icn.jpg" alt="Publish" width="16" height="16" /></a>%>
+      <%= link_to "Publish", change_state_faqs_path(:id => faq.id,:state => 'P') %>
+    </td>
+    <td class="quzIcnTd">
+      <%#*<a href="#"><img src="../images/icons/deleet-icn.jpg" alt="Delete" width="17" height="16" /></a>%>
+      <%= link_to "Deactivate", change_state_faqs_path(:id => faq.id,:state => 'X') %>
+    </td>
+  </tr>
+
+  <% end %>
+
+  <%#*<tr>%>
+    <%#*<td>&nbsp;</td>%>
+    <%#*<td colspan="4"><a href="#"><img src="../images/save-btn.jpg" align="absmiddle" /></a> <a href="#"><img src="../images/publish-btn.jpg" align="absmiddle" /></a> <a href="#" class="cnclLnk">Cancel</a></td>%>
+  <%#*</tr>%>
+</table>
+</div>
+</div>

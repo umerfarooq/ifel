@@ -1,0 +1,17 @@
+<div class="resourcesContentWrapper">
+  <div>
+    <% top_categories.each do |resource_category| %>
+      <div id = "category_<%= section_template.id.to_s %>_panel_<%=  resource_category.id.to_s %>" class="resourceType">
+        <%= render :partial => '/resources/resource_category', :locals => {:resource_category => resource_category, :section_template => section_template, :is_section_selected => is_section_selected, :limit => 3, :top_trending=>false} %>
+      </div>
+    <%end%>
+   
+    <%if categories_count > 2 and top_categories.count == 2 %>
+      <%section_template_id = section_template.nil? ? nil : section_template.id%>
+      <h3>
+        <%=link_to "[Continuation of remaining category listings]",'JavaScript:void(0);' , :id => "all_category_#{section_template_id.to_s}", :onclick=>"loadAllContent('#{section_template_id}')" %>
+      </h3>
+    <%end%>
+  </div>
+</div>
+

@@ -1,0 +1,118 @@
+<%# content_for :head do %>
+<%#= javascript_include_tag 'jquery-1.4.2.min' %>
+<%#= javascript_include_tag 'jquery.colorbox-min' %>
+<%#= stylesheet_link_tag 'colorbox' %>
+
+<%#*<script type="text/javascript">%>
+<%#*$(document).ready(function(){%>
+<%#*$("a[rel='take_tour']").colorbox();%>
+<%#*});%>
+<%#*</script>%>
+
+<%# end %>
+
+<%#*<div class="launchTopBg" style="margin-top:-14px;"></div>%>
+<div class="howWrkHedr">
+  <%= link_to image_tag("free-trial-orange.jpg", :alt => "Sign Up"), signup_path, :class => 'freeTrial-btn' %>
+  <p class="wlcome"><i>HOW IT WORKS</i></p>
+  <p class="prtnrMsg">Wicked Start is a subscription based service to help you manage the process of starting a business with a personalized roadmap of concrete action steps that are concise and organized, according to your time-line. We’ve created a community so you can ask questions and share experiences with others who are also in the process of starting a business. Sign up for your free, seven-day trial now! After the trial, you'll pay only $9.99 a month with a one-time registration fee of $40.00.</p>
+  <div class="tour">
+    <% if @marketing_multimedia_message.blank? %>
+      <%= image_tag "tak-tour-btn.jpg", :alt => "Take a Tour" %>
+    <% else %>
+      <%= link_to image_tag("tak-tour-btn.jpg", :alt => "Take a Tour"), @marketing_multimedia_message, :onclick => "$(this).colorbox()" %>
+    <% end %>
+<%#= link_to image_tag("tak-tour-btn.jpg", :alt => "Take a Tour"), flvplayer_biographies_path(:video_path => SITE_VIDEO_PATH_HOW_IT_WORKS), :onclick => "$(this).colorbox()" %>
+<%#= link_to image_tag("tak-tour-btn.jpg", :alt => "Take a Tour"), home_path('take_a_tour') %>
+<%#= link_to image_tag("tak-tour-btn.jpg", :alt => "Take a Tour"), "/images/take-tour-step-1.jpg", :rel => "take_tour", :title => "Tour One" %>
+<%#*<p style="display: none">%>
+<%#*<a href="/images/take-tour-step-1.jpg" rel="take_tour" title="Tour One">Take a Tour One</a>%>
+<%#*<a href="/images/take-tour-step-2.jpg" rel="take_tour" title="Tour Two">Take a Tour Two</a>%>
+<%#*<a href="/images/take-tour-step-3.jpg" rel="take_tour" title="Tour Three">Take a Tour Three</a>%>
+<%#*<a href="/images/take-tour-step-4.jpg" rel="take_tour" title="Tour Four">Take a Tour Four</a>%>
+<%#*</p>%>
+<%#*<a href="#"><img src="images/tak-tour-btn.jpg" alt="Taka a Tour" /></a>%>
+  </div>
+</div>
+<div class="launchTopBg" style="margin-top:-14px;"></div>
+<!--<div class="launchWrks">
+<span class="lunchWorkTxt">
+<h2>HOW WICKED START’S LAUNCH PAD WORKS</h2>
+It’s here that you’ll find the “launch” list of concrete action items to complete to start your business. You’re time is valuable so this “launch” list has been organized in 8 manageable sections with 75 action items wvhere we identify the meaning and relevance of each, including building a case for your idea, structuring your business, writing a business plan, funding, marketing and the nuts & bolts of launching.  Once you’ve completed each action item, you simply check it off as complete.<br />
+</span>
+<span class="launchWrkBnr"><img src="images/launch-pad-works.jpg" /></span>
+</div>-->
+<div class="lunchMidl">
+  <h2>WHAT YOU GET!</h2>
+  <%#*<img src="images/sign-up-btn.jpg" alt="" />%>
+</div>
+<div class="launchLstng">
+  <div class="launhLst">
+    <span class="icnSpan"><img src="images/icons/get-going-icn.gif" alt="" /></span>
+    <span class="lunchSpantxt">
+      <span class="launcTxtTtl">The Starting Block</span>
+      <p class="launcTxtDtl">
+        An easy to use tool to help you successfully manage the entire startup process. It’s here that you’ll find the “Wicked Start” list of concrete action items to start your business. You’re time is valuable so these action items have been organized into 10 manageable steps, where we identify the meaning and relevance of each, including building a case for your idea, structuring your business, writing a business plan, funding, marketing and the nuts & bolts of launching. Once you’ve finished each action item, you simply check it off as complete.
+      </p>
+    </span>
+  </div>
+  
+  <div class="launhLst">
+    <span class="launchLstTtl">Wicked Start offers the following benefits and features to support you in completing your action items</span>
+    <span class="icnSpan">
+      <img src="images/icons/graph-icn.gif" width="57" height="59" alt="" />
+    </span>
+    <span class="lunchSpantxt">
+      <span class="launcTxtTtl">Progress Tracking</span>
+      <p class="launcTxtDtl">This feature is a visual graph that tracks your progress as you complete each action item. After each item is marked ‘complete’, your progress bar moves closer to 100%. This simple yet telling graph can give you the satisfaction of seeing how much you’ve completed and how much closer you are to your goal of starting your own business.</p>
+    </span>
+  </div>
+  <div class="launhLst">
+    <%#*<span class="launchLstTtl">In addition to your “launch” list of action items, your Launch Pad provides additional support to start a business, including the following: </span>%>
+    <span class="icnSpan"><img src="images/icons/comment-icn.gif" width="77" height="71" alt="" /></span>
+    <span class="lunchSpantxt">
+      <span class="launcTxtTtl">User Community</span>
+      <p class="launcTxtDtl">The “Community” feature allows you to connect and communicate with Wicked Start and other early stage business owners and entrepreneurs in a private online forum. You can post questions and answers and search for information relevant to your own journey for starting a business.</p>
+    </span>
+  </div>
+  <div class="launhLst">
+    <span class="icnSpan"><img src="images/icons/files-icn.gif" width="77" height="77" alt="" /></span>
+    <span class="lunchSpantxt">
+      <span class="launcTxtTtl">Resource Center</span>
+      <p class="launcTxtDtl">This invaluable feature provides you with useful links to resources to help you start your business, including many businesses that we have partnered with to make Launch Pad your hub for managing this process. Whether it’s finding the right legal forms, creating a logo, locating investors, printing business cards, or identifying an email marketing partner, there will be organized, low-cost, and easy to follow links for your startup needs.</p>
+    </span>
+  </div>
+  <div class="launhLst">
+    <span class="icnSpan"><img src="images/icons/folder-icn.gif" width="77" height="55" alt="" /></span>
+    <span class="lunchSpantxt">
+      <span class="launcTxtTtl">My Files</span>
+      <p class="launcTxtDtl">This feature allows you to manage all of your files in connection with turning your idea into a business. You can organize, upload, and download files you’ve posted, whether they’re documents, spreadsheets of presentations.  It really helps to keep everything in one place for easy reference and access.</p>
+    </span>
+  </div>
+  <div class="launhLst">
+    <span class="icnSpan"><img src="images/icons/edit-icn.gif" width="58" height="60" alt="" /></span>
+    <span class="lunchSpantxt">
+      <span class="launcTxtTtl">Access to planning templates</span>
+      <p class="launcTxtDtl">This feature provides you with key business planning templates that you can use along the way. These templates include a business plan, an investor pitch, financial spreadsheets, and a Non-Disclosure Agreement (NDA). There will also be sample documents included as well that help illustrate how to best use them.</p>
+    </span>
+  </div>
+  <div class="launhLst">
+    <span class="icnSpan"><img src="images/icons/info-icn.gif" width="56" height="57" alt="" /></span>
+    <span class="lunchSpantxt">
+      <span class="launcTxtTtl">Reminders</span>
+      <p class="launcTxtDtl">This feature is an email notification to let you know when action items are coming due. This gentle reminder can provide a ‘nudge’ to help you complete your action items within the timeframe that you specify. If your schedule or timeframe changes, you always have the option of changing when items are due. You’re in control.</p>
+    </span>
+  </div>
+
+
+</div>
+<div class="lauchCost">
+  <h4>COST OF WICKED START</h4>
+  Simply signup now to create your personalized account and in a few easy steps,
+  you’ll be on your way to starting your business. Sign up for your free, seven-day trial now! After the trial, you'll pay only $9.99 a month with a one-time registration fee of $40.00. Then, every 30 days you’ll be charged an ongoing
+  membership fee of only $9.99. You can cancel anytime online.
+  <br />
+  <br />
+  <%= link_to image_tag("free-trial-orange.jpg", :alt => "Sign Up"), signup_path %>
+<%#*<a href="#"><img src="images/sign-up-btn.jpg" alt="" /></a>%>
+</div>

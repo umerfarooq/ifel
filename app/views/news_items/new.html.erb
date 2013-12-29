@@ -1,0 +1,143 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "jquery-1.4.2.min" %>
+  <%= javascript_include_tag "nicEdit" %>
+<% end %>
+
+<% if @type == "news_article" %>
+  <% content_for :head do %>
+    <script type="text/javascript">
+      $(document).ready(function (){
+        news_article_summary_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('news_article_summary');
+        news_article_body_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('news_article_body');
+      });
+    </script>
+  <% end %>
+  <h2>Add news article</h2>
+  <%#*@news_article = NewsArticle.new%>
+  <% form_for @news_article, :url => {:action => 'create'} do |f| %>
+    <%= hidden_field_tag :type, @type %>
+    <%= f.error_messages :header_message => nil, :message => nil %>
+    <p>
+      <%= f.label :news_date %><br />
+      <%= f.date_select :news_date %>
+    </p>
+    <p>
+      <%= f.label :is_public, "Type" %> <br />
+      <%= f.select(:is_public, [['Public', 'p'], ['Non-Public', 'n']]) %>
+    </p>
+    <p>
+      <%= f.label :provider %> <br />
+      <%#= f.collection_select(:news_provider_id, NewsProvider.all, :id, :name, {:prompt => true}) %>
+      <%= f.collection_select(:news_provider_id, NewsProvider.find_all_by_is_active_and_is_rss_provider(true, false), :id, :name, {:prompt => true}) %>
+    </p>
+    <p>
+      <%= f.label :headline %> <br />
+      <%= f.text_field :headline, :size => "50", :maxlength => "250" %>
+    <%#= f.text_area :headline, :size => "100x1" %>
+    </p>
+    <p>
+      <%= f.label :summary %> <br />
+      <%= f.text_area :summary, :size => "100x5" %>
+    </p>
+    <p>
+      <%= f.label :body %> <br />
+      <%= f.text_area :body, :size => "100x20" %>
+    </p>
+    <p>
+      <%= f.label :url %> <br />
+      <%= f.text_field :url, :size => "50", :maxlength => "250" %>
+    </p>
+    <p>
+      <%= f.submit :add %>
+    </p>
+    <p>
+      <%= link_to '<< Back', url_for(:back) %>
+    </p>
+  <% end %>
+<% elsif @type == "white_paper" %>
+  <% content_for :head do %>
+    <script type="text/javascript">
+      $(document).ready(function (){
+        white_paper_summary_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('white_paper_summary');
+      });
+    </script>
+  <% end %>
+  <h2>Add white paper</h2>
+  <%#*@white_paper = WhitePaper.new%>
+  <% form_for @white_paper, :url => {:action => 'create'}, :html => { :multipart => true } do |f| %>
+    <%= hidden_field_tag :type, @type %>
+    <%#= f.hidden_field :type, :value => @type %>
+    <%= f.error_messages :header_message => nil, :message => nil %>
+    <p>
+      <%= f.label :title %> <br />
+      <%= f.text_field :title, :size => "50", :maxlength => "250" %>
+    </p>
+    <p>
+      <%= f.check_box :is_public %>
+      <%= f.label :is_public %>
+    </p>
+    <p>
+      <%= f.label :summary %> <br />
+      <%= f.text_area :summary, :size => "100x5" %>
+    </p>
+    <p>
+      <%= f.label :paper %> <br />
+      <%= f.file_field :paper %>
+    </p>
+    <p>
+      <%= f.submit :add %>
+    </p>
+    <p>
+      <%= link_to '<< Back', url_for(:back) %>
+    </p>
+  <% end %>
+<% else %>
+  <h2>Add news item</h2>
+  <% form_for @news_item, :html => { :multipart => true } do |f| %>
+    <%= hidden_field_tag :type, @type %>
+    <%#= f.hidden_field :type, :value => @type %>
+    <%= f.error_messages :header_message => nil, :message => nil %>
+    <p>
+      <%= f.label :title %> <br />
+      <%= f.text_field :title %>
+    </p>
+    <p>
+      <%= f.label :headline %> <br />
+      <%= f.text_field :headline %>
+    </p>
+    <p>
+      <%= f.label :provider %> <br />
+      <%= f.collection_select(:news_provider_id, NewsProvider.all, :id, :name, {:prompt => true}) %>
+    </p>
+    <p>
+      <%= f.label :news_date %><br />
+      <%= f.date_select :news_date %>
+    </p>
+    <p>
+      <%= f.label :category %> <br />
+      <%= f.collection_select(:news_category_id, NewsCategory.all, :id, :title, {:prompt => true}) %>
+    </p>
+    <p>
+      <%= f.label :summary %> <br />
+      <%= f.text_area :summary %>
+    </p>
+    <p>
+      <%= f.label :body %> <br />
+      <%= f.text_area :body %>
+    </p>
+    <p>
+      <%= f.label :url %> <br />
+      <%= f.text_field :url %>
+    </p>
+    <p>
+      <%= f.label :document %> <br />
+      <%= f.file_field :document %>
+    </p>
+    <p>
+      <%= f.submit :add %>
+    </p>
+    <p>
+      <%= link_to '<< Back', url_for(:back) %>
+    </p>
+  <% end %>
+<% end %>

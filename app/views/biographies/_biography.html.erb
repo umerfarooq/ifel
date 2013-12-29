@@ -1,0 +1,73 @@
+<% content_for :javascripts do %>
+  <% if biography.video.exists? %>
+    <script defer async type="text/javascript">
+      $(document).ready(function(){
+        $("#bio_video_link_<%= biography.id %>").colorbox();
+      });
+    </script>
+  <% end %>
+<% end %>
+
+
+<div class="aboutUsBdy">
+  <%#*<span class="storyPic">%>
+  <span class="launchownrPic" style="margin-top:0px;">
+<%#= image_tag biography.photo.url(:small) %>
+    <% if biography.video.exists? %>
+      <%= image_tag biography.photo.url(:small), :alt => "PIC-#{biography.name}"%>
+      <%#= link_to image_tag('play-btn.png', :alt => "PIC-#{biography.name}"), flvplayer_biographies_path(:video_path => biography.video.url(nil, false)), :id => "bio_video_link_#{biography.id}", :class => 'playBtn' %>
+      <%= link_to image_tag('play-btn.png', :alt => "PIC-#{biography.name}"), flvplayer_biographies_path(:video_path => biography.url_for_video_player), :id => "bio_video_link_#{biography.id}", :class => 'playBtn' %>
+    <% else %>
+      <%= image_tag(biography.photo.url(:small), :alt => "PIC-#{biography.name}") %>
+    <% end %>
+<%#= link_to image_tag("/images/BryanVideoBio.jpg", :alt => "BIO-VIDEO", :size => "100x100"), flvplayer_biographies_path(:video_path => "http://videobio.com/bjaneczko/BJaneczko videoBIO Final HQ by JK.flv"), :id => 'bio_video_link' %>
+  </span>
+  <span class="aboutTxt" <%= "style='width:675px'" unless current_user.blank? %>>
+    <h5>
+      <%= biography.title %>
+    </h5>
+    <p>
+      <%= biography.description %>
+    </p>
+  </span>
+</div>
+
+<%#*<span class="videoSpan">%>
+
+<%#= link_to image_tag("/images/BryanVideoBio.jpg", :alt => "BIO-VIDEO"), flvplayer_biographies_path(:video_path => "http://videobio.com/bjaneczko/BJaneczko videoBIO Final HQ by JK.flv"), :id => 'bio_video_link' %>
+
+<%#*</span>%>
+<%#*<!-- This contains the hidden content for inline calls -->%>
+<%#*<div style='display:none'>%>
+<%#*<div id='bio_video_data%>
+<%#= biography.id %>
+<%#*' style='padding:10px; background:#ccc;'>%>
+<%#= biography.videobio_data %>
+<%#*</div>%>
+<%#*</div>%>
+
+
+<%#*<!-- This Link is for header text on which colorbox is called -->%>
+<%#*<!-- $("#bio_video_link").colorbox({width:"546", inline:true, href:"#bio_video_data"}); -->%>
+<%#*<span class="videoSpan">%>
+<%#*<a id='bio_video_link' href="#">%>
+<%#*<img src="images/movie-player.jpg" />%>
+<%#*</a>%>
+<%#*</span>%>
+<%#*<!-- This contains the hidden content for inline calls -->%>
+<%#*<div style='display:none'>%>
+<%#*<div id='bio_video_data' style='padding:10px; background:#ccc;'>%>
+<%#*<script type="text/javascript" src="http://video.videobio.tv/js/embed.js.php?id=492"></script>%>
+<%#*<noscript>%>
+<%#*<object type="application/x-shockwave-flash" data="http://video.videobio.tv/vimp.swf?playlistmode=media&amp;mediaid=492&amp;webtv=false&amp;hosturl=http%3A%2F%2Fvideo.videobio.tv%2Fflashcomm.php" id="flashcontent_4bab21c756296" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" name="c6a80378-3eb2-47e7-8415-ba1f7cff037e" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="480" height="360" align="middle">%>
+<%#*<param name="movie" value="http://video.videobio.tv/vimp.swf?playlistmode=media&amp;mediaid=492&amp;webtv=false&amp;hosturl=http%3A%2F%2Fvideo.videobio.tv%2Fflashcomm.php" />%>
+<%#*<param name="width" value="480" />%>
+<%#*<param name="height" value="360" />%>
+<%#*<param name="align" value="middle" />%>
+<%#*<param name="quality" value="high" />%>
+<%#*<param name="allowscriptaccess" value="always" />%>
+<%#*</object>%>
+<%#*</noscript>%>
+<%#*</div>%>
+<%#*</div>%>
+

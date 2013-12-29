@@ -1,0 +1,12 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :about_us_tab } %>
+
+<% title "Edit Biography, #{@biography.name}" %>
+
+<div class="admnRitCol">
+  <h1>
+    <%= "Edit Biography, #{@biography.name}" %>
+  </h1>
+  <%= render :partial => "form", :locals => {:biography => @biography} %>
+
+  <%= render :partial => "biog_links", :locals => {:biography => @biography} %>
+</div>

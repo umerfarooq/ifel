@@ -1,0 +1,23 @@
+<%#*<div class="RitCol">%>
+  <h4>
+    <%= @category.title %>
+  </h4>
+  <div class="inbxDv">
+    <% @category.resources.published.each do |resource| %>
+      <h5>
+        <%= resource.title %>
+      </h5>
+      <p class="inbxBdy">
+        <%= resource.description %>
+      </p>
+      <p class="inbxLnks">
+         <%#*# TODO [11/1/10 8:01 PM] => CHECK_IT%>
+        <%# if resource.url == 'http://www.wickedstart/quizzes/new' %>
+          <%#= link_to "#{(resource.url.length<22) ? resource.url : resource.url.slice(0..22)+('...')}", "JavaScript:newPopup('"+resource.url+"');", :target => "_blank" %>
+        <%# else %>
+          <%= link_to "#{(resource.url.length<22) ? resource.url : resource.url.slice(0..22)+('...')}", resource.url, :target => "_blank" %>
+        <%# end %>
+      </p><br />
+    <% end %>
+  </div>
+<%#*</div>%>

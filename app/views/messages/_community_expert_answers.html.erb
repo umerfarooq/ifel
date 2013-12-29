@@ -1,0 +1,49 @@
+<% unless comments.blank? %>
+  <% message_hash = helper_check_msg_presence_before(comments)%>
+  <div class="feed">
+    <%index = 0%>
+    <%class_name = ''%>
+    <% message_hash.each do |hash, msg|%>
+      <%= link_to strip_tags(truncate(msg.body, 225)), "JavaScript:void(0);",:class => "feedTitle", :onclick => "show_message_detail(#{msg.id})"%>
+    <%
+    if show_comments.blank?
+       class_name = 'userQuestions'
+       if index == message_hash.length-1
+         class_name = 'userQuestionBorderless'
+       end
+    end
+     %>
+    <div id=<%="follow_"+msg.id.to_s%> class="<%=class_name %> >
+        <%=render :partial=>"/messages/message_details", :locals=>{:msg=> msg, :topic=>nil}%>
+      </div>
+    <%if !show_comments.blank? %>
+      <%  comments = msg.latest_comments(@current_user) %>
+      <% unless comments.blank? %>
+        <% comments.each do |comment| %>
+          <div class="feedContent">
+            <div class="feedImage"><%= comments.count.to_s %></div>
+            <div class="feedDesc width500">
+              <%latest_comment = comment.body %>
+              <span id="short_answer_<%= comment.id.to_s %>" class="dispBlock"><%=strip_tags sanitize truncate(latest_comment,50) %><%=link_to '(more)','JavaScript:void(0);',:onclick=>"showMoreTextOfAnswer('#{comment.id.to_s}');" if helper_comment_length_exceeds? latest_comment %></span>
+              <span id="long_answer_<%= comment.id.to_s %>" class="dispNone"><p class="breakWord"><%= latest_comment %><%=link_to '(less)','JavaScript:void(0);',:onclick=>"showLessTextOfAnswer('#{comment.id.to_s}');"%></p></span>
+            </div>
+          </div>
+        <%end%>
+      <%end%>
+
+    
+    <%end%>
+<%index += 1%>
+<%end%>
+  </div>
+
+
+
+
+
+
+<%else%>
+  <div class="feed">
+    No Question has been Answered by this User
+  </div>
+<%end%>

@@ -1,0 +1,110 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'jquery-1.4.2.min', 'ws.common-questions' %>
+<% end %>
+
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :common_questions_tab } %>
+
+<div class="admnRitCol">
+  <h4>
+    COMMON QUESTIONS PAGE
+    |
+    <%= link_to "EDIT", "JavaScript:void(0);", :id => "message_edit_link" %>
+  </h4>
+  <br />
+  <%unless @main_title.blank?%>
+    <div id="message_show">
+      <strong>
+        Title
+      </strong>
+      <h5>
+        <%= @main_title.title %>
+      </h5>
+      <br />
+      <strong>
+        Sub Title
+      </strong>
+      <p>
+        <%= @main_title.content %>
+      </p>
+    </div>
+
+    <div id="message_edit" style="display: none">
+      <% form_for @main_title do |f| %>
+        <%= f.label :title %>
+        <br />
+        <%= f.text_field :title %>
+        <br />
+        <%= label_tag 'sub_title', 'Sub Title' %>
+        <br />
+        <%= f.text_area :content, :size => "100x5" %>
+        <br />
+        <%= f.submit 'Update and Publish' %>
+        <br />
+      <% end %>
+    </div>
+  <%end%>
+  <br />
+  
+  <h4>
+    WICKED START Common Questions
+    |
+    <%= link_to "Add Statement", new_common_question_path(:is_statement => true) %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>
+        Seq
+      </th>
+      <th>
+        Section
+      </th>
+      <th>
+        Statement
+      </th>
+      <th>
+        STATE
+      </th>
+      <th>
+        AVAILABLE ACTIONS
+      </th>
+    </tr>
+    <% unless @statements.blank? %>
+      <% @statements.each do |statement| %>
+        <tr>
+          <td>
+            <%= statement.sequence_number %>
+          </td>
+          <td>
+            <%= statement.section_template.title.camelize %>
+          </td>
+          <td>
+            <%= statement.statement.camelize %>
+          </td>
+          <td>
+            <%= statement.state.title.upcase %>
+          </td>
+          <td>
+    <%#= link_to 'SHOW', statement %>
+
+            <%= link_to 'EDIT', edit_common_question_path(statement, :is_statement => true, :section_template_id => statement.section_template.id) %>
+            |
+            <% if statement.published? %>
+              <%= link_to 'INACTIVATE', inactivate_common_question_path(statement) %>
+            <% elsif statement.activated? %>
+              <%= link_to 'PUBLISH', publish_common_question_path(statement) %>
+              |
+              <%= link_to 'INACTIVATE', inactivate_common_question_path(statement) %>
+            <% else %>
+              <%= link_to 'ACTIVATE', activate_common_question_path(statement) %>
+            <% end %>
+    <%#= "| #{link_to 'MOVE-UP', move_up_common_question_path(statement)}" unless statement.on_top? %>
+    <%#= "| #{link_to 'MOVE-DOWN', move_down_common_question_path(statement)}" unless statement.on_bottom? %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+
+</div>

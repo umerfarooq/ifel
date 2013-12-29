@@ -1,0 +1,183 @@
+<%if params[:type] == 'wibo' %>
+  <%= render :partial => "admins/admin_roadmap_menu", :locals => { :active_admin_roadmap_tab => :wibo_roadmap_tab } %>
+<%else%>
+  <%= render :partial => "admins/admin_roadmap_menu", :locals => { :active_admin_roadmap_tab => :ifel_roadmap_tab } %>
+<%end%>
+
+
+<div class="admnRitCol">
+  <h2>
+    All Section Templates
+    |
+    <%= link_to "All Item Templates", "/item_templates?type=#{params[:type]}", :style => "font-size: 20px" %>
+  </h2>
+  <br />
+
+  <p>
+    Total Items Count:
+    <strong>
+      <%= ItemTemplate.all.count %>
+    </strong>
+  </p>
+
+  <p>
+    Total Sections Count:
+    <strong>
+      <%= SectionTemplate.all.count %>
+    </strong>
+  </p>
+
+  <p>
+    Published Sections Count:
+    <strong>
+      <%= SectionTemplate.published.count %>
+    </strong>
+  </p>
+
+  <%
+  published_count = 0
+  published_percentage = 0
+  SectionTemplate.published.each do |st|
+    st.item_templates.published.each do |it|
+      published_percentage = published_percentage + it.percent
+    end
+    published_count = published_count + st.item_templates.published.count
+  end
+%>
+
+  <p>
+    Count of Published Items in Published Sections:
+    <strong>
+      <%= published_count %>
+    </strong>
+  </p>
+
+  <p>
+    Percentage of Published Items in Published Sections:
+    <strong>
+      <%= published_percentage %>
+    </strong>
+  </p>
+
+  <br />
+  <br />
+
+  <h4>
+    CHECKLIST SECTION TEMPLATES
+    |
+    <%= link_to "Add Section Template", new_section_template_path(:type => params[:type]) %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>
+        SEQ
+      </th>
+      <th>
+        TITLE - TITLE COMMENT
+      </th>
+      <th>
+        TITLE ALIAS
+      </th>
+      <th>
+        ITEMS-C
+      </th>
+      <th>
+        PUB-C
+      </th>
+      <th>
+        PUB-%
+      </th>
+<%#*<th>%>
+<%#*D30%>
+<%#*</th>%>
+<%#*<th>%>
+<%#*D60%>
+<%#*</th>%>
+<%#*<th>%>
+<%#*D120%>
+<%#*</th>%>
+<%#*<th>%>
+<%#*SHOW%>
+<%#*</th>%>
+<%#*<th>%>
+<%#*IMAGE%>
+<%#*</th>%>
+      <th>
+        STATE
+      </th>
+      <th>
+        AVAILABLE ACTIONS
+      </th>
+    </tr>
+    <% @section_templates.each do |section_template| %>
+      <tr>
+        <td>
+          <%=h section_template.sequence_number %>
+        </td>
+        <td >
+          <%= link_to "<strong>#{section_template.title}</strong> - #{section_template.title_comment}", section_template_item_templates_path(section_template, :type => params[:type]) %>
+  <%#*<strong>%>
+  <%#= section_template.title %>
+  <%#*</strong>%>
+  <%#*-%>
+  <%#= section_template.title_comment %>
+        </td>
+        <td>
+          <%=h section_template.name %>
+        </td>
+        <td>
+          <%=h section_template.item_templates.count %>
+        </td>
+        <td>
+          <%=h section_template.item_templates.published.count %>
+        </td>
+        <td>
+          <%=h section_template.item_templates.published.sum(:percent) %>
+        </td>
+  <%#*<td>%>
+  <%#=h section_template.due_days_30 %>
+  <%#*</td>%>
+  <%#*<td>%>
+  <%#=h section_template.due_days_60 %>
+  <%#*</td>%>
+  <%#*<td>%>
+  <%#=h section_template.due_days_120 %>
+  <%#*</td>%>
+  <%#*<td>%>
+  <%#= link_to "SHOW", section_template_item_templates_path(section_template) %>
+  <%#*</td>%>
+  <%#*<td style="padding: 0px">%>
+  <%#= image_tag section_template.multimedia.url('tiny2') %>
+  <%#*</td>%>
+        <td>
+          <%= section_template.state.title.upcase %>
+        </td>
+        <td>
+          <% if section_template.state.is_published? %>
+            <%= link_to 'EDIT', edit_section_template_path(section_template, :type => params[:type]) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_section_template_path(section_template, :type => params[:type]) %>
+          <% elsif section_template.state.is_activated? %>
+            <%= link_to 'EDIT', edit_section_template_path(section_template, :type => params[:type]) %>
+            |
+            <%= link_to 'PUBLISH', publish_section_template_path(section_template, :type => params[:type]) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_section_template_path(section_template, :type => params[:type]) %>
+          <% else %>
+            <%= link_to 'EDIT', edit_section_template_path(section_template, :type => params[:type]) %>
+            |
+            <%= link_to 'ACTIVATE', activate_section_template_path(section_template, :type => params[:type]) %>
+          <% end %>
+          <%= "| #{link_to 'MOVE-UP', move_up_section_template_path(section_template, :type => params[:type])}" unless section_template.on_top? %>
+          <%= "| #{link_to 'MOVE-DOWN', move_down_section_template_path(section_template, :type => params[:type])}" unless section_template.on_bottom? %>
+          |
+          <%= link_to 'SYNC', synchronize_section_template_path(section_template, :type => params[:type])%>
+          |
+          <%= link_to 'DELETE', section_template_path(section_template, :type => params[:type]), :method => :delete, :confirm => "Are you sure?" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

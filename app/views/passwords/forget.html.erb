@@ -1,0 +1,56 @@
+<% title "Forgot Password" %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+
+  <h1>Forgot Password</h1>
+  <h2 class="headLine">Did you forget your username or password?</h2>
+ <p class="marginTop desc">Please enter your username or email with which you registered and we'll send you your username and link to reset your password.</p>
+<% form_tag passwords_path do %>
+    <table cellspacing="0" cellpadding="0" border="0" class="frmLogin width100">
+      <tbody>
+        <tr>
+          <td class="lableTd">
+            <%= label_tag :login, "Username" %>
+          </td>
+          <td >
+            <%= text_field_tag :login, @login, :title => "username" %>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <b>OR</b>
+          </td>
+        </tr>
+        <tr>
+          <td class="lableTd">
+            <%= label_tag :email, "Email" %>
+          </td>
+          <td >
+            <%= text_field_tag :email, @email, :title => "email" %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <%= recaptcha_tags %>
+          </td>
+        </tr>
+        <tr>
+          <th align="left" colspan="2">&nbsp;</th>
+        </tr>
+        <tr>
+          <td colspan="2" align="center">
+            <%= submit_tag "SUBMIT", :class => "bntSubmit", :name => nil, :style=>"margin-left:0px;" %>
+            &nbsp;
+            <%= link_to "Cancel", root_url %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+  <div class="clear"></div>
+</div>

@@ -1,0 +1,258 @@
+<% content_for :javascripts do %>
+  <% if params[:success] == 'true' %>
+    <script>
+      $(document).ready(function() {
+        $.fn.colorbox({
+          width:"500px",
+          height:"275px",
+          html:"<div id='error-box'><img alt='Alert icon' class='icon master-sprite' src='/images/pixel.gif' /> \n\
+                    <div style='padding:30px 10px 10px 10px;'>\n\
+                       <style>\n\
+                            .alignC{text-align:center;}\n\
+                            .serveyHeading{ margin-top:15px; font-size:16px;color:#333333; font-weight:bold;text-align:center;}\n\
+                            .serveyHeading a{  font-size:16px; text-decoration:none;} \n\
+                      </style>\n\
+                      <p class='alignC'><a href='/' onClick='$.fn.colorbox.close();'><img src='/images/logo.jpg'></a></p>\n\
+                        \n\
+                      <h2 class='serveyHeading'>Do you mind taking a quick survey about<br /> Wicked Start to help us better serve our customers?<br /><br /><a href='/questionnaire'  onClick='$.fn.colorbox.close();' target='_blank'>Click Here</a> to complete the survey.</h2>\n\
+                    </div>\n\
+                  </div>"
+          , open:true,onClosed:true});
+      });
+    </script>
+  <%end%>
+  <%= javascript_include_tag "ajaxupload"  %>
+  <script>
+    //function uploadPicture() {
+    $(document).ready(function() {
+      user_id = <%= @user.id %>;
+      new AjaxUpload('upload_picture_btn', {
+        action: ["", "users", user_id, "upload_picture"].join("/"),
+        data : {
+          '_method'               : "post",
+          'authenticity_token'    : $("input[name=authenticity_token]").attr("value")
+        },
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+        autoSubmit: true,             // Submit file after selection
+        responseType: "json",         // Useful when you are using JSON data as a response, set to "json" in that case.
+        onChange: function (f, e) { }, // Fired after the file is selected
+        onSubmit: function (f, e) {    // Fired before the file is uploaded
+          if (!(/^(jpg|png|jpeg|gif)$/i.test(e))){
+            $("#upload-error-msg").html("Invalid file type");
+            return false;
+          }else{
+            $("#upload-error-msg").html("");
+          }
+        },
+        onComplete: function (file, response) {  // Fired when file upload is completed  // WARNING! DO NOT USE "FALSE" STRING AS A RESPONSE!
+          if(response.success){
+            var path = response.path;
+            $("#uploaded_profile_picture").html("<img class='profile-pic-box' src='"+path+"' />");
+          } else {
+            $("#upload-error-msg").html(response.message);
+          }
+          this.enable();
+        }
+      });
+    });
+    //}
+  </script>
+<% end %>
+<% content_for :ads do %>
+  <span class="ad1">
+    <%= image_tag "Myprofile.jpg", :alt => "My Profile Image" %>
+  </span>
+<% end %>
+<div class="subPageWrapper">
+  <h1 class="noMargin">
+    <%=  sanitize @profile_contents[:summary].title.to_s %>
+  </h1>
+  <h2 class="headLine marginBtm"><%= sanitize current_user.business_idea %></h2>
+  <%= render :partial=>'shared/startup_workspace_breadcrumbs', :locals=>{:selected => :my_profile} %>
+  <p class="floatR"></p>
+  <div class="clear"></div>
+  <h2 class="leadInText"><%=  sanitize @profile_contents[:summary].content.to_s %></h2>
+  <div class="sep"></div>
+  <div class="clear"></div>
+  <div class="close-accnt"><%= link_to "Cancel Subscription", cancel_subscription_credentials_path, :class => "suspndLnk", :confirm => "Are you sure you want to cancel your account?"%></div>
+  <h3 class="header">
+    <div class="floatL">Basic Information
+      <%= link_to image_tag('information-icon.jpg', :class=>'dispInline'),'#.', :onmouseover=>"$('#basic-info-tip').show();", :onmouseout=>"$('#basic-info-tip').hide();" %></div>
+    <div id="basic-info-tip" class="floatL dispNone"><%= render :partial => 'shared/info_tooltip', :locals => { :tip => @profile_contents[:basic_info_tooltip] }  %></div>
+  </h3>
+  <div class="clear"></div>
+  <% form_for(@user, :html => {:multipart => true}) do |f| %>
+    <% if !f.error_messages.blank? && params[:user][:first_name]%>
+      <%= f.error_messages :header_message => nil, :message => nil %>
+    <% end %>
+    <table class="floatL width550" id="prof_basic_info" cellspacing="3" cellpadding="3">
+      <tr>
+        <td colspan="2"><%= f.label :email, "Email" %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong><%=@user.email%></strong></td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= f.label :login, "User Name"%></td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong><%=@user.login%></strong></td>
+      </tr>
+      <tr>
+        <td width="30%"><%= f.label :first_name, "First Name" %> <span class="required-field">*</span></td>
+        <td width="30%"><%= f.label :last_name, "Last Name" %> <span class="required-field">*</span></td>
+      </tr>
+      <tr>
+        <td><%= f.text_field :first_name, :class => "prflTxtFld"%></td>
+        <td><%= f.text_field :last_name, :class => "prflTxtFld" %></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="floatL">
+            <%= f.label :screen_name, "Screen Name" %>
+            <%= link_to image_tag('information-icon.jpg', :class=>'dispInline'),'#.', :onmouseover=>"$('#screen-name-tip').show();", :onmouseout=>"$('#screen-name-tip').hide();" %>
+          </div>
+          <div id="screen-name-tip" class="floatL dispNone">
+            <%= render :partial => 'shared/info_tooltip', :locals => { :tip => @profile_contents[:screen_name_tooltip] }  %>
+          </div>
+        </td>
+      </tr>
+      <div class="clear"></div>
+      <tr>
+        <td> <%= f.text_field :screen_name, :class => "prflTxtFld" %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= f.label :gender, "Gender" %></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <%= f.select :gender, [['Male', 'm'], ['Female', 'f']], :class => "LstFld2" %>
+        </td>
+      </tr>
+      <tr id="community-profile">
+        <td colspan="2">
+          <div class="floatL">
+            Community Profile
+            <%= link_to image_tag('information-icon.jpg', :class=>'dispInline'),'#.', :onmouseover=>"$('#community-tip').show();", :onmouseout=>"$('#community-tip').hide();" %>
+          </div>
+          <div id="community-tip" class="floatL dispNone">
+            <%= render :partial => 'shared/info_tooltip', :locals => { :tip => @profile_contents[:community_profile_tooltip] }  %>
+          </div>
+        </td>
+      </tr>
+      <div class="clear"></div>
+      <tr>
+        <td colspan="2"><%= f.text_area :community_profile, :size => "65x7", :class => "userEditor" %></td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+      <tr>
+        <td>
+          <%= image_submit_tag 'save-btn.jpg', :alt => "Submit" %>
+        </td>
+      </tr>
+    </table>
+    <table class="floatL profile-img-panel">
+      <tr>
+        <td>
+          <div class="floatL">
+            Photo
+            <%= link_to image_tag('information-icon.jpg', :class=>'dispInline'),'#.', :onmouseover=>"$('#photo-tip').show();", :onmouseout=>"$('#photo-tip').hide();" %>
+          </div>
+          <div id="photo-tip" class="floatL dispNone">
+            <%= render :partial => 'shared/info_tooltip', :locals => { :tip => @profile_contents[:photo_tooltip] }  %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td id="file-uploader">
+          <span id="upload_picture_btn" class="marginTop5"></span>
+  <%#= link_to '', '#.', :class => 'marginTop5', :id=>'upload_picture_btn', :onclick=>"uploadPicture();" %>
+          <span style="color: red" id="upload-error-msg"></span>
+          <div id="uploaded_profile_picture">
+            <%if @user.profile_picture.exists?(:normal)%>
+              <%=image_tag @user.profile_picture.url(:normal), :class => 'profile-pic-box'%>
+            <%else%>
+              <%=image_tag 'no-image.jpg', :class => 'profile-pic-box'%>
+            <%end%>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <div class="clear"></div>
+    <div style="border-top:1px solid #E5E5E5; padding-top: 10px; margin-top: 10px;">
+      <h3 class="header">
+        <div class="floatL">
+          Change Password
+          <%= link_to image_tag('information-icon.jpg', :class=>'dispInline'),'#.', :onmouseover=>"$('#password-tip').show();", :onmouseout=>"$('#password-tip').hide();" %>
+        </div>
+        <div id="password-tip" class="floatL dispNone">
+          <%= render :partial => 'shared/info_tooltip', :locals => { :tip => @profile_contents[:password_tooltip] }  %>
+        </div>
+      </h3>
+      <div class="clear"></div>
+
+    <%end%>
+
+    <% form_for (@user) do |f| %>
+      <% if !f.error_messages.blank? && params[:user][:password]%>
+        <%= f.error_messages :header_message => nil, :message => nil %>
+      <% end %>
+
+      <table border="0" cellpadding="0" cellspacing="0">
+
+        <tr>
+          <td>
+            <%= f.label :old_password, "Old Password" %> <span class="required-field">*</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <%= f.password_field :old_password %>
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td >
+            <%= f.label :password, "New Password" %> <span class="required-field">*</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td >
+            <%= f.password_field :password %>
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td>
+            <%= f.label :password_confirmation, "Re-enter New Password" %> <span class="required-field">*</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= f.password_field :password_confirmation %>
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+
+        <tr>
+          <td >
+            <%= image_submit_tag 'save-btn.jpg', :alt => "Submit" %>
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+
+        <tr>
+          <td colspan="2"><span class="required-field">*</span> = Required Fields</td>
+        </tr>
+
+      </table>
+    <% end %>
+  </div>
+</div>

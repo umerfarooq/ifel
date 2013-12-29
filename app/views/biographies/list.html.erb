@@ -1,0 +1,137 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :about_us_tab } %>
+
+<% content_for :head do %>
+  <%= javascript_include_tag 'jquery-1.4.2.min' %>
+  <%= javascript_include_tag "nicEdit" %>
+
+  <script type="text/javascript">
+    $(document).ready(function (){
+      marketing_text_message_content_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('marketing_text_message_content');
+      $("div#message_edit").hide();
+    });
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var msg_title = '<%= @message_main.title %>';
+      var msg_content = '<%= @message_main.content %>';
+      $("a#message_edit_link").click(function (event){
+        if($("a#message_edit_link").text() == "EDIT") {
+          $("a#message_edit_link").text("CANCEL");
+          $("#marketing_text_message_title").val(msg_title);
+          $("#marketing_text_message_content").val(msg_content);
+          $("div#message_show").hide();
+          $("div#message_edit").show();
+        } else {
+          $("a#message_edit_link").text("EDIT");
+          $("div#message_show").show();
+          $("div#message_edit").hide();
+        }
+        event.preventDefault();
+      });
+    });
+  </script>
+<% end %>
+
+<div class="admnRitCol">
+
+  <h4>
+    ABOUT US GENERAL MESSAGE
+    |
+    <%= link_to "EDIT", edit_marketing_text_message_path(@message_main), :id => "message_edit_link" %>
+  </h4>
+  <br />
+  <div id="message_show">
+    <strong>
+      Title
+    </strong>
+    <h5>
+      <%= @message_main.title %>
+    </h5>
+    <br />
+    <strong>
+      Content
+    </strong>
+    <p>
+      <%= @message_main.content %>
+    </p>
+  </div>
+  <%#*<div id="message_edit" style="display: none">%>
+  <div id="message_edit" style="display: inline">
+    <% form_for @message_main do |f| %>
+      <%= f.label :title %>
+      <br />
+      <%= f.text_field :title %>
+      <br />
+      <%= f.label :content %>
+      <br />
+      <%= f.text_area :content, :size => "100x5" %>
+      <br />
+      <%= f.submit 'Update and Publish' %>
+      <br />
+    <% end %>
+  </div>
+  <hr />
+
+
+  <h4>
+    WICKED START BIOGRAPHIES
+    |
+    <%= link_to "Add Biography", new_biography_path %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>
+        Seq
+      </th>
+      <th>
+        Name
+      </th>
+      <%#*<th>%>
+        <%#*Title%>
+      <%#*</th>%>
+      <th>
+        STATE
+      </th>
+      <th>
+        AVAILABLE ACTIONS
+      </th>
+    </tr>
+    <% @biographies.each do |biography| %>
+      <tr>
+        <td>
+          <%= biography.sequence_number %>
+        </td>
+        <td>
+          <%= biography.name %>
+        </td>
+        <%#*<td>%>
+          <%#= biography.title %>
+        <%#*</td>%>
+        <td>
+          <%= biography.state.title.upcase %>
+        </td>
+        <td>
+          <%= link_to 'SHOW', biography %>
+          |
+          <%= link_to 'EDIT', edit_biography_path(biography) %>
+          |
+          <% if biography.published? %>
+            <%= link_to 'INACTIVATE', inactivate_biography_path(biography) %>
+          <% elsif biography.activated? %>
+            <%= link_to 'PUBLISH', publish_biography_path(biography) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_biography_path(biography) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_biography_path(biography) %>
+          <% end %>
+          <%= "| #{link_to 'MOVE-UP', move_up_biography_path(biography)}" unless biography.on_top? %>
+          <%= "| #{link_to 'MOVE-DOWN', move_down_biography_path(biography)}" unless biography.on_bottom? %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>

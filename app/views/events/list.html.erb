@@ -1,0 +1,165 @@
+<%= render :partial => "admins/admin_client_information_menu", :locals => { :active_admin_client_information_tab => :event_tab } %>
+
+<div class="admnRitCol">
+
+  <h4>
+    EVENT TYPES
+    |
+    <%= link_to "Add Event Type", new_event_category_path %>
+  </h4>
+  <br />
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>DATE</th>
+
+      <th>TITLE</th>
+      <th>STATE</th>
+      <th style="width: 170px">AVAILABLE ACTIONS</th>
+    </tr>
+    <% @event_categories.each do |event| %>
+      <tr>
+        <td>
+          <%= event.creation_date %>
+        </td>
+
+        <td>
+          <%= truncate(event.title,30) %>
+        </td>
+        <td>
+          <%= event.state.title.upcase %>
+        </td>
+        <td>
+          <%= link_to 'EDIT', edit_event_category_path(event) %>
+          |
+          <% if event.published? %>
+            <%= link_to 'INACTIVATE', inactivate_event_category_path(event) %>
+          <% elsif event.activated? %>
+            <%= link_to 'PUBLISH', publish_event_category_path(event) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_event_category_path(event) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_event_category_path(event) %>
+          <% end %>
+          |
+          <%= link_to 'DELETE', event_category_path(event), :confirm => 'Are you sure?', :method => :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <hr />
+  <br />
+
+  <h4>
+    EVENTS PROVIDERS
+    |
+    <%= link_to "Add Events Provider", new_events_provider_path %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>TITLE</th>
+      <th>URL</th>
+      <th>RSS_LINK?</th>
+      <th>STATE</th>
+      <th style="width: 320px">AVAILABLE ACTIONS</th>
+    </tr>
+    <% for events_provider in @events_providers %>
+      <tr>
+        <td>
+          <%= link_to truncate(events_provider.title,30), events_provider %>
+        </td>
+        <td>
+          <%= link_to truncate(events_provider.url.slice(7, events_provider.url.length-7),30), events_provider.url, :target => "_blank" unless events_provider.url.blank? %>
+        </td>
+        <td>
+          <% if events_provider.rss_link.blank? %>
+            NOT RSS PROVIDER
+          <% else %>
+            <%= link_to truncate(events_provider.rss_link.slice(7, events_provider.rss_link.length-7),30), events_provider.rss_link, :target => "_blank" %>
+          <% end %>
+        </td>
+
+        <td>
+          <%= events_provider.state.title.upcase %>
+        </td>
+        <td>
+          <%= link_to 'EDIT', edit_events_provider_path(events_provider) %>
+          |
+
+          <% if events_provider.state.is_published? %>
+            <%= link_to 'INACTIVATE', inactivate_events_provider_path(events_provider) %>
+          <% elsif events_provider.state.is_activated? %>
+            <%= link_to 'PUBLISH', publish_events_provider_path(events_provider) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_events_provider_path(events_provider) %>
+          <% else %>
+            <%= link_to 'ACTIVATE', activate_events_provider_path(events_provider) %>
+          <% end %>
+          |
+          <%= link_to 'DELETE', events_provider_path(events_provider), :confirm => 'Are you sure?', :method => :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <hr />
+  <br />
+
+  <h4>
+    EVENTS
+    |
+    <%= link_to "Add Event", new_event_path %>
+  </h4>
+  <br />
+
+  <table cellpadding="5px" style="text-align: left">
+    <tr>
+      <th>DATE</th>
+      <th>TITLE</th>
+      <th>URL</th>
+      <th>STATE</th>
+      <th style="width: 170px">AVAILABLE ACTIONS</th>
+    </tr>
+    <% @events.each do |event| %>
+      <tr>
+        <td>
+          <%= event.event_start_date %>
+        </td>
+        <td>
+          <%= link_to truncate(event.title,30), display_event_path(event) %>
+        </td>
+        <td>
+          <%= link_to truncate(event.url,30), event.url, :target => "_blank" unless event.url.blank? %>
+        </td>
+        <td>
+          <%= event.state.title.upcase %>
+        </td>
+        <td>
+
+          <% if event.state.is_featurified? %>
+            <%= link_to 'EDIT', edit_event_path(event) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_event_path(event) %>
+          <% elsif event.state.is_published? %>
+            <%= link_to 'EDIT', edit_event_path(event) %>
+            |
+            <%= link_to 'FEATURIFY', featurify_event_path(event) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_event_path(event) %>
+          <% elsif event.state.is_activated? %>
+            <%= link_to 'PUBLISH', publish_event_path(event) %>
+            |
+            <%= link_to 'INACTIVATE', inactivate_event_path(event) %>
+          <% else %>
+            <%= link_to 'EDIT', edit_event_path(event) %>
+            |
+            <%= link_to 'ACTIVATE', activate_event_path(event) %>
+          <% end %>
+          |
+          <%= link_to 'DELETE', event_path(event), :confirm => 'Are you sure?', :method => :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>

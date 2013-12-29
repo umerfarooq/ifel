@@ -1,0 +1,2 @@
+module TemplatificationsHelper
+end

@@ -1,0 +1,96 @@
+<%# content_for :head do %>
+<%#= javascript_include_tag 'jquery-1.4.2.min' %>
+<%#= javascript_include_tag 'jquery.colorbox-min' %>
+<%#= stylesheet_link_tag 'colorbox' %>
+<%# end %>
+
+<%# content_for :ads do %>
+<%#*<span class="ad1">%>
+<%#= image_tag "AD - About Us - Cloud on grass150px.jpg", :alt => "About Us Image" %>
+<%#*</span>%>
+<%# end %>
+
+<%#*<div class="aboutUs">%>
+<%# if @message_main.blank? %>
+<%#*<h3>Main About Us</h3>%>
+<%#*<p>%>
+<%#*Main marketing message for About Us.%>
+<%#*</p>%>
+<%# else %>
+<%#*<h3>%>
+<%#= @message_main.title %>
+<%#*</h3>%>
+<%#*<p>%>
+<%#= @message_main.content %>
+<%#*</p>%>
+<%# end %>
+
+
+<%#*</div>%>
+
+<%#*<h4>%>
+<%#*ABOUT THE FOUNDER%>
+<%#*</h4>%>
+<%# if @founder_biography.blank? %>
+<%# if @message_no_bio.blank? %>
+<%#*<p>%>
+<%#*Biography of the founder not available to display.%>
+<%#*</p>%>
+<%# else %>
+<%#*<p>%>
+<%#= @message_no_bio.content %>
+<%#*</p>%>
+<%# end %>
+<%#*<br />%>
+<%#*<br />%>
+<%# else %>
+<%#= render :partial => @founder_biography %>
+<%# end %>
+
+<%#*<div class="aboutUsBdy">%>
+<%#= render :partial => @biographies %>
+<%#*</div>%>
+<%#= render :partial => @biographies %>
+<%#= render :partial => @biographies %>
+
+
+
+
+<% title "Our Small Business Experts are Here to Help" %>
+<% meta "Our small business experts are here to help guide entrepreneurs through the process for starting a business." %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" unless current_user %>
+
+  <h1>ABOUT US</h1>
+
+  <%= render :partial => "shared/aboutus_breadcrumbs", :locals => {:current => :team} %>
+
+  <h2 class="headLine">
+    Meet the People Behind Wicked Start
+  </h2>
+
+<%#*<h3 class="header marginTop">%>
+<%#*Introducing the Wicked Start Team%>
+<%#*</h3>%>
+
+  <ul class="teamPhotoListing">
+    <% @biographies.each_with_index do |biography, iterator| %>
+      <% content_tag :li, :class => ((iterator % 5) == 4 )? 'tall special':'tall' do %>
+        <%= link_to image_tag(biography.photo.url(:team), :alt => biography.name), biography %>
+        <h3 class="headerLink">
+          <%= biography.name %>
+          <br />
+          <span>
+            <%= biography.title %>
+          </span>
+
+        </h3>
+        <p>
+          <%= truncate(strip_tags(biography.description), :length => BIO_SUMMARY_LENGTH) %>
+        </p>
+      <% end %>
+    <% end %>
+  </ul>
+
+</div> <!-- End of Sub page Wrapper -->

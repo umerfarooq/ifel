@@ -1,0 +1,90 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'jquery-1.4.2.min' %>
+  <script type="text/javascript">
+    function edit_content(content_type) {
+      var msg_title = $("#"+content_type+"_title").val();
+      var msg_content = $("#"+content_type+"_content").val();
+      if($("a#"+content_type+"_edit_link").text() == "EDIT") {
+        $("a#"+content_type+"_edit_link").text("CANCEL");
+        $("#"+content_type+"_title").val(msg_title);
+        $("#"+content_type+"_content").val(msg_content);
+        $("#"+content_type+"_show").hide();
+        $("#"+content_type+"_edit").show();
+      } else {
+        $("a#"+content_type+"_edit_link").text("EDIT");
+        $("#"+content_type+"_show").show();
+        $("#"+content_type+"_edit").hide();
+      }
+    }
+    function edit_tooltips(type){
+      if($("a#"+type+"_edit_link").text()=="EDIT"){
+        $("a#"+type+"_edit_link").text("CANCEL");
+        $("#"+type+"_title_label").hide();
+        $("#"+type+"_content_label").hide();
+        $("#"+type+"_title_field").show();
+        $("#"+type+"_content_field").show();
+        $("#"+type+"_update_btn").show();
+      }else{
+        $("a#"+type+"_edit_link").text("EDIT")
+        $("#"+type+"_title_label").show();
+        $("#"+type+"_content_label").show();
+        $("#"+type+"_title_field").hide();
+        $("#"+type+"_content_field").hide();
+        $("#"+type+"_update_btn").hide();
+      }
+    }
+  </script>
+<% end %>
+
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :dashboard_tab } %>
+<div class="admnRitCol">
+  <%unless @item_summary.blank?%>
+    <div>
+      <h4>
+        FILE SUMMARY
+        |
+        <%= link_to "EDIT", '#.', :id => "file_summary_edit_link", :onclick=>"edit_content('file_summary')" %>
+      </h4>
+      <br />
+      <%unless @startup_workspace_contents[:company_files][:summary].blank?%>
+        <div id="file_summary_show">
+          <table style="text-align: left;">
+            <tr>
+              <th width="20%">Title</th>
+              <th width="80%">Summary</th>
+            </tr>
+            <tr>
+              <td><%= @startup_workspace_contents[:company_files][:summary].title.to_s %></td>
+              <td><%= @startup_workspace_contents[:company_files][:summary].content.to_s %></td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="file_summary_edit" style="display: none">
+          <% form_for @startup_workspace_contents[:company_files][:summary], :url => update_file_content_document_path(@startup_workspace_contents[:company_files][:summary]), :method=>:put do |f| %>
+            <table>
+              <tr>
+                <th><%= f.label :title %></th>
+                <th><%= f.label :content, 'Summary' %></th>
+              </tr>
+              <tr>
+                <td>
+                  <%= f.text_field :title, :size => "20", :id=>'file_summary_title' %>
+                </td>
+                <td>
+                  <%= f.text_area :content, :size => "80x5", :id=>'file_summary_content', :class => "adminEditor" %>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.submit 'Update and Publish' %></td>
+              </tr>
+            </table>
+
+          <% end %>
+        </div>
+      <%end%>
+      <br />
+    </div>
+  </div>
+<%end%>

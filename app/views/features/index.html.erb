@@ -1,0 +1,49 @@
+<% title "WickedStart.com Features Help You Start A Small Business" %>
+<% meta "WickedStart.com is packed with features to help you start a small business, including startup tools and resources you need to succeed." %>
+<div class="subPageWrapper">
+  <%= render :partial=>'shared/register_badge' %>
+  <h1>Features</h1>
+  <%= render :partial => "shared/features_breadcrumbs", :locals => {:current => :overview} %>
+  <div class="clear"></div>
+  <h2 class="headLine">Take Control of Your Small Business Startup</h2>
+  <h2 class="leadInText">Wicked Start is a free service for your small business startup</h2>
+  <div class="tourContent1">
+    <div class="tourVideo">
+      <%= link_to image_tag('/images/tour-video.jpg', :alt => 'Why Wicked Start'), why_wicked_start_features_path %>
+      <h3 class="header">View Video</h3>
+      <%= link_to  'Why Wicked Start? Watch this 2 minute video and see!', why_wicked_start_features_path%>
+    </div>
+    <h2 class="leadInText tourDetail">Starting a small business with Wicked Start as your copilot helps ensure you have all the tools you need at your fingertips, managing your startup steps without missing a beat.</h2>
+    <div class="tourBtn">
+<%#*<a title="Take a Tour" class="btnTakeTour" id="btnTour" href="#"></a>%>
+      <%= link_to image_tag('small-business-startup-software-tour.png', :alt=>'Take a Tour of Small Business Startup Software', :mouseover=>'small-business-startup-software-tour-hover.png', :class => 'takeATourBtn'), (detail_feature_path(Feature.get_parents.published.first) rescue features_path) %>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <ul class="featuresListing">
+    <% @features.each_with_index do |feature, iterator| %>
+      <% content_tag :li, :class => ((iterator % 5) == 4 )? 'special':'' do %>
+        <%= link_to image_tag(feature.photo.url(:small), :alt => feature.photo_alt), detail_feature_path(feature) %>
+        <h3 class="headerLink"><%= link_to feature.name, detail_feature_path(feature) %></h3>
+        <p>
+          <%= truncate(strip_tags(feature.description), :length => FEATURE_SUMMARY_LENGTH) %>
+        </p>
+    <%#*<p>%>
+    <%#= link_to "Learn more", detail_feature_path(feature) %>
+    <%#*</p>%>
+      <% end %>
+    <% end %>
+  </ul>
+</div> <!-- End of Sub page Wrapper -->
+<div class="clear"></div>
+<div id="ContentBottom">
+  <h3 class="header wide">Small Business Startups Using Wicked Start Tools</h3>
+  <p class="wide">Here are just a few of our customers who have realized their business ideas into rewarding business start-ups.</p>
+  <div class="rectAds">
+    <% @success_stories.each_with_index do |story, iterator| %>
+  <%#= link_to image_tag(story.photo.url(:grey)), story %>
+      <%= link_to image_tag(story.logo.url(:grey), :alt => story.name, :class => (iterator == 0 )? 'first':''), story %>
+    <% end %>
+  </div>
+
+</div>

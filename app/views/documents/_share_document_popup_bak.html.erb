@@ -1,0 +1,26 @@
+<%# form_tag '/share_document', 'document_id' => "#{document_id}",:class=>'shareDocumentForm', :method=>:post  do %>
+<fieldset>
+  <legend>SHARE WITH YOUR FRIENDS!</legend>
+  <!--<label style="font-weight: normal; margin-top: 5px;">Send us your question and we will examine it to be included in our Common Questions set.</label>-->
+  <table style="width:100%;">
+    <tr>
+      <td style="text-align: center;padding-top: 5px; font-weight: normal;">
+        <label id="notice" style="color: red;"></label>
+      </td>
+    </tr>
+    <tr> 
+      <td><%= text_field_tag 'email[to]','', :size => '30', :id=>"email_to_#{document_id}", :class => 'emailTo' %></td>
+    </tr>
+    <tr>
+      <td><%= text_field_tag 'email[subject]','', :size => '30', :id=>"email_subject_#{document_id}", :class => 'emailSubject' %></td>
+    </tr>
+    <tr>        
+      <td><%= text_area_tag 'email[body]','', :cols => 10, :rows => 3, :id=>"email_body_#{document_id}", :class => 'emailBody' %></td>
+    </tr>
+    <tr>  
+      <td><%= link_to 'Send','JavaScript:void(0);', :onclick=>"sendShareEmail('#{document_id}');", :class=>'shareLink' %></td>
+    </tr>
+  </table>
+</fieldset>
+<%#end%>
+

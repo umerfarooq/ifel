@@ -1,0 +1,88 @@
+<%= javascript_include_tag 'jscolor/jscolor'  %>
+<% content_for :javascripts do %>
+  <script defer async type="text/javascript">
+    $(document).ready(function() {
+      var msg_content = '<%= @configurations.description %>';
+      var email = '<%= @configurations.email %>';
+      
+      $("a#message_edit_link").click(function (event){
+        if($("a#message_edit_link").text() == "EDIT") {
+          $("a#message_edit_link").text("CANCEL");
+          $("#account_description").val(msg_content);
+          $("div#message_show").hide();
+          $("div#message_edit").show();
+        } else {
+          $("a#message_edit_link").text("EDIT");
+          $("div#message_show").show();
+          $("div#message_edit").hide();
+        }
+        event.preventDefault();
+      });
+      
+      $("a#email_edit_link").click(function (event){
+        if($("a#email_edit_link").text() == "EDIT") {
+          $("a#email_edit_link").text("CANCEL");
+          $("#account_email").val(email);
+          $("span#email_show").hide();
+          $("div#email_edit").show();
+        } else {
+          $("a#email_edit_link").text("EDIT");
+          $("span#email_show").show();
+          $("div#email_edit").hide();
+        }
+        event.preventDefault();
+      });
+      
+    });
+  </script>
+<% end %>
+<%= render :partial => "admins/admin_client_information_menu", :locals => { :active_admin_client_information_tab => :account_tab } %>
+<div class="admnRitCol">
+  <h4>
+    ACCOUNT
+    |
+    <%= link_to "EDIT", edit_configuration_path(@configurations), :id => "message_edit_link" %>
+  </h4>
+  <br />
+  <%unless @configurations.blank?%>
+    <p>
+      Welcome <%= @current_user.name %>
+    </p>
+    <div id="message_show">
+      <p>
+        <%= @configurations.description %>
+      </p>
+    </div>
+
+    <div id="message_edit" style="display: none">
+      <% form_for @configurations do |f| %>
+        <%= f.text_area :description, :size => "100x5", :class => "adminEditor" %>
+        <br />
+        <%= f.submit 'Update and Publish' %>
+        <br />
+      <% end %>
+    </div>
+  <%end%>
+  <h4>White Label Account Info</h4>
+  <br />
+  <%unless @configurations.blank?%>
+    <p>
+      <strong>Registered to: </strong>
+      <%= "#{@configurations.name}, #{@configurations.company_name}" %>
+    </p>
+    <p>
+      <strong>Email address: </strong>
+      <span id="email_show"><%= "#{@configurations.email}" %> <%= link_to "EDIT", edit_configuration_path(@configurations), :id => "email_edit_link" %></span>
+    <div id="email_edit" style="display: none">
+      <% form_for @configurations do |f| %>
+        <%= f.text_field :email %>
+        <%= f.submit 'Update and Publish' %>
+      <% end %>
+    </div>
+  </p>
+  <p>
+    <strong>License Valid Until: </strong>
+    <%= "#{@configurations.license_validity_date}" %>
+  </p>
+<%end%>
+</div>

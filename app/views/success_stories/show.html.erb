@@ -1,0 +1,62 @@
+<% title "Success Stories, #{@success_story.name}, #{@success_story.title} #{@success_story.company_name}" %>
+
+<div class="subPageWrapper">
+  <%= link_to "7-DAY FREE TRIAL Sign Up Today!", signup_path, :class => "freeTrialBadge" %>
+
+  <h1>SUCCESS STORIES</h1>
+  <ul id="breadcrumb">
+    <li><%= link_to "Overview", success_stories_path %></li>
+  </ul>
+  <div class="clear"></div>
+
+  <h2 class="headLine">
+    <%= @success_story.story_title %>
+  </h2>
+
+  <div id="sideBarLeft" class="borderRight">
+    <%= image_tag @success_story.photo.url(:single), :alt => @success_story.photo_alt %>
+    <h3>
+      <%= @success_story.name %><br />
+      <span>
+        <%= @success_story.title %>
+        <br />
+        <%= @success_story.company_name %>
+      </span>
+    </h3>
+
+    <p class="successStory">
+      <%= "Founded: #{@success_story.founded}" %>
+      <br />
+      <%= "Employees: #{@success_story.employee_count} <br />" unless @success_story.employee_count.nil? %>
+      <%= "Industry: #{@success_story.industry.title}" unless @success_story.industry.blank? %>
+    </p>
+    <%= (image_tag @success_story.logo.url(:medium), :alt => @success_story.company_name) if @success_story.logo.exists? :medium %>
+    <%= link_to_unless @success_story.url.blank?, helper_strip_off_protocol(@success_story.url), @success_story.url, :target => "_blank"  %>
+    <%#= link_to @promotion.title, @promotion.url, :target=>'_blank' %>
+  </div>
+  <div id="content">
+    <%= sanitize(@success_story.before_quote) %>
+    <blockquote>
+      <span>
+        <%= strip_tags(@success_story.quote) %>
+      </span>
+    </blockquote>
+    <%= sanitize(@success_story.after_quote) %>
+
+    <% content_tag :p do %>
+      To learn more about
+      <%= "#{@success_story.company_name}," %>
+      go to
+      <%= link_to @success_story.url, @success_story.url, :target => "_blank" %>
+    <% end unless @success_story.url.blank? %>
+  </div>
+
+  <div id="sideBarRight">
+    <% if @success_story.banner.exists? :normal %>
+      <%= image_tag @success_story.banner.url(:normal), :alt => @success_story.banner_alt %>
+    <%else%>
+      <%= image_tag 'sidebarBanner.jpg', :alt => @success_story.title %>
+    <%end%>
+    
+  </div>
+</div>

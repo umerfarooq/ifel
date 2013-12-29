@@ -1,0 +1,21 @@
+development:
+  min_infix_len: 3
+  port: 3316
+  bin_path: '/usr/local/bin'
+  max_matches: 5000
+  per-server: 5000
+  mem_limit: 256M
+
+testing:
+  min_infix_len: 3
+
+production:
+  min_infix_len: 3
+  pid_file: /var/rails/apps/nyustern.wickedstart/shared/sphinx/searchd_production.pid
+  searchd_file_path: /var/rails/apps/nyustern.wickedstart/shared/sphinx/production
+  port: 3314
+  max_matches: 5000
+  per-server: 5000
+  bin_path: '/usr/bin'
+  mem_limit: 256M
+  charset_table: "0..9, a..z, _, -, @, A..Z->a..z, U+410..U+42F->U+430..U+44F, U+430..U+44F"

@@ -1,0 +1,27 @@
+<div class="congratulstionsDV">
+  <div>
+    <%= link_to image_tag("cancel-icn.png",:class=>"cancelBtnBanner"), "JavaScript:void(0);", :onclick=>"banner_slideUp('notification')" %>
+  </div>
+  <div class="congratulstionsCol">
+    <h1><%=  @notification_banner_content[:notification_banner_first_col].title %></h1>
+    <p class="breakWord shadedColor"><%= @notification_banner_content[:notification_banner_first_col].content%></p>
+
+  </div>
+  <div class="verticalSeprator"></div>
+  <div class="congratulstionsCol">
+    <h3><%= @notification_banner_content[:notification_banner_second_col].title %></h3>
+    <p class="breakWord"><%= @notification_banner_content[:notification_banner_second_col].content %><br /><br />
+      <!--<span>»</span><%#= link_to "Launch Guided Tours", guided_tour_video_url(:video_path => SITE_VIDEO_PATH_GUIDED_TOURS, :width => '590', :height => '400'), :onclick => "$(this).colorbox()" %>-->
+    </p>
+  </div>
+  <div class="verticalBorder"></div>
+
+  <div class="congratulstionsCol">
+    <h3><%= @notification_banner_content[:notification_banner_third_col].title %></h3>
+    <p class="breakWord"><%= @notification_banner_content[:notification_banner_third_col].content %><br /><br />
+      <span>»</span><%#= link_to "Launch Guided Tours", guided_tour_video_url(:video_path => 'http://www.youtube.com/watch?v=W_EF23skOkg', :width => '590', :height => '400'), :onclick => "$(this).colorbox()" %>
+      <%= link_to "Launch Guided Tours", 'http://www.youtube.com/watch?v=W_EF23skOkg', :target => '_blank' %>
+    </p>
+  </div>
+
+</div>

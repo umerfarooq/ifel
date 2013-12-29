@@ -1,0 +1,14 @@
+<div class="deadlineDate2 <%= helper_choose_date_color(section.due_date, section.percent_completed.to_i) if section.due_date %>">
+  <div id="deadline_text_<%= section.id.to_s %>" class="dispInline">
+    <%unless section.due_date.blank?%>
+      <%= ws_date_format_with_abreviated_month section.due_date %>
+      <%= helper_choose_date_icon_large( section.due_date,section.percent_completed.to_i)  %>
+    <%else%>
+      No Date
+    <%end%>
+  </div>
+  <div id="deadline_date_<%= section.id.to_s %>" class="dispNone">
+    <%= text_field_tag :section_deadline,((section.due_date.blank?) ? Date.today : section.due_date.to_s), :id=>"deadline_date_field_#{section.id.to_s}", :size => 10, :class => 'sectionDeadline' %>
+  </div>
+  <%=  link_to image_tag('save-icn.png', :id=>"deadline_icon_#{section.id.to_s}"),"JavaScript:void(0);", :onclick=>"editSectionDeadline('#{section.id.to_s}');", :title=>'Edit Deadline', :id=> "edit_deadline_link_#{section.id.to_s}" %>
+</div>

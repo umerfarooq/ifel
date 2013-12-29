@@ -1,0 +1,149 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :quizzes_tab } %>
+
+<% title "#{@quiz.main_title}?" %>
+
+<h1>
+  <%= @quiz.main_title %>
+</h1>
+
+<p>
+  <%= link_to "EDIT", edit_quiz_path(@quiz) %>
+  |
+  <% if @quiz.state.is_published? %>
+    <%= link_to 'INACTIVATE', inactivate_quiz_path(@quiz) %>
+  <% elsif @quiz.state.is_activated? %>
+    <%= link_to 'PUBLISH', publish_quiz_path(@quiz) %>
+    |
+    <%= link_to 'INACTIVATE', inactivate_quiz_path(@quiz) %>
+  <% else %>
+    <%= link_to 'ACTIVATE', activate_quiz_path(@quiz) %>
+  <% end %>
+</p>
+
+<p>
+  STATE:
+  <strong>
+    <%= @quiz.state.title.upcase %>
+  </strong>
+</p>
+
+<br />
+<br />
+
+<p>
+  NAME:
+  <strong>
+    <%= @quiz.name %>
+  </strong>
+</p>
+
+<%#*<p>%>
+  <%#*PATH:%>
+  <%#*<strong>%>
+    <%#= @quiz.path %>
+  <%#*</strong>%>
+<%#*</p>%>
+
+<p>
+  MAIN TITLE:
+  <strong>
+    <%= @quiz.main_title %>
+  </strong>
+</p>
+
+<p>
+  SUB TITLE:
+  <strong>
+    <%= @quiz.sub_title %>
+  </strong>
+</p>
+
+<p>
+  MAIN TEXT:
+  <strong>
+    <%= simple_format((@quiz.main_text)) %>
+  </strong>
+</p>
+
+<p>
+  SUB TEXT:
+  <strong>
+    <%= simple_format((@quiz.sub_text)) %>
+  </strong>
+</p>
+
+<p>
+  FIELD LABEL:
+  <strong>
+    <%= simple_format(h(@quiz.field_label)) %>
+  </strong>
+</p>
+
+<p>
+  EMAIL SUBJECT:
+  <strong>
+    <%= simple_format(h(@quiz.email_subject)) %>
+  </strong>
+</p>
+
+<p>
+  EMAIL QUIZ NAME:
+  <strong>
+    <%= simple_format(h(@quiz.email_quiz_name)) %>
+  </strong>
+</p>
+
+<p>
+  PICTURE:
+  <%= image_tag @quiz.picture.url, :alt => @quiz.main_title unless @quiz.picture.blank? %>
+</p>
+
+<br />
+<br />
+<br />
+
+<h2>
+  QUESTIONS
+</h2>
+
+<p>
+  <%= link_to "ADD QUESTION", new_quiz_question_path(@quiz) %>
+</p>
+
+<table cellpadding="5px" style="text-align: left">
+  <tr>
+    <th>SEQ</th>
+    <th>STATEMENT</th>
+    <th>STATE</th>
+    <th style="width: 320px">AVAILABLE ACTIONS</th>
+  </tr>
+  <% @quiz.questions.sequence_wise.each do |question| %>
+    <tr>
+      <td>
+        <%=h question.sequence_number %>
+      </td>
+      <td>
+        <%= link_to h(question.statement), question %>
+      </td>
+      <td>
+        <%=h question.state.title.upcase %>
+      </td>
+      <td>
+        <%= link_to 'EDIT', edit_quiz_question_path(question.quiz, question) %>
+  <%#= link_to 'EDIT', edit_quiz_question_path(:id => question.id, :quiz_id => question.quiz.id) %>
+        |
+        <% if question.state.is_published? %>
+          <%= link_to 'INACTIVATE', inactivate_question_path(question) %>
+        <% elsif question.state.is_activated? %>
+          <%= link_to 'PUBLISH', publish_question_path(question) %>
+          |
+          <%= link_to 'INACTIVATE', inactivate_question_path(question) %>
+        <% else %>
+          <%= link_to 'ACTIVATE', activate_question_path(question) %>
+        <% end %>
+        <%= "| #{link_to 'MOVE-UP', move_up_question_path(question)}" unless question.on_top? %>
+        <%= "| #{link_to 'MOVE-DOWN', move_down_question_path(question)}" unless question.on_bottom? %>
+      </td>
+    </tr>
+  <% end %>
+</table>

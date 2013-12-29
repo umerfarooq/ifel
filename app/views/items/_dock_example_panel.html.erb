@@ -1,0 +1,60 @@
+<div class="filesColLeft">
+  <h2>Examples</h2>
+  <% unless examples.blank? %>
+  <div class="filesList" style="height: 170px;">
+      <ul>
+        <% examples.each do |example| %>
+          <li>
+            <a href="JavaScript:void(0);" id="example_opener_<%= example.id.to_s %>" onclick="showPanel('<%= example.id.to_s %>', 'example');">
+              <%=  image_tag helper_get_file_extension(example.document_file_name) %>
+              <p><%= sanitize example.name %></p>
+            </a>
+          </li>
+        <%end%>
+      </ul>
+    </div>
+  <%else%>
+    <div class="marginTop10">
+      No Matching Selection Available for this Action Item
+    </div>
+  <%end%>
+  
+  <h2>Templates</h2>
+  <% unless templates.blank? %>
+    <div class="filesList" style="height: 170px;">
+      <ul>
+        <% templates.each do |template| %>
+          <li>
+            <a href="JavaScript:void(0);" id="template_opener_<%= template.id.to_s %>" onclick="showPanel('<%= template.id.to_s %>', 'templatedocument');">
+              <%=  image_tag helper_get_file_extension(template.document_file_name) %>
+              <p><%= sanitize template.name %></p>
+            </a>
+          </li>
+        <%end%>
+      </ul>
+    </div>
+  <%else%>
+    <div class="marginTop10">
+      No Matching Selection Available for this Action Item
+    </div>
+  <%end%>
+</div>
+
+<% contents = examples+templates %>
+<% unless contents.blank? %>
+  <% contents.each_with_index do |content,index| %>
+    <div class="filesColRight <%= (index!=0) ? 'dispNone' : '' %>" id="<%= "#{content.class.to_s.downcase}_panel_#{content.id.to_s}" %>">
+      <div class="iconCol">
+        <%=  image_tag helper_get_file_extension_big_icon(content.document_file_name) %>
+        <%= link_to image_tag('download-btn.png'), helper_download_path(content) %>
+        <!--<a href="#"><img src="images/share-btn.png" /></a>-->
+      </div>
+      <div class="filesDetailCom">
+        <h3><%= sanitize  helper_template_example_title(content) %></h3>
+        <p class="byP">by <span>Wicked Start</span></p>
+        <p>Summary <br /><%= sanitize content.description %></p>
+        <p><%= helper_document_viewer_software_message(content.document_file_name) %></p>
+      </div>
+    </div>
+  <%end%>
+<%end%>

@@ -1,0 +1,56 @@
+<%= render :partial => "admin_sub_menu", :locals => { :active_admin_sub_tab => :community_tab } %>
+
+<div class="admnRitCol">
+<div class="admnCntDv">
+  <h4>ABOUT US MESSAGE <a href="#">Edit</a></h4>
+  <%= render :partial => "marketing_message", :locals=>{:obj=>@marketing_message, :title=>'Community Page General Message'} %>
+</div>
+</div>
+<div class="admnRitCol">
+<div class="admnQuizDv">
+<table width="200" border="0" cellspacing="0" class="admnQuiztbl">
+  <tr>
+    <td colspan="5"><h4>Message Categories</h4></td>
+    </tr>
+  <tr>
+    <h4>Add New Category</h4>
+    <% form_for @message_category do |f| %>
+   <p class="admnP"><%= f.text_field :name , :cols=>'45', :rows=>'5'%>
+   <%= f.submit 'Save'  %>
+  <% end %></p>
+    <td colspan="5"><h4>WICKED START NEWS CATEGORIES</h4></td>
+    </tr>
+  <%@message_categories.each do |message_category|%>
+  <%#*<tr>%>
+    <%#*<td colspan="5" valign="middle"><a href="#"><img src="../images/add-qstn-btn.jpg" width="130" height="26" /></a> <a href="#"><img src="../images/update-answr-btn.jpg" width="130" height="26" /></a></td>%>
+  <%#*</tr>%>
+  <tr>
+    <td><%= message_category.name%></td>
+    <td>
+      <%#= files_category.state %>
+      <%= message_category.title%>
+    </td>
+    <td><%= (message_category.state)? message_category.state.title : ''%></td>
+    <td class="quzIcnTd">
+      <%#*<a href="#"><img src="../images/icons/edit-icn.jpg" alt="Edit" width="18" height="16" /></a>%>
+      <%= link_to "Edit", edit_message_category_path(message_category) %>
+    </td>
+    <td class="quzIcnTd">
+      <%#*<a href="#"><img src="../images/icons/pblisch-icn.jpg" alt="Publish" width="16" height="16" /></a>%>
+      <%= link_to "Publish", change_state_message_categories_path(:id => message_category.id,:state => 'P') %>
+    </td>
+    <td class="quzIcnTd">
+      <%#*<a href="#"><img src="../images/icons/deleet-icn.jpg" alt="Delete" width="17" height="16" /></a>%>
+      <%= link_to "Deactivate", change_state_message_categories_path(:id => message_category.id,:state => 'X') %>
+    </td>
+  </tr>
+
+  <% end %>
+
+  <%#*<tr>%>
+    <%#*<td>&nbsp;</td>%>
+    <%#*<td colspan="4"><a href="#"><img src="../images/save-btn.jpg" align="absmiddle" /></a> <a href="#"><img src="../images/publish-btn.jpg" align="absmiddle" /></a> <a href="#" class="cnclLnk">Cancel</a></td>%>
+  <%#*</tr>%>
+</table>
+</div>
+</div>

@@ -1,0 +1,85 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "jquery-1.4.2.min" %>
+  <%#= javascript_include_tag "nicEdit" %>
+  <script type="text/javascript">
+    //$(document).ready(function (){
+    //  section_template_introduction_editarea = new nicEditor({iconsPath : '/images/nicEditorIcons.gif', buttonList : ['fontSize', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'ol', 'ul', 'indent', 'outdent', 'link', 'unlink', 'removeformat']}).panelInstance('section_template_introduction');
+    //});
+  </script>
+<% end %>
+
+<%if params[:type] == 'wibo' %>
+  <%= render :partial => "admins/admin_roadmap_menu", :locals => { :active_admin_roadmap_tab => :wibo_roadmap_tab } %>
+<%else%>
+  <%= render :partial => "admins/admin_roadmap_menu", :locals => { :active_admin_roadmap_tab => :ifel_roadmap_tab } %>
+<%end%>
+
+<div class="admnRitCol">
+  <h3>Edit Section Template</h3>
+  <% form_for @section_template, :html => { :multipart => true } do |f| %>
+    <br />
+    <%= f.error_messages :header_message => nil, :message => nil %>
+
+    <%= f.hidden_field :associated_with, :value => params[:type] %>
+    <p>
+      <%= f.label :title %> <br />
+      <%= f.text_field :title %>
+    </p>
+    <p>
+      <%= f.label :name,'Title Alias' %> <br />
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.label :title_comment %> <br />
+      <%= f.text_field :title_comment %>
+    </p>
+    <p>
+      <%= f.label :due_days_30 %> <br />
+      <%= f.text_field :due_days_30 %>
+    </p>
+    <p>
+      <%= f.label :due_days_60 %> <br />
+      <%= f.text_field :due_days_60 %>
+    </p>
+    <p>
+      <%= f.label :due_days_120 %> <br />
+      <%= f.text_field :due_days_120 %>
+    </p>
+    <p>
+      <%= f.label :introduction %> <br />
+      <%= f.text_area :introduction, :size => "100x10", :class => "adminEditor"  %>
+    </p>
+    <p>
+      <%= f.label :side_bar_image %> <br />
+      <%= f.file_field :side_bar_image %>
+    </p>
+    <p>
+      <%= f.check_box :is_multimedia_video %>
+      <%= f.label :is_multimedia_video %>
+    </p>
+    <p>
+      <%= f.label :multimedia %> <br />
+      <% if @section_template.is_multimedia_video %>
+      <div style="z-index:0;  padding-top:30px; padding-left:30px; padding-bottom:30px; padding-right:30px; width:635px; height:480px;">
+        <object width='800' height='600' id='flvPlayer'>
+          <param name='allowFullScreen' value='true' />
+          <param name='movie' value='/flvplayer/player.swf?movie=<%= @section_template.multimedia.url(nil, false) %>&bgcolor=0xff7800&fgcolor=0x7ef54f&volume=50&autoload=on&autorewind=on&clickurl=&clicktarget=' />
+          <embed src='/flvplayer/player.swf?movie=<%= @section_template.multimedia.url(nil, false) %>&bgcolor=0xff7800&fgcolor=0x7ef54f&volume=50&autoload=on&autorewind=on&clickurl=&clicktarget=' width='640' height='480' allowFullScreen='true' type='application/x-shockwave-flash' >
+        </object>
+      </div>
+    <% else %>
+      <%= image_tag @section_template.multimedia.url %>
+    <% end %>
+    <br />
+    <%= f.file_field :multimedia %>
+  </p>
+  <p>
+    <%= f.label :chart, "Chart (Add multiple charts using .zip format)" %> <br />
+    <%= f.file_field :chart %>
+  </p>
+  <p><%= "#{image_tag('attachment_black.png', :size=>"30x30")} #{link_to @section_template.chart_file_name.to_s, download_section_template_path(@section_template)}" if @section_template.chart.exists? %></p>
+  <p>
+    <%= f.submit :update %>
+  </p>
+<% end %>
+</div>

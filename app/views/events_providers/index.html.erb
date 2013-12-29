@@ -1,0 +1,26 @@
+<h1>Listing events_providers</h1>
+
+<table>
+  <tr>
+    <th>Logo</th>
+    <th>Title</th>
+    <th>Url</th>
+    <th>Rss</th>
+  </tr>
+
+<% @events_providers.each do |events_provider| %>
+  <tr>
+    <td><%= image_tag events_provider.logo.url(:small) %></td>
+    <td><%=h events_provider.title %></td>
+    <td><%=h events_provider.url %></td>
+    <td><%=h events_provider.rss %></td>
+    <td><%= link_to 'Show', events_provider %></td>
+    <td><%= link_to 'Edit', edit_events_provider_path(events_provider) %></td>
+    <td><%= link_to 'Destroy', events_provider, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New events_provider', new_events_provider_path %>

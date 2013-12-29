@@ -1,0 +1,152 @@
+<table width="732" border="0" cellspacing="0" cellpadding="0" class="dataTable">
+  <tr class="plainPanel">
+    <th width="10"></th>
+    <th class="fileTypeTh">File Type</th>
+    <th class="nameCommentsTh">Name &amp; Comments</th>
+    <th class="authorTh">author</th>
+    <th class="statusTh">Status</th>
+    <th class="actionsTh">Actions</th>
+  </tr>
+  <% documents.each do|document| %>
+    <%status_image = "#{document.state.name.to_s}.png" %>
+    <% unless document.documentable.blank? %>
+
+      <tr class="plainPanel" id="plain_panel_row_<%= document.id.to_s %>">
+        <td width="20" id="click_me_<%= document.id.to_s %>" class="inactiveArrow paddingLess" onclick="toggleFilePanels('<%= document.id.to_s %>')"></td>
+        <td width="712" class="paddedPanel" >
+          <% form_for document do|f| %>
+            <div id="plain_document_panel_<%= document.id.to_s %>" class="padBtm10">
+              <div class="fileType">
+                <%=  image_tag helper_get_file_extension(document.data_file_name) %>
+              </div>
+
+              <div class="nameComments">
+                <h3><%= truncate(sanitize(document.name.to_s),40) %></h3>
+                <p id="short_text_<%= document.id.to_s %>"><%= truncate(sanitize(document.description.to_s),30) %></p>
+                <p id="long_text_<%= document.id.to_s %>" class="dispNone breakWord">
+                  <%= truncate(sanitize(document.description.to_s),150) %>
+                </p>
+              </div>
+
+              <div class="author">
+                <%= link_to truncate(document.owner.name, 30), edit_user_path(document.owner) %>
+                <%= ws_date_format_with_time document.updated_at %>
+              </div>
+              <div class="status">
+
+                <%= image_tag(status_image) %>
+              </div>
+
+              <div class="actions">
+                <% if helper_is_loggedin_user_owner_of_this_document? document %>
+                  <%= link_to image_tag('icn-down.png'), download_document_path(document), :title => 'Download' if document.data.exists? %>
+        <%#= link_to image_tag('icn-up.png'), '#.',:id=>"upload_document_plain_#{document.id.to_s}", :class=>"upload_document_plain uploadAction", :document_id=>document.id.to_s,:title=>"Upload" %>
+                  <%= link_to image_tag('icn-refresh.png'),'JavaScript:void(0);',:id=>"replace_document_plain_#{document.id.to_s}", :document_id=>document.id.to_s, :class=>"replace_document_plain replaceAction", :title=>"Replace" %>
+                  <%= link_to image_tag('icn-cancel.png'), "JavaScript:void(0);", :class=>'delete', :ajaxtarget => '#document_panel', :document_id => "#{document.id.to_s}" ,:title => 'Delete'%>
+                <%  else %>
+        <%#= image_tag('icn-up.png', :class=>"dispInline") %>
+                  <%= image_tag('icn-down.png', :class=>"dispInline") %>
+                  <%= image_tag('icn-refresh.png', :class=>"dispInline") %>
+                  <%= image_tag('icn-cancel.png', :class=>"dispInline") %>                  
+                <%  end %>
+                <%= link_to image_tag('print-icn-my-files.png'), print_notes_section_path(section), :target=>'_blank', :title => 'Print Notes' if document.is_note%>
+                <%= link_to image_tag('email-icon.png'),"JavaScript:void(0);", {:title => 'Share', :class=>'docShareButton', 'document_id'=>"#{document.id.to_s}"}  %>          
+                <div id="share_doc_panel_<%= document.id.to_s %>" class="shareDocPanel"><%= render :partial => "share_document_popup", :locals => {:document => document, :document_id => document.id.to_s } %></div>
+                <span id="action_error_msg_<%= document.id.to_s %>" class="actionError"></span>                
+              </div>
+              <div style="clear:both"></div>
+
+              <div id="detail_file_panel_<%= document.id.to_s %>" class="dispNone">
+                <%unless document.tag_list.blank?%>
+                  <div class="tags BtmBorderLess">
+                    <strong>Tags:</strong>
+                    <%document.tag_list.each do |tag|%>
+                      <a><%= tag %></a>
+                    <%end%>
+                  </div>
+                <%end%>
+                <div id="bluish" class="actionButtons">
+                  <%= link_to_if(helper_is_loggedin_user_owner_of_this_document?(document), '',"JavaScript:void(0);", :class=>'editDetailBtn', :onclick=>"slideFileEditablePanel('#{document.id.to_s}');") %>
+                </div>
+              </div>
+            </div>
+          <%end%>
+        </td>
+      </tr>
+      <tr>
+        <td width="20" id="click_me_edit_<%= document.id.to_s %>" class="activeArrow borderLess paddingLess" onclick="slideFilePlainPanel('<%= document.id.to_s %>');"></td>
+        <td class="borderLess">
+          <% form_for document do|f| %>
+            <div id="editable_document_panel_<%= document.id.to_s %>" class="dataDiv dispNone padBtm10">
+              <div class="fileType height135">
+                <%=  image_tag helper_get_file_extension(document.data_file_name) %>
+              </div>
+
+              <div class="nameComments">
+                <label>Document name</label>
+                <%= f.text_field :name, :size=>'47', :id=>"document_name_#{document.id.to_s}" %>
+                <label>Comments (400 characters or less)</label>
+                <%= f.text_area :description, :rows=>3, :id=>"document_description_#{document.id.to_s}" %>
+              </div>
+
+              <div class="author height130">
+                <%= link_to truncate(document.owner.name, 30), edit_user_path(document.owner) %>
+                <%= ws_date_format_with_time document.updated_at %>
+              </div>
+
+              <div class="status height130">
+                <%= image_tag(status_image) %>
+              </div>
+
+              <div class="actions">
+                <% if helper_is_loggedin_user_owner_of_this_document? document %>
+                  <%= link_to image_tag('icn-down.png'), download_document_path(document), :title => "Download" if document.data.exists? %>
+        <%#= link_to image_tag('icn-up.png'), '#.',:id=>"upload_document_editable_#{document.id.to_s}", :class=>"upload_document_editable uploadAction", :document_id=>document.id.to_s,:title=>"Upload" %>
+                  <%= link_to image_tag('icn-refresh.png'),'JavaScript:void(0);',:id=>"replace_document_editable_#{document.id.to_s}", :document_id=>document.id.to_s, :class=>"replace_document_editable replaceAction", :title=>"Replace" %>
+                  <%= link_to image_tag('icn-cancel.png'), "JavaScript:void(0);", :class=>'delete', :ajaxtarget => '#document_panel', :document_id => "#{document.id.to_s}", :title=>'Delete' %>-
+                <%  else %>
+        <%#= image_tag('icn-up.png', :class=>"dispInline") %>
+                  <%= image_tag('icn-down.png', :class=>"dispInline") %>
+                  <%= image_tag('icn-refresh.png', :class=>"dispInline") %>
+                  <%= image_tag('icn-cancel.png', :class=>"dispInline") %>
+                <%  end %>
+                <%= link_to image_tag('print-icn-my-files.png'), print_notes_section_path(section), :target=>'_blank', :title => 'Print Notes' if document.is_note%>
+                <%= link_to image_tag('email-icon.png'),"JavaScript:void(0);", {:title => 'Share', :class=>'docShareButton', 'document_id'=>"edit_#{document.id.to_s}"}  %>          
+                <div id="share_doc_panel_edit_<%= document.id.to_s %>" class="shareDocPanel"><%= render :partial => "share_document_popup", :locals => {:document => document, :document_id => "edit_#{document.id.to_s}" } %></div>
+                <span id="action_error_editable_msg_<%= document.id.to_s %>" class="actionError"></span>
+              </div>
+              <div class="clear"></div>
+              <div class="tags">
+                <strong>Tags: </strong><%= text_field_tag :tags, document.tag_list, :id => "tags_#{document.id.to_s}"%>
+              </div>
+              <div class="documentStatus">
+                <h4>Document Status</h4>
+                <div class="inProgress">
+                  <%= image_tag('inprogress.png') %>
+                  <%= f.radio_button 'state', 7, :id=>"status_inprogress_#{document.id.to_s}", :checked => document.is_inprogress?  %> In Progress
+                </div>
+                <div class="completed">
+                  <%= image_tag('complete.png') %>
+                  <%= f.radio_button 'state', 8, :id=>"status_complete_#{document.id.to_s}" , :checked => document.is_completed? %> Completed
+                </div>
+              </div>
+              <div class="clear"></div>
+              <div class="actionButtons">
+                <%= link_to '','JavaScript:void(0);',{:class=>"saveBtn", :onclick=>"updateDocument('#{document.id.to_s}');"} %>
+                <%= link_to '',"JavaScript:void(0);",{:class=>"cancelBtn", :onclick=>"slideFilePlainPanel('#{document.id.to_s}');"} %>
+
+              </div>
+              <!--<span id="save_contents_loading_<%= document.id.to_s %>" class="actionError"><img src="/images/loding.gif" /></span>-->
+            </div>
+          <%end%>
+        </td>
+      </tr>
+    <%end%>
+  <%end%>
+</table>
+<% if @editable_document %>
+  <% content_for :javascripts do %>
+    <script>slideFileEditablePanel('<%= @editable_document %>');</script>
+  <%end%>
+<%end%>
+

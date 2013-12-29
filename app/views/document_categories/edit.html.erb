@@ -1,0 +1,9 @@
+<% form_for @document_category do |q| %>
+  <p>
+    <%= q.label :title %> <br />
+    <%= q.text_field :title %>
+  </p>
+  <p>
+    <%= q.submit :update %>
+  </p>
+<% end %>

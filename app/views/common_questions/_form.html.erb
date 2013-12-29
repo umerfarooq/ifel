@@ -1,0 +1,101 @@
+<% form_for @question, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :header_message => nil, :message => nil %>
+  <% unless flash[:validation_errors].blank? %>
+    <%flash[:validation_errors].each do |error|%>
+      <span style="color:red"><%= error %></span><br />
+    <%end%>
+  <%end%>
+
+  <%
+  if @add_as_statement
+    dropdown_title = 'Section'
+    title = 'Statement'
+  elsif @add_as_root
+    dropdown_title = 'Statement'
+    title = 'Question Title'
+  else
+    dropdown_title = 'Question'
+    title = 'Answer Title'
+  end
+%>
+
+  <% unless @add_as_statement %>
+    <p>
+      <%= label_tag dropdown_title %>
+      <br />
+    <%#= f.collection_select :parent_id, (@add_as_root) ? CommonQuestion.roots : CommonQuestion.children.are_not_leaves , :id, :statement, :selected => params[:parent_id].to_i,:include_blank => true %>
+      <%= f.select :parent_id, (@add_as_root) ? CommonQuestion.roots.collect{|cq| [cq.statement, cq.id]} : CommonQuestion.children.are_not_leaves.collect{|cq| [cq.parent.section_template.title+": "+cq.statement.to_s, cq.id]} , {:selected => params[:parent_id].to_i},{:include_blank => true} %>
+    </p>
+  <%else%>
+    <p>
+      <%= label_tag dropdown_title %>
+      <br />
+      <%= f.collection_select :section_template_id, @sections, :id, :title, :selected => params[:section_template_id].to_i,:include_blank => true %>
+    </p>
+  <% end %>
+
+
+  <p>
+    <%= label_tag title %>
+    <br />
+    <%= f.text_field :statement %>
+  </p>
+  <% if @add_as_statement %>
+    <p>
+      <%= f.label :button_text %>
+      <br />
+      <%= f.text_field :button_text %>
+    </p>
+
+    <p>
+      <%= f.label :button_url %>
+      <br />
+      <%= f.text_field :button_url %>
+    </p>
+  <%end%>
+
+  <% unless @add_as_root %>
+    <p>
+      <%= label_tag 'Description (Max. 600 Characters)' %>
+      <br />
+      <%= f.text_area :description, :size => "100x15",:class => "adminEditor" %>
+      <span id="charsLeft"></span>
+    </p>
+    <p>
+      <%= label_tag 'Photo (W: 310px, H: 175px )' %>
+      <%= image_tag @question.photo.url %>
+      <br />
+      <%= f.file_field :photo %>
+    </p>
+    <p>
+      <%= f.label :photo_alt %>
+      <br />
+      <%= f.text_field :photo_alt %>
+    </p>
+    <p>
+      <%= f.check_box :has_video %>
+      <%= f.label :has_video %>
+    </p>
+    <p>
+      <%= f.label :video %>
+      <%= image_tag @question.photo.url %>
+      <br />
+      <%= f.file_field :video %>
+    </p>
+  <%end%>
+
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>
+<% content_for :javascripts do %>
+  <script>
+    bkLib.onDomLoaded(function(){
+      $('#common_question_description').keyup(function(){
+        limitChars('common_question_description', 600, 'charsLeft');
+      });
+    });
+  
+  </script>
+<%end%>
+

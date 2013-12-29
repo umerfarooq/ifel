@@ -1,0 +1,13 @@
+<div id = "likings_panel_with_arrows_<%=  resource.id.to_s %>">
+  <%= render :partial => "rating_arrow", :locals=>{:resource =>resource}%>
+  <%=link_to "Reviews",'JavaScript:void(0);' , :id => "rl_category_#{resource.id.to_s}", :onclick=>"loadCommentsContent('#{resource.id.to_s}')" %>
+  <div id = "likings_panel_<%=  resource.id.to_s %>">
+    <% if resource.liking_by_user?(current_user) %>
+      <%= image_tag("green-grey-thumb.png", :class=>'floatL marginR')%><a href="JavaScript:void(0);"><%=resource.likes_count%></a>
+      <%= image_tag("red-grey-thumb.png", :class=>'floatL marginR')%><a href="JavaScript:void(0);"><%=resource.dislikes_count%></a>
+    <%else%>
+      <%= link_to image_tag("green-thumb.png"), "JavaScript:void(0);", :id => "ratings_#{resource.id.to_s}", :onclick=>"likes_content('#{resource.id.to_s}')" %><a href="#"><%=resource.likes_count%></a>
+      <%= link_to image_tag("red-thumb.png"), "JavaScript:void(0);", :id => "ratings_#{resource.id.to_s}", :onclick=>"dislikes_content('#{resource.id.to_s}')" %><a href="#"><%=resource.dislikes_count%></a>
+    <%end%>
+  </div>
+</div>

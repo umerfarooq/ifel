@@ -1,0 +1,15 @@
+<div class="tagSorterWrapper">
+  <div class="topTenTags" id="topTenTags">
+    <%= render :partial => 'tags_list', :locals => {:tags => nil} %>
+  </div>
+  <div class="submit-resource">
+    <%= link_to image_tag("theme/sub-res-btn.png"), "JavaScript:void(0);", :title => "Submit Resource", :id => "btnSubmitResource", :class=>"floatL" %>
+    <div id="submitResourcePanel">
+      <%= render :partial => "submit_resource_popup" %>
+    </div>
+    <div id="sentConfirmPanel" class="submitResourceConfirm" style="display: none;">
+      THANK YOU, YOUR REQUEST HAS BEEN SENT!
+    </div>
+  </div>
+</div>
+

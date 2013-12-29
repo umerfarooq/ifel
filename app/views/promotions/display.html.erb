@@ -1,0 +1,72 @@
+<%= render :partial => "admins/admin_sub_menu", :locals => { :active_admin_sub_tab => :radar_tab } %>
+
+<% title "#{@promotion.head_title}" %>
+
+<div class="admnRitCol">
+
+  <h1>
+    <%= @promotion.head_title %>
+  </h1>
+
+  <p>
+    STATE:
+    <strong>
+      <%= @promotion.state.title.upcase %>
+    </strong>
+  </p>
+
+  <p>
+    MODULE TITLE:
+    <strong>
+      <%= @promotion.head_title %>
+    </strong>
+  </p>
+
+  <%unless @promotion.sub_title.blank?%>
+  <p>
+    PROMOTION TITLE:
+    <strong>
+      <%= @promotion.sub_title %>
+    </strong>
+  </p>
+  <%end%>
+
+  <p>
+    DATE:
+    <strong>
+      <%= @promotion.creation_date %>
+    </strong>
+  </p>
+
+  <p>
+    URL:
+    <strong>
+      <%
+      target = ""
+      unless @promotion.url.blank?
+        if @promotion.is_external
+          target = "_blank"
+        end
+      end
+      %>
+      <%= link_to @promotion.url, @promotion.url, :target => target %>
+    </strong>
+  </p>
+
+  <%unless @promotion.description.blank?%>
+  <p>
+    DESCRIPTION:
+    <strong>
+      <%= @promotion.description %>
+    </strong>
+  </p>
+  <%end%>
+
+  <p>
+    PICTURE:
+    <strong>
+      <%= image_tag @promotion.picture.url, :alt => @promotion.head_title %>
+    </strong>
+  </p>
+
+</div>

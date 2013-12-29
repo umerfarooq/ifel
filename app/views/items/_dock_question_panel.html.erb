@@ -1,0 +1,66 @@
+<%= include_javascripts :tokeninput %>
+<%= include_stylesheets :tokeninput %>
+
+<%#= javascript_include_tag "jquery.tokeninput" %>
+<%#= stylesheet_link_tag "token-input-facebook"  %>
+<style>
+  .ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    /* add padding to account for vertical scrollbar */
+    padding-right: 20px;}
+  * html .ui-autocomplete {height: 100px;}
+</style>
+
+<div class="filesColLeft">
+  <h2>Post a Question</h2>
+  <div class="filesList noOverFlow">
+    <%= sanitize @post_question_summary.content %>
+  </div>
+</div>
+
+<div class="postQuestionColRight">
+  <span id="post_quest_notif" class="bolded"></span>
+  <% form_tag '/post_question_to_community', :method => :post do %>
+    <h3>Write Your Question</h3>
+
+    <p>
+      <%= text_area_tag 'message[body]' %>
+    </p>
+
+    <p>
+      <label>Select a Category for Your Question</label>
+      <%= select_tag :section_template_id, options_from_collection_for_select(@section_templates, 'id', 'title', item.section.section_template.id)  %>
+    </p>
+
+    <!--<p>
+      <label>Make your question private</label>
+      <input type="checkbox" id="private_flag" />
+    </p>-->
+
+    <!--<p>
+      <input type="checkbox" onclick="showShareByEmailPanel();" id="share_check" />
+      <label>Share Your Question</label> <br />
+      <span>In addition to the Wicked Start community, share your question with staff, team members and peers.</span>
+    </p>
+
+    <p id="share_by_email_panel" class="dispNone">To: (Comma separated Email IDs)
+  <%#= text_field_tag :share_id, '', :class=>'txtFld' %>
+    </p>-->
+
+    <p>
+      <label>Define tags to associate with your question</label> <br />
+      <%= text_field_tag :tags, '', :class=>'txtFld'  %>
+  <%#= link_to "#{image_tag('theme/add-icn-blue.png')} Add new Topic","#.", :id=>"new_topic_div_visible", :class => 'addTopicLink'  %>
+      <span style="position: absolute; padding: 0px; margin: 0px; font-family: MS Shell Dlg; font-size: 13.3333px; font-weight: 400; color: rgb(191, 191, 191);  cursor: text; background-color: rgb(255, 255, 255);  left: 5px;" class="default"></span>
+    </p>
+
+    <p>
+      <%= link_to image_tag('theme/post-question-btn2.png'), 'JavaScript:void(0);', :onclick=>"postQuestion('#{post_question_to_community_item_path(item)}');" %>
+      <%= link_to image_tag('cancel-btn2.png'), 'JavaScript:void(0);', :onclick => "openSlider('question');" %>
+    </p>
+  <%end%>
+
+</div>

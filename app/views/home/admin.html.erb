@@ -1,0 +1,105 @@
+<%# if current_user_is_admin? %>
+  <h3>Hi <%= current_user.first_name %><i>[as admin]</i>.</h3>
+  <br /><br />
+
+  <h5>Success Stories</h5>
+  <%= link_to "Add a new Story", new_success_story_path %>
+  <br /><br />
+
+  <h5>Biographies</h5>
+  <%= link_to "Add a new Biography", new_biography_path %>
+  <br /><br />
+
+  <h5>News Providers</h5>
+  <%= link_to "Add a new News Provider", new_news_provider_path %>
+  <br /><br />
+
+  <h5>News Items</h5>
+  <%= link_to "Add a new News Article", new_news_item_path(:type => "news_article") %>
+  |
+  <%= link_to "NEW! Add a new News Article", new_news_article_path %>
+  <br />
+  <%= link_to "Add a new White Paper", new_news_item_path(:type => "white_paper") %>
+  <br />
+  <%= link_to "Add a new News Item", new_news_item_path %>
+  <br /><br />
+
+  <h5>Partners</h5>
+  <%= link_to "Add a new Partner", new_partner_path %>
+  <br /><br />
+
+  <h5>Faqs</h5>
+  <%= link_to "Add a new Faq", new_faq_path %>
+  <br /><br />
+
+  <hr />
+  <h4>Checklist</h4>
+  <br /><br />
+
+  <%#*<h5>Examples</h5>%>
+  <%#= link_to "Add a new Example", new_example_path %>
+  <%#*<br /><br />%>
+
+  <h5>Templates</h5>
+  <%= link_to "Add a new Template Document", new_template_document_path %>
+  <br /><br />
+
+  <h5>Item Templates</h5>
+  <%= link_to "All Item Templates", item_templates_path %>
+  <br /><br />
+
+  <h5>Section Templates</h5>
+  <%= link_to "All Section Templates", section_templates_path %>
+  <br /><br />
+
+
+
+
+  <%#*<p>%>
+  <%#*<a class='example6' href="http://video.videobio.tv/mediadetails.php?key=b47e85086b40a0436b2c" title="Bryan Janeczko videoBIO (Client Approval)">%>
+  <%#*Bryan Janeczko videoBIO (Client Approval) __LINK__%>
+  <%#*</a>%>
+  <%#*</p>%>
+
+  <%#*<p><a class='example8' href="#">Inline HTML</a></p>%>
+  <%#*<!-- This contains the hidden content for inline calls -->%>
+  <%#*<div style='display:none'>%>
+  <%#*<div id='inline_example1' style='padding:10px; background:#fff;'>%>
+  <%#*<p><strong>This content comes from a hidden element on this page.</strong></p>%>
+  <%#*<p>The inline option preserves bound JavaScript events and changes, and it puts the content back where it came from when it is closed.<br />%>
+  <%#*<a id="click" href="#" style='padding:5px; background:#ccc;'>Click me, it will be preserved!</a></p>%>
+  <%#*<p><strong>If you try to open a new ColorBox while it is already open, it will update itself with the new content.</strong></p>%>
+  <%#*<p>Updating Content Example:<br />%>
+  <%#*<a class="example5" href="../content/flash.html">Click here to load new content</a></p>%>
+
+  <%#*<script type="text/javascript" src="http://video.videobio.tv/js/embed.js.php?id=492"></script>%>
+  <%#*<noscript>%>
+  <%#*<object type="application/x-shockwave-flash" data="http://video.videobio.tv/vimp.swf?playlistmode=media&amp;mediaid=492&amp;webtv=false&amp;hosturl=http%3A%2F%2Fvideo.videobio.tv%2Fflashcomm.php" id="flashcontent_4bab21c756296" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" name="c6a80378-3eb2-47e7-8415-ba1f7cff037e" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="480" height="360" align="middle">%>
+  <%#*<param name="movie" value="http://video.videobio.tv/vimp.swf?playlistmode=media&amp;mediaid=492&amp;webtv=false&amp;hosturl=http%3A%2F%2Fvideo.videobio.tv%2Fflashcomm.php" />%>
+  <%#*<param name="width" value="480" />%>
+  <%#*<param name="height" value="360" />%>
+  <%#*<param name="align" value="middle" />%>
+  <%#*<param name="quality" value="high" />%>
+  <%#*<param name="allowscriptaccess" value="always" />%>
+  <%#*</object>%>
+  <%#*</noscript>%>
+
+  <%#*</div>%>
+  <%#*</div>%>
+
+
+  <%#*<script type="text/javascript" src="http://video.videobio.tv/js/embed.js.php?id=492"></script>%>
+  <%#*<noscript>%>
+  <%#*<object type="application/x-shockwave-flash" data="http://video.videobio.tv/vimp.swf?playlistmode=media&amp;mediaid=492&amp;webtv=false&amp;hosturl=http%3A%2F%2Fvideo.videobio.tv%2Fflashcomm.php" id="flashcontent_4bab21c756296" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" name="c6a80378-3eb2-47e7-8415-ba1f7cff037e" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="480" height="360" align="middle">%>
+  <%#*<param name="movie" value="http://video.videobio.tv/vimp.swf?playlistmode=media&amp;mediaid=492&amp;webtv=false&amp;hosturl=http%3A%2F%2Fvideo.videobio.tv%2Fflashcomm.php" />%>
+  <%#*<param name="width" value="480" />%>
+  <%#*<param name="height" value="360" />%>
+  <%#*<param name="align" value="middle" />%>
+  <%#*<param name="quality" value="high" />%>
+  <%#*<param name="allowscriptaccess" value="always" />%>
+  <%#*</object>%>
+  <%#*</noscript>%>
+
+<%# else %>
+  <%#= render "public_home" %>
+<%# end %>

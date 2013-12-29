@@ -1,0 +1,17 @@
+<% form_for UserSession.new, :url => user_session_url(:protocol =>'https') do |f| %>
+  <fieldset>
+    <legend>Log into your Wicked Start Account</legend>
+    <p>
+      <%= f.text_field :login, :title => "username", :class => "defaultText" %>
+      <%= f.password_field :password, :title => "password", :class => "defaultText" %>
+      <%= f.submit "LOGIN", :class => "submit", :name => nil %>
+      <%  %>
+    </p>
+    <p class="footer">
+      <%= "#{f.check_box(:remember_me, :class => 'checkBx')} #{f.label(:remember_me, "Remember me", :class => "rememberMe")}" %>
+      <span class ="needHelp">
+        <%= link_to "Need Help?", forget_passwords_path %>
+      </span>
+    </p>
+  </fieldset>
+<% end %>

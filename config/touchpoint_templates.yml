@@ -1,0 +1,335 @@
+## YAML Template.
+#---
+completed_item_1_in_section_1:
+#  condition: completed_item_1_in_section_1
+  subject: "You've completed your first action item"
+  quote: "\"The odds of hitting your target go up dramatically when you aim at it.\" -Mal Pancoast, motivational speaker"
+  paragraphs:
+    - "Congratulations! You've scoped out your business idea, and by doing so you've taken the first specific step in the process of launching your business."
+    - "This step will enable you to lay a strong foundation for building a successful business. If you haven't done so already, {_WSL_}SECTION_1_ITEM_2{_SOI_}click here{_WSL_} to complete the next task, which is to find the {_WSL_}SECTION_1_ITEM_2{_SOI_}Market Need{_SOI_}.{_WSL_}"
+
+completed_item_4_in_section_1:
+  subject: "You've identifed your business model"
+  quote: "\"I'd say it's been my biggest problem all my life. Money. It takes a lot of money to make these dreams come true.\" -Walt Disney"
+  paragraphs:
+    - "Understanding how you're going to generate revenue, pay your initial starting costs, and find a location is a crucial point in your planning process."
+    - "By now you should have put down your initial thoughts on how your business will make money. Now that you've identified this, you'll be better able to focus on the unique elements that make your business different and better."
+    - "If you haven't done so already, {_WSL_}SECTION_1_ITEM_5{_SOI_}click here{_WSL_} to complete the next task, which is to find the {_WSL_}SECTION_1_ITEM_5{_SOI_}Value Proposition{_SOI_}.{_WSL_}"
+
+completed_item_5_in_section_1:
+  subject: "You've identified your value proposition"
+  quote: "\"A man, to carry on a successful business, must have imagination. He must see things as in a vision, a dream of the whole thing.\" -Charles M. Schwab"
+  paragraphs:
+    - "Understanding what makes your business valuable is a powerful thing."
+    - "You've defined why someone would want to buy your product, use your service, or work with you specifically. Take a moment to smile and envision your future success."
+    - "You're making great progress.  When you're ready, and if you haven't done so already, move forward and think about your {_WSL_}SECTION_1_ITEM_6{_SOI_}competition{_WSL_} and how you'll {_WSL_}SECTION_1_ITEM_7{_SOI_}market{_WSL_} your product or service in Action Items 6 and 7."
+ended_all_items_in_section_1_and_completed_item_8_in_section_1:
+  subject: "Your idea has potential"
+  quote: "\"The future you see is the future you get.\" -Robert G. Allen, best-selling author"
+  paragraphs:
+    - "You've decided you have a viable idea, and that your idea represents a viable business opportunity. Fantastic! In doing so, you've completed all the Action Items in this Step. In doing so you've laid the foundation for your success."
+    - "Now that you're done with Step 1,\"The Starting Block,\" you might want to take a moment to review your progress. When you're ready, and if you haven't done so already, dive in to Step 2, {_WSL_}SECTION_2_SUMMARY{_SOI_}Industry: Know Before You Go{_SOI_};\"{_SOI_}\"{_WSL_} it's just a click away."
+
+ended_items_1_to_5_in_section_2:
+  subject: "Getting experience"
+  quote: "\"When you confront a problem you begin to solve it.\" -Rudy Giuliani"
+  paragraphs:
+    - "You're just completed most of the Action Items under Step 2, \"Industry: Know Before You Go.\" All the Items you've completed so far have helped you learn more about the industry in which your business will sit. But there's no substitute for direct, hands-on experience."
+    - "It's time to find a creative way to learn about your industry from an insider perspective. If you have not yet moved on to Action Item 6 under Step 2, {_WSL_}SECTION_2_ITEM_6{_SOI_}Get Experience{_SOI_},{_WSL_} click to see the details of this Action Item, and then go learn how a similar business works."
+
+ended_all_items_in_section_2_and_completed_minimum_1_item_in_section_2:
+  subject: "You've completed Step 2"
+  quote: "\"Confidence can get you where you want to go, and getting there is a daily process. It’s so much easier when you feel good about yourself, your abilities and talents.\" -Donald Trump"
+  paragraphs:
+    - "Congratulations! You've completed Step 2! You have dug deeper and obtained experience. This knowledge will help you frame your business within your larger industry and create a clear vision for you to follow as you begin your Prototype step. The value you have created here will help you start a business successfully."
+    - "Take a moment to savor your small victories so far. If you haven't done so already, move to Step 3 and {_WSL_}SECTION_3_SUMMARY{_SOI_}Create a Sample of Your Product{_SOI_}\"{_SOI_}\"{_WSL_} when you're ready to move forward."
+
+completed_item_1_in_section_3:
+  subject: "Creating a prototype"
+  quote: "\"Don't let anyone say you can't do it.\" -\"Crazy\" John Ilhan, Australian mobile phone mogul"
+  paragraphs:
+    - "Congratulations! You've completed your prototype, which means that have a sample of your product or service-something specific to show as you talk about your idea with potential partners and investors. Your business idea is now a tangible thing."
+    - "Enjoy a vision of your fully realized product or service being used by your customers. Then, if you haven't done so already, get back to work creating a {_WSL_}SECTION_3_ITEM_2{_SOI_}Draft Logo{_WSL_} for your company."
+
+ended_all_items_in_section_3:
+  subject: "Moving toward structuring your businesss"
+  quote: "\"...you pull people in with inspiration, but then you have to roll up your sleeves and you’ve got to make sacrifices and you have got to have structure.\" -Michelle Obama"
+  paragraphs:
+    - "Congratulations! You've completed Step 3 and have created a framework for your business. You've also completed {_WSL_}{_POT_}{_WSL_} percent of your roadmap. Think about that, and compliment yourself on the work you've done so far."
+    - "If you haven't yet moved forward, now's the time. The next Step involves structuring your business, giving it a name, incorporating, and registering with your state. This is formalizing your business-the moment you give it real life, at least officially."
+    - "{_WSL_}SECTION_2_SUMMARY{_SOI_}Click here{_WSL_} to learn more about {_WSL_}SECTION_4_SUMMARY{_SOI_}Section 4{_WSL_} and the first Action Item, {_WSL_}SECTION_4_ITEM_1{_SOI_}Find a CPA{_SOI_},\"{_SOI_}\"{_WSL_} which will get you started by helping you find an accountant who will let you put down your finanical cornerstone."
+
+completed_item_4_in_section_4:
+  subject: "Naming a thing creates power"
+  quote: "\"If names are not correct, language will not be in accordance with the truth of things\"-Confucius"
+  paragraphs:
+    - "You've picked the name for your business, and in doing so you've passed a milestone that Procter & Gamble, GE, Microsoft, and Google all had to overcome."
+    - "Your company is now a unique thing, ready to be born through your continued hard work. You aren't quite done, though: If you haven't done so already, go find out {_WSL_}SECTION_4_ITEM_5{_SOI_}How to Make it Legal in your State{_SOI_}.\"{_SOI_}\"{_WSL_}"
+
+ended_all_items_in_section_4:
+  subject: "Creating your road map to profitability"
+  quote: "\"Don’t limit yourself. Many people limit themselves to what they think they can do. You can go as far as your mind lets you. What you believe, remember, you can achieve.\" -Mary Kay Ash, cosmetics entrepreneur"
+  paragraphs:
+    - "You're official! In completing Step 4 you have structured your business for launch. We hope you've been able to accomplish the Action Items in Steps 1 through 4, and you're ready to create your business plan-your roadmap to profitability."
+    - "Documenting your goals and action steps gives you a much better chance of  achieveing them."
+    - "During the next Step, \"Business Plan: Charting Your Course,\" you'll make sure that you and your partners and key managers share a vision for your business. {_WSL_}SECTION_5_ITEM_1{_SOI_}Click here{_WSL_} to access a {_WSL_}SECTION_5_ITEM_1{_SOI_}Business Plan Template{_WSL_} to get you started."
+
+ended_all_items_in_section_5:
+  subject: "You're ready to get the money you need!"
+  quote: "\"The general who wins the battle makes many calculations in his temple before the battle is fought. The general who loses makes but few calculations beforehand.\" -Sun Tzu"
+  paragraphs:
+    - "Now that you've completed your business plan-your road map to profitability-you've considered how you'll actually execute your business and what it will take to get it off the ground. You deserve credit for your persistance and efforts."
+    - "With the information and your accomplishments from Steps 1 through 5, you're ready to determine how much money you need to start your business and think about where you're going to get it. If you haven't done so already, {_WSL_}SECTION_6_SUMMARY{_SOI_}click here{_WSL_} to access details about what it takes to fund your business and start the process."
+
+completed_item_4_in_section_6:
+  subject: "Finding money"
+  quote: "\"I wish it grew on trees, but it takes hard work to make money.\" -Jim Cramer, financial TV host"
+  paragraphs:
+    - "Finding money is often a challenging part of starting a business. And asking someone else for money to start your business can be the biggest challenge of all. But, you've already done the work to create your vision, create a prototype, and write your plan."
+    - "Now is the time when you get to sell others on your idea. You'll hear challenges and objections you haven't thought of before, but after spending time on the action item for creating your pitch, you will have a lot of answers and know where to get more of them."
+    - "We have resources to help you through this phase-don't forget to take advantage of them. You can do it! If you haven't done so already, create your list of {_WSL_}SECTION_6_ITEM_5{_SOI_}potential investors{_SOI_}.{_WSL_} We'll help give you some places to start."
+
+completed_item_7_in_section_6:
+  subject: "Congrats on making your pitch!"
+  quote: "\"The only way you preserve pitching arms is throwing; that makes the arm stronger.\" -Juan Marichal, San Francisco Giants, record-holder for most wins of any pitcher in the 1960s."
+  paragraphs:
+    - "Congratulations on making your pitch to investors. It can be one of the hardest steps in the entire process. You may get shot down, and your assumptions may be strongly called into question. But you've made your pitch, and you'll make it again the next time, stronger and more informed."
+    - "Keep going!"
+
+ended_all_items_in_section_6:
+  subject: "You've achieved a major milestone"
+  quote: "\"Money isn't the most important thing in life, but it's reasonably close to oxygen on the 'gotta have it' scale.\" -Zig Ziglar, salesman and motivational speaker"
+  paragraphs:
+    - "Securing the financial resources necessary to start your business is truly a milestone. Congratulations on your persistence. Just a few more concrete Action Items and you'll be ready to take off."
+    - "Your next Step is getting your infrastructure in place. From budgets and insurance to legal and technical details, this is where you create a strong backbone for your organization. If you haven't done so already, dive right in to the {_WSL_}SECTION_7_SUMMARY{_SOI_}Nuts and Bolts{_WSL_} of your business."
+
+ended_all_items_in_section_7:
+  subject: "Infrastructure's in place-get ready to hire"
+  quote: "\"A journey of a thousand miles begins with a single step.\" -Lao-tzu"
+  paragraphs:
+    - "You've conquered the initial legal, financial, and technical hurdles to launching your business. Doesn't it feel great? With your company's new infrastructure, you can feel confident that you're ready to bring others on board to take your journey with you."
+    - "The people you choose and the skills they possess will enable your idea to grow in new and powerful ways. {_WSL_}SECTION_8_SUMMARY{_SOI_}Click here{_WSL_} when you're ready to begin that important process, {_WSL_}SECTION_8_SUMMARY{_SOI_}Start Building Your Team{_SOI_},{_WSL_} if you haven't done so already."
+
+ended_all_items_in_section_8:
+  subject: "Get ready to get real"
+  quote: "\"Individual commitment to a group effort-that is what makes a team work, a company work, a society work, a civilization work.\" -Vince Lombardi, football coach"
+  paragraphs:
+    - "You've built a team, and your enterprise is really coming together. This is a moment for a small celebration and acknowledgment of the hard work you've been doing."
+
+ended_all_items_in_section_9:
+  subject: "Operations are set: Time for show and tell"
+  quote: "\"Authentic marketing is not the art of selling what you make, but knowing what to make. It is the art of identifying and understanding customer needs and creating solutions that deliver satisfaction to the customers, profits to the producers, and benefits for the stakeholders.\" -Konosuke Matsushita, founder, Panasonic"
+  paragraphs:
+    - "You've created the mechanics and operations your business needs. There's one more thing you have to do: communicate your company's product or service idea to the world. It's time to design the logo, package, and website-and create a strategy to fill your sales funnel."
+    - "You've done the research and gathered experience, and you know your customers will want to do business with you-they just need to know you're there. If you haven't done so already, start developing your {_WSL_}SECTION_10_SUMMARY{_SOI_}brand assets{_SOI_}.{_WSL_} We'll help guide you along the way."
+
+ended_all_items:
+  subject: "Go for liftoff!"
+  quote: "\"Life is a succession of lessons which must be lived to be understood.\" -Ralph Waldo Emerson"
+  paragraphs:
+    - "Wow! You've done it-you've completed all the Steps, and you are ready to launch your business. The entire Wicked Start team and community wishes you much success and happiness in your new venture."
+    - "Please keep in touch and feel free to use the {_WSL_}/messages{_LOC_}Community{_WSL_} tab to ask questions, send us your launch story (which we might feature on the site) or {_WSL_}info@wickedstart.com{_LEM_}email us{_WSL_} with any questions or concerns. Good luck!"
+
+
+#---
+#-
+#  condition: completed_item_1_in_section_1
+#  subject: "You've completed your first action item"
+#  quote: "\"The odds of hitting your target go up dramatically when you aim at it.\"—Mal Pancoast, motivational speaker"
+#  paragraphs:
+#    - "Congratulations! You've scoped out your business idea, and by doing so you've taken the first specific step in the process of launching your business."
+#    - "This step will enable you to lay a strong foundation for building a successful business. If you haven't done so already, {_WSL_}click here{_LOC_}SECTION_1_ITEM_2{_WSL_} to complete the next task, which is to find the {_WSL_}Market Need{_LOC_}SECTION_1_ITEM_2{_WSL_}."
+#-
+#  condition: completed_item_4_in_section_1
+#  subject: "You've identifed your business model"
+#  quote: "\"I'd say it's been my biggest problem all my life. Money. It takes a lot of money to make these dreams come true.\"—Walt Disney"
+#  paragraphs:
+#    - "Understanding how you're going to generate revenue, pay your initial starting costs, and find a location is a crucial point in your planning process."
+#    - "By now you should have put down your initial thoughts on how your business will make money. Now that you've identified this, you'll be better able to focus on the unique elements that make your business different and better."
+#    - "If you haven't done so already, {_WSL_}click here{_LOC_}SECTION_1_ITEM_5{_WSL_} to complete the next task, which is to find the {_WSL_}Value Proposition{_LOC_}SECTION_1_ITEM_5{_WSL_}."
+#-
+#  condition: completed_item_5_in_section_1
+#  subject: "You've identified your value proposition"
+#  quote: "\"A man, to carry on a successful business, must have imagination. He must see things as in a vision, a dream of the whole thing.\"—Charles M. Schwab"
+#  paragraphs:
+#    - "Understanding what makes your business valuable is a powerful thing."
+#    - "You've defined why someone would want to buy your product, use your service, or work with you specifically. Take a moment to smile and envision your future success."
+#    - "You're making great progress.  When you're ready, and if you haven't done so already, move forward and think about your {_WSL_}competition{_LOC_}SECTION_1_ITEM_6{_WSL_} and how you'll {_WSL_}market{_LOC_}SECTION_1_ITEM_7{_WSL_} your product or service in Action Items 6 and 7."
+#-
+#  condition: ended_all_items_in_section_1_and_completed_item_8_in_section_1
+#  subject: "Your idea has potential"
+#  quote: "\"The future you see is the future you get.\"—Robert G. Allen, best-selling author"
+#  paragraphs:
+#    - "You've decided you have a viable idea, and that your idea represents a viable business opportunity. Fantastic! In doing so, you've completed all the Action Items in this Step. In doing so you've laid the foundation for your success."
+#    - "Now that you're done with Step 1,\"The Starting Block,\" you might want to take a moment to review your progress. When you're ready, and if you haven't done so already, dive in to Step 2, {_WSL_}\"Industry: Know Before You Go\"{_LOC_}SECTION_2_SUMMARY{_WSL_}; it's just a click away."
+#-
+#  condition: ended_items_1_to_5_in_section_2
+#  subject: "Getting experience"
+#  quote: "\"When you confront a problem you begin to solve it.\"—Rudy Giuliani"
+#  paragraphs:
+#    - "You're just completed most of the Action Items under Step 2, \"Industry: Know Before You Go.\" All the Items you've completed so far have helped you learn more about the industry in which your business will sit. But there's no substitute for direct, hands-on experience."
+#    - "It's time to find a creative way to learn about your industry from an insider perspective. If you have not yet moved on to Action Item 6 under Step 2, {_WSL_}Get Experience{_LOC_}SECTION_2_ITEM_6{_WSL_}, click to see the details of this Action Item, and then go learn how a similar business works."
+#-
+#  condition: ended_all_items_in_section_2_and_completed_minimum_1_item_in_section_2
+#  subject: "You've completed Step 2"
+#  quote: "\"Confidence can get you where you want to go, and getting there is a daily process. It’s so much easier when you feel good about yourself, your abilities and talents.\"—Donald Trump"
+#  paragraphs:
+#    - "Congratulations! You've completed Step 2! You have dug deeper and obtained experience. This knowledge will help you frame your business within your larger industry and create a clear vision for you to follow as you begin your Prototype step. The value you have created here will help you start a business successfully."
+#    - "Take a moment to savor your small victories so far. If you haven't done so already, move to Step 3 and {_WSL_}\"Create a Sample of Your Product\"{_LOC_}SECTION_3_SUMMARY{_WSL_} when you're ready to move forward."
+#-
+#  condition: completed_item_1_in_section_3
+#  subject: "Creating a prototype"
+#  quote: "\"Don't let anyone say you can't do it.\"—\"Crazy\" John Ilhan, Australian mobile phone mogul"
+#  paragraphs:
+#    - "Congratulations! You've completed your prototype, which means that have a sample of your product or service—something specific to show as you talk about your idea with potential partners and investors. Your business idea is now a tangible thing."
+#    - "Enjoy a vision of your fully realized product or service being used by your customers. Then, if you haven't done so already, get back to work creating a {_WSL_}Draft Logo{_LOC_}SECTION_3_ITEM_2{_WSL_} for your company."
+#-
+#  condition: ended_all_items_in_section_3
+#  subject: "Moving toward structuring your businesss"
+#  quote: "\"...you pull people in with inspiration, but then you have to roll up your sleeves and you’ve got to make sacrifices and you have got to have structure.\"—Michelle Obama"
+#  paragraphs:
+#    - "Congratulations! You've completed Step 3 and have created a framework for your business. You've also completed X percent of your roadmap. Think about that, and compliment yourself on the work you've done so far."
+#    - "If you haven't yet moved forward, now's the time. The next Step involves structuring your business, giving it a name, incorporating, and registering with your state. This is formalizing your business—the moment you give it real life, at least officially."
+#    - "{_WSL_}Click here{_LOC_}SECTION_2_SUMMARY{_WSL_} to learn more about {_WSL_}Section 4{_LOC_}SECTION_4_SUMMARY{_WSL_} and the first Action Item, \"{_WSL_}Find a CPA{_LOC_}SECTION_4_ITEM_1{_WSL_},\" which will get you started by helping you find an accountant who will let you put down your finanical cornerstone."
+#-
+#  condition: completed_item_4_in_section_4
+#  subject: "Naming a thing creates power"
+#  quote: "\"If names are not correct, language will not be in accordance with the truth of things\"—Confucius"
+#  paragraphs:
+#    - "You've picked the name for your business, and in doing so you've passed a milestone that Procter & Gamble, GE, Microsoft, and Google all had to overcome."
+#    - "Your company is now a unique thing, ready to be born through your continued hard work. You aren't quite done, though: If you haven't done so already, go find out \"{_WSL_}How to Make it Legal in your State{_LOC_}SECTION_4_ITEM_5{_WSL_}.\""
+#-
+#  condition: ended_all_items_in_section_4
+#  subject: "Creating your road map to profitability"
+#  quote: "\"Don’t limit yourself. Many people limit themselves to what they think they can do. You can go as far as your mind lets you. What you believe, remember, you can achieve.\"—Mary Kay Ash, cosmetics entrepreneur"
+#  paragraphs:
+#    - "You're official! In completing Step 4 you have structured your business for launch. We hope you've been able to accomplish the Action Items in Steps 1 through 4, and you're ready to create your business plan—your roadmap to profitability."
+#    - "Documenting your goals and action steps gives you a much better chance of  achieveing them."
+#    - "During the next Step, \"Business Plan: Charting Your Course,\" you'll make sure that you and your partners and key managers share a vision for your business. Click here to access a Business Plan Template to get you started."
+#-
+#  condition: ended_all_items_in_section_5
+#  subject: "You're ready to get the money you need!"
+#  quote: "\"The general who wins the battle makes many calculations in his temple before the battle is fought. The general who loses makes but few calculations beforehand.\"—Sun Tzu"
+#  paragraphs:
+#    - "Now that you've completed your business plan—your road map to profitability—you've considered how you'll actually execute your business and what it will take to get it off the ground. You deserve credit for your persistance and efforts."
+#    - "With the information and your accomplishments from Steps 1 through 5, you're ready to determine how much money you need to start your business and think about where you're going to get it. If you haven't done so already, {_WSL_}click here{_LOC_}SECTION_6_SUMMARY{_WSL_} to access details about what it takes to fund your business and start the process."
+#-
+#  condition: completed_item_4_in_section_6
+#  subject: "Finding money"
+#  quote: "\"I wish it grew on trees, but it takes hard work to make money.\"—Jim Cramer, financial TV host"
+#  paragraphs:
+#    - "Finding money is often a challenging part of starting a business. And asking someone else for money to start your business can be the biggest challenge of all. But, you've already done the work to create your vision, create a prototype, and write your plan."
+#    - "Now is the time when you get to sell others on your idea. You'll hear challenges and objections you haven't thought of before, but after spending time on the action item for creating your pitch, you will have a lot of answers and know where to get more of them."
+#    - "We have resources to help you through this phase—don't forget to take advantage of them. You can do it! If you haven't done so already, create your list of {_WSL_}potential investors{_LOC_}SECTION_6_ITEM_5{_WSL_}. We'll help give you some places to start."
+#-
+#  condition: completed_item_7_in_section_6
+#  subject: "Congrats on making your pitch!"
+#  quote: "\"The only way you preserve pitching arms is throwing; that makes the arm stronger.\"—Juan Marichal, San Francisco Giants, record-holder for most wins of any pitcher in the 1960s."
+#  paragraphs:
+#    - "Congratulations on making your pitch to investors. It can be one of the hardest steps in the entire process. You may get shot down, and your assumptions may be strongly called into question. But you've made your pitch, and you'll make it again the next time, stronger and more informed."
+#    - "Keep going!"
+#-
+#  condition: ended_all_items_in_section_6
+#  subject: "You've achieved a major milestone"
+#  quote: "\"Money isn't the most important thing in life, but it's reasonably close to oxygen on the 'gotta have it' scale.\"—Zig Ziglar, salesman and motivational speaker"
+#  paragraphs:
+#    - "Securing the financial resources necessary to start your business is truly a milestone. Congratulations on your persistence. Just a few more concrete Action Items and you'll be ready to take off."
+#    - "Your next Step is getting your infrastructure in place. From budgets and insurance to legal and technical details, this is where you create a strong backbone for your organization. If you haven't done so already, dive right in to the {_WSL_}Nuts and Bolts{_LOC_}SECTION_7_SUMMARY{_WSL_} of your business."
+#-
+#  condition: ended_all_items_in_section_7
+#  subject: "Infrastructure's in place—get ready to hire"
+#  quote: "\"A journey of a thousand miles begins with a single step.\"—Lao-tzu"
+#  paragraphs:
+#    - "You've conquered the initial legal, financial, and technical hurdles to launching your business. Doesn't it feel great? With your company's new infrastructure, you can feel confident that you're ready to bring others on board to take your journey with you."
+#    - "The people you choose and the skills they possess will enable your idea to grow in new and powerful ways. When you're ready to begin that important process, {_WSL_}Start Building{_LOC_}SECTION_8_SUMMARY{_WSL_} Your Team—if you haven't already."
+#-
+#  condition: ended_all_items_in_section_8
+#  subject: "Get ready to get real"
+#  quote: "\"Individual commitment to a group effort—that is what makes a team work, a company work, a society work, a civilization work.\"—Vince Lombardi, football coach"
+#  paragraphs:
+#    - "You've built a team, and your enterprise is really coming together. This is a moment for a small celebration and acknowledgment of the hard work you've been doing."
+#-
+#  condition: ended_all_items_in_section_9
+#  subject: "Operations are set: Time for show and tell"
+#  quote: "\"Authentic marketing is not the art of selling what you make, but knowing what to make. It is the art of identifying and understanding customer needs and creating solutions that deliver satisfaction to the customers, profits to the producers, and benefits for the stakeholders.\"—Konosuke Matsushita, founder, Panasonic"
+#  paragraphs:
+#    - "You've created the mechanics and operations your business needs. There's one more thing you have to do: communicate your company's product or service idea to the world. It's time to design the logo, package, and website—and create a strategy to fill your sales funnel."
+#    - "You've done the research and gathered experience, and you know your customers will want to do business with you—they just need to know you're there. If you haven't done so already, start developing your {_WSL_}brand assets{_LOC_}SECTION_10_SUMMARY{_WSL_}. We'll help guide you along the way."
+#-
+#  condition: ended_all_sections
+#  subject: "Go for liftoff!"
+#  quote: "\"Life is a succession of lessons which must be lived to be understood.\"—Ralph Waldo Emerson"
+#  paragraphs:
+#    - "Wow! You've done it—you've completed all the Steps, and you are ready to launch your business. The entire Wicked Start team and community wishes you much success and happiness in your new venture."
+#    - "Please keep in touch and feel free to use the {_WSL_}Community{_LOC_}/messages{_WSL_} tab to ask questions, send us your launch story (which we might feature on the site) or email us with any questions or concerns. Good luck!"
+#
+#
+#---
+#- completed_item_1_in_section_1
+#- completed_item_4_in_section_1
+#- completed_item_5_in_section_1
+#- ended_all_items_in_section_1_and_completed_item_8_in_section_1
+#- ended_items_1_to_5_in_section_2
+#- ended_all_items_in_section_2_and_completed_minimum_1_item_in_section_2
+#- completed_item_1_in_section_3
+#- ended_all_items_in_section_3
+#- completed_item_4_in_section_4
+#- ended_all_items_in_section_4
+#- ended_all_items_in_section_5
+#- completed_item_4_in_section_6
+#- completed_item_7_in_section_6
+#- ended_all_items_in_section_6
+#- ended_all_items_in_section_7
+#- ended_all_items_in_section_8
+#- ended_all_items_in_section_9
+#- ended_all_sections
+#
+
+
+
+
+
+
+
+
+#- completed_item_1_01
+#- completed_item_1_04
+#- completed_item_1_05
+#- ended_section_1_and_completed_item_1_08
+#- ended_items_2_01_to_2_05
+#- ended_section_2_and_completed_one_item
+#- completed_item_3_01
+#- ended_section_3
+#- completed_item_4_04
+#- ended_section_4
+#- ended_section_5
+#- completed_item_6_04
+#- completed_item_6_07
+#- ended_section_6
+#- ended_section_7
+#- ended_section_8
+#- ended_section_9
+#- ended_all_items
+#
+#---
+#1- completed_item_1_05
+#1- completed_item_5_in_section_1
+#
+#2- ended_section_4
+#2- ended_all_items_in_section_4
+#
+#3- ended_section_1_and_completed_item_1_08
+#2- ended_all_items_in_section_1_and_completed_item_8_in_section_1
+#
+#4- ended_section_2_and_completed_one_item
+#4- ended_all_items_in_section_2_and_completed_minimum_1_item_in_section_2
+#
+#5- ended_items_2_01_to_2_05
+#5- ended_items_1_to_5_in_section_2
+#
+#6- ended_all_items
+#6- ended_all_sections
+#
+#7- completed_minimum_1_item_in_section_2
+#
+
